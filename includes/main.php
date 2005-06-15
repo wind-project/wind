@@ -1,0 +1,67 @@
+<?php
+/*
+ * WiND - Wireless Nodes Database
+ *
+ * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 dated June, 1991.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+include_once($root_path."includes/html.php");
+include_once($root_path."globals/classes/userdata.php");
+include_once($root_path."globals/classes/message.php");
+include_once($root_path."includes/main_header.php");
+include_once($root_path."includes/main_center.php");
+include_once($root_path."includes/main_footer.php");
+include_once($root_path."includes/main_menu.php");
+
+class main {
+	
+	var $html;
+	var $userdata;
+	var $message;
+	var $header;
+	var $center;
+	var $footer;
+	var $menu;
+	
+	function main() {
+		$this->html = new html;
+		$this->userdata = new userdata;
+		$this->message = new message;
+		$this->header = new header;
+		$this->center = new center;
+		$this->footer = new footer;
+		$this->menu = new menu;
+	}
+	
+	function output() {
+		global $root_path, $lang;
+		
+		$this->html->head->add_title($lang['site_title']);
+		$this->html->head->add_meta("text/html; charset=".$lang['charset'], "", "Content-Type");
+		
+		$this->html->body->tpl['center'] = $this->center->output();
+		$this->html->body->tpl['header'] = $this->header->output();
+		$this->html->body->tpl['footer'] = $this->footer->output();
+		$this->html->body->tpl['menu'] = $this->menu->output();
+		if ($this->message->show) $this->html->body->tpl['message'] = $this->message->output();
+
+		return $this->html->output();
+	}
+	
+}
+
+?>

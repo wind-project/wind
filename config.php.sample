@@ -1,0 +1,53 @@
+<?php
+
+$config = array(
+	
+	'db' => array(
+		'server' => "server.example.org",
+		'username' => "youruser",
+		'password' => "yourpassword",
+		'database' => "yourdatabase"
+		),
+		
+	'site' => array(
+		'domain' => 'server.example.org',
+		'url' => 'http://server.example.org/'
+		),
+	
+	'cookies' => array(
+		'expire' => (60 * 60 * 24 * 30)
+		),
+
+	'message' => array(
+		'delay' => 5
+		),
+
+	'language' => array(
+		'default' => 'greek'
+		),
+		
+	'smarty' => array(
+		'class' => '/usr/share/php/smarty/libs/Smarty.class.php'
+		),
+		
+	'constructor' => array(
+		'max_rows' => 50
+		),
+	
+	'dns' => array(
+		'root_zone' => 'domain',
+		'ns_zone' => 'ns.domain',
+		'reverse_zone' => 'in-addr.arpa'
+		),
+	
+	'folders' => array(
+		'photos' => $root_path.'files/photos/'
+		),
+	
+	'mail' => array(
+		'from' => 'hostmaster@wind.cube.gr',
+		'from_name' => 'WiND Hostmaster'
+		)
+);
+
+?>
