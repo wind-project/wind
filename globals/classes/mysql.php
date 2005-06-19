@@ -191,8 +191,6 @@ class mysql {
 		if (isset($main)) {
 			if ($main->userdata->privileges['admin'] === TRUE) $if_admin .= '<br /><br />Last MySQL query:<br />'.$this->last_query;
 			$main->message->set('MySQL Error', $this->get_error().$if_admin);
-		} else {
-			echo $this->get_error();
 		}
 	}
 	

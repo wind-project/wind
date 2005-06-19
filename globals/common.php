@@ -19,6 +19,9 @@
  *
  */
 
+if (!file_exists($root_path."config.php")) {
+	die("WiND error: Please make config.php file ...");
+}
 include_once($root_path."config.php");
 include_once($root_path."globals/vars.php");
 $vars = array_merge($config, $vars);
@@ -27,13 +30,18 @@ include_once($root_path."globals/classes/mysql.php");
 include_once($root_path."globals/classes/construct.php");
 include_once($root_path."globals/classes/form.php");
 include_once($root_path."globals/classes/table.php");
+if (!file_exists($vars['smarty']['class'])) {
+	die("WiND error: Cannot find Smarty lib. Please check config.php ...");
+}
 include_once($vars['smarty']['class']);
 
 $construct = new construct;
 
 $db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
 
-if ($db->error) die("Database error: $db->error_report");
+if ($db->error) {
+	die("WiND MySQL database error: $db->error_report");
+}
 
 $smarty = new Smarty;
 $smarty->template_dir = $root_path.'templates/basic/';
