@@ -38,6 +38,12 @@ $h3 = bytes2int(strrev(fread($file, 2)));
 $h4 = bytes2int(strrev(fread($file, 2)));
 fclose($file);
 
+$m = max($h1, $h2, $h3, $h4);
+for($i=1;$i<=4;$i++) {
+	$c = 'h'.$i;
+	if ($$c == -32768) $$c = $m;
+}
+
 $fx = ($log - (integer)($log * 1200) / 1200) * 1200;
 $fy = ($lat - (integer)($lat * 1200) / 1200) * 1200;
 

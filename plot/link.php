@@ -43,6 +43,7 @@ function plotlink($width, $height, $point_a, $point_b, $antenna_a=0, $antenna_b=
 	$color_sky = ImageColorAllocate($image, 99, 200, 248);
 	$color_ground = ImageColorAllocate($image, 177, 125, 86);
 	$color_antenna = ImageColorAllocate($image, 0, 0, 0);
+	$color_sea = ImageColorAllocate($image, 0, 0, 200);
 	$black = ImageColorAllocate($image, 0, 0, 0);
 	$color_link_on = ImageColorAllocate($image, 57, 187, 77);
 	$color_link_off = ImageColorAllocate($image, 211, 97, 97);
@@ -54,6 +55,9 @@ function plotlink($width, $height, $point_a, $point_b, $antenna_a=0, $antenna_b=
 		if ($point_a->lat == '' || $point_a->log == '' || $point_b->lat == '' || $point_b->log == '' || $elevations[$i] === FALSE) {
 			imagestring ($image, 5, 10, 10, "Data error!", $black);
 			return $image;
+		}
+		if ($elevations[$i] < -32000) {
+			$elevations[$i] = $elevations[$i-1];
 		}
 	}
 	$max_el = max($elevations) + max($antenna_a, $antenna_b);
@@ -69,6 +73,14 @@ function plotlink($width, $height, $point_a, $point_b, $antenna_a=0, $antenna_b=
 		$y1 = $height - 1 - $ground_pad - $pixels_el;
 		$y2 = $height - 1;
 		imagelinethick($image, $left_pad + $i, $y1, $left_pad + $i, $y2, $color_ground);
+		
+		//SEA
+		if ($elevations[$i] < 0) {
+			$pixels_el = (0 - $min_el) / $step_elevation;
+			$y2 = $y1;
+			$y1 = $height - 1 - $ground_pad - $pixels_el;
+			imagelinethick($image, $left_pad + $i, $y1, $left_pad + $i, $y2, $color_sea);
+		}
 		
 		//ANTENNA A
 		if ($i ==0) {
