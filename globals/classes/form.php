@@ -65,6 +65,21 @@ class form {
 			}
 		}
 	}
+
+	function db_data_pickup($data_field, $subpage, $values, $multi=FALSE) {
+		for ($i=0;$i<count($this->data);$i++) {
+			if ($data_field == str_replace("__", ".", $this->data[$i]['fullField'])) {
+				$this->data[$i]['Type'] = 'pickup'.($multi==FALSE?'':"_multi");
+				$this->data[$i]['Pickup_url'] = makelink(array("page" => "pickup", "subpage" => $subpage, "object" => $this->info['FORM_NAME'].".elements['".str_replace(".", "__", $data_field).($multi==FALSE?'':"[]")."']"));
+				if ($multi == FALSE) {
+					$this->data[$i]['Type_Pickup'] = $values[0];
+				} else {
+					$this->data[$i]['Type_Pickup'] = $values;
+				}
+				break;
+			}
+		}
+	}
 	
 	// args: [[table], [key], [value] ...]
 	function db_data_values() {

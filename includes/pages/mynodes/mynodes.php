@@ -49,20 +49,14 @@ class mynodes {
 		if ($this->has_owner_access() || get('node') == 'add') {
 			$form_node->data[6]['Field'] = 'user_id_owner';
 			$form_node->data[6]['fullField'] = 'user_id_owner';
-			$form_node->data[6]['Type'] = 'pickup';
-			$form_node->data[6]['Pickup_url'] = makelink(array("page" => "pickup", "subpage" => "users", "object" => "form_node.user_id_owner"));
-			//$form_node->data[6]['Null'] = 'YES';
-			//$form_node->db_data_enum('user_id_owner', $db->get("id AS value, username AS output", "users"));
 			if (get('node') == 'add') {
-				$form_node->data[6]['Type_Pickup'] = $db->get("users.id AS value, users.username AS output", "users", "users.id = '".$main->userdata->user."'");
+				$temp = $db->get("users.id AS value, users.username AS output", "users", "users.id = '".$main->userdata->user."'");
 			} else {
-				$form_node->data[6]['Type_Pickup'] = $db->get("users.id AS value, users.username AS output", "users_nodes, users", "users.id = users_nodes.user_id AND users_nodes.node_id = '".get('node')."' AND users_nodes.owner = 'Y'");			
+				$temp = $db->get("users.id AS value, users.username AS output", "users_nodes, users", "users.id = users_nodes.user_id AND users_nodes.node_id = '".get('node')."' AND users_nodes.owner = 'Y'");			
 			}
-			$form_node->data[6]['Type_Pickup'] = $form_node->data[6]['Type_Pickup'][0];
-			$form_node->data[7]['Type'] = 'pickup_multi';
-			$form_node->data[7]['Pickup_url'] = makelink(array("page" => "pickup", "subpage" => "users", "object" => "form_node.elements['users_nodes__user_id[]']"));
+			$form_node->db_data_pickup("user_id_owner", "users", $temp);
+			$form_node->db_data_pickup("users_nodes.user_id", "users", $db->get("users.id AS value, users.username AS output", "users_nodes, users", "users.id = users_nodes.user_id AND users_nodes.node_id = '".get('node')."' AND users_nodes.owner != 'Y'"), TRUE);
 			$form_node->data[7]['Null'] = 'YES';
-			$form_node->data[7]['Type_Pickup'] = $db->get("users.id AS value, users.username AS output", "users_nodes, users", "users.id = users_nodes.user_id AND users_nodes.node_id = '".get('node')."' AND users_nodes.owner != 'Y'");			
 		}
 		
 		if ($main->userdata->privileges['admin'] === TRUE) $form_node->db_data('nodes.id, nodes.name_ns');

@@ -18,43 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-{literal}<script language="JavaScript" type="text/javascript">
-	function pickup(list, text, value, mywindow) {
-		if (list.multiple) {
-			for(x=0; x<(list.length); x++){
-				if (list.options[x].value == value) return;
-			}
-			var opt = new Option(text, value)
-			list.options[list.options.length] = opt
-			for(x=0; x<(list.length); x++){
-				list.options[x].selected = "true"
-			}
-		} else {
-			if (list.options[0].value == '' && list.options.length == 1) {
-				num = 1
-			} else {
-				num = 0
-			}
-			list.options[num] = null
-			var opt = new Option(text, value)
-			list.options[num] = opt
-			list.selectedIndex = num
-			mywindow.close()
-		}
-	}
-	
-	function remove_selected(list) {
-		for(x=0; x<(list.length); x++){
-			if (list.options[x].selected == true) {
-				list.options[x] = null
-				x--
-			}
-		}
-		for(x=0; x<(list.length); x++){
-			list.options[x].selected = "true"
-		}
-	}
-</script>{/literal}
+<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
 <form name="{$extra_data.FORM_NAME}" method="post" action="?">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
@@ -75,7 +39,7 @@
 	{elseif $data[d].Type == 'enum'}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field" >
-			<select class="fld-form-input" name="{$data[d].fullField}" class="table-form-field" >
+			<select class="fld-form-input" name="{$data[d].fullField}">
 				{if $data[d].Null == 'YES'}<option value=""></option>{/if}
 				{section loop=$data[d].Type_Enums name=e}
 				<option value="{$data[d].Type_Enums[e].value}"{if $data[d].Type_Enums[e].value == $data[d].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Enums[e].output}</option>
@@ -103,8 +67,9 @@
 	{elseif $data[d].Type == 'pickup'}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field" >
-			<select class="fld-form-input" name="{$data[d].fullField}" class="table-form-field">
-				<option value="{$data[d].Type_Pickup.value}">{$data[d].Type_Pickup.output}</option>
+			{if $data[d].Null == 'YES'}<option value=""></option>{/if}
+			<select class="fld-form-input" name="{$data[d].fullField}">
+				<option value="{$data[d].Type_Pickup.value}" selected="selected">{$data[d].Type_Pickup.output}</option>
 			</select>
 			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: open ('`$data[d].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"}
 		</td>	
