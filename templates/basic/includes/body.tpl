@@ -21,7 +21,7 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-main">
   {if $header != ''}
   <tr>
-    <td colspan="2" class="table-main-td-header">{$header}</td>
+    <td {if $menu != ''}colspan="2" {/if}class="table-main-td-header">{$header}</td>
   </tr>
   {/if}
   
@@ -51,7 +51,7 @@
     
   {if $footer != ''}
   <tr>
-    <td colspan="2" class="table-main-td-footer">{$footer}</td>
+    <td {if $menu != ''}colspan="2" {/if}class="table-main-td-footer">{$footer}</td>
   </tr>
   {/if}
 </table>

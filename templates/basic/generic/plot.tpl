@@ -21,5 +21,5 @@
 <table class="plot-table" cellspacing="0">
 <tr><td colspan="3" class="plot-title">{$lang.plot}</td></tr>
 <tr><td width="33%" align="left">{$data[rowl].node_name} (#{$data[rowl].node_id})</td><td width="33%" align="center">-- {$data[rowl].distance|round:3}km --</td><td align="right">{$data[rowl].peer_node_name} (#{$data[rowl].links__peer_node_id})</td></tr>
-<tr><td colspan="3" align="center"><img src="?page=nodes&subpage=plot&a_node={$data[rowl].node_id}&b_node={$data[rowl].links__peer_node_id}&width=300&height=150" width="300" height="150"></td></tr>
+<tr><td colspan="3" align="center"><a href="" onclick="javascript: open ('?page=nodes&subpage=plot_link&a_node={$data[rowl].node_id}&b_node={$data[rowl].links__peer_node_id}', 'popup_plot_link', 'width=600,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"><img src="?page=nodes&subpage=plot&a_node={$data[rowl].node_id}&b_node={$data[rowl].links__peer_node_id}&width=300&height=150" width="300" height="150"></a></td></tr>
 </table>

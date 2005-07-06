@@ -67,11 +67,11 @@
 	{elseif $data[d].Type == 'pickup'}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field" >
-			{if $data[d].Null == 'YES'}<option value=""></option>{/if}
 			<select class="fld-form-input" name="{$data[d].fullField}">
+				{if $data[d].Null == 'YES'}<option value=""></option>{/if}
 				<option value="{$data[d].Type_Pickup.value}" selected="selected">{$data[d].Type_Pickup.output}</option>
 			</select>
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: open ('`$data[d].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"}
+			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[d].Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 		</td>	
 	{elseif $data[d].Type == 'pickup_multi'}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
@@ -82,7 +82,7 @@
 				<option value="{$data[d].Type_Pickup[e].value}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Pickup[e].output}</option>
 				{/section}
 			</select>
-			{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: open ('`$data[d].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"}
+			{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: t = window.open('`$data[d].Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 			{include file=generic/link.tpl content="`$lang.remove`" onclick="javascript: remove_selected(window.document.`$extra_data.FORM_NAME`.elements['`$data[d].fullField`[]']); return false;"}
 		</td>	
 	{elseif $data[d].Field|truncate:8:"":true == 'password'}

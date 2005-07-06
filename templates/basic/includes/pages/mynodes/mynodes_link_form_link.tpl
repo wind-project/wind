@@ -93,7 +93,7 @@ function type_changed() {
 				{if $data[1].Null == 'YES'}<option value=""></option>{/if}
 				<option value="{$data[1].Type_Pickup.value}">{$data[1].Type_Pickup.output}</option>
 			</select>
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: open ('`$data[1].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"}
+			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 		</td>	
 		</tr>	
 		<tr class="table-form-row2">
@@ -103,7 +103,7 @@ function type_changed() {
 				{if $data[2].Null == 'YES'}<option value=""></option>{/if}
 				<option value="{$data[2].Type_Pickup.value}">{$data[2].Type_Pickup.output}</option>
 			</select>
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: open ('`$data[2].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"}
+			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 		</td>	
 		</tr>	
 		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.3.fullField]}{if $data[3].Null != 'YES'}*{/if}:</td>

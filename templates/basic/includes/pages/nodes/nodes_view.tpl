@@ -28,6 +28,8 @@
 {include file="generic/title5.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
 {include file="generic/title5.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
 {include file="generic/title5.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}
+<br />
+<div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 </td>
 <td class="table-page-split">
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="500" height="500" id="main" align="middle">

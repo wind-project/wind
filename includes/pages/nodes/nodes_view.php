@@ -20,7 +20,7 @@
  */
 
 $plot_path = $root_path."plot/";
-include $root_path."plot/elevation.php";
+include_once $root_path."plot/elevation.php";
 
 class nodes_view {
 
@@ -259,6 +259,8 @@ class nodes_view {
 			$this->tpl['photosview'][$value['view_point']]['image_s'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'-s.jpg';
 			$this->tpl['photosview'][$value['view_point']]['image'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'.jpg';
 		}		
+		
+		$this->tpl['link_plot_link'] = makelink(array("page" => "nodes", "subpage" => "plot_link", "a_node" => $this->tpl['node']['id']));
 		
 		return template($this->tpl, __FILE__);
 	}

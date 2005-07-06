@@ -13,7 +13,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
@@ -114,6 +113,14 @@ $lang = array(
 	'plot' => "Οπτική επαφή",
 	'mynetwork' => "Το δίκτυο του κόμβου",
 	'new_window' => "Νέο παράθυρο",
+	'node_plot_link' => "Οπτική επαφή με άλλους κόμβους",
+	'nodes_plot_link' => "Οπτική επαφή κόμβων",
+	'nodes_plot_link_info' => "Επιλέξτε παραπάνω τους κόμβους για τους οποίους επιθυμείτε να ελέγξετε την οπτική επαφή.",
+	'distance' => "Απόσταση",
+	'azimuth' => "Αζιμούθιο",
+	'elevation' => "Υψόμετρο",
+	'fsl' => "Free space loss",
+	'tilt' => "Κλίση",
 	'' => "",
 	
 
