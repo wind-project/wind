@@ -55,21 +55,21 @@ class menu {
 
 				$this->tpl['link_dnsnameservers'] = makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers"));
 				$this->tpl['link_dnsnameservers_pending'] = makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers", "form_search_nameservers_search" => serialize(array("dns_nameservers__status" => "pending"))));
-				$this->tpl['dnsnameservers_pending'] = $db->cnt("dns_nameservers", "status = 'pending'");
+				$this->tpl['dnsnameservers_pending'] = $db->cnt('', "dns_nameservers", "status = 'pending'");
 				$this->tpl['link_dnsnameservers_req_del'] = makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers", "form_search_nameservers_search" => serialize(array("dns_nameservers__delete_req" => "Y"))));
-				$this->tpl['dnsnameservers_req_del'] = $db->cnt("dns_nameservers", "delete_req = 'Y'");
+				$this->tpl['dnsnameservers_req_del'] = $db->cnt('', "dns_nameservers", "delete_req = 'Y'");
 
 				$this->tpl['link_dnszones'] = makelink(array("page" => "hostmaster", "subpage" => "dnszones"));
 				$this->tpl['link_dnszones_pending'] = makelink(array("page" => "hostmaster", "subpage" => "dnszones", "form_search_dns_search" => serialize(array("dns_zones__status" => "pending"))));
-				$this->tpl['dnszones_pending'] = $db->cnt("dns_zones", "status = 'pending'");
+				$this->tpl['dnszones_pending'] = $db->cnt('', "dns_zones", "status = 'pending'");
 				$this->tpl['link_dnszones_req_del'] = makelink(array("page" => "hostmaster", "subpage" => "dnszones", "form_search_dns_search" => serialize(array("dns_zones__delete_req" => "Y"))));
-				$this->tpl['dnszones_req_del'] = $db->cnt("dns_zones", "delete_req = 'Y'");
+				$this->tpl['dnszones_req_del'] = $db->cnt('', "dns_zones", "delete_req = 'Y'");
 
 				$this->tpl['link_ranges'] = makelink(array("page" => "hostmaster", "subpage" => "ranges"));
 				$this->tpl['link_ranges_pending'] = makelink(array("page" => "hostmaster", "subpage" => "ranges", "form_search_ranges_search" => serialize(array("ip_ranges__status" => "pending"))));
-				$this->tpl['ranges_pending'] = $db->cnt("ip_ranges", "status = 'pending'");
+				$this->tpl['ranges_pending'] = $db->cnt('', "ip_ranges", "status = 'pending'");
 				$this->tpl['link_ranges_req_del'] = makelink(array("page" => "hostmaster", "subpage" => "ranges", "form_search_ranges_search" => serialize(array("ip_ranges__delete_req" => "Y"))));
-				$this->tpl['ranges_req_del'] = $db->cnt("ip_ranges", "delete_req = 'Y'");
+				$this->tpl['ranges_req_del'] = $db->cnt('', "ip_ranges", "delete_req = 'Y'");
 			}
 		}
 		$this->tpl['link_allnodes'] = makelink(array("page" => "nodes"));

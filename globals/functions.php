@@ -350,7 +350,7 @@ function validate_name_ns($name, $node) {
 	}
 	$i=2;
 	do {
-		$cnt = $db->cnt('nodes', "name_ns = '".$ret.$extension."' AND id != '".$node."'");
+		$cnt = $db->cnt('', 'nodes', "name_ns = '".$ret.$extension."' AND id != '".$node."'");
 		if ($cnt > 0) {
 			$extension = "-".$i;
 			$i++;

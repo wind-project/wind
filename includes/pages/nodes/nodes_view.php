@@ -147,6 +147,13 @@ class nodes_view {
 			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
 			INNER JOIN nodes AS n2 ON l2.node_id = n2.id',
 			"l1.node_id = '".get('node')."' AND l2.peer_node_id = l1.node_id AND l1.type ='p2p' AND l2.type = 'p2p'");
+		$table_links->db_data(
+			'"" AS distance, n1.name AS node_name, n1.id AS node_id, n2.name AS peer_node_name, l1.type AS links__type, l1.info AS links__info, l2.node_id AS links__peer_node_id, l1.date_in AS links__date_in, l2.ssid AS links__ssid, l2.protocol AS links__protocol, l2.channel AS links__channel, l1.equipment AS links__equipment, l1.status AS l1_status, l2.status AS l2_status, "" AS links__status',
+			'links AS l1
+			INNER JOIN links AS l2 ON l1.peer_ap_id = l2.id
+			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
+			INNER JOIN nodes AS n2 ON l2.node_id = n2.id',
+			"l1.node_id = '".get('node')."' AND l1.type ='client' AND l2.type = 'ap'");
 		foreach( (array) $table_links->data as $key => $value) {
 			$table_links->data[$key]['distance'] = $this->calculate_distance($table_links->data[$key]['node_id'], $table_links->data[$key]['links__peer_node_id']);
 			if ($key != 0) {
@@ -155,6 +162,7 @@ class nodes_view {
 				} else {
 					$table_links->data[$key]['links__status'] = 'inactive';
 				}
+				$table_links->info['EDIT'][$key] = makelink(array('page' => 'nodes', 'node' => $table_links->data[$key]['links__peer_node_id']));
 			}
 		}
 		$table_links->db_data_translate('links__status', 'links__type');
@@ -164,11 +172,18 @@ class nodes_view {
 	
 	function table_links_ap($id) {
 		global $db;
-		$table_links = new table(array('TABLE_NAME' => 'table_links_ap_'.$id, 'FORM_NAME' => 'table_links_ap_'.$id));
+		$table_links = new table(array('TABLE_NAME' => 'table_links_ap'));
 		$table_links->db_data(
-			'id, type, node_id, status',
-			'links',
-			"type = 'client' AND peer_ap_id = '".$id."'");
+			'nodes.id AS c_node_id, nodes.name AS c_node_name, l1.status AS c_status, l2.date_in AS links__date_in, l2.ssid AS links__ssid, l2.type AS links__type, l2.info AS links__info, l2.protocol AS links__protocol, l2.channel AS links__channel, l2.equipment AS links__equipment, l2.status AS links__status',
+			'links AS l2
+			LEFT JOIN links AS l1 ON l1.peer_ap_id = l2.id
+			LEFT JOIN nodes ON l1.node_id = nodes.id',
+			"(l1.type = 'client' OR l1.id IS NULL) AND l2.id = '".$id."'");
+		foreach( (array) $table_links->data as $key => $value) {
+			if ($key != 0) {
+				$table_links->info['EDIT'][$key] = makelink(array('page' => 'nodes', 'node' => $table_links->data[$key]['c_node_id']));
+			}
+		}
 		return $table_links;
 	}
 

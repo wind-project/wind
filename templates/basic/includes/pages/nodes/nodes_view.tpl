@@ -46,7 +46,10 @@
 </tr>
 <tr>
 <td colspan="2" class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.links`" content=$table_links_p2p}
+{foreach from=$table_links_ap item=ap}
+	{assign var=aps value="`$aps``$ap`"}
+{/foreach}
+{include file=generic/title2.tpl title="`$lang.links`" content="`$table_links_p2p``$aps`"}
 </td>
 </tr>
 <tr>

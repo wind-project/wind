@@ -37,7 +37,7 @@ class mynodes {
 		global $db, $main;
 		if ($main->userdata->privileges['admin']===TRUE) return TRUE;
 		
-		if ($db->cnt("users_nodes", "user_id = '".$main->userdata->user."' AND node_id = '".get('node')."' AND owner = 'Y'") > 0) return TRUE;
+		if ($db->cnt('', "users_nodes", "user_id = '".$main->userdata->user."' AND node_id = '".get('node')."' AND owner = 'Y'") > 0) return TRUE;
 		
 		return FALSE;
 	}
@@ -342,12 +342,12 @@ class mynodes {
 		if (get('node') != 'add') {
 			$old_v = $db->get('name, area_id', 'nodes', "id = '".get('node')."'");
 			if ($old_v[0]['name'] != $_POST['nodes__name'] && 
-					$db->cnt('dns_nameservers', "node_id = '".get('node')."'") > 0) {
+					$db->cnt('', 'dns_nameservers', "node_id = '".get('node')."'") > 0) {
 				$main->message->set_fromlang('error', 'nodes_field_name', makelink("",TRUE));
 				return;
 			}
 			if ($old_v[0]['area_id'] != $_POST['nodes__area_id'] && 
-					$db->cnt('ip_ranges', "node_id = '".get('node')."'") > 0) {
+					$db->cnt('', 'ip_ranges', "node_id = '".get('node')."'") > 0) {
 				$main->message->set_fromlang('error', 'nodes_field_area_id', makelink("",TRUE));
 				return;
 			}

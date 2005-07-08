@@ -34,7 +34,7 @@ class mynodes_link {
 		$form_link->db_data_values("links", "id", get('link'));
 		
 		$form_link->db_data_pickup('links.peer_node_id', "nodes", $db->get("links.peer_node_id AS value, CONCAT(nodes.name, ' (#', nodes.id, ')') AS output", "links, nodes", "links.peer_node_id = nodes.id AND links.id = '".get("link")."'"));
-		$form_link->db_data_pickup('links.peer_ap_id', "links_ap", $db->get("links.peer_ap_id AS value, links.ssid AS output", "links", "links.id = '".get("link")."'"));
+		$form_link->db_data_pickup('links.peer_ap_id', "links_ap", $db->get("l1.peer_ap_id AS value, l2.ssid AS output", "links AS l1, links AS l2", "l1.peer_ap_id = l2.id AND l1.id = '".get("link")."'"));
 		$form_link->data[1]['Null'] = '';
 		//$form_link->db_data_enum('links.peer_ap_id', $db->get("id AS value, ssid AS output", "links", "type = 'ap'"));
 		return $form_link;

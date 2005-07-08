@@ -18,11 +18,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-comments">
+<table border="0" cellpadding="0" cellspacing="0" class="table-main">
 <tr>
-<td width="65%" colspan="4" class="table-comments-title">{$title}</td>
+<td class="table-comments-title">{$title}</td>
 </tr>
 <tr>
-<td colspan="4" class="table-comments-text">{$content}</td>
+<td class="table-comments-text">{$content}</td>
 </tr>
 </table>

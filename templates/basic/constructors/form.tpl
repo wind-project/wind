@@ -88,7 +88,26 @@
 	{elseif $data[d].Field|truncate:8:"":true == 'password'}
 		<td class="table-form-title">{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td><td class="table-form-field" ><input class="fld-form-input" name="{$data[d].fullField}" type="password" value="{$data[d].value}" /></td>
 	{else}
-		<td class="table-form-title">{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td><td class="table-form-field" ><input class="fld-form-input" name="{$data[d].fullField}" type="text" value="{$data[d].value}" /></td>
+		<td class="table-form-title">{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
+		<td class="table-form-field" >
+		{if $data[d].Compare != ''}
+			<select class="fld-form-input" name="{$data[d].fullField}_compare">
+				{if $data[d].Compare == 'full' || $data[d].Compare == 'numeric'}
+				<option value="equal"{if $data[d].Compare_value == 'equal'} selected="selected"{/if}>{$lang.compare_equal}</option>
+				<option value="greater_equal"{if $data[d].Compare_value == 'greater_equal'} selected="selected"{/if}>{$lang.compare_greater_equal}</option>
+				<option value="less_equal"{if $data[d].Compare_value == 'less_equal'} selected="selected"{/if}>{$lang.compare_less_equal}</option>
+				<option value="greater"{if $data[d].Compare_value == 'greater'} selected="selected"{/if}>{$lang.compare_greater}</option>
+				<option value="less"{if $data[d].Compare_value == 'less'} selected="selected"{/if}>{$lang.compare_less}</option>
+				{/if}
+				{if $data[d].Compare == 'full' || $data[d].Compare == 'text'}
+				<option value="starts_with"{if $data[d].Compare_value == 'starts_with'} selected="selected"{/if}>{$lang.compare_starts_with}</option>
+				<option value="ends_with"{if $data[d].Compare_value == 'ends_with'} selected="selected"{/if}>{$lang.compare_ends_with}</option>
+				<option value="contains"{if $data[d].Compare_value == 'contains'} selected="selected"{/if}>{$lang.compare_contains}</option>
+				{/if}
+			</select>
+		{/if}
+		<input class="fld-form-input" name="{$data[d].fullField}" type="text" value="{$data[d].value}" />
+		</td>
 	{/if}
 	</tr>
 {/section}

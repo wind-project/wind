@@ -125,6 +125,9 @@ class form {
 		for ($i=0;$i<count($this->data);$i++) {
 			if (isset($this->data[$i])) {
 				$this->data[$i]['value'] = (isset($_POST[$this->data[$i]['fullField']]) ? $_POST[$this->data[$i]['fullField']] : $sc[$this->data[$i]['fullField']]);
+				if (isset($this->data[$i]['Compare'])) {
+					$this->data[$i]['Compare_value'] = (isset($_POST[$this->data[$i]['fullField'].'_compare']) ? $_POST[$this->data[$i]['fullField'].'_compare'] : $sc[$this->data[$i]['fullField'].'_compare']);
+				}
 				$this->data[$i]['Null'] = 'YES';
 			}
 		}
@@ -132,15 +135,30 @@ class form {
 	
 	// get the where string for SQL. $extra[_fieldname_]: '=' | 'starts_with' | 'ends_with' | 'contains' | 'exclude'
 	function db_data_where($extra="") {
-		$sc = unserialize(stripslashes(get($this->info['FORM_NAME'].'_search')));
 		for ($i=0;$i<count($this->data);$i++) {
 			if (isset($this->data[$i])) {
 				$item = $this->data[$i]['fullField'];
-				$value = (isset($_POST[$item]) ? $_POST[$item] : $sc[$item]);
+				if (isset($this->data[$i]['Compare']) && !isset($extra[$item])) {
+					$extra[$item] = $this->data[$i]['Compare_value'];
+				}
+				$value = $this->data[$i]['value'];
 				switch ($extra[$item]) {
 					case '':
 					case '=':
+					case 'equal':
 						$where .= ($value !=''?str_replace("__", ".", $item)." = '".$value."' AND ":"");
+						break;
+					case 'greater':
+						$where .= ($value !=''?str_replace("__", ".", $item)." > '".$value."' AND ":"");
+						break;
+					case 'less':
+						$where .= ($value !=''?str_replace("__", ".", $item)." < '".$value."' AND ":"");
+						break;
+					case 'greater_equal':
+						$where .= ($value !=''?str_replace("__", ".", $item)." >= '".$value."' AND ":"");
+						break;
+					case 'less_equal':
+						$where .= ($value !=''?str_replace("__", ".", $item)." <= '".$value."' AND ":"");
 						break;
 					case 'starts_with':
 						$where .= ($value !=''?str_replace("__", ".", $item)." LIKE '".$value."%' AND ":"");

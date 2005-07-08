@@ -167,10 +167,11 @@ class mysql {
 		return $res;
 	}
 
-	function cnt($table, $where="") {
-		$res = $this->query("SELECT COUNT(*) FROM $table".($where==""?"":" WHERE $where"));
-		if ($res[0]['COUNT(*)'] != "") return $res[0]['COUNT(*)'];
-		return $res;
+	function cnt($select="*", $table, $where="", $group_by="", $order_by="", $limit="") {
+		if ($select == '') $select = '*';
+		$query = "SELECT $select FROM $table".($where==""?"":" WHERE $where").($group_by==""?"":" GROUP BY $group_by").($order_by==""?"":" ORDER BY $order_by").($limit==""?"":" LIMIT $limit");
+		$q = mysql_query($query, $this->mysql_link);
+		return mysql_num_rows($q);
 	}
 	
 	function error() {

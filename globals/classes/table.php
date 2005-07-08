@@ -31,7 +31,7 @@ class table {
 	function db_data($select, $from, $where="", $group_by="", $order_by="", $limit="") {
 		global $db, $vars;
 		if ($limit == '') {
-			$cnt = $db->cnt($from, $where, $group_by, $limit);
+			$cnt = $db->cnt($select, $from, $where, $group_by);
 			if ($vars['constructor']['max_rows'] != '' && $cnt > $vars['constructor']['max_rows']) {
 				$this->info['TOTAL_PAGES'] = ceil($cnt / $vars['constructor']['max_rows']);
 				
@@ -74,6 +74,8 @@ class table {
 			}
 			if (isset($data[0][$fkey]) || ($isset !== TRUE && !isset($data[0][$fkey]))) $data[0][$fkey] = $f;
 		}
+		$this->data[0] = array_merge($this->data[0], $data[0]);
+		unset($data[0]);
 		$this->data = array_merge($this->data, $data);
 	}
 	
@@ -83,6 +85,9 @@ class table {
 			if (isset($form->data[$i])) {
 				$sf=$sc[$form->data[$i]['fullField']];
 				$search[$form->data[$i]['fullField']] = (isset($_POST[$form->data[$i]['fullField']])?$_POST[$form->data[$i]['fullField']]:$sf);
+				if (isset($form->data[$i]['Compare'])) {
+					$search[$form->data[$i]['fullField'].'_compare'] = (isset($_POST[$form->data[$i]['fullField'].'_compare']) ? $_POST[$form->data[$i]['fullField'].'_compare'] : $sc[$form->data[$i]['fullField'].'_compare']);
+				}
 			}
 		}
 		$search = serialize($search);

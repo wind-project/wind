@@ -13,6 +13,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
+ * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
@@ -121,6 +122,15 @@ $lang = array(
 	'elevation' => "Υψόμετρο",
 	'fsl' => "Free space loss",
 	'tilt' => "Κλίση",
+	'clients' => "Πελάτες",
+	'compare_equal' => "Ισούται με",
+	'compare_greater' => "Μεγαλύτερο από",
+	'compare_less' => "Μικρότερο από",
+	'compare_greater_equal' => "Μεγαλύτερο ή ίσο με",
+	'compare_less_equal' => "Μικρότερο ή ίσο με",
+	'compare_starts_with' => "Ξεκινάει από",
+	'compare_ends_with' => "Τελειώνει σε",
+	'compare_contains' => "Περιέχει",
 	'' => "",
 	
 
@@ -218,6 +228,7 @@ $lang = array(
 		'links__equipment' => 'Εξοπλισμός',
 		'links__info' => 'Πληροφορίες',
 		'peer' => 'Διασύνδεση',
+		'total_active_peers' => 'Ενεργές διασυνδέσεις',
 
 		'subnets__ip_start' => 'Από',
 		'subnets__ip_end' => 'Μέχρι',
