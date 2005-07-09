@@ -184,7 +184,7 @@
 			<td colspan="2" class="table-form-title"><img src="templates/basic/images/nameserver.gif">&nbsp;<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a></td>
 			</tr>
 			<tr>
-			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnsnameservers_req_del content="$dnsnameservers_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_dnszones_req_del content="$dnsnameservers_req_del `$lang.for_deletion`"}</td>
+			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnsnameservers_pending content="$dnsnameservers_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_dnsnameservers_req_del content="$dnsnameservers_req_del `$lang.for_deletion`"}</td>
 			</tr>
 			{/if}
 			<tr>
