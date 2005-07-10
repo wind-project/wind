@@ -229,6 +229,7 @@ $lang = array(
 		'links__info' => 'Πληροφορίες',
 		'peer' => 'Διασύνδεση',
 		'total_active_peers' => 'Ενεργές διασυνδέσεις',
+		'total_active_clients' => 'Ενεργοί πελάτες',
 
 		'subnets__ip_start' => 'Από',
 		'subnets__ip_end' => 'Μέχρι',

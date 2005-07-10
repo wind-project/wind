@@ -34,6 +34,7 @@ class nodes_search {
 		$form_search_nodes->db_data_enum('areas.id', $db->get("id AS value, name AS output", "areas"));
 		$form_search_nodes->db_data_enum('regions.id', $db->get("id AS value, name AS output", "regions"));
 		array_push($form_search_nodes->data, array('Compare' => 'numeric', 'Field' => 'total_active_peers', 'fullField' => 'total_active_peers'));
+		array_push($form_search_nodes->data, array('Compare' => 'numeric', 'Field' => 'total_active_clients', 'fullField' => 'total_active_clients'));
 		$form_search_nodes->db_data_search();
 		return $form_search_nodes;
 	}
@@ -41,16 +42,18 @@ class nodes_search {
 	function table_nodes() {
 		global $construct, $db, $main;
 		$form_search_nodes = $this->form_search_nodes();
-		$where = $form_search_nodes->db_data_where(array("nodes__name" => "starts_with", "total_active_peers" => 'exclude'));
+		$where = $form_search_nodes->db_data_where(array("nodes__name" => "starts_with", "total_active_peers" => 'exclude', "total_active_clients" => 'exclude'));
 		$having = $form_search_nodes->db_data_where(array("nodes__id" => "exclude", "nodes__name" => "exclude", "areas__id" => "exclude", "regions__id" => "exclude"));
 		$table_nodes = new table(array('TABLE_NAME' => 'table_nodes'));
 		$table_nodes->db_data(
-			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(l1.id) AS total_active_peers',
+			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(l1.id) AS total_active_peers, COUNT(cl.id) AS total_active_clients',
 			'nodes
 			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN regions ON areas.region_id = regions.id
 			LEFT JOIN links AS l1 ON nodes.id = l1.node_id
-			LEFT JOIN links AS l2 ON l1.type != "ap"',
+			LEFT JOIN links AS l2 ON l1.type != "ap"
+			LEFT JOIN links AS cl ON l1.type = "ap" AND cl.status = "active" AND cl.type = "client" AND cl.peer_ap_id = l1.id
+			',
 			"l1.type IS NULL OR (" .
 			"(l1.type = 'p2p' AND l2.type = 'p2p' AND l1.peer_node_id = l2.node_id AND l2.peer_node_id = l1.node_id) OR " .
 			"(l1.type = 'ap') OR " .
