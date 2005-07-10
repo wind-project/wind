@@ -159,7 +159,7 @@ class mynodes {
 				$table_links->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "link", 'node' => get('node'), "link" => $table_links->data[$i]['id']));
 			}
 		}
-		$table_links->info['EDIT_COLUMN'] = 'peer';
+		$table_links->info['EDIT_COLUMN'] = 'type';
 		$table_links->info['MULTICHOICE_LABEL'] = 'delete';
 		$table_links->db_data_remove('id', 'peer_node_id', 'peer_node_name', 'peer_ap_nodename', 'peer_ap_nodeid', 'peer_ap_ssid');
 		$table_links->db_data_translate('links__type', 'links__status');

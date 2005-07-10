@@ -66,6 +66,7 @@ function sendmail_changed() {{/literal}
 {literal}}
 </script>
 {/literal}
+<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
 <form name="{$extra_data.FORM_NAME}" method="post">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
@@ -74,15 +75,19 @@ function sendmail_changed() {{/literal}
 
 	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data.1.fullField}">{$data.1.value}</textarea></td></tr>
 
-	<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</td>
-	<td class="table-form-field">
-		<select class="fld-form-input" name="{$data[2].fullField}[]" size="5" multiple="multiple">
-			{section loop=$data[2].Type_Enums name=e}
-			{assign var="value" value=$data[2].Type_Enums[e].value}
-			<option value="{$data[2].Type_Enums[e].value}"{if $data[2].value.$value == 'YES'} selected="selected"{/if}>{$data[2].Type_Enums[e].output}</option>
+	<tr class="table-form-row1">
+	<td class="table-form-title">{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</td>
+	<td class="table-form-field" >
+		<select class="fld-form-input" name="{$data.2.fullField}[]" size="5" multiple="multiple">
+			{section loop=$data.2.Type_Pickup name=e}
+			{assign var="value" value=$data.2.Type_Pickup[e].value}
+			<option value="{$data.2.Type_Pickup[e].value}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data.2.Type_Pickup[e].output}</option>
 			{/section}
 		</select>
-	</td></tr>
+		{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: t = window.open('`$data.2.Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+		{include file=generic/link.tpl content="`$lang.remove`" onclick="javascript: remove_selected(window.document.`$extra_data.FORM_NAME`.elements['`$data.2.fullField`[]']); return false;"}
+	</td>	
+	</tr>
 		
 	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.3.fullField]}{if $data[d].Null != 'YES'}*{/if}:</td>
 	<td class="table-form-field">

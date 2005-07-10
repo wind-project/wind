@@ -31,17 +31,9 @@ class hostmaster_dnszone {
 		global $db, $vars;
 		$form_zone = new form(array('FORM_NAME' => 'form_zone'));
 		$form_zone->db_data('dns_zones.name, dns_zones.info, dns_zones_nameservers.nameserver_id, dns_zones.status');
-		$ns = $db->get("ns.id AS value, ns.ip AS ip, IF(ns.name IS NOT NULL, CONCAT(ns.name, '.', n.name_ns), n.name_ns) AS name",
-				"dns_nameservers AS ns, nodes AS n",
-				"ns.node_id = n.id");
-		foreach( (array) $ns as $key => $value) {
-			$ns[$key]['name'] = strtolower($value['name'].".".$vars['dns']['ns_zone']);
-			$ns[$key]['ip'] = long2ip($value['ip']);
-			$ns[$key]['output'] = $ns[$key]['name'].' ['.$ns[$key]['ip'].']';
-		}
-		$form_zone->db_data_enum('dns_zones_nameservers.nameserver_id', $ns, TRUE);
 		$form_zone->db_data_values("dns_zones", "id", get('zone'));
-		$form_zone->db_data_values_multi("dns_zones_nameservers", "zone_id", get('zone'), 'nameserver_id');
+		
+		$form_zone->db_data_pickup("dns_zones_nameservers.nameserver_id", "dns_nameservers", $db->get('dns_nameservers.id AS value, CONCAT(dns_nameservers.name, ".", nodes.name_ns, ".", "'.$vars['dns']['ns_zone'].'") AS output', "dns_zones_nameservers, dns_nameservers, nodes", "dns_nameservers.node_id = nodes.id AND dns_nameservers.id = dns_zones_nameservers.nameserver_id AND dns_zones_nameservers.zone_id = '".get('zone')."'"), TRUE);
 
 		$tmp = $db->get('users.email, users_nodes.owner', 'users, users_nodes, dns_zones', "users_nodes.user_id = users.id AND users_nodes.node_id = dns_zones.node_id AND dns_zones.id = '".get("zone")."'");
 		foreach( (array) $tmp as $key => $value) {
