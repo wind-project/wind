@@ -20,6 +20,7 @@
  */
 
 include $plot_path."elevation.php";
+include $plot_path."../globals/classes/geocalc.php";
 
 class elevation {
 	var $lat;
@@ -32,6 +33,9 @@ class elevation {
 }
 
 function plotlink($width, $height, $point_a, $point_b, $antenna_a=0, $antenna_b=0) {
+	$gc = new geocalc();
+	$distance = $gc->GCDistance($point_a->lat, $point_a->log, $point_b->lat, $point_b->log) * 1000;
+
 	$image = imagecreate($width, $height);
 	$ground_pad = $height * (1 / 20);
 	$sky_pad = $height * (1 / 20);
@@ -64,6 +68,9 @@ function plotlink($width, $height, $point_a, $point_b, $antenna_a=0, $antenna_b=
 	$min_el = min($elevations);
 	
 	$step_elevation = ($max_el - $min_el) / ($height - $ground_pad - $sky_pad);
+	
+	//$step_elevation = $distance / $width; //step_elevation for real distances plotting
+	
 	$antenna_a_se = $antenna_a / $step_elevation;
 	$antenna_b_se = $antenna_b / $step_elevation;
 	
@@ -89,7 +96,7 @@ function plotlink($width, $height, $point_a, $point_b, $antenna_a=0, $antenna_b=
 		}
 		
 		//ANTENNA B
-		if ($i == $width-1) { 
+		if ($i == $width-2) { 
 			$ant_b = $y1 - $antenna_b_se;
 			imagelinethick($image, $left_pad + $i, $y1, $left_pad + $i, $ant_b, $color_antenna, 2);
 		}
@@ -103,6 +110,21 @@ function plotlink($width, $height, $point_a, $point_b, $antenna_a=0, $antenna_b=
 		}
 	}
 	imagelinethick($image, $left_pad + 0, $ant_a, $left_pad + $width - 1, $ant_b, $color_link, 2);
+
+	//FRESNEL ZONE
+	$freq = 2400;
+	for ($i=1;$i<$width-1;$i++) {
+		$d1 = ($i / $width) * $distance;
+		if ( (integer)($i / 2) % 2 == 0) { // dashed line
+			$fresnel = 17.32 * sqrt(($d1*($distance-$d1)) / ($freq * $distance));
+			imagesetpixel($image, $left_pad + $i, ($ant_a + $i * ($ant_b - $ant_a) / ($width - 1)) + $fresnel / $step_elevation, $color_link);
+			imagesetpixel($image, $left_pad + $i, ($ant_a + $i * ($ant_b - $ant_a) / ($width - 1)) - $fresnel / $step_elevation, $color_link);
+		}
+		
+		$fresnel06 = 0.6 * 17.32 * sqrt(($d1*($distance-$d1)) / ($freq * $distance));
+		imagesetpixel($image, $left_pad + $i, ($ant_a + $i * ($ant_b - $ant_a) / ($width - 1)) + $fresnel06 / $step_elevation, $color_link);
+		imagesetpixel($image, $left_pad + $i, ($ant_a + $i * ($ant_b - $ant_a) / ($width - 1)) - $fresnel06 / $step_elevation, $color_link);
+	}
 	
 	return $image;
 }
