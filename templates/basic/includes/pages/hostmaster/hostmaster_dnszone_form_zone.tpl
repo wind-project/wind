@@ -25,12 +25,12 @@ function status_changed()
 	var arr_s = new Array()
 	{section loop=$data[3].Type_Enums name=e}
 		{assign var="lng" value=$data[3].Type_Enums[e].value}
-		arr_s[{$smarty.section.e.index}] = '{$lang.email.zone.$lng.subject|replace:"##zone##":"`$data.0.value`"}'
+		arr_s[{$smarty.section.e.index}] = '{$lang.email.zone.$lng.subject|replace:"##zone##":"`$data.0.value`"|replace:"\n":"\\n"}'
 	{/section}
 	var arr_b = new Array()
 	{section loop=$data[3].Type_Enums name=e}
 		{assign var="lng" value=$data[3].Type_Enums[e].value}
-		arr_b[{$smarty.section.e.index}] = '{$lang.email.zone.$lng.body|replace:"##zone##":"`$data.0.value`"|replace:"##node_name##":"`$extra_data.node_name`"|replace:"##node_id##":"`$extra_data.node_id`"}'
+		arr_b[{$smarty.section.e.index}] = '{$lang.email.zone.$lng.body|replace:"##zone##":"`$data.0.value`"|replace:"##node_name##":"`$extra_data.node_name`"|replace:"##node_id##":"`$extra_data.node_id`"|replace:"\n":"\\n"}'
 	{/section}
 	document.{$extra_data.FORM_NAME}.email_subject.value = arr_s[document.{$extra_data.FORM_NAME}.{$data[3].fullField}.selectedIndex]
 	document.{$extra_data.FORM_NAME}.email_body.value = arr_b[document.{$extra_data.FORM_NAME}.{$data[3].fullField}.selectedIndex]
