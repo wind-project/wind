@@ -21,17 +21,26 @@
 <table class="table-form">
 {section name=row loop=$data start=1}
 {if $data[row].ip_start != $cur}
-	{if $close == true}</table></td></tr></table>{/if}
+	{$close2}{$close1}
+	{assign var=close1 value=""}
+	{assign var=close2 value=""}
+	{assign var=close1 value="</table>"}
 	{assign var=cur value=$data[row].ip_start}
-	{assign var=close value=true}
 	<tr><td>
 	<table class="table-form">
 	<tr><td class="table-search-menu-text">
 		<img src="{$img_dir}admin.gif" />
-		{assign var=t value="subnets__type-"|cat:$data[row].type}
-		{$lang.db.$t} {if $data[row].nodes__name != ''}[{$data[row].nodes__name} (#{$data[row].nodes__id})] {/if}({$data[row].ip_start} - {$data[row].ip_end})
+		{assign var=t1 value="subnets__type-"|cat:$data[row].type}
+		{assign var=t2 value="links__type-"|cat:$data[row].links__type}
+		{$lang.db.$t1}
+		{$lang.db.$t2}
+		{if $data[row].nodes__name != ''}[{$data[row].nodes__name} (#{$data[row].nodes__id})] {/if}
+		({$data[row].ip_start} - {$data[row].ip_end})
 	</td></tr>
-	<tr><td><table class="table-form">
+	{if $data[row].date_in != ''}
+	{assign var=close2 value="</table></td></tr>"}
+	<tr><td>
+	<table class="table-form">
 	<tr>
 	{foreach key=key item=itm from=$data.0}
 	{assign var="fullkey" value=$data.0.$key}
@@ -53,31 +62,36 @@
 	{/if}
 	{/foreach}
 	</tr>
+	{/if}
 {/if}
-<tr>
-	{foreach key=key item=itm from=$data[row]}
-	{assign var="fullkey" value=$data.0.$key}
-	{if $extra_data.HIDE.$fullkey != 'YES'}
-	{if $smarty.section.row.index == 0 && $lang.db.$itm != ''}
-		{assign var="cell" value="`$lang.db.$itm`"}
-		{assign var="cellclass" value="table-node-key2"}
-	{elseif $smarty.section.row.index != 0 && $key|truncate:5:"":true == 'date_'}
-		{assign var="cell" value=$itm|date_format:"%x"}
-		{assign var="cellclass" value="table-node-value2"}
-	{elseif $extra_data.TRANSLATE.$fullkey == 'YES'}
-		{assign var="cellclass" value="table-node-value2"}
-		{assign var="lang_cell" value=$fullkey|cat:"-"|cat:$itm}
-		{assign var="cell" value=$lang.db.$lang_cell}
-		{assign var="cellclass" value="table-node-value2"}
-	{else}
-		{assign var="cellclass" value="table-node-value2"}
-		{assign var="cell" value=$itm}
+	{if $data[row].date_in != ''}
+	<tr>
+		{foreach key=key item=itm from=$data[row]}
+		{assign var="fullkey" value=$data.0.$key}
+		{if $extra_data.HIDE.$fullkey != 'YES'}
+		{if $smarty.section.row.index == 0 && $lang.db.$itm != ''}
+			{assign var="cell" value="`$lang.db.$itm`"}
+			{assign var="cellclass" value="table-node-key2"}
+		{elseif $smarty.section.row.index != 0 && $key|truncate:5:"":true == 'date_'}
+			{assign var="cell" value=$itm|date_format:"%x"}
+			{assign var="cellclass" value="table-node-value2"}
+		{elseif $extra_data.TRANSLATE.$fullkey == 'YES'}
+			{assign var="cellclass" value="table-node-value2"}
+			{assign var="lang_cell" value=$fullkey|cat:"-"|cat:$itm}
+			{assign var="cell" value=$lang.db.$lang_cell}
+			{assign var="cellclass" value="table-node-value2"}
+		{else}
+			{assign var="cellclass" value="table-node-value2"}
+			{assign var="cell" value=$itm}
+		{/if}
+		
+		<td class="{$cellclass}">{$cell}</td>
+		{/if}
+		{/foreach}
+	</tr>
 	{/if}
-	
-	<td class="{$cellclass}">{$cell}</td>
-	{/if}
-	{/foreach}
-</tr>
 {/section}
-{if $close == true}</table></td></tr></table>{/if}
+{$close2}{$close1}
+{assign var=close1 value=""}
+{assign var=close2 value=""}
 </table>
