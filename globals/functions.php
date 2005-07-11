@@ -36,100 +36,6 @@ function pvar($var) {
 	}
 }
 
-function valid_username($username) {
-	if ($username == '') return FALSE;
-	if (strlen($username) > 20) return FALSE;
-	$allowchars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
-	for ($i=0; $i<strlen($username); $i++) {
-		if (strstr($allowchars, substr($username, $i, 1)) === FALSE) return FALSE;
-	}
-	return TRUE;
-}
-
-function greeklish($greek) {
-	$greek = strtoupper($greek);
-	$replacements = array(
-		"A" => "A",
-		"B" => "B",
-		"C" => "C",
-		"D" => "D",
-		"E" => "E",
-		"F" => "F",
-		"G" => "G",
-		"H" => "H",
-		"I" => "I",
-		"J" => "J",
-		"K" => "K",
-		"L" => "L",
-		"M" => "M",
-		"N" => "N",
-		"O" => "O",
-		"P" => "P",
-		"Q" => "Q",
-		"R" => "R",
-		"S" => "S",
-		"T" => "T",
-		"U" => "U",
-		"V" => "V",
-		"W" => "W",
-		"X" => "X",
-		"Y" => "Y",
-		"Z" => "Z",
-		"0" => "0",
-		"1" => "1",
-		"2" => "2",
-		"3" => "3",
-		"4" => "4",
-		"5" => "5",
-		"6" => "6",
-		"7" => "7",
-		"8" => "8",
-		"9" => "9",
-		"_" => "_",
-		"-" => "-",
-		"." => ".",
-		"¶" => "A",
-		"¸" => "E",
-		"¹" => "H",
-		"º" => "I",
-		"¼" => "O",
-		"¾" => "Y",
-		"¿" => "W",
-		"Á" => "A",
-		"Â" => "B",
-		"Ã" => "G",
-		"Ä" => "D",
-		"Å" => "E",
-		"Æ" => "Z",
-		"Ç" => "H",
-		"È" => "TH",
-		"É" => "I",
-		"Ê" => "K",
-		"Ë" => "L",
-		"Ì" => "M",
-		"Í" => "N",
-		"Î" => "KS",
-		"Ï" => "O",
-		"Ð" => "P",
-		"Ñ" => "R",
-		"Ó" => "S",
-		"Ô" => "T",
-		"Õ" => "Y",
-		"Ö" => "F",
-		"×" => "X",
-		"Ø" => "PS",
-		"Ù" => "W",
-		" " => "_"
-	);
-	for ($i=0; $i<strlen($greek); $i++) {
-		if ($replacements[strtoupper(substr($greek, $i, 1))] != '') {
-			$english .= $replacements[strtoupper(substr($greek, $i, 1))];
-		}
-	}
-	if ($english == '') $english = rand(100000, 999999);
-	return strtolower($english);
-}
-
 function redirect($url, $sec=0, $exit=TRUE) {
 	global $main;
 	$sec = (integer)($sec);
@@ -243,10 +149,6 @@ function lang($arg) {
 		$mes = str_replace('%'.($i).'%', $par, $mes);
 	}
 	return $mes;
-}
-
-function valid_email($email) {
-	return eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@([0-9a-z](-?[0-9a-z])*\.)+[a-z]{2}([zmuvtg]|fo|me)?$",$email);
 }
 
 function template($assign_array, $file) {
