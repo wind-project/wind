@@ -37,7 +37,10 @@ class users {
 		$form_user = new form(array('FORM_NAME' => 'form_user'));
 		$form_user->db_data('users.username, users.password, users.surname, users.name, users.email, users.phone, users.info'.($main->userdata->privileges['admin'] === TRUE?', rights.type, users.status':''));
 		$form_user->db_data_values("users", "id", get('user'));
+		// Hide password...
 		$form_user->data[1]['value'] = '';
+		// ...and show it as required
+		$form_user->data[1]['Null'] = '';
 		array_splice($form_user->data, 2, 0, array($form_user->data[1]));
 		$form_user->data[2]['Field'] .= '_c';
 		$form_user->data[2]['fullField'] .= '_c';
