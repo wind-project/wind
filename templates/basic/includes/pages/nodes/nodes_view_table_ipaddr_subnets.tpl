@@ -26,7 +26,11 @@
 	{assign var=close value=true}
 	<tr><td>
 	<table class="table-form">
-	<tr><td class="table-search-menu-text"><img src="{$img_dir}admin.gif" /> {assign var=t value="subnets__type-"|cat:$data[row].type}{$lang.db.$t} ({$data[row].ip_start} - {$data[row].ip_end})</td></tr>
+	<tr><td class="table-search-menu-text">
+		<img src="{$img_dir}admin.gif" />
+		{assign var=t value="subnets__type-"|cat:$data[row].type}
+		{$lang.db.$t} {if $data[row].nodes__name != ''}[{$data[row].nodes__name} (#{$data[row].nodes__id})] {/if}({$data[row].ip_start} - {$data[row].ip_end})
+	</td></tr>
 	<tr><td><table class="table-form">
 	<tr>
 	{foreach key=key item=itm from=$data.0}

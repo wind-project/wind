@@ -60,6 +60,16 @@ class mynodes_subnet {
 		$ret = TRUE;
 		$_POST['subnets__ip_start'] = ip2long($_POST['subnets__ip_start']);
 		$_POST['subnets__ip_end'] = ip2long($_POST['subnets__ip_end']);
+		if ($_POST['subnets__type'] == 'link') {
+			if ($db->cnt(
+				'',
+				'ip_ranges',
+				"node_id = '".get('node')."' AND ip_ranges.ip_start <= '".$_POST['subnets__ip_start']."' AND ip_ranges.ip_end >= '".$_POST['subnets__ip_start']."' " .
+						"AND ip_ranges.ip_start <= '".$_POST['subnets__ip_end']."' AND ip_ranges.ip_end >= '".$_POST['subnets__ip_end']."'") == 0) {
+					$main->message->set_fromlang('error', 'subnet_backbone_no_ip_range');
+					return;
+				}
+		}
 		$ret = $form_subnet->db_set(array('date_in' => date_now(), 'node_id' => get('node')),
 								"subnets", "id", $subnet);
 		

@@ -187,47 +187,17 @@ class nodes_view {
 		return $table_links;
 	}
 
-	function table_subnets() {
-		global $construct, $db;
-		$table_subnets = new table(array('TABLE_NAME' => 'table_subnets', 'FORM_NAME' => 'table_subnets'));
-		$table_subnets->db_data(
-			'subnets.id, subnets.ip_start, subnets.ip_end, subnets.type, n_l.name AS link_node_name, n_l.id AS link_node_id, n_c.name AS client_node_name, n_c.id AS client_node_id',
-			'subnets
-			LEFT JOIN links ON links.id = subnets.link_id
-			LEFT JOIN nodes AS n_l ON n_l.id = links.peer_node_id
-			LEFT JOIN nodes AS n_c ON n_c.id = client_node_id',
-			'subnets.node_id = '.get('node'));
-		foreach( (array) $table_subnets->data as $key => $value) {
-			if ($key != 0) {
-				$table_subnets->data[$key]['ip_start'] = long2ip($table_subnets->data[$key]['ip_start']);
-				$table_subnets->data[$key]['ip_end'] = long2ip($table_subnets->data[$key]['ip_end']);
-			}
-		}
-		return $table_subnets;
-	}
-
-	function table_ipaddr() {
-		global $construct, $db;
-		$table_ipaddr = new table(array('TABLE_NAME' => 'table_ipaddr', 'FORM_NAME' => 'table_ipaddr'));
-		$table_ipaddr->db_data(
-			'ip_addresses.id, ip_addresses.date_in, ip_addresses.ip, ip_addresses.type, ip_addresses.always_on, ip_addresses.info',
-			'ip_addresses',
-			'ip_addresses.node_id = '.get('node'));
-		foreach( (array) $table_ipaddr->data as $key => $value) {
-			if ($key != 0) {
-				$table_ipaddr->data[$key]['ip'] = long2ip($table_ipaddr->data[$key]['ip']);
-			}
-		}
-		return $table_ipaddr;
-	}
-
 	function table_ipaddr_subnets() {
 		global $construct, $db;
 		$table_ipaddr_subnets = new table(array('TABLE_NAME' => 'table_ipaddr_subnets'));
 		$table_ipaddr_subnets->db_data(
-			'ip_addresses.date_in, ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type AS ip_addresses__type, ip_addresses.always_on, ip_addresses.info, subnets.ip_start, subnets.ip_end, subnets.type',
-			'ip_addresses, subnets',
-			"ip_addresses.node_id = '".get('node')."' AND subnets.node_id = '".get('node')."' AND subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip",
+			'ip_addresses.date_in, ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type AS ip_addresses__type, ip_addresses.always_on, ip_addresses.info, subnets.ip_start, subnets.ip_end, subnets.type, nodes.name AS nodes__name, nodes.id AS nodes__id',
+			'subnets ' .
+				'LEFT JOIN ip_addresses ON subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip ' .
+				'LEFT JOIN links ON links.id = subnets.link_id ' .
+				"LEFT JOIN nodes ON (links.node_id = '".get('node')."' AND links.peer_node_id = nodes.id) OR (links.peer_node_id = '".get('node')."' AND links.node_id = nodes.id) OR subnets.client_node_id = nodes.id",
+			"ip_addresses.node_id = '".get('node')."' AND subnets.node_id = '".get('node')."' OR " .
+				"(links.peer_node_id = '".get('node')."' AND ip_addresses.node_id = links.node_id AND subnets.node_id = links.node_id)",
 			"",
 			"subnets.type ASC, subnets.ip_start ASC");
 		foreach( (array) $table_ipaddr_subnets->data as $key => $value) {
@@ -238,7 +208,7 @@ class nodes_view {
 			}
 		}
 		$table_ipaddr_subnets->db_data_translate('ip_addresses__type', 'ip_addresses__always_on', 'subnets__type');
-		$table_ipaddr_subnets->db_data_hide('subnets__ip_start', 'subnets__ip_end', 'subnets__type');
+		$table_ipaddr_subnets->db_data_hide('subnets__ip_start', 'subnets__ip_end', 'subnets__type', 'nodes__name', 'nodes__id');
 		return $table_ipaddr_subnets;
 	}
 		
@@ -264,8 +234,6 @@ class nodes_view {
 			if ($value['type'] == 'ap') $this->tpl['table_links_ap'][$value['id']] = $construct->table($this->table_links_ap($value['id']), __FILE__);
 		}
 
-		$this->tpl['table_subnets'] = $construct->table($this->table_subnets(), __FILE__);
-		$this->tpl['table_ipaddr'] = $construct->table($this->table_ipaddr(), __FILE__);
 		$this->tpl['table_ipaddr_subnets'] = $construct->table($this->table_ipaddr_subnets(), __FILE__);
 		
 		$t = $db->get('id, date_in, view_point, info', 'photos', "node_id = '".get('node')."'");
