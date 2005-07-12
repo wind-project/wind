@@ -33,7 +33,7 @@
     
     <td class="table-middle-right-td">
 	<table border="0" cellpadding="0" cellspacing="0" class="table-middle-right">
-  {if $menu != '' && $form_login != ''}
+  {if $menu != '' && $form_login != '' && $logged != TRUE}
 		<tr><td class="quick-login">
 		{$form_login}
 		</td></tr>
@@ -42,7 +42,11 @@
     {if $message==''}
 		{$center}
     {else}
+    	<table width="100%" border="0" cellpadding="50" cellspacing="0">
+    	<tr><td align="center">
     	{$message}
+    	</td></tr>
+    	</table>
     {/if}
 	</td></tr>
 	</table>
