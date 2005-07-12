@@ -91,7 +91,12 @@ class mynodes_range {
 	}
 
 	function output_onpost_form_getrange() {
-		global $main;
+		global $main, $db;
+		$t = $db->get('area_id', 'nodes', "id = '".get('node')."'");
+		if ($t[0]['area_id'] == '') {
+			$main->message->set_fromlang('error', 'nodes_no_area_id');
+			return;
+		}
 		$form_getrange = $this->form_getrange();
 		$nextr = $this->calculate_next_range();
 		$status = "pending";
