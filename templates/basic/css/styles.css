@@ -516,9 +516,10 @@ border:1px solid #000000;
 }
 
 .fld-form-input-pickup {
-font-size:12px;
+font-size:14px;
 width:100%;
 border:1px dashed #000000;
+background-color:white;
 }
 
 .fld-form-submit {

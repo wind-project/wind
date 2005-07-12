@@ -31,6 +31,7 @@
 <td nowrap="nowrap" class="quick-login-field">{$lang.db.$fullField}:
 <input name="{$fullField}" type="password" class="fld-quick-login" />
 </td>
+<td nowrap="nowrap" class="quick-login-field"><input type="checkbox" name="save_login" value="Y" /></td>
 <td width="373" class="quick-login-submit">
 <input type="image" src="templates/basic/images/submit1.png" /></td>
 </tr>

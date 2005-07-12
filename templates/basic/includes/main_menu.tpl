@@ -39,9 +39,6 @@
 	{else}
 	
 			  <tr bgcolor="#FFFFFF">
-				<td class="table-small-menu-text">{$lang.login}</td>
-			  </tr>
-			  <tr bgcolor="#FFFFFF">
 				<td class="table-small-menu-text"><a href="{$link_register}" class="menu-link">{$lang.register}</a></td>
 			  </tr>
 			  <tr bgcolor="#FFFFFF">

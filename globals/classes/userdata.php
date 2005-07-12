@@ -47,7 +47,7 @@ class userdata {
 				$p_md5 = $_COOKIE['userdata'][$this->password_key];
 				if ($this->check_login($uid, $p_md5, TRUE)) {
 					$this->logged = TRUE;
-					$this->user_id = $uid;
+					$this->user = $uid;
 					$_SESSION['userdata'][$this->primary_key] = $uid;
 					$this->reset_visit();
 					$this->refresh_session();

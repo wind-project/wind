@@ -83,7 +83,7 @@ class menu {
 
 	function output_onpost_form_login() {
 		global $main;
-		if ($main->userdata->login($_POST['users__username'], $_POST['users__password'])) {
+		if ($main->userdata->login($_POST['users__username'], $_POST['users__password'], ($_POST['save_login']=='Y'?TRUE:FALSE))) {
 			if ($main->userdata->info['status'] == 'pending') {
 				$main->message->set_fromlang('info', 'activation_required');
 				$main->userdata->logout();
