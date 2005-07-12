@@ -94,7 +94,8 @@ class mysql {
 			$key_t = explode(".", $key);
 			$key_t = $key_t[count($key_t)-1];
 			if ($value === '' && $nulls[$key_t] != 'YES') {
-				$not_null_keys .= ($not_null_keys==''?'':', ').$key;
+				if (!isset($not_null_keys)) $not_null_keys = array();
+				array_push($not_null_keys, $table.".".$key);
 			}
 			$keys .= $key.", ";
 			$value = str_replace("'", "\\'", $value);
@@ -127,7 +128,8 @@ class mysql {
 			$key_t = explode(".", $key);
 			$key_t = $key_t[count($key_t)-1];
 			if ($value === '' && $nulls[$key_t] != 'YES') {
-				$not_null_keys .= ($not_null_keys==''?'':', ').translate($table.'__'.$key, 'db');
+				if (!isset($not_null_keys)) $not_null_keys = array();
+				array_push($not_null_keys, $table.".".$key);
 			}
 			$value = str_replace("'", "\\'", $value);
 			$value = str_replace("\\\\'", "\\'", $value);
@@ -177,12 +179,29 @@ class mysql {
 	function error() {
 		$this->error = mysql_errno();
 		$this->error_report = mysql_error();
-		if ($this->error > 0) $this->output_error();
+		if ($this->error == 1062) {
+			$this->output_error_duplicate_entry();
+		} elseif ($this->error > 0) {			
+			$this->output_error();
+		}
 	}
 	
+	function output_error_duplicate_entry() {
+		global $main, $lang;
+		//$t = explode(" ", $this->error_report);
+		//$duplicate_key = $t[count($t)-1];
+		ereg(".*'(.*)'.*", $this->error_report, $ereg);
+		$duplicate_entries = $ereg[1];
+		$main->message->set($lang['message']['error']['duplicate_entry']['title'], str_replace("##duplicate_entries##", $duplicate_entries, $lang['message']['error']['duplicate_entry']['body']));
+	}
+
 	function output_error_fields_required($fields_required) {
 		global $main, $lang;
-		$main->message->set($lang['message']['error']['fields_required']['title'], str_replace("##fields_required##", $fields_required, $lang['message']['error']['fields_required']['body']));
+		foreach ($fields_required as $key => $value) {
+			if ($fields_required_text != '') $fields_required_text .= ", "; 
+			$fields_required_text .= $lang['db'][str_replace(".", "__", $value)];
+		}
+		$main->message->set($lang['message']['error']['fields_required']['title'], str_replace("##fields_required##", $fields_required_text, $lang['message']['error']['fields_required']['body']));
 	}
 	
 	function output_error($num='', $report='') {

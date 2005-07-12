@@ -36,6 +36,7 @@ class mynodes_link {
 		$form_link->db_data_pickup('links.peer_node_id', "nodes", $db->get("links.peer_node_id AS value, CONCAT(nodes.name, ' (#', nodes.id, ')') AS output", "links, nodes", "links.peer_node_id = nodes.id AND links.id = '".get("link")."'"));
 		$form_link->db_data_pickup('links.peer_ap_id', "links_ap", $db->get("l1.peer_ap_id AS value, l2.ssid AS output", "links AS l1, links AS l2", "l1.peer_ap_id = l2.id AND l1.id = '".get("link")."'"));
 		$form_link->data[1]['Null'] = '';
+		$form_link->data[2]['Null'] = '';
 		return $form_link;
 	}
 	
@@ -55,10 +56,18 @@ class mynodes_link {
 		$f = array("date_in" => date_now(), "node_id" => get('node'));
 		switch ($_POST['links__type']) {
 			case 'p2p':
+				if ($_POST['links__peer_node_id'] == '') {
+					$db->output_error_fields_required(array('links__peer_node_id'));
+					return;
+				}
 				$f['peer_ap_id'] = '';
 				$f['peer_node_id'] = $_POST['links__peer_node_id'];
 				break;
 			case 'client':
+				if ($_POST['links__peer_ap_id'] == '') {
+					$db->output_error_fields_required(array('links__peer_ap_id'));
+					return;
+				}
 				$f['peer_ap_id'] = $_POST['links__peer_ap_id'];
 				$f['peer_node_id'] = '';
 				break;

@@ -361,7 +361,11 @@ $lang = array(
 			),
 			'fields_required' => array(
 				'title' => "Υποχρεωτικά πεδία",
-				'body' => "Δεν δώσατε τα ακόλουθα πεδία που είναι υποχρεωτικά: ##fields_required##"
+				'body' => "Δεν δώσατε τα ακόλουθα πεδία που είναι υποχρεωτικά:\n##fields_required##"
+			),
+			'duplicate_entry' => array(
+				'title' => "Η καταχώρηση υπάρχει ήδη",
+				'body' => "Το ακόλουθα στοιχεία της καταχώρησής σας υπάρχουν ήδη:\n##duplicate_entries##"
 			),
 			'upload_file_failed' => array(
 				'title' => "Εισαγωγή αρχείου",
