@@ -54,11 +54,11 @@ class nodes_search {
 			LEFT JOIN links AS l2 ON l1.type != "ap"
 			LEFT JOIN links AS cl ON l1.type = "ap" AND cl.status = "active" AND cl.type = "client" AND cl.peer_ap_id = l1.id
 			',
-			"l1.type IS NULL OR (" .
+			"(l1.type IS NULL OR (" .
 			"(l1.type = 'p2p' AND l2.type = 'p2p' AND l1.peer_node_id = l2.node_id AND l2.peer_node_id = l1.node_id) OR " .
 			"(l1.type = 'ap') OR " .
 			"(l1.type = 'client' AND l2.type = 'ap' AND l1.peer_ap_id = l2.id)) AND " .
-			"(l1.status = 'active' AND (l2.status = 'active' OR l1.type = 'ap'))".
+			"(l1.status = 'active' AND (l2.status = 'active' OR l1.type = 'ap')))".
 			($where!=''?' AND ('.$where.')':""),
 			'nodes.id'.
 			($having!=''?' HAVING ('.$having.')':""));
