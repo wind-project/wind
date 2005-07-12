@@ -9,15 +9,9 @@
 				list.options[x].selected = "true"
 			}
 		} else {
-			if (list.options.length == 2) {
-				num = 1
-			} else {
-				num = 0
-			}
-			list.options[num] = null
-			var opt = new Option(text, value)
-			list.options[num] = opt
-			list.selectedIndex = num
+			list.value = value
+			l = document.getElementsByName(list.name + '_output')
+			l[0].value = text
 			mywindow.close()
 		}
 	}

@@ -28,32 +28,32 @@
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <table cellpadding="4" cellspacing="0" class="plot-link-table">
 <tr>
-<td width="33%" align="left">
-	<select name="a_node">
-		<option value="{$a_node}" selected="selected">{$a_node_output}</option>
-	</select>
-	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: open ('?page=pickup&subpage=nodes&object=form_nodes_plot_link.a_node', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"}
+<td width="25%" align="left">
+	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('?page=pickup&subpage=nodes&object=form_nodes_plot_link.a_node', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+	<br />
+	<input type="hidden" name="a_node" value="{$a_node}" />
+	<input class="fld-form-input-pickup" type="text" disabled="disabled" name="a_node_output" value="{$a_node_output}" />
 </td>
-<td width="34%" align="center"><input class="fld-form-submit" type="submit" name="submit" value="OK" /></td>
-<td width="33%" align="right">
-	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: open ('?page=pickup&subpage=nodes&object=form_nodes_plot_link.b_node', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); return false;"}
-	<select name="b_node">
-		<option value="{$b_node}" selected="selected">{$b_node_output}</option>
-	</select>
+<td width="50%" align="center"><input class="fld-form-submit" type="submit" name="submit" value="OK" /></td>
+<td width="25%" align="right">
+	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('?page=pickup&subpage=nodes&object=form_nodes_plot_link.b_node', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+	<br />
+	<input type="hidden" name="b_node" value="{$b_node}" />
+	<input style="text-align:right;" class="fld-form-input-pickup" type="text" disabled="disabled" name="b_node_output" value="{$b_node_output}" />
 </td>
 </tr>
 {if $a_node != '' && $b_node != ''}
 <tr>
-<td width="33%" align="left">
+<td align="left">
 {$lang.azimuth}: {$a_node_azimuth|round:2}&#176;<br />
 {$lang.elevation}: {$a_node_elevation|round:0} m<br />
 {$lang.tilt}: {$a_node_tilt|round:2}&#176;
 </td>
-<td width="34%" align="center">
+<td align="center">
 {$lang.distance}: {$distance|round:3} km<br />
 {$lang.fsl}: {$fsl|round:2} dBm
 </td>
-<td width="33%" align="right">
+<td align="right">
 {$lang.azimuth}: {$b_node_azimuth|round:2}&#176;<br />
 {$lang.elevation}: {$b_node_elevation|round:0} m<br />
 {$lang.tilt}: {$b_node_tilt|round:2}&#176;

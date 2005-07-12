@@ -67,11 +67,10 @@
 	{elseif $data[d].Type == 'pickup'}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field" >
-			<select class="fld-form-input" name="{$data[d].fullField}">
-				{if $data[d].Null == 'YES'}<option value=""></option>{/if}
-				<option value="{$data[d].Type_Pickup.value}" selected="selected">{$data[d].Type_Pickup.output}</option>
-			</select>
+			<input type="hidden" name="{$data[d].fullField}" value="{$data[d].Type_Pickup.value}" />
+			<input type="text" disabled="disabled" class="fld-form-input-pickup" name="{$data[d].fullField}_output" value="{$data[d].Type_Pickup.output}" />
 			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[d].Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			{if $data[d].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[d].fullField`.value = ''; `$data[d].fullField`_output.innerText = ''; return false;"}{/if}
 		</td>	
 	{elseif $data[d].Type == 'pickup_multi'}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>

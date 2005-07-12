@@ -89,21 +89,19 @@ function type_changed() {
 		<tr class="table-form-row2">
 		<td class="table-form-title">{$lang.db[$data.1.fullField]}{if $data[1].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field">
-			<select class="fld-form-input" name="{$data[1].fullField}">
-				{if $data[1].Null == 'YES'}<option value=""></option>{/if}
-				<option value="{$data[1].Type_Pickup.value}" selected="selected">{$data[1].Type_Pickup.output}</option>
-			</select>
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			<input type="hidden" name="{$data[1].fullField}" value="{$data[1].Type_Pickup.value}" />
+			<input type="text" disabled="disabled" class="fld-form-input-pickup" name="{$data[1].fullField}_output" value="{$data[1].Type_Pickup.output}" />
+			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			{if $data[1].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[1].fullField`.value = ''; `$data[1].fullField`_output.innerText = ''; return false;"}{/if}
 		</td>	
 		</tr>	
 		<tr class="table-form-row2">
 		<td class="table-form-title">{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field">
-			<select class="fld-form-input" name="{$data[2].fullField}">
-				{if $data[2].Null == 'YES'}<option value=""></option>{/if}
-				<option value="{$data[2].Type_Pickup.value}" selected="selected">{$data[2].Type_Pickup.output}</option>
-			</select>
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			<input type="hidden" name="{$data[2].fullField}" value="{$data[2].Type_Pickup.value}" />
+			<input type="text" disabled="disabled" class="fld-form-input-pickup" name="{$data[2].fullField}_output" value="{$data[2].Type_Pickup.output}" />
+			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			{if $data[2].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[2].fullField`.value = ''; `$data[2].fullField`_output.innerText = ''; return false;"}{/if}
 		</td>	
 		</tr>	
 		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.3.fullField]}{if $data[3].Null != 'YES'}*{/if}:</td>
