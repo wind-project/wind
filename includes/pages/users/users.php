@@ -40,7 +40,7 @@ class users {
 		// Hide password...
 		$form_user->data[1]['value'] = '';
 		// ...and show it as required
-		$form_user->data[1]['Null'] = '';
+		if (get('user') == 'add') $form_user->data[1]['Null'] = '';
 		array_splice($form_user->data, 2, 0, array($form_user->data[1]));
 		$form_user->data[2]['Field'] .= '_c';
 		$form_user->data[2]['fullField'] .= '_c';
