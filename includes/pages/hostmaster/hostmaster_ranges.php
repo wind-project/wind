@@ -31,7 +31,7 @@ class hostmaster_ranges {
 		global $construct, $db;
 		$form_search_ranges = new form(array('FORM_NAME' => 'form_search_ranges'));
 		$form_search_ranges->data = array("0" => array("Field" => "ip", "fullField" => "ip"));
-		$form_search_ranges->db_data('ip_ranges.status, ip_ranges.delete_req');
+		$form_search_ranges->db_data('ip_ranges.status, ip_ranges.delete_req, nodes.id, nodes.name');
 		$form_search_ranges->db_data_search();
 		return $form_search_ranges;
 	}
@@ -39,7 +39,7 @@ class hostmaster_ranges {
 	function table_ip_ranges() {
 		global $construct, $db;
 		$form_search_ranges = $this->form_search_ranges();
-		$where = $form_search_ranges->db_data_where(array('ip' => 'exclude'));
+		$where = $form_search_ranges->db_data_where(array('ip' => 'exclude', 'nodes__name' => 'starts_with'));
 		$table_ip_ranges = new table(array('TABLE_NAME' => 'table_ip_ranges', 'FORM_NAME' => 'table_ip_ranges'));
 		$s_ip = correct_ip($form_search_ranges->data[0]['value']);
 		$where = ($where !=''?"(".$where.") AND ":"").
@@ -47,7 +47,8 @@ class hostmaster_ranges {
 		if ($where!='') $where = substr($where, 0, -5);
 		$table_ip_ranges->db_data(
 			'ip_ranges.id, "" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, ip_ranges.delete_req',
-			'ip_ranges',
+			'ip_ranges ' .
+			'LEFT JOIN nodes ON ip_ranges.node_id = nodes.id',
 			$where);
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
 			if ($key != 0) {

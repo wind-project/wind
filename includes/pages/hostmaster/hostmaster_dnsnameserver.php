@@ -36,10 +36,40 @@ class hostmaster_dnsnameserver {
 		return $form_nameserver;
 	}
 	
+	function table_node_info() {
+		global $db;
+		$table_node_info = new table(array('TABLE_NAME' => 'table_node_info'));
+		$table_node_info->db_data(
+			'nodes.name AS nodes__name, nodes.id, nodes.date_in, nodes.info, areas.name AS areas__name, regions.name AS regions__name',
+			'dns_nameservers ' .
+			'LEFT JOIN nodes ON dns_nameservers.node_id = nodes.id
+			LEFT JOIN areas ON nodes.area_id = areas.id
+			LEFT JOIN regions ON areas.region_id = regions.id',
+			"dns_nameservers.id = '".get('nameserver')."'");
+		return $table_node_info;
+	}
+
+	function table_user_info() {
+		global $db;
+		$table_user_info = new table(array('TABLE_NAME' => 'table_user_info'));
+		$table_user_info->db_data(
+			'users_nodes.owner, users.username, users.surname, users.name, users.name, users.email, users.phone, users.info',
+			'dns_nameservers ' .
+			'LEFT JOIN users_nodes ON users_nodes.node_id = dns_nameservers.node_id 
+			LEFT JOIN users ON users_nodes.user_id = users.id',
+			"dns_nameservers.id = '".get('nameserver')."'",
+			'',
+			'users_nodes.owner ASC');
+		$table_user_info->db_data_translate('users_nodes__owner');
+		return $table_user_info;
+	}
+
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
 		$this->tpl['form_nameserver'] = $construct->form($this->form_nameserver(), __FILE__);
+		$this->tpl['table_node_info'] = $construct->table($this->table_node_info(), __FILE__);
+		$this->tpl['table_user_info'] = $construct->table($this->table_user_info(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 

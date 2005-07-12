@@ -22,7 +22,17 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.ip_range_edit`" content=$form_range}
+{include file=generic/title1.tpl title="`$lang.node_info`" content=$table_node_info}
+</td>
+</tr>
+<tr>
+<td class="table-page-pad">
+{include file=generic/title1.tpl title="`$lang.users_info`" content=$table_user_info}
+</td>
+</tr>
+<tr>
+<td class="table-page-pad">
+{include file=generic/title1.tpl title="`$lang.ip_range_edit`" content=$form_range}
 </td>
 </tr>
 </table>

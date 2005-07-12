@@ -43,6 +43,7 @@ $lang = array(
 	'all_zones' => "DNS Zones",
 	'all_ranges' => "Διευθυνσιοδότηση",
 	'user_info' => "Στοιχεία χρήστη",
+	'users_info' => "Στοιχεία χρήστών",
 	'username' => "Όνομα χρήστη",
 	'registered_since' => "Εγγραφή",
 	'name' => "Όνομα",
@@ -157,7 +158,10 @@ $lang = array(
 		'nodes__elevation' => 'Υψόμετρο',
 		'nodes__info' => 'Πληροφορίες',
 		'nodes__name_ns' => 'Πρόθεμα nameserver',
-
+		
+		'users_nodes__owner' => 'Δικαίωμα',
+		'users_nodes__owner-Y' => 'Διαχειριστής',
+		'users_nodes__owner-N' => 'Συνδιαχειριστής',
 		'users_nodes__user_id' => 'Συνδιαχειριστές',
 		'user_id_owner' => 'Διαχειριστής',
 

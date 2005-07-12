@@ -29,7 +29,7 @@ class hostmaster_dnszones {
 	
 	function form_search_dns() {
 		$form_search_dns = new form(array('FORM_NAME' => 'form_search_dns'));
-		$form_search_dns->db_data('dns_zones.type, dns_zones.name, dns_zones.status, dns_zones.delete_req');
+		$form_search_dns->db_data('dns_zones.type, dns_zones.name, dns_zones.status, dns_zones.delete_req, nodes.id, nodes.name');
 		$form_search_dns->db_data_search();
 		return $form_search_dns;
 	}
@@ -37,12 +37,13 @@ class hostmaster_dnszones {
 	function table_dns() {
 		global $construct, $db, $vars;
 		$form_search_dns = $this->form_search_dns();
-		$where = $form_search_dns->db_data_where(array("dns_zones__name" => "starts_with"));
+		$where = $form_search_dns->db_data_where(array("dns_zones__name" => "starts_with", 'nodes__name' => 'starts_with'));
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 
 		$table_dns->db_data(
 			'dns_zones.id, dns_zones.name, dns_zones.type, dns_zones.date_in, dns_zones.status, dns_zones.delete_req',
-			'dns_zones',
+			'dns_zones ' .
+			'LEFT JOIN nodes ON dns_zones.node_id = nodes.id',
 			$where);
 		$table_dns->db_data_multichoice('dns_zones', 'id');
 		for($i=1;$i<count($table_dns->data);$i++) {
