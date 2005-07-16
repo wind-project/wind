@@ -19,7 +19,8 @@
  *
  *}
 {if $form_restore != ''}
-{include file=generic/page-title.tpl title="`$lang.password_recover`"}
+{include assign=help file=generic/help.tpl help=users_restore_password_recover}
+{include file=generic/page-title.tpl title="`$lang.password_recover`" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
@@ -28,7 +29,8 @@
 </tr>
 </table>
 {elseif $form_change_password != ''}
-{include file=generic/page-title.tpl title="`$lang.password_change`"}
+{include assign=help file=generic/help.tpl help=users_restore_password_change}
+{include file=generic/page-title.tpl title="`$lang.password_change`" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">

@@ -19,12 +19,14 @@
  *
  *}
 {if $node_method == 'add'}
+{include assign=help file=generic/help.tpl help=mynodes_add}
 {assign var=t value="`$lang.node_add`"}
 {else}
+{include assign=help file=generic/help.tpl help=mynodes}
 {assign var=t value="`$lang.node` $node_name (#$node_id)"}
 {include assign="t1" file="generic/link.tpl" link=$link_node_delete content="`$lang.node_delete`" confirm=TRUE}
 {/if}
-{include file=generic/page-title.tpl title="$t"}
+{include file=generic/page-title.tpl title="$t" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
