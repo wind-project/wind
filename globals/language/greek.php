@@ -132,6 +132,8 @@ $lang = array(
 	'compare_starts_with' => "Ξεκινάει από",
 	'compare_ends_with' => "Τελειώνει σε",
 	'compare_contains' => "Περιέχει",
+	'zone_forward' => "Forward DNS zone",
+	'zone_reverse' => "Reverse DNS zone",
 	'' => "",
 	
 
@@ -200,6 +202,8 @@ $lang = array(
 		'dns_zones__delete_req' => 'Αίτηση διαγραφής',
 		'dns_zones__delete_req-Y' => 'ΝΑΙ',
 		'dns_zones__delete_req-N' => 'ΟΧΙ',
+
+		'schema' => "Schema",
 
 		'dns_zones_nameservers__nameserver_id' => 'Υπεύθυνοι Nameservers (NS)',
 
@@ -386,6 +390,10 @@ $lang = array(
 			'subnet_backbone_no_ip_range' => array(
 				'title' => 'Προσθήκη υποδικτύου σε διασύνδεση',
 				'body' => 'Το υποδίκτυο που δώσατε δεν ανήκει σε κάποιο IP C-Class που σας έχει αποδωθεί. Αν το υποδίκτυο ανήκει στον κόμβο του άλλου άκρου της διασύνδεσης, θα πρέπει να το δηλώσει ο κάτοχος του IP C-Class.'
+			),
+			'schema_files_missing' => array(
+				'title' => 'Τα αρχεία schema δεν βρέθηκαν',
+				'body' => 'Επικοινωνήστε με τον διαχειριστή για τη διόρθωση του σφάλματος.'
 			),
 			'generic' => array(
 				'title' => "Γενικό σφάλμα",

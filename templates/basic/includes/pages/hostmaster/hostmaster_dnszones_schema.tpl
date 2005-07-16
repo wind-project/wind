@@ -18,17 +18,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-{include assign="t1" file="generic/link.tpl" link=$link_schema content="`$lang.db.schema`"}
-{include file=generic/page-title.tpl title="`$lang.hostmaster_panel` > `$lang.dns_zones` $t1"}
+{include file=generic/page-title.tpl title="`$lang.hostmaster_panel` > `$lang.dns_zones` (`$lang.db.schema`)"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
+{include file=generic/title1.tpl title="`$lang.zone_forward`" content=$form_zone_forward}
 </td>
 </tr>
 <tr>
 <td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.dns_zones_found`" content=$table_dns}
+{include file=generic/title1.tpl title="`$lang.zone_reverse`" content=$form_zone_reverse}
 </td>
 </tr>
 </table>

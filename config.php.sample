@@ -37,7 +37,9 @@ $config = array(
 	'dns' => array(
 		'root_zone' => 'domain',
 		'ns_zone' => 'ns.domain',
-		'reverse_zone' => 'in-addr.arpa'
+		'reverse_zone' => 'in-addr.arpa',
+		'forward_zone_schema' => $root_path.'poller/domain-forward.schema',
+		'reverse_zone_schema' => $root_path.'poller/domain-reverse.schema'
 		),
 	
 	'folders' => array(

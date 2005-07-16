@@ -64,6 +64,7 @@ class hostmaster_dnszones {
 		global $construct;
 		$this->tpl['form_search_dns'] = $construct->form($this->form_search_dns(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
+		$this->tpl['link_schema'] = makelink(array('page' => 'hostmaster', 'subpage' => 'dnszones_schema'));
 		return template($this->tpl, __FILE__);
 	}
 
