@@ -45,7 +45,9 @@ class pickup_dns_nameservers {
 		$table_nameservers->db_data(
 			'dns_nameservers.id, dns_nameservers.name, nodes.id AS nodes__id, nodes.name AS nodes__name, nodes.name_ns AS nodes__name_ns, areas.name AS areas__name',
 			'dns_nameservers, nodes, areas, regions',
-			'dns_nameservers.node_id = nodes.id AND nodes.area_id = areas.id AND areas.region_id = regions.id'.($where!=''?' AND ('.$where.')':""));
+			'dns_nameservers.node_id = nodes.id AND nodes.area_id = areas.id AND areas.region_id = regions.id'.($where!=''?' AND ('.$where.')':""),
+			"",
+			"nodes.id ASC");
 		$table_nameservers->db_data_search($form_search_nameservers);
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {

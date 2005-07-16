@@ -44,7 +44,9 @@ class hostmaster_dnszones {
 			'dns_zones.id, dns_zones.name, dns_zones.type, dns_zones.date_in, dns_zones.status, dns_zones.delete_req',
 			'dns_zones ' .
 			'LEFT JOIN nodes ON dns_zones.node_id = nodes.id',
-			$where);
+			$where,
+			"",
+			"dns_zones.date_in DESC, dns_zones.status ASC");
 		$table_dns->db_data_multichoice('dns_zones', 'id');
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {

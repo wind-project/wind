@@ -49,7 +49,9 @@ class hostmaster_ranges {
 			'ip_ranges.id, "" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, ip_ranges.delete_req',
 			'ip_ranges ' .
 			'LEFT JOIN nodes ON ip_ranges.node_id = nodes.id',
-			$where);
+			$where,
+			"",
+			"ip_ranges.date_in DESC, ip_ranges.status ASC");
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
 			if ($key != 0) {
 				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);

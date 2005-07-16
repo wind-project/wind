@@ -44,7 +44,8 @@ class admin_users {
 			'users.id, users.username, "" AS fullname, users.surname, users.name, users.email, users.phone',
 			'users LEFT JOIN rights ON users.id = rights.user_id',
 			$where,
-			'users.id');
+			'users.id',
+			'users.date_in DESC');
 		$table_users->db_data_search($form_search_users);
 		for($i=1;$i<count($table_users->data);$i++) {
 			if (isset($table_users->data[$i])) {

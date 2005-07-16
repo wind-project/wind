@@ -45,7 +45,9 @@ class admin_nodes {
 		$table_nodes->db_data(
 			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name',
 			'nodes, areas, regions',
-			'nodes.area_id = areas.id AND areas.region_id = regions.id'.($where!=''?' AND ('.$where.')':""));
+			'nodes.area_id = areas.id AND areas.region_id = regions.id'.($where!=''?' AND ('.$where.')':""),
+			"",
+			"nodes.id ASC");
 		$table_nodes->db_data_search($form_search_nodes);
 		for($i=1;$i<count($table_nodes->data);$i++) {
 			if (isset($table_nodes->data[$i])) {

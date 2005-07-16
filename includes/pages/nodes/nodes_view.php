@@ -72,7 +72,9 @@ class nodes_view {
 		$table_ip_ranges->db_data(
 			'ip_ranges.id, "" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, ip_ranges.delete_req',
 			'ip_ranges',
-			'ip_ranges.node_id = '.get('node'));
+			'ip_ranges.node_id = '.get('node'),
+			"",
+			"ip_ranges.date_in ASC");
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
 			if ($key != 0) {
 				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);
@@ -94,7 +96,9 @@ class nodes_view {
 		$table_dns->db_data(
 			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
 			'dns_zones',
-			'dns_zones.node_id = '.get('node'));
+			'dns_zones.node_id = '.get('node'),
+			"",
+			"dns_zones.type ASC, dns_zones.date_in ASC");
 		$table_dns->db_data_multichoice('dns_zones', 'id');
 		$table_dns->db_data_multichoice_checked('delete_req', 'Y');
 		for($i=1;$i<count($table_dns->data);$i++) {
@@ -116,7 +120,9 @@ class nodes_view {
 		$table_nameservers->db_data(
 			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns, dns_nameservers.delete_req',
 			'dns_nameservers, nodes',
-			"nodes.id = '".get('node')."' AND dns_nameservers.node_id = nodes.id");
+			"nodes.id = '".get('node')."' AND dns_nameservers.node_id = nodes.id",
+			"",
+			"dns_nameservers.name ASC");
 		foreach( (array) $table_nameservers->data as $key => $value) {
 			if ($key != 0) {
 				$table_nameservers->data[$key]['ip'] = long2ip($table_nameservers->data[$key]['ip']);
@@ -146,14 +152,18 @@ class nodes_view {
 			INNER JOIN links AS l2 ON l1.peer_node_id = l2.node_id
 			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
 			INNER JOIN nodes AS n2 ON l2.node_id = n2.id',
-			"l1.node_id = '".get('node')."' AND l2.peer_node_id = l1.node_id AND l1.type ='p2p' AND l2.type = 'p2p'");
+			"l1.node_id = '".get('node')."' AND l2.peer_node_id = l1.node_id AND l1.type ='p2p' AND l2.type = 'p2p'",
+			"",
+			"l1.date_in ASC");
 		$table_links->db_data(
 			'"" AS distance, n1.name AS node_name, n1.id AS node_id, n2.name AS peer_node_name, l1.type AS links__type, l1.info AS links__info, l2.node_id AS links__peer_node_id, l1.date_in AS links__date_in, l2.ssid AS links__ssid, l2.protocol AS links__protocol, l2.channel AS links__channel, l1.equipment AS links__equipment, l1.status AS l1_status, l2.status AS l2_status, "" AS links__status',
 			'links AS l1
 			INNER JOIN links AS l2 ON l1.peer_ap_id = l2.id
 			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
 			INNER JOIN nodes AS n2 ON l2.node_id = n2.id',
-			"l1.node_id = '".get('node')."' AND l1.type ='client' AND l2.type = 'ap'");
+			"l1.node_id = '".get('node')."' AND l1.type ='client' AND l2.type = 'ap'",
+			"",
+			"l1.date_in ASC");
 		foreach( (array) $table_links->data as $key => $value) {
 			$table_links->data[$key]['distance'] = $this->calculate_distance($table_links->data[$key]['node_id'], $table_links->data[$key]['links__peer_node_id']);
 			if ($key != 0) {
@@ -178,7 +188,9 @@ class nodes_view {
 			'links AS l2
 			LEFT JOIN links AS l1 ON l1.peer_ap_id = l2.id
 			LEFT JOIN nodes ON l1.node_id = nodes.id',
-			"(l1.type = 'client' OR l1.id IS NULL) AND l2.id = '".$id."'");
+			"(l1.type = 'client' OR l1.id IS NULL) AND l2.id = '".$id."'",
+			"",
+			"l1.date_in ASC");
 		foreach( (array) $table_links->data as $key => $value) {
 			if ($key != 0) {
 				$table_links->info['EDIT'][$key] = makelink(array('page' => 'nodes', 'node' => $table_links->data[$key]['c_node_id']));
@@ -199,7 +211,7 @@ class nodes_view {
 			"subnets.node_id = '".get('node')."' OR " .
 				"(links.peer_node_id = '".get('node')."' AND ip_addresses.node_id = links.node_id AND subnets.node_id = links.node_id)",
 			"",
-			"subnets.type ASC, links.type DESC, subnets.ip_start ASC");
+			"subnets.type ASC, links.type DESC, subnets.ip_start ASC, ip_addresses.ip");
 		foreach( (array) $table_ipaddr_subnets->data as $key => $value) {
 			if ($key != 0) {
 				$table_ipaddr_subnets->data[$key]['ip'] = long2ip($table_ipaddr_subnets->data[$key]['ip']);
@@ -208,7 +220,7 @@ class nodes_view {
 			}
 		}
 		$table_ipaddr_subnets->db_data_translate('ip_addresses__type', 'ip_addresses__always_on', 'subnets__type');
-		$table_ipaddr_subnets->db_data_hide('subnets__ip_start', 'subnets__ip_end', 'subnets__type', 'nodes__name', 'nodes__id');
+		$table_ipaddr_subnets->db_data_hide('subnets__ip_start', 'subnets__ip_end', 'subnets__type', 'nodes__name', 'nodes__id', 'links__type');
 		return $table_ipaddr_subnets;
 	}
 		

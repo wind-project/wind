@@ -53,7 +53,9 @@ class hostmaster_dnsnameservers {
 			'dns_nameservers.id, dns_nameservers.name, nodes.name_ns, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, dns_nameservers.delete_req',
 			'dns_nameservers
 			LEFT JOIN nodes ON dns_nameservers.node_id = nodes.id',
-			$where);
+			$where,
+			"",
+			"dns_nameservers.date_in DESC, dns_nameservers.status ASC");
 		$table_nameservers->db_data_search($form_search_nameservers);
 		
 		foreach( (array) $table_nameservers->data as $key => $value) {

@@ -49,7 +49,9 @@ class ranges_search {
 			'"" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, nodes.name AS nodes__name, nodes.id AS nodes__id',
 			'ip_ranges
 			LEFT JOIN nodes ON ip_ranges.node_id = nodes.id',
-			($where !=''?"(".$where.") AND ":"")."ip_ranges.status = 'active'");
+			($where !=''?"(".$where.") AND ":"")."ip_ranges.status = 'active'",
+			"",
+			"ip_ranges.ip_start ASC");
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
 			if ($key != 0) {
 				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);

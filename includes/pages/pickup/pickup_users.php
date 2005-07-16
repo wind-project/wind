@@ -44,7 +44,8 @@ class pickup_users {
 			'users.id, users.username',
 			'users',
 			$where,
-			'users.id');
+			'users.id',
+			"users.username ASC");
 		$table_users->db_data_search($form_search_users);
 		for($i=1;$i<count($table_users->data);$i++) {
 			if (isset($table_users->data[$i])) {

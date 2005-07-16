@@ -71,7 +71,9 @@ class mynodes {
 		$table_ip_ranges->db_data(
 			'ip_ranges.id, "" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, ip_ranges.delete_req',
 			'ip_ranges',
-			'ip_ranges.node_id = '.get('node'));
+			'ip_ranges.node_id = '.get('node'),
+			"",
+			"ip_ranges.date_in ASC");
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
 			if ($key != 0) {
 				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);
@@ -93,7 +95,9 @@ class mynodes {
 		$table_dns->db_data(
 			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
 			'dns_zones',
-			'dns_zones.node_id = '.get('node'));
+			'dns_zones.node_id = '.get('node'),
+			"",
+			"dns_zones.type ASC, dns_zones.date_in ASC");
 		$table_dns->db_data_multichoice('dns_zones', 'id');
 		$table_dns->db_data_multichoice_checked('delete_req', 'Y');
 		for($i=1;$i<count($table_dns->data);$i++) {
@@ -115,7 +119,9 @@ class mynodes {
 		$table_nameservers->db_data(
 			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns, dns_nameservers.delete_req',
 			'dns_nameservers, nodes',
-			"nodes.id = '".get('node')."' AND dns_nameservers.node_id = nodes.id");
+			"nodes.id = '".get('node')."' AND dns_nameservers.node_id = nodes.id",
+			"",
+			"dns_nameservers.name ASC");
 		foreach( (array) $table_nameservers->data as $key => $value) {
 			if ($key != 0) {
 				$table_nameservers->data[$key]['ip'] = long2ip($table_nameservers->data[$key]['ip']);
@@ -145,7 +151,9 @@ class mynodes {
 			LEFT JOIN nodes AS n_p ON links.peer_node_id = n_p.id
 			LEFT JOIN links AS l_c ON links.peer_ap_id = l_c.id
 			LEFT JOIN nodes AS n_c ON l_c.node_id = n_c.id',
-			"links.node_id = '".get('node')."'");
+			"links.node_id = '".get('node')."'",
+			"",
+			"links.type ASC, links.date_in ASC");
 		$table_links->db_data_multichoice('links', 'id');
 		for($i=1;$i<count($table_links->data);$i++) {
 			if (isset($table_links->data[$i])) {
@@ -173,7 +181,9 @@ class mynodes {
 			'links.id, links.type, "" AS peer, links.node_id, nodes.name, links.status',
 			'links
 			LEFT JOIN nodes ON links.node_id = nodes.id',
-			"links.type = 'client' AND links.peer_ap_id = '".$id."'");
+			"links.type = 'client' AND links.peer_ap_id = '".$id."'",
+			"",
+			"links.date_in ASC");
 		$table_links->db_data_multichoice('links', 'id');
 		for($i=1;$i<count($table_links->data);$i++) {
 			if (isset($table_links->data[$i])) {
@@ -197,7 +207,9 @@ class mynodes {
 			LEFT JOIN links ON links.id = subnets.link_id
 			LEFT JOIN nodes AS n_l ON n_l.id = links.peer_node_id
 			LEFT JOIN nodes AS n_c ON n_c.id = client_node_id',
-			'subnets.node_id = '.get('node'));
+			'subnets.node_id = '.get('node'),
+			"",
+			"subnets.type ASC, subnets.ip_start ASC");
 		foreach( (array) $table_subnets->data as $key => $value) {
 			if ($key != 0) {
 				$table_subnets->data[$key]['ip_start'] = long2ip($table_subnets->data[$key]['ip_start']);
@@ -230,7 +242,9 @@ class mynodes {
 		$table_ipaddr->db_data(
 			'ip_addresses.id, ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type, ip_addresses.always_on',
 			'ip_addresses',
-			'ip_addresses.node_id = '.get('node'));
+			'ip_addresses.node_id = '.get('node'),
+			"",
+			"ip_addresses.ip ASC");
 		foreach( (array) $table_ipaddr->data as $key => $value) {
 			if ($key != 0) {
 				$table_ipaddr->data[$key]['ip'] = long2ip($table_ipaddr->data[$key]['ip']);

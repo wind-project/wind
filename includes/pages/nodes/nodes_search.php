@@ -61,7 +61,8 @@ class nodes_search {
 			"(l1.status = 'active' AND (l2.status = 'active' OR l1.type = 'ap')))".
 			($where!=''?' AND ('.$where.')':""),
 			'nodes.id'.
-			($having!=''?' HAVING ('.$having.')':""));
+			($having!=''?' HAVING ('.$having.')':""),
+			"total_active_peers DESC, total_active_clients DESC, nodes.id");
 		$table_nodes->db_data_search($form_search_nodes);
 		for($i=1;$i<count($table_nodes->data);$i++) {
 			if (isset($table_nodes->data[$i])) {
