@@ -178,7 +178,7 @@ class mynodes {
 		global $db;
 		$table_links = new table(array('TABLE_NAME' => 'table_links_ap_'.$id, 'FORM_NAME' => 'table_links_ap_'.$id));
 		$table_links->db_data(
-			'links.id, links.type, "" AS peer, links.node_id, nodes.name, links.status',
+			'links.id, "" AS peer, links.type, links.node_id, nodes.name, links.status',
 			'links
 			LEFT JOIN nodes ON links.node_id = nodes.id',
 			"links.type = 'client' AND links.peer_ap_id = '".$id."'",
@@ -188,10 +188,8 @@ class mynodes {
 		for($i=1;$i<count($table_links->data);$i++) {
 			if (isset($table_links->data[$i])) {
 				$table_links->data[$i]['peer'] = $table_links->data[$i]['name']." (#".$table_links->data[$i]['node_id'].")";
-				$table_links->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "link", 'node' => $table_links->data[$i]['node_id'], "link" => $table_links->data[$i]['id']));
 			}
 		}
-		$table_links->info['EDIT_COLUMN'] = 'peer';
 		$table_links->info['MULTICHOICE_LABEL'] = 'delete';
 		$table_links->db_data_remove('id', 'node_id', 'name');
 		$table_links->db_data_translate('links__type', 'links__status');
@@ -317,9 +315,9 @@ class mynodes {
 				$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 				$this->tpl['table_nameservers'] = $construct->table($this->table_nameservers(), __FILE__);
 				$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
-				$t = $db->get('id, type', 'links', "node_id = '".get('node')."'");
+				$t = $db->get('id, ssid', 'links', "node_id = '".get('node')."' AND type = 'ap'");
 				foreach( (array) $t as $key => $value) {
-					if ($value['type'] == 'ap') $this->tpl['table_links_ap'][$value['id']] = $construct->table($this->table_links_ap($value['id']), __FILE__);
+					$this->tpl['table_links_ap'][$value['ssid']] = $construct->table($this->table_links_ap($value['id']), __FILE__);
 				}
 				$this->tpl['table_subnets'] = $construct->table($this->table_subnets(), __FILE__);
 				$this->tpl['table_ipaddr'] = $construct->table($this->table_ipaddr(), __FILE__);

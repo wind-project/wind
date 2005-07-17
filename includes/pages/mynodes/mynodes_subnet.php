@@ -28,15 +28,39 @@ class mynodes_subnet {
 	}
 	
 	function form_subnet() {
-		global $db, $vars;
+		global $db, $vars, $lang;
 		$form_subnet = new form(array('FORM_NAME' => 'form_subnet'));
 		$form_subnet->db_data('subnets.ip_start, subnets.ip_end, subnets.type, subnets.link_id, subnets.client_node_id');
-		$links = $db->get("links.id AS value, IF(links.type = 'ap', CONCAT(links.type, ' - ', links.ssid), CONCAT(links.type, ' - ', nodes.name, ' (#',links.peer_node_id, ')')) AS output",
+		$links = $db->get('links.id AS value, links.type, links.ssid, nodes.name, links.peer_node_id, "" AS output',
 							"links
 							LEFT JOIN nodes ON links.peer_node_id = nodes.id",
-							"(links.type = 'ap' OR links.type = 'p2p') AND node_id = '".get('node')."'");
+							"(links.type = 'ap' OR links.type = 'p2p') AND node_id = '".get('node')."'",
+							"",
+							"links.type ASC, links.date_in ASC");
+		foreach ( (array) $links as $key => $value) {
+			$links[$key]['output'] .= $lang['db']['links__type-'.$value['type']].' - ';
+			if ($value['type'] == 'ap') {
+				$links[$key]['output'] .= $links[$key]['ssid'];
+			}
+			if ($value['type'] == 'p2p') {
+				$links[$key]['output'] .= $links[$key]['name'].' (#'.$links[$key]['peer_node_id'].')';
+			}
+		}
 		$form_subnet->db_data_enum('subnets.link_id', $links);
-		$form_subnet->db_data_enum('subnets.client_node_id', $db->get("id AS value, name AS output", "nodes"));
+
+		$clients = $db->get('cl_n.id AS value, ap_l.ssid, cl_n.name, cl_n.id, "" AS output',
+							"links AS cl_l " .
+							"LEFT JOIN links AS ap_l ON cl_l.peer_ap_id = ap_l.id
+							LEFT JOIN nodes AS ap_n ON ap_l.node_id = ap_n.id " .
+							"LEFT JOIN nodes AS cl_n ON cl_l.node_id = cl_n.id",
+							"cl_l.type = 'client' AND ap_l.type = 'ap' AND ap_l.node_id = '".get('node')."'",
+							"",
+							"ap_l.date_in ASC, cl_l.date_in ASC");
+		foreach ( (array) $clients as $key => $value) {
+			$clients[$key]['output'] = '['.$lang['db']['links__type-ap'].' '.$clients[$key]['ssid'].'] - '.$clients[$key]['name'].' (#'.$clients[$key]['id'].')';
+		}
+		$form_subnet->db_data_enum('subnets.client_node_id', $clients);
+
 		$form_subnet->db_data_values("subnets", "id", get('subnet'));
 		if (get('subnet') != 'add') {
 			$form_subnet->data[0]['value'] = long2ip($form_subnet->data[0]['value']);
