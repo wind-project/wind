@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
 <form name="{$extra_data.FORM_NAME}" method="post" action="?">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
@@ -65,6 +64,7 @@
 			{/section}
 		</td>
 	{elseif $data[d].Type == 'pickup'}
+		{assign var=use_pickup value=TRUE}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field" >
 			<input type="hidden" name="{$data[d].fullField}" value="{$data[d].Type_Pickup.value}" />
@@ -73,6 +73,7 @@
 			{if $data[d].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[d].fullField`.value = ''; `$data[d].fullField`_output.innerText = ''; return false;"}{/if}
 		</td>	
 	{elseif $data[d].Type == 'pickup_multi'}
+		{assign var=use_pickup value=TRUE}
 		<td class="table-form-title" >{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field" >
 			<select class="fld-form-input" name="{$data[d].fullField}[]" size="5" multiple="multiple">
@@ -90,7 +91,8 @@
 		<td class="table-form-title">{$lang.db.$fullField}{if $data[d].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field" >
 		{if $data[d].Compare != ''}
-			<select class="fld-form-input" name="{$data[d].fullField}_compare">
+			<table class="table-main" cellpadding="0" cellspacing="0"><tr><td>
+			<select name="{$data[d].fullField}_compare">
 				{if $data[d].Compare == 'full' || $data[d].Compare == 'numeric'}
 				<option value="equal"{if $data[d].Compare_value == 'equal'} selected="selected"{/if}>{$lang.compare_equal}</option>
 				<option value="greater_equal"{if $data[d].Compare_value == 'greater_equal'} selected="selected"{/if}>{$lang.compare_greater_equal}</option>
@@ -104,8 +106,10 @@
 				<option value="contains"{if $data[d].Compare_value == 'contains'} selected="selected"{/if}>{$lang.compare_contains}</option>
 				{/if}
 			</select>
+			</td><td width="100%">
 		{/if}
 		<input class="fld-form-input" name="{$data[d].fullField}" type="text" value="{$data[d].value}" />
+		{if $data[d].Compare != ''}</td></tr></table>{/if}
 		</td>
 	{/if}
 	</tr>
@@ -113,3 +117,4 @@
 <tr><td class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="OK" /></td></tr>
 </table>
 </form>
+{if $use_pickup == TRUE}<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>{/if}
