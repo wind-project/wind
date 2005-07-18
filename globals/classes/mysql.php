@@ -105,7 +105,7 @@ class mysql {
 		$keys = substr($keys, 0, -2);
 		$values = substr($values, 0, -2);
 		$query = "INSERT INTO $table ($keys) VALUES ($values)";
-		if ($not_null_keys != '') {
+		if (isset($not_null_keys)) {
 			$this->output_error_fields_required($not_null_keys);
 			if ($addlog) $this->add_log('ADD', $table, $this->insert_id, serialize($data), $query, $this->get_error());
 			return FALSE;
@@ -137,7 +137,7 @@ class mysql {
 		}
 		$sets = substr($sets, 0, -2);
 		$query = "UPDATE $table SET $sets".($where!=''?" WHERE $where":'');
-		if ($not_null_keys != '') {
+		if (isset($not_null_keys)) {
 			$this->output_error_fields_required($not_null_keys);
 			if ($addlog) {
 				for ($i=0;$i<count($aff);$i++) {
