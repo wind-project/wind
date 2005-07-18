@@ -75,7 +75,7 @@ class mynodes_dnszone {
 		$ret = $ret && $form_zone->db_set_multi(array(), "dns_zones_nameservers", "zone_id", $ins_id);
 
 		if ($ret) {
-			$main->message->set_fromlang('info', 'request_dnszone_success', makelink("", TRUE));
+			$main->message->set_fromlang('info', 'request_dnszone_success', makelink(array("page" => "mynodes", "node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

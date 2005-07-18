@@ -100,7 +100,7 @@ class hostmaster_dnszone {
 		}
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'edit_success', makelink("", TRUE));
+			$main->message->set_fromlang('info', 'edit_success', makelink(array("page" => "hostmaster", "subpage" => "dnszones")));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

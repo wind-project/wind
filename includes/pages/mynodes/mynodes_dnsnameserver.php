@@ -56,7 +56,7 @@ class mynodes_dnsnameserver {
 								"dns_nameservers", "id", $nameserver);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'request_dnsnameserver_success', makelink("", TRUE));
+			$main->message->set_fromlang('info', 'request_dnsnameserver_success', makelink(array("page" => "mynodes", "node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

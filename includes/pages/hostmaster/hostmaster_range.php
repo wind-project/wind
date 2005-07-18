@@ -98,7 +98,7 @@ class hostmaster_range {
 			if ($ret) $ret = $ret && sendmail($_POST['email_to'], $_POST['email_subject'], $_POST['email_body']);
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'insert_success', makelink("", TRUE));
+			$main->message->set_fromlang('info', 'edit_success', makelink(array("page" => "hostmaster", "subpage" => "ranges")));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

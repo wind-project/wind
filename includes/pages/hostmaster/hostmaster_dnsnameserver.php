@@ -81,7 +81,7 @@ class hostmaster_dnsnameserver {
 							"dns_nameservers", "id", get('nameserver'));
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'edit_success', makelink("", TRUE));
+			$main->message->set_fromlang('info', 'edit_success', makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers")));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

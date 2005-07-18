@@ -76,19 +76,6 @@ class ranges_search {
 		return template($this->tpl, __FILE__);
 	}
 
-	function output_onpost_table_ip_ranges() {
-		global $db, $main;
-		$ret = TRUE;
-		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("ip_ranges", "id = '".$value."'");
-		}
-		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
-		} else {
-			$main->message->set_fromlang('error', 'generic');		
-		}
-	}
-
 }
 
 ?>

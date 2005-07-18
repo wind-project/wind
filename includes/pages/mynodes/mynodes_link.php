@@ -76,7 +76,7 @@ class mynodes_link {
 								"links", "id", $link);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'insert_success', makelink("", TRUE));
+			$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "mynodes", "node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
