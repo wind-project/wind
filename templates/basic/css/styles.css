@@ -114,6 +114,15 @@ vertical-align:top;
 text-align:left;
 }
 
+td.footer {
+font-size:10px;
+background-color:#FFFFFF;
+background-image:url(../images/page-bg.gif);
+background-position:top;
+background-repeat:repeat-x;
+border-top:1px solid #000000;
+vertical-align:middle;
+}
 
 /* QUICK LOGIN TABLE */
 

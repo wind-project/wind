@@ -18,8 +18,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-header">
+<table cellpadding="5" cellspacing="0" class="table-main">
       <tr>
-        <td class="table-header-td">&nbsp;</td>
+        <td class="footer" align="left">
+        	<a href="http://www.php.net/"><img src="{$img_dir}logo-php.gif" alt="PHP Hypertext Preprocessor" /></a>
+        	<a href="http://www.mysql.com/"><img src="{$img_dir}logo-mysql.gif" alt="MySQL database server" /></a>
+        	<a href="http://smarty.php.net/"><img src="{$img_dir}logo-smarty.gif" alt="smarty template engine" /></a>
+        </td>
+        <td class="footer" align="right">
+        	<b>WiND - Wireless Nodes Database</b><br />
+        	Project page: <a href="http://wind.cube.gr/">http://wind.cube.gr/</a><br /><br />
+        	&copy; 2005 <a href="http://wind.cube.gr/">WiND development team</a>
+        </td>
       </tr>
 </table>
