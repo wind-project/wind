@@ -67,7 +67,7 @@ class mynodes_dnszone {
 		$ret = TRUE;
 		$f = array();
 		if (get('zone') == 'add') {
-			$f = array('dns_zones.status' => 'pending', 'dns_zones.type' => get('type'), 'dns_zones.date_in' => date_now(), "dns_zones.node_id" => get('node'));
+			$f = array('dns_zones.status' => 'pending', 'dns_zones.type' => get('type'), "dns_zones.node_id" => get('node'));
 			$ret = $form_zone->db_set($f,
 									"dns_zones", "id", get('zone'));
 		}

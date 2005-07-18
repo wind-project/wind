@@ -365,7 +365,7 @@ class mynodes {
 			}
 		}
 		
-		$ret = $ret && $form_node->db_set(array('date_in' => date_now(), 'name_ns' => $name_ns), "nodes", "id", get('node'));
+		$ret = $ret && $form_node->db_set(array('name_ns' => $name_ns), "nodes", "id", get('node'));
 		if ($ret && $main->userdata->privileges['admin'] === TRUE && get('node') != 'add' && get('node') != $_POST['nodes__id']) {
 			$db->set('dns_nameservers', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
 			$db->set('dns_zones', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
@@ -502,7 +502,7 @@ class mynodes {
 		foreach( (array) array('N','NE','E','SE','S','SW','W','NW', 'PANORAMIC') as $value) {
 			if ($_FILES[$value]['tmp_name'] != '') {
 				if (@!imagecreatefromjpeg($_FILES[$value]['tmp_name'])) continue;
-				$db->add("photos", array('date_in' => date_now(), 'node_id' => get('node'), 'type' => 'view', 'view_point' => $value, 'info' => $_POST['info-'.$value]));
+				$db->add("photos", array('node_id' => get('node'), 'type' => 'view', 'view_point' => $value, 'info' => $_POST['info-'.$value]));
 				$ins_id = $db->insert_id;
 				$uploaddir = $vars['folders']['photos'];
 				$filename = 'photo-'.$ins_id.'.jpg';

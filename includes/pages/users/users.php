@@ -102,7 +102,6 @@ class users {
 		$form_user = $this->form_user();
 		array_splice($form_user->data, 2, 1);
 		if ($_POST['users__password'] == '') array_splice($form_user->data, 1, 1);
-		$a = array('date_in' => date_now());
 		if (get('user') == 'add') {
 			$a['status'] = 'pending';	
 			$a['account_code'] = generate_account_code();

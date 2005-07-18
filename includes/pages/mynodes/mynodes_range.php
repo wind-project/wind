@@ -101,7 +101,7 @@ class mynodes_range {
 		$nextr = $this->calculate_next_range();
 		$status = "pending";
 		$ret = TRUE;
-		$ret = $form_getrange->db_set(array('date_in' => date_now(), "node_id" => get('node'), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "ip_subnetmask" => $nextr['subnetmask'], "status" => $status));
+		$ret = $form_getrange->db_set(array("node_id" => get('node'), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "ip_subnetmask" => $nextr['subnetmask'], "status" => $status));
 		if ($ret) {
 			$main->message->set_fromlang('info', 'request_range_success', makelink(array("page" => "mynodes", "node" => get('node'))));
 		} else {

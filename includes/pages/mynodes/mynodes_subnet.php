@@ -94,7 +94,7 @@ class mynodes_subnet {
 					return;
 				}
 		}
-		$ret = $form_subnet->db_set(array('date_in' => date_now(), 'node_id' => get('node')),
+		$ret = $form_subnet->db_set(array('node_id' => get('node')),
 								"subnets", "id", $subnet);
 		
 		if ($ret) {

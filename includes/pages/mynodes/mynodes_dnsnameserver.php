@@ -48,7 +48,6 @@ class mynodes_dnsnameserver {
 		$form_nameserver = $this->form_nameserver();
 		$nameserver = get('nameserver');
 		if (get('nameserver') == 'add') {
-			$f['date_in'] = date_now();
 			$_POST['dns_nameservers__ip'] = ip2long($_POST['dns_nameservers__ip']);
 		}
 		$f['node_id'] = get('node');

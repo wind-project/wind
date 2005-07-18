@@ -82,13 +82,18 @@ class mysql {
 		return $this->query("SELECT $select FROM $from".($where==""?"":" WHERE $where").($group_by==""?"":" GROUP BY $group_by").($order_by==""?"":" ORDER BY $order_by").($limit==""?"":" LIMIT $limit"));
 	}
 	
-	function add($table, $data, $addlog=TRUE) {
+	function add($table, $data, $addlog=TRUE, $try_date_in=TRUE) {
 		$table_start = preg_split("/[\s,]+/", $table);
 		$table_start = $table_start[0];
 		$db_fields = $this->query("SHOW FIELDS FROM `$table_start`");
 		for ($i=0;$i<count($db_fields);$i++) {
 			$nulls[$db_fields[$i]['Field']] = $db_fields[$i]['Null'];
 			$nulls['`'.$db_fields[$i]['Field'].'`'] = $db_fields[$i]['Null'];
+			if ($try_date_in && !isset($data['date_in'])) {
+				if ($db_fields[$i]['Field'] == 'date_in') {
+					$data['date_in'] = $this->date_now();
+				}
+			}
 		}
 		while (list ($key, $value) = each ($data)) {
 			$key_t = explode(".", $key);
@@ -247,6 +252,10 @@ class mysql {
 		list($usec, $sec) = explode(" ",microtime()); 
 		return ((float)$usec + (float)$sec); 
 	} 
+
+	function date_now() {
+	      return date("Y-m-d H:i:s");
+	}
 
 }
 

@@ -53,7 +53,7 @@ class mynodes_link {
 		$form_link = $this->form_link();
 		$link = get('link');
 		$ret = TRUE;
-		$f = array("date_in" => date_now(), "node_id" => get('node'));
+		$f = array("node_id" => get('node'));
 		switch ($_POST['links__type']) {
 			case 'p2p':
 				if ($_POST['links__peer_node_id'] == '') {
