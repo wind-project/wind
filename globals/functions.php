@@ -207,7 +207,7 @@ function reverse_zone_from_ip($ip) {
 
 function sendmail($to, $subject, $body) {
 	global $vars;
-	return mail($to, $subject, $body, "From: ".$vars['mail']['from_name']." <".$vars['mail']['from'].">");
+	return @mail($to, $subject, $body, "From: ".$vars['mail']['from_name']." <".$vars['mail']['from'].">");
 }
 
 function sendmail_fromlang($to, $message) {

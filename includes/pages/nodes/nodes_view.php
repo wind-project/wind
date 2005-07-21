@@ -236,6 +236,7 @@ class nodes_view {
 			LEFT JOIN users ON users.id = users_nodes.user_id',
 			"nodes.id = '".get('node')."' AND (users_nodes.owner = 'Y' OR users_nodes.owner IS NULL)");
 		$this->tpl['node'] = $this->tpl['node'][0];
+		$this->tpl['link_contact'] = makelink(array("subpage" => "contact"), TRUE);
 		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 		$this->tpl['table_nameservers'] = $construct->table($this->table_nameservers(), __FILE__);

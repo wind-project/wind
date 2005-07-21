@@ -47,6 +47,8 @@ $config = array(
 		),
 	
 	'mail' => array(
+		'smtp' => '', // if not set default used from php.ini file
+		'smtp_port' => '25',
 		'from' => 'hostmaster@wind.cube.gr',
 		'from_name' => 'WiND Hostmaster'
 		)

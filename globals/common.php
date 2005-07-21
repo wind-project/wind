@@ -48,6 +48,11 @@ $smarty->template_dir = $root_path.'templates/basic/';
 $smarty->compile_dir = $root_path.'templates/basic_c/';
 reset_smarty();
 
+if ($vars['mail']['smtp'] != '') {
+	ini_set('SMTP', $vars['mail']['smtp']);
+	ini_set('smtp_port', $vars['mail']['smtp_port']);
+}
+
 //INCLUDE LANGUAGE
 if (get('lang') != '') {
 	$tl = get('lang');

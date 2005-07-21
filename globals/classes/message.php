@@ -39,7 +39,7 @@ class message {
 		$this->set($lang['message'][$type][$message]['title'], $lang['message'][$type][$message]['body'], $forward, $image);
 	}
 	
-	function set($title, $message, $forward="", $image="", $hide_menu=FALSE) {
+	function set($title, $message, $forward="", $image="", $hide_menu="") {
 		global $main;
 		if ($this->show == TRUE) return FALSE;
 		$this->show = TRUE;
@@ -47,7 +47,7 @@ class message {
 		$this->message = $message;
 		if ($forward != '') $this->forward = $forward;
 		if ($image != '') $this->image = $image;
-		$main->menu->hide = $hide_menu;
+		if ($hide_menu !== "") $main->menu->hide = $hide_menu;
 	}
 	
 	function output() {
