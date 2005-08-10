@@ -1,4 +1,4 @@
-AA<?php
+<?php
 /*
  * WiND - Wireless Nodes Database
  *
