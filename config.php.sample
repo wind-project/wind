@@ -54,8 +54,7 @@ $config = array(
 		),
 	'gmap' => array(
 		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
-			'domain_here' => 'key_here',
-			'another_domain_here' => 'another_key_here'
+			'server.example.org' => 'example_key'
 			)
 		)
 );
