@@ -57,13 +57,13 @@
 		<td class="search-menu">
 		<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-search-menu">
 		  <tr>
-			<td class="table-search-menu-text"><img src="templates/basic/images/search_nodes.gif" width="34" height="28">&nbsp;<a href="{$link_allnodes}">{$lang.all_nodes}</a></td>
+			<td class="table-search-menu-text"><img src="templates/basic/images/search_nodes.gif" width="34" height="28" alt="{$lang.all_nodes}" />&nbsp;<a href="{$link_allnodes}">{$lang.all_nodes}</a></td>
 		  </tr>
 		  <tr>
-			<td class="table-search-menu-text"><img src="templates/basic/images/search_dns.gif" width="36" height="32">&nbsp;<a href="{$link_alldnszones}">{$lang.all_zones}</a></td>
+			<td class="table-search-menu-text"><img src="templates/basic/images/search_dns.gif" width="36" height="32" alt="{$lang.all_zones}" />&nbsp;<a href="{$link_alldnszones}">{$lang.all_zones}</a></td>
 		  </tr>
 		  <tr>
-			<td class="table-search-menu-text"><img src="templates/basic/images/search_ip.gif" width="33" height="32">&nbsp;<a href="{$link_allranges}">{$lang.all_ranges}</a></td>
+			<td class="table-search-menu-text"><img src="templates/basic/images/search_ip.gif" width="33" height="32" alt="{$lang.all_ranges}" />&nbsp;<a href="{$link_allranges}">{$lang.all_ranges}</a></td>
 		  </tr>
 		  <tr>
 			<td class="table-middle-left-pad"></td>
@@ -108,7 +108,7 @@
 		<td class="search-menu">
 			<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-mynodes">
 			<tr>
-			<td rowspan="2" class="table-mynodes-image" ><img src="templates/basic/images/node.gif"></td>
+			<td rowspan="2" class="table-mynodes-image" ><img src="templates/basic/images/node.gif" alt="{$lang.mynodes}" /></td>
 			<td class="table-mynodes-title">{$lang.mynodes}</td>
 			
 			<tr><td class="table-mynodes-link">|<a href="{$link_addnode}">{$lang.node_add}</a>|</td></tr>
@@ -120,7 +120,7 @@
 			{else}
 			<tr class="table-form-row1">
 			{/if}
-			<td class="table-form-title"><img src="templates/basic/images/node-small.png">&nbsp;<a href="{$mynodes[row].url}">{$mynodes[row].name} (#{$mynodes[row].id})</a></td>
+			<td class="table-form-title"><img src="templates/basic/images/node-small.png" alt="{$lang.mynodes}" />&nbsp;<a href="{$mynodes[row].url}">{$mynodes[row].name} (#{$mynodes[row].id})</a></td>
 			</tr>
 			{/section}
 			<tr>
@@ -136,13 +136,13 @@
 		<td class="search-menu">
 			<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-mynodes">
 			<tr>
-			<td class="table-mynodes-image" ><img src="templates/basic/images/admin.gif"></td><td class="table-mynodes-title" >{$lang.admin_panel}</td>
+			<td class="table-mynodes-image" ><img src="templates/basic/images/admin.gif" alt="{$lang.admin_panel}" /></td><td class="table-mynodes-title" >{$lang.admin_panel}</td>
 			</tr>
 			<tr class="table-form-row1">
-			<td colspan="2" class="table-form-title"><img src="templates/basic/images/node-small.png">&nbsp;<a href="{$link_admin_nodes}">{$lang.nodes}</a></td>
+			<td colspan="2" class="table-form-title"><img src="templates/basic/images/node-small.png" alt="{$lang.nodes}" />&nbsp;<a href="{$link_admin_nodes}">{$lang.nodes}</a></td>
 			</tr>
 			<tr class="table-form-row1">
-			<td colspan="2" class="table-form-title"><img src="templates/basic/images/user-small.png">&nbsp;<a href="{$link_admin_users}">{$lang.users}</a></td>
+			<td colspan="2" class="table-form-title"><img src="templates/basic/images/user-small.png" alt="{$lang.users}" />&nbsp;<a href="{$link_admin_users}">{$lang.users}</a></td>
 			</tr>
 			<tr>
 			<td colspan="2" class="table-middle-left-pad"></td>
@@ -158,11 +158,11 @@
 		<td class="search-menu">
 			<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-mynodes">
 			<tr>
-			<td class="table-mynodes-image" ><img src="templates/basic/images/admin.gif"></td><td class="table-mynodes-title" >{$lang.hostmaster_panel}</td>
+			<td class="table-mynodes-image" ><img src="templates/basic/images/admin.gif" alt="{$lang.hostmaster_panel}" /></td><td class="table-mynodes-title" >{$lang.hostmaster_panel}</td>
 			</tr>
 			{if $link_ranges != ''}
 			<tr class="table-form-row1">
-			<td colspan="2" class="table-form-title"><img src="templates/basic/images/node-small.png">&nbsp;<a href="{$link_ranges}">{$lang.ip_ranges}</a></td>
+			<td colspan="2" class="table-form-title"><img src="templates/basic/images/node-small.png" alt="{$lang.ip_ranges}" />&nbsp;<a href="{$link_ranges}">{$lang.ip_ranges}</a></td>
 			</tr>
 			<tr>
 			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_ranges_pending content="$ranges_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_ranges_req_del content="$ranges_req_del `$lang.for_deletion`"}</td>
@@ -170,7 +170,7 @@
 			{/if}
 			{if $link_dnszones != ''}
 			<tr class="table-form-row1">
-			<td colspan="2" class="table-form-title"><img src="templates/basic/images/dns-small.png">&nbsp;<a href="{$link_dnszones}">{$lang.dns_zones}</a></td>
+			<td colspan="2" class="table-form-title"><img src="templates/basic/images/dns-small.png" alt="{$lang.dns_zones}" />&nbsp;<a href="{$link_dnszones}">{$lang.dns_zones}</a></td>
 			</tr>
 			<tr>
 			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnszones_pending content="$dnszones_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_dnszones_req_del content="$dnszones_req_del `$lang.for_deletion`"}</td>
@@ -178,7 +178,7 @@
 			{/if}
 			{if $link_dnsnameservers != ''}
 			<tr class="table-form-row1">
-			<td colspan="2" class="table-form-title"><img src="templates/basic/images/nameserver.gif">&nbsp;<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a></td>
+			<td colspan="2" class="table-form-title"><img src="templates/basic/images/nameserver.gif" alt="{$lang.dns_nameservers}" />&nbsp;<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a></td>
 			</tr>
 			<tr>
 			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnsnameservers_pending content="$dnsnameservers_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_dnsnameservers_req_del content="$dnsnameservers_req_del `$lang.for_deletion`"}</td>

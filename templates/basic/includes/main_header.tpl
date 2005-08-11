@@ -20,6 +20,6 @@
  *}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-header">
       <tr>
-        <td class="table-header-td"><img src="{$img_dir}main_logo.png" /></td>
+        <td class="table-header-td"><img src="{$img_dir}main_logo.png" alt="WiND Logo" /></td>
       </tr>
 </table>

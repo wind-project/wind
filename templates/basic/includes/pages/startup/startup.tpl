@@ -19,14 +19,16 @@
  *
  *}
 {include file=generic/page-title.tpl title="`$lang.welcome`"}
-<center><br />
-<br />
-<b><font size="5">WiND - Wireless Nodes Database</font></b>
-<br />
-<br />
-<b>Προσοχή! Πιλοτική εφαρμογή.</b>
-<br />
-Οτιδήποτε πληροφορίες αποθηκεύσετε θα χαθούν όταν ξεκινήσει η κανονική λειτουργία.
+<center>
+<p>
+<font size="5"><strong>WiND - Wireless Nodes Database</strong></font>
 <br />
 <br />
-Αναφορά προβλημάτων στο <a href="mailto:winner@cube.gr">winner@cube.gr</a></center>
+<strong>Warning</strong>: this is an SVN snapshot.<br />
+As such, it's still under heavy development and you
+should expect it to break and/or lose data.<br />
+</p>
+<p>
+$Id
+</p>
+</center>

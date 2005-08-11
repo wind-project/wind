@@ -108,7 +108,7 @@ function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE) {
 		$o = array_merge($o, $qs_vars);
 	}
 	$o = array_merge($o, $extra);
-	return '?'.query_str($o);
+	return htmlspecialchars('?'.query_str($o));
 }
 
 function query_str ($params) {

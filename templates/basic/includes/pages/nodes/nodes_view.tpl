@@ -35,10 +35,10 @@
 <table bgcolor="#DBE0D7" cellpadding="0" cellspacing="2"><tr><td colspan="2">
 <div id="map" style="width: 500px; height: 500px"></div>
 </td></tr><tr><td style="font-size:12px;">
-<input type="checkbox" name="p2p" checked="checked" onClick="gmap_refresh();" />{$lang.backbone}
-<input type="checkbox" name="aps" checked="checked" onClick="gmap_refresh();" />{$lang.aps}
-<input type="checkbox" name="clients" checked="checked" onClick="gmap_refresh();" />{$lang.clients}
-<input type="checkbox" name="unlinked" onClick="gmap_refresh();" />{$lang.unlinked}
+<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{$lang.backbone}
+<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{$lang.aps}
+<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{$lang.clients}
+<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{$lang.unlinked}
 </td><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td>
 </table>
 </td>

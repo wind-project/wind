@@ -21,9 +21,9 @@
 <table class="table-main" cellpadding="0" cellspacing="0"><tr><td height="100%">
 <div id="map" style="width: 100%; height: 100%"></div>
 </td></tr><tr><td style="font-size:12px;" align="center">
-<input type="checkbox" name="p2p" checked="checked" onClick="gmap_refresh();" />{$lang.backbone}
-<input type="checkbox" name="aps" checked="checked" onClick="gmap_refresh();" />{$lang.aps}
-<input type="checkbox" name="clients" checked="checked" onClick="gmap_refresh();" />{$lang.clients}
+<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{$lang.backbone}
+<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{$lang.aps}
+<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{$lang.clients}
 <input type="checkbox" name="unlinked" onClick="gmap_refresh();" />{$lang.unlinked}
-</td>
+</td></tr>
 </table>

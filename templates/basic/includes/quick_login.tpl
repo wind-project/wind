@@ -20,10 +20,10 @@
  *}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-quick-login">
 <tr>
-<td width="110" nowrap class="quick-login-title">Quick Login |</td>
-<td width="184" nowrap class="quick-login-field">Username:
+<td width="110" nowrap="nowrap" class="quick-login-title">Quick Login |</td>
+<td width="184" nowrap="nowrap" class="quick-login-field">Username:
 <input name="textfield" type="text" class="fld-quick-login"></td>
-<td width="190" nowrap class="quick-login-field">Password:
+<td width="190" nowrap="nowrap" class="quick-login-field">Password:
 <input name="textfield" type="text" class="fld-quick-login">
 </td>
 <td width="373" class="quick-login-submit"><img src="templates/basic/images/submit1.png" width="8" height="7"></td>

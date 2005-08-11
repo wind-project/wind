@@ -18,4 +18,4 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<a href="javascript:;"><img src="{$img_dir}help.png" onclick="return overlib('{$lang.help.$help.body}'{if $lang.help.$help.title != ''}, CAPTION, '{$lang.help.$help.title}'{/if});" onmouseout="nd();" /></a>
+<a href="javascript:;"><img src="{$img_dir}help.png" alt="" onclick="return overlib('{$lang.help.$help.body}'{if $lang.help.$help.title != ''}, CAPTION, '{$lang.help.$help.title}'{/if});" onmouseout="nd();" /></a>

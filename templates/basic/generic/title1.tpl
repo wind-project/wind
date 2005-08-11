@@ -21,10 +21,10 @@
 <table width="100%"  border="0" cellspacing="0" cellpadding="0" class="table-d1">
 <tr>
 <td width="6" class="table-d1-side">&nbsp;</td>
-<td nowrap class="table-d1-title-text" >
+<td nowrap="nowrap" class="table-d1-title-text" >
 {$title}
 </td>
-<td width="10" class="table-d1-title-space"><img name="" src="" width="20" height="8" alt=""></td>
+<td width="10" class="table-d1-title-space"></td>
 <td width="299" class="table-d1-title-border">&nbsp;</td>
 <td width="6" class="table-d1-side2">&nbsp;</td>
 </tr>

@@ -28,7 +28,7 @@
         <td class="footer" align="right">
         	<b>WiND - Wireless Nodes Database</b><br />
         	Project page: <a href="http://wind.cube.gr/">http://wind.cube.gr/</a><br /><br />
-        	&copy; 2005 <a href="http://wind.cube.gr/">WiND development team</a>
+        	&copy; 2005 <a href="http://wind.cube.gr/project/wiki/Team">WiND development team</a>
         </td>
       </tr>
 </table>
