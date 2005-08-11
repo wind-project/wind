@@ -32,7 +32,7 @@ class gmap_js {
 		
 		$node = $db->get('latitude, longitude', 'nodes', "id = '".get('node')."'");
 		$this->tpl['node'] = $node[0];
-		$this->tpl['link_xml_page'] = makelink(array("page" => "gmap", "subpage" => "xml"));
+		$this->tpl['link_xml_page'] = makelink(array("page" => "gmap", "subpage" => "xml"), FALSE, TRUE, FALSE);
 		
 		echo template($this->tpl, __FILE__);
 		exit;
