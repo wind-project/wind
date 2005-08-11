@@ -23,7 +23,7 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.ip_range_request_for_node` $node_name|escape (#$node_id)" content=$form_getrange}
+{include file=generic/title2.tpl title="`$lang.ip_range_request_for_node` $node_name (#$node_id)"|escape content=$form_getrange}
 </td>
 </tr>
 </table>

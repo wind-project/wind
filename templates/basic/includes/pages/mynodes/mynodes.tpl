@@ -23,7 +23,7 @@
 {assign var=t value="`$lang.node_add`"}
 {else}
 {include assign=help file=generic/help.tpl help=mynodes}
-{assign var=t value="`$lang.node` $node_name|escape (#$node_id)"}
+{assign var=t value="`$lang.node` $node_name (#$node_id)"|escape}
 {include assign="t1" file="generic/link.tpl" link=$link_node_delete content="`$lang.node_delete`" confirm=TRUE}
 {/if}
 {include file=generic/page-title.tpl title="$t" right="$help"}
@@ -62,7 +62,7 @@
 {foreach key=key item=item from=$table_links_ap}
 <tr>
 <td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.ap` $key|escape" content=$item}
+{include file=generic/title2.tpl title="`$lang.ap` $key"|escape content=$item}
 </td>
 </tr>
 {/foreach}
