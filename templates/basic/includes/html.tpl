@@ -20,13 +20,13 @@
  *}
 <?xml version="1.0" encoding="iso-8859-7"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="el" lang="el">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="el" lang="el" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
 {$head}
 <link href="{$css_dir}styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{$js_dir}overlib/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
 </head>
-<body>
+<body{foreach from=$body_tags item=item key=key} {$key}="{$item}"{/foreach}>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 {$body}
 </body>

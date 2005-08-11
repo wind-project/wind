@@ -58,6 +58,7 @@ class center {
 			case 'ranges':
 			case 'dnszones':
 			case 'pickup':
+			case 'gmap':
 				return TRUE;
 				break;
 			case 'users':

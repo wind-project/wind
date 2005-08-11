@@ -138,6 +138,11 @@ $lang = array(
 	'contact_node' => "Επικοινωνία με τον κόμβο",
 	'from' => "Από",
 	'send' => "Αποστολή",
+	'node_page' => "Σελίδα κόμβου",
+	'yes' => "Ναι",
+	'no' => "Όχι",
+	'backbone' => "Backbone",
+	'unlinked' => "Ασύνδετοι",
 
 	'db' => array(
 		'users__username' => 'Όνομα χρήστη',
@@ -240,6 +245,7 @@ $lang = array(
 		'peer' => 'Διασύνδεση',
 		'total_active_peers' => 'Ενεργές διασυνδέσεις',
 		'total_active_clients' => 'Ενεργοί πελάτες',
+		'has_ap' => 'Διαθέτει Access Point',
 
 		'subnets__ip_start' => 'Από',
 		'subnets__ip_end' => 'Μέχρι',

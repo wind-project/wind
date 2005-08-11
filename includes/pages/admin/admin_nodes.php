@@ -47,7 +47,7 @@ class admin_nodes {
 			'nodes ' .
 			'LEFT JOIN areas ON nodes.area_id = areas.id ' .
 			'LEFT JOIN regions ON areas.region_id = regions.id',
-			($where!=''?' AND ('.$where.')':""),
+			$where,
 			"",
 			"nodes.id ASC");
 		$table_nodes->db_data_search($form_search_nodes);

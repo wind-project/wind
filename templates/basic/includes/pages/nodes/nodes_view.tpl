@@ -32,16 +32,15 @@
 <div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 </td>
 <td class="table-page-split">
-<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="500" height="500" id="main" align="middle">
-<param name="allowScriptAccess" value="sameDomain" />
-<param name="movie" value="map/flash/main.swf" />
-<param name="menu" value="false" />
-<param name="quality" value="high" />
-<param name="wmode" value="opaque" />
-<param name="bgcolor" value="#ffffff" />
-<embed src="map/flash/main.swf" menu="false" quality="high" wmode="opaque" bgcolor="#ffffff" width="500" height="500" name="main" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-</object>
-<div align="center">{include file=generic/link.tpl link="map/flash/main.html" content="`$lang.new_window`" target="_blank"}</div>
+<table bgcolor="#DBE0D7" cellpadding="0" cellspacing="2"><tr><td colspan="2">
+<div id="map" style="width: 500px; height: 500px"></div>
+</td></tr><tr><td style="font-size:12px;">
+<input type="checkbox" name="p2p" checked="checked" onClick="gmap_refresh();" />{$lang.backbone}
+<input type="checkbox" name="aps" checked="checked" onClick="gmap_refresh();" />{$lang.aps}
+<input type="checkbox" name="clients" checked="checked" onClick="gmap_refresh();" />{$lang.clients}
+<input type="checkbox" name="unlinked" onClick="gmap_refresh();" />{$lang.unlinked}
+</td><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td>
+</table>
 </td>
 </tr>
 <tr>

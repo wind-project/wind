@@ -24,7 +24,7 @@ class head {
 	var $tpl;
 	
 	function add_extra($extra) {
-		$this->tpl['extra'] = $extra;
+		$this->tpl['extra'] .= $extra;
 	}
 	
 	function add_title($title) {
@@ -46,9 +46,9 @@ class head {
 		array_push($this->tpl['meta'], array('http-equiv' => $http_equiv, 'content' => $content, 'name' => $name, 'scheme' => $scheme));
 	}
 	
-	function add_script($type,$scr) {
+	function add_script($type,$src) {
 		if (!isset($this->tpl['script'])) $this->tpl['script'] = array();
-		array_push($this->tpl['script'], array('type' => $type, 'scr' => $scr));
+		array_push($this->tpl['script'], array('type' => $type, 'src' => $src));
 	}
 	
 	function output() {

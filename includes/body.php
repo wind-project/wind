@@ -21,6 +21,7 @@
 
 class body {
 	
+	var $tags;
 	var $tpl;
 	
 	function output() {

@@ -226,7 +226,7 @@ class nodes_view {
 		
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		global $construct, $db, $vars;
+		global $construct, $db, $vars, $main;
 		$this->tpl['node'] = $db->get(
 			'nodes.id, nodes.name, nodes.date_in, nodes.latitude, nodes.longitude, nodes.elevation, nodes.info, areas.name as area_name, regions.name as region_name, users.username AS owner_username, users.email AS owner_email',
 			'nodes
@@ -257,6 +257,18 @@ class nodes_view {
 		}		
 		
 		$this->tpl['link_plot_link'] = makelink(array("page" => "nodes", "subpage" => "plot_link", "a_node" => $this->tpl['node']['id']));
+
+		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
+		$main->html->head->add_script("text/javascript", "http://maps.google.com/maps?file=api&v=1&key=".$vars['gmap']['keys'][$_SERVER['SERVER_NAME']]);
+		$main->html->head->add_script("text/javascript", "?page=gmap&subpage=js&node=".get('node'));
+		$main->html->head->add_extra(
+			'<style type="text/css">
+    			v\:* {
+      			behavior:url(#default#VML);
+    			}
+    		</style>');
+    	
+		$main->html->body->tags['onload'] = "gmap_onload()";
 		
 		return template($this->tpl, __FILE__);
 	}

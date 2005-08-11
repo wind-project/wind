@@ -65,6 +65,7 @@ class html {
 	function output() {
 		$this->tpl['head'] = $this->head->output();
 		$this->tpl['body'] = $this->body->output();
+		$this->tpl['body_tags'] = $this->body->tags;
 		$ret = template($this->tpl, __FILE__);
 		return ($this->do_format?$this->format_html($ret):$ret);
 	}

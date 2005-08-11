@@ -51,6 +51,12 @@ $config = array(
 		'smtp_port' => '25',
 		'from' => 'hostmaster@wind.cube.gr',
 		'from_name' => 'WiND Hostmaster'
+		),
+	'gmap' => array(
+		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
+			'domain_here' => 'key_here',
+			'another_domain_here' => 'another_key_here'
+			)
 		)
 );
 
