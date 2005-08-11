@@ -55,7 +55,7 @@ function gmap_reload() {
 	var ch_unlinked = document.getElementsByName("unlinked")[0];
   for (var i = 0; i < nodes.length; i++) {
     if (markers[i] == undefined &&
-    	((nodes[i].getAttribute("total_p2p") > 0 && ch_p2p.checked == true) || (nodes[i].getAttribute("total_aps") > 0 && ch_aps.checked == true) || (nodes[i].getAttribute("total_client_on_ap") > 0 && ch_clients.checked == true) || ch_unlinked.checked == true) &&
+    	((nodes[i].getAttribute("total_p2p") > 0 && ch_p2p.checked == true) || (nodes[i].getAttribute("total_aps") > 0 && ch_aps.checked == true) || (nodes[i].getAttribute("total_client_on_ap") > 0 && ch_clients.checked == true) || (nodes[i].getAttribute("total_p2p") == 0 && nodes[i].getAttribute("total_client_on_ap") == 0 && ch_unlinked.checked == true)) &&
     	nodes[i].getAttribute("latitude") >= bounds.minY && nodes[i].getAttribute("latitude") <= bounds.maxY && nodes[i].getAttribute("longitude") >= bounds.minX && nodes[i].getAttribute("longitude") <= bounds.maxX) {
 	    var point = new GPoint(nodes[i].getAttribute("longitude"), nodes[i].getAttribute("latitude"));
 		var html = "<div style=\"font-size:12px;font-weight:bold;\">" + nodes[i].getAttribute("name") + " (#" + nodes[i].getAttribute("id") + ")</div><br />" +
