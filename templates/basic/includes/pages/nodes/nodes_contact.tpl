@@ -23,7 +23,7 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.contact_node` $node_name (#$node_id)" content=$form_contact}
+{include file=generic/title1.tpl title="`$lang.contact_node` $node_name|escape (#$node_id)" content=$form_contact}
 </td>
 </tr>
 </table>

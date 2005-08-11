@@ -70,11 +70,11 @@
 		{assign var=edit value=""}
 		{assign var=onclick value="javascript: window.opener.pickup(window.opener.document.`$extra_data.PICKUP_OBJECT`,'`$extra_data.PICKUP_OUTPUT[row]`','`$extra_data.PICKUP_VALUE[row]`', window); return false;"}
 	{/if}
-	<td class="{$cellclass}">{if $key==$edit_column && $smarty.section.row.index != 0}<a href="{$edit}"{if $extra_data.PICKUP_COLUMN != ''} onclick="{$onclick}"{/if}>{$cell}</a>{else}{$cell}{/if}</td>
+	<td class="{$cellclass}">{if $key==$edit_column && $smarty.section.row.index != 0}<a href="{$edit}"{if $extra_data.PICKUP_COLUMN != ''} onclick="{$onclick}"{/if}>{$cell|escape}</a>{else}{$cell|escape}{/if}</td>
 	{/if}
 	{/foreach}
 	{if $extra_data.MULTICHOICE[row] != ''}
-	<td class="table-list-cell-extra"><input class="fld-form-check" type="checkbox" name="id[]" value="{$extra_data.MULTICHOICE[row]}" {if $extra_data.MULTICHOICE_CHECKED[row] == 'YES'}checked="checked" {/if}/></td>
+	<td class="table-list-cell-extra"><input class="fld-form-check" type="checkbox" name="id[]" value="{$extra_data.MULTICHOICE[row]|escape}" {if $extra_data.MULTICHOICE_CHECKED[row] == 'YES'}checked="checked" {/if}/></td>
 	{elseif $extra_data.MULTICHOICE_LABEL != ''}
 	<td width="1%" class="table-list-top-cell">{$lang[$extra_data.MULTICHOICE_LABEL]}</td>
 	{/if}
@@ -98,7 +98,7 @@
 			{/if}
 		{/foreach}</td>
 	{/if}
-	{if $extra_data.MULTICHOICE[1] != ''}<td class="table-form-submit"><input class="fld-form-submit" type="submit" name="submit" value="{$lang[$extra_data.MULTICHOICE_LABEL]}" /></td>{/if}
+	{if $extra_data.MULTICHOICE[1] != ''}<td class="table-form-submit"><input class="fld-form-submit" type="submit" name="submit" value="{$lang[$extra_data.MULTICHOICE_LABEL]|escape}" /></td>{/if}
 </tr>
 {/if}
 </table>

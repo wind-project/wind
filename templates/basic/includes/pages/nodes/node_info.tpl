@@ -25,15 +25,15 @@
 </tr>
 <tr>
 <td class="table-node-key">{$lang.db.nodes__name}</td>
-<td class="table-node-value">{$node.name}</td>
+<td class="table-node-value">{$node.name|escape}</td>
 </tr>
 <tr>
 <td class="table-node-key">{$lang.db.areas__name}</td>
-<td class="table-node-value">{$node.area_name}</td>
+<td class="table-node-value">{$node.area_name|escape}</td>
 </tr>
 <tr>
 <td class="table-node-key">{$lang.db.regions__name}</td>
-<td class="table-node-value">{$node.region_name}</td>
+<td class="table-node-value">{$node.region_name|escape}</td>
 </tr>
 <tr>
 <td class="table-node-key">{$lang.db.nodes__date_in}</td>
@@ -41,6 +41,6 @@
 </tr>
 <tr>
 <td class="table-node-key">{$lang.db.user_id_owner}</td>
-<td class="table-node-value">{$node.owner_username} {include file="generic/link.tpl" onclick="javascript: t = window.open('$link_contact', 'contact', 'width=600,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;" content=$lang.contact}</td>
+<td class="table-node-value">{$node.owner_username|escape} {include file="generic/link.tpl" onclick="javascript: t = window.open('$link_contact', 'contact', 'width=600,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;" content=$lang.contact}</td>
 </tr>
 </table>

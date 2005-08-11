@@ -19,4 +19,4 @@
  *
  *}
 {assign var=temp value=$fullField|cat:"-"|cat:$value}
-{if $lang.db.$temp != ''}{$lang.db.$temp}{else}{$value}{/if}
+{if $lang.db.$temp != ''}{$lang.db.$temp}{else}{$value|escape}{/if}

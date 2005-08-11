@@ -80,7 +80,7 @@
 				  </tr>
 				  <tr class="table-form-row2">
 					<td class="quick-login-text">{$lang.username}</td>
-					<td class="table-form-title">{$username}</td>
+					<td class="table-form-title">{$username|escape}</td>
 				  </tr>
 				  <tr class="table-form-row1">
 					<td class="quick-login-text">{$lang.registered_since}</td>
@@ -88,11 +88,11 @@
 				  </tr>
 				  <tr class="table-form-row2">
 					<td class="quick-login-text">{$lang.name}</td>
-					<td class="table-form-title">{$name}</td>
+					<td class="table-form-title">{$name|escape}</td>
 				  </tr>
 				  <tr class="table-form-row1">
 					<td class="quick-login-text">{$lang.surname}</td>
-					<td class="table-form-title">{$surname}</td>
+					<td class="table-form-title">{$surname|escape}</td>
 				  </tr>
 				  <tr class="table-form-row2">
 					<td class="quick-login-text">{$lang.last_visit}</td>
@@ -120,7 +120,7 @@
 			{else}
 			<tr class="table-form-row1">
 			{/if}
-			<td class="table-form-title"><img src="templates/basic/images/node-small.png" alt="{$lang.mynodes}" />&nbsp;<a href="{$mynodes[row].url}">{$mynodes[row].name} (#{$mynodes[row].id})</a></td>
+			<td class="table-form-title"><img src="templates/basic/images/node-small.png" alt="{$lang.mynodes}" />&nbsp;<a href="{$mynodes[row].url}">{$mynodes[row].name|escape} (#{$mynodes[row].id})</a></td>
 			</tr>
 			{/section}
 			<tr>

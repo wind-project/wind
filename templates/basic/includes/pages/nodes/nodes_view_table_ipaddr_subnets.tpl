@@ -34,7 +34,7 @@
 		{assign var=t2 value="links__type-"|cat:$data[row].links__type}
 		{$lang.db.$t1}
 		{$lang.db.$t2}
-		{if $data[row].nodes__name != ''}[{$data[row].nodes__name} (#{$data[row].nodes__id})] {/if}
+		{if $data[row].nodes__name != ''}[{$data[row].nodes__name|escape} (#{$data[row].nodes__id})] {/if}
 		({$data[row].ip_start} - {$data[row].ip_end})
 	</td></tr>
 	{if $data[row].date_in != ''}
@@ -58,7 +58,7 @@
 		{assign var="cell" value=$itm}
 	{/if}
 	
-	<td class="{$cellclass}">{$cell}</td>
+	<td class="{$cellclass}">{$cell|escape}</td>
 	{/if}
 	{/foreach}
 	</tr>
@@ -85,7 +85,7 @@
 			{assign var="cell" value=$itm}
 		{/if}
 		
-		<td class="{$cellclass}">{$cell}</td>
+		<td class="{$cellclass}">{$cell|escape}</td>
 		{/if}
 		{/foreach}
 	</tr>

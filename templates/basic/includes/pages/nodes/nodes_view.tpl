@@ -18,13 +18,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-{include file=generic/page-title.tpl title="`$lang.node` `$node.name` (#`$node.id`)" right="$help"}
+{include file=generic/page-title.tpl title="`$lang.node` `$node.name`|escape (#`$node.id`)" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-split">
 {include assign=t1 file="includes/pages/nodes/node_info.tpl"}
 {include file="generic/title3.tpl" title="`$lang.node_info`" content="$t1"}
-{include file="generic/title4.tpl" title="`$lang.db.nodes__info`" content="`$node.info`"|nl2br}
+{include file="generic/title4.tpl" title="`$lang.db.nodes__info`" content="`$node.info`"|escape|nl2br}
 {include file="generic/title5.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
 {include file="generic/title5.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
 {include file="generic/title5.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}

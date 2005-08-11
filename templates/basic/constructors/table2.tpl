@@ -40,7 +40,7 @@
 		{assign var="cell" value=$itm}
 	{/if}
 	
-	<td class="{$cellclass}">{$cell}</td>
+	<td class="{$cellclass}">{$cell|escape}</td>
 	{/if}
 	{/foreach}
 </tr>

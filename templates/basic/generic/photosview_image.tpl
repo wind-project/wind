@@ -20,7 +20,7 @@
  *}
 <div align="center">
 {if $image.image != ''}
-<a  href="{$image.image}" target="_blank"><img src="{$image.image_s}" alt="{$image.info}" /></a>
+<a  href="{$image.image}" target="_blank"><img src="{$image.image_s}" alt="{$image.info|escape}" /></a>
 {else}
 <img src="" alt="" width="200" height="200" />
 {/if}

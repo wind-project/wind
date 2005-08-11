@@ -23,6 +23,6 @@
 <td width="65%" colspan="4" class="table-comments-title">{$lang.db.nodes__info}</td>
 </tr>
 <tr>
-<td colspan="4" class="table-comments-text">{$node.info}</td>
+<td colspan="4" class="table-comments-text">{$node.info|escape}</td>
 </tr>
 </table>

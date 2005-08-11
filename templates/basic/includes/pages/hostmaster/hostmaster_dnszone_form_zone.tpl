@@ -71,9 +71,9 @@ function sendmail_changed() {{/literal}
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 <table class="table-form">
-	<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.0.fullField]}{if $data.0.Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input"name="{$data.0.fullField}" type="text" value="{$data.0.value}" /></td></tr>
+	<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.0.fullField]}{if $data.0.Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data.0.fullField}" type="text" value="{$data.0.value|escape}" /></td></tr>
 
-	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data.1.fullField}">{$data.1.value}</textarea></td></tr>
+	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data.1.fullField}">{$data.1.value|escape}</textarea></td></tr>
 
 	<tr class="table-form-row1">
 	<td class="table-form-title">{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</td>
@@ -81,7 +81,7 @@ function sendmail_changed() {{/literal}
 		<select class="fld-form-input" name="{$data.2.fullField}[]" size="5" multiple="multiple">
 			{section loop=$data.2.Type_Pickup name=e}
 			{assign var="value" value=$data.2.Type_Pickup[e].value}
-			<option value="{$data.2.Type_Pickup[e].value}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data.2.Type_Pickup[e].output}</option>
+			<option value="{$data.2.Type_Pickup[e].value|escape}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data.2.Type_Pickup[e].output}</option>
 			{/section}
 		</select>
 		{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: t = window.open('`$data.2.Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
@@ -93,7 +93,7 @@ function sendmail_changed() {{/literal}
 	<td class="table-form-field">
 		<select class="fld-form-input" name="{$data[3].fullField}" onchange="status_changed()">
 			{section loop=$data[3].Type_Enums name=e}
-			<option value="{$data[3].Type_Enums[e].value}"{if $data[3].Type_Enums[e].value == $data[3].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.3.fullField value=$data[3].Type_Enums[e].output}</option>
+			<option value="{$data[3].Type_Enums[e].value|escape}"{if $data[3].Type_Enums[e].value == $data[3].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.3.fullField value=$data[3].Type_Enums[e].output}</option>
 			{/section}
 		</select>
 	</td></tr>	

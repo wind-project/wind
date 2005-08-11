@@ -42,7 +42,7 @@
 	{if $key == 'photo' && $smarty.section.row.index>0}
 	{if $cell != ''}<img src="{$cell}" />{else}<input class="fld-form-file" type="file" name="{$data[row].view_point}" value="{$lang.search}" />{/if}
 	{elseif $key=='info' && $smarty.section.row.index>0}
-	<textarea name="info-{$data[row].view_point}">{$cell}</textarea>
+	<textarea name="info-{$data[row].view_point}">{$cell|escape}</textarea>
 	{elseif $smarty.section.row.index==0}
 	{$lang.db.$cell}
 	{elseif $key == 'date_in' && $smarty.section.row.index>0}

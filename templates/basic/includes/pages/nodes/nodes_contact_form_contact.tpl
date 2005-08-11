@@ -22,7 +22,7 @@
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 <table class="table-form">
-	<tr class="table-form-row1"><td class="table-form-title">{$lang.from}:</td><td class="table-form-field">{$extra_data.from_username} &lt;{$extra_data.from_email}&gt;</td></tr>
+	<tr class="table-form-row1"><td class="table-form-title">{$lang.from}:</td><td class="table-form-field">{$extra_data.from_username|escape} &lt;{$extra_data.from_email|escape}&gt;</td></tr>
 <tr class="table-form-row2"><td class="table-form-title">{$lang.to}:</td><td class="table-form-field">
 		<select class="fld-form-input" name="email_to_type">
 			<option value="all">{$lang.mailto_all}</option>
