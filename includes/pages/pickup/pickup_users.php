@@ -43,7 +43,7 @@ class pickup_users {
 		$table_users->db_data(
 			'users.id, users.username',
 			'users',
-			$where,
+			"users.status = 'activated'".($where!=''?' AND ('.$where.')':""),
 			'users.id',
 			"users.username ASC");
 		$table_users->db_data_search($form_search_users);

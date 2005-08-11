@@ -44,9 +44,13 @@ class pickup_nodes {
 		$table_nodes = new table(array('TABLE_NAME' => 'table_nodes'));
 		$table_nodes->db_data(
 			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name',
-			'nodes, areas, regions',
-			'nodes.area_id = areas.id AND areas.region_id = regions.id'.($where!=''?' AND ('.$where.')':""),
-			"",
+			'nodes
+			LEFT JOIN areas ON nodes.area_id = areas.id
+			LEFT JOIN regions ON areas.region_id = regions.id ' .
+			'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
+			'LEFT JOIN users ON users.id = users_nodes.user_id',
+			"users.status = 'activated'".($where!=''?' AND ('.$where.')':""),
+			"nodes.id",
 			"nodes.id ASC");
 		$table_nodes->db_data_search($form_search_nodes);
 		for($i=1;$i<count($table_nodes->data);$i++) {
