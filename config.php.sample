@@ -58,10 +58,10 @@ $config = array(
 			'server.example.org/path' => 'example_key'
 			),
 		'bounds' => array(
-			'min_latitude' => GPS_COORDINATE,
-			'min_longitude' => GPS_COORDINATE,
-			'max_latitude' => GPS_COORDINATE,
-			'max_longitude' => GPS_COORDINATE
+			'min_latitude' => MINLAT_GPS_COORDINATE,
+			'min_longitude' => MINLON_GPS_COORDINATE,
+			'max_latitude' => MAXLAT_GPS_COORDINATE,
+			'max_longitude' => MAXLON_GPS_COORDINATE
 			)
 		)
 
