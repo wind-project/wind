@@ -52,11 +52,13 @@ $config = array(
 		'from' => 'hostmaster@wind.cube.gr',
 		'from_name' => 'WiND Hostmaster'
 		),
+	
 	'gmap' => array(
 		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
-			'server.example.org' => 'example_key'
+			'server.example.org/path' => 'example_key'
 			)
 		)
+
 );
 
 ?>

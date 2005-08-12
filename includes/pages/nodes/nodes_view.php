@@ -259,17 +259,28 @@ class nodes_view {
 		$this->tpl['link_plot_link'] = makelink(array("page" => "nodes", "subpage" => "plot_link", "a_node" => $this->tpl['node']['id']));
 
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
-		$main->html->head->add_script("text/javascript", "http://maps.google.com/maps?file=api&v=1&key=".$vars['gmap']['keys'][$_SERVER['SERVER_NAME']]);
-		$main->html->head->add_script("text/javascript", "?page=gmap&subpage=js&node=".get('node'));
-		$main->html->head->add_extra(
-			'<style type="text/css">
-    			v\:* {
-      			behavior:url(#default#VML);
-    			}
-    		</style>');
-    	
-		$main->html->body->tags['onload'] = "gmap_onload()";
+		foreach ($vars['gmap']['keys'] as $key => $value) {
+			if (strpos($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'], $key) === 0) {
+				$gmap_key = $value;
+				break;
+			}
+		}
 		
+		if (isset($gmap_key)) {
+			$this->tpl['gmap_key_ok'] = TRUE;
+			$main->html->head->add_script("text/javascript", "http://maps.google.com/maps?file=api&v=1&key=".$gmap_key);
+			$main->html->head->add_script("text/javascript", "?page=gmap&subpage=js&node=".get('node'));
+			$main->html->head->add_extra(
+				'<style type="text/css">
+					v\:* {
+		  			behavior:url(#default#VML);
+					}
+				</style>');
+			
+			$main->html->body->tags['onload'] = "gmap_onload()";
+		} else {
+			$this->tpl['gmap_key_ok'] = FALSE;
+		}		
 		return template($this->tpl, __FILE__);
 	}
 

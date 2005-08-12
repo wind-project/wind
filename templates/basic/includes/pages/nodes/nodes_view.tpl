@@ -32,8 +32,12 @@
 <div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 </td>
 <td class="table-page-split">
-<table bgcolor="#DBE0D7" cellpadding="0" cellspacing="2"><tr><td colspan="2">
+<table bgcolor="#DBE0D7" cellpadding="0" cellspacing="2"><tr><td colspan="2" style="font-size:12px; text-align:center; width: 500px; height: 500px">
+{if $gmap_key_ok}
 <div id="map" style="width: 500px; height: 500px"></div>
+{else}
+{$lang.message.error.gmap_key_failed.body|wordwrap:40|nl2br}
+{/if}
 </td></tr><tr><td style="font-size:12px;">
 <input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{$lang.backbone}
 <input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{$lang.aps}
