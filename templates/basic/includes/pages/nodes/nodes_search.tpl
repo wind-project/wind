@@ -23,17 +23,19 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-split">
-<table align="center" bgcolor="#DBE0D7" cellpadding="0" cellspacing="2"><tr><td colspan="2" style="font-size:12px; text-align:center;">{if $gmap_key_ok}
+<table align="center" bgcolor="#DBE0D7" cellpadding="0" cellspacing="2">
+<tr><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td></tr>
+<tr><td style="font-size:12px; text-align:center;">{if $gmap_key_ok}
 <div id="map" style="width: 500px; height: 500px;"></div>
 {else}
 {$lang.message.error.gmap_key_failed.body|wordwrap:40|nl2br}
 {/if}
 </td></tr><tr><td style="font-size:12px;">
-<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{$lang.backbone}
-<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{$lang.aps}
-<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{$lang.clients}
-<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{$lang.unlinked}
-</td><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td>
+<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_orange.png" alt=$lang.backbone}{$lang.backbone}
+<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_green.png" alt=$lang.aps}{$lang.aps}
+<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_blue.png" alt=$lang.clients}{$lang.clients}
+<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_red.png" alt=$lang.unlinked}{$lang.unlinked}
+</td>
 </table>
 </td>
 </tr>

@@ -34,7 +34,7 @@ class gmap_js {
 			$node = $db->get('latitude, longitude', 'nodes', "id = '".get('node')."'");
 			$this->tpl['center_latitude'] = $node[0]['latitude'];
 			$this->tpl['center_longitude'] = $node[0]['longitude'];
-			$this->tpl['zoom'] = 4;
+			$this->tpl['zoom'] = 3;
 		} else {
 			$t = $db->get('MIN(latitude) AS min_lat, MIN(longitude) AS min_lon, MAX(latitude) AS max_lat, MAX(longitude) AS max_lon',
 							'nodes

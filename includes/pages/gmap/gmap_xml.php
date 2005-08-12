@@ -32,8 +32,9 @@ class gmap_xml {
 		$node = $node[0];
 		
 		$nodes = $db->get(
-			'nodes.id, nodes.latitude, nodes.longitude, nodes.name AS nodes__name, COUNT(DISTINCT p2p.id) AS total_p2p, COUNT(DISTINCT aps.id) AS total_aps, COUNT(DISTINCT clients.id) AS total_clients, COUNT(DISTINCT client_ap.id) AS total_client_on_ap',
+			'nodes.id, nodes.latitude, nodes.longitude, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(DISTINCT p2p.id) AS total_p2p, COUNT(DISTINCT aps.id) AS total_aps, COUNT(DISTINCT clients.id) AS total_clients, COUNT(DISTINCT client_ap.id) AS total_client_on_ap',
 			'nodes
+			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN links AS p2p_t ON nodes.id = p2p_t.node_id
 			LEFT JOIN links AS p2p ON p2p.type = "p2p" AND p2p_t.peer_node_id = p2p.node_id AND p2p.peer_node_id = p2p_t.node_id
 			LEFT JOIN links AS aps ON nodes.id = aps.node_id AND aps.type = "ap"
@@ -78,7 +79,7 @@ class gmap_xml {
 			$xml .= ' lon1="'.$value['n1_lon'].'"';
 			$xml .= ' lat2="'.$value['n2_lat'].'"';
 			$xml .= ' lon2="'.$value['n2_lon'].'"';
-			$xml .= ' color="'.($value['l1_status']!='active' || $value['l2_status']!='active'?'#ff0000':'#00ff00').'"';
+			$xml .= ' status="'.($value['l1_status']!='active' || $value['l2_status']!='active'?'inactive':'active').'"';
 			$xml .= " />\r";
 		}
 		$xml .= "</links>\r";

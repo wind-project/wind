@@ -25,9 +25,9 @@
 {$lang.message.error.gmap_key_failed.body|wordwrap:40|nl2br}
 {/if}
 </td></tr><tr><td style="font-size:12px;" align="center">
-<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{$lang.backbone}
-<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{$lang.aps}
-<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{$lang.clients}
-<input type="checkbox" name="unlinked" onClick="gmap_refresh();" />{$lang.unlinked}
+<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_orange.png" alt=$lang.backbone}{$lang.backbone}
+<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_green.png" alt=$lang.aps}{$lang.aps}
+<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_blue.png" alt=$lang.clients}{$lang.clients}
+<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_red.png" alt=$lang.unlinked}{$lang.unlinked}
 </td></tr>
 </table>
