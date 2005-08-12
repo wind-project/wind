@@ -22,7 +22,23 @@
 {include file=generic/page-title.tpl title="`$lang.all_nodes`" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
-<td class="table-page-pad">
+<td class="table-page-split">
+<table align="center" bgcolor="#DBE0D7" cellpadding="0" cellspacing="2"><tr><td colspan="2" style="font-size:12px; text-align:center;">{if $gmap_key_ok}
+<div id="map" style="width: 500px; height: 500px;"></div>
+{else}
+{$lang.message.error.gmap_key_failed.body|wordwrap:40|nl2br}
+{/if}
+</td></tr><tr><td style="font-size:12px;">
+<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{$lang.backbone}
+<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{$lang.aps}
+<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{$lang.clients}
+<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{$lang.unlinked}
+</td><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td>
+</table>
+</td>
+</tr>
+<tr>
+<td class="table-page-split">
 {include file=generic/title1.tpl title="`$lang.nodes_search`" content=$form_search_nodes}
 </td>
 </tr>

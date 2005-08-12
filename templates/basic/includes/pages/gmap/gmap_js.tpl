@@ -28,7 +28,11 @@ var polylines = Array();
 function gmap_onload() {
 if (GBrowserIsCompatible()) {
   map = new GMap(document.getElementById("map"));
-  map.centerAndZoom(new GPoint({/literal}{$node.longitude}{literal}, {/literal}{$node.latitude}{literal}), 4);
+  var center = new GPoint({/literal}{$center_longitude}{literal}, {/literal}{$center_latitude}{literal});
+  var span = new GSize((({/literal}{$max_longitude|default:0}{literal})-({/literal}{$min_longitude|default:0}{literal})),(({/literal}{$max_latitude|default:0}{literal})-({/literal}{$min_latitude|default:0}{literal}))); 
+  var zoom = map.spec.getLowestZoomLevel(center, span, map.viewSize); 
+  if ('{/literal}{$zoom}{literal}' != '') zoom = {/literal}{$zoom|default:0}{literal};
+  map.centerAndZoom(center, zoom);
   map.addControl(new GLargeMapControl());
   map.setMapType(G_SATELLITE_TYPE);
   GEvent.addListener(map, "moveend", gmap_reload);
@@ -58,8 +62,8 @@ function gmap_reload() {
     	((nodes[i].getAttribute("total_p2p") > 0 && ch_p2p.checked == true) || (nodes[i].getAttribute("total_aps") > 0 && ch_aps.checked == true) || (nodes[i].getAttribute("total_client_on_ap") > 0 && ch_clients.checked == true) || (nodes[i].getAttribute("total_p2p") == 0 && nodes[i].getAttribute("total_client_on_ap") == 0 && ch_unlinked.checked == true)) &&
     	nodes[i].getAttribute("latitude") >= bounds.minY && nodes[i].getAttribute("latitude") <= bounds.maxY && nodes[i].getAttribute("longitude") >= bounds.minX && nodes[i].getAttribute("longitude") <= bounds.maxX) {
 	    var point = new GPoint(nodes[i].getAttribute("longitude"), nodes[i].getAttribute("latitude"));
-		var html = "<div style=\"font-size:12px;font-weight:bold;\">" + nodes[i].getAttribute("name") + " (#" + nodes[i].getAttribute("id") + ")</div><br />" +
-				"<div style=\"font-size:10px;\">" +
+		var html = "<div style=\"text-align:left; font-size:12px;font-weight:bold;\">" + nodes[i].getAttribute("name") + " (#" + nodes[i].getAttribute("id") + ")</div><br />" +
+				"<div style=\"text-align:left; font-size:10px;\">" +
 				"{/literal}{$lang.links}{literal}: " + nodes[i].getAttribute("total_p2p") + " (+" + nodes[i].getAttribute("total_aps") + " {/literal}{$lang.aps}{literal})" + "<br />" +
 				"{/literal}{$lang.clients}{literal}: " + nodes[i].getAttribute("total_clients") + "<br /><br />" +
 				"<a href=\"" + nodes[i].getAttribute("url") + "\">{/literal}{$lang.node_page}{literal}</a></div>";

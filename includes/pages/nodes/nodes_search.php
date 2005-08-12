@@ -85,9 +85,34 @@ class nodes_search {
 	
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		global $construct;
+		global $construct, $vars, $main;
 		$this->tpl['form_search_nodes'] = $construct->form($this->form_search_nodes(), __FILE__);
 		$this->tpl['table_nodes'] = $construct->table($this->table_nodes(), __FILE__);
+
+		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
+		foreach ($vars['gmap']['keys'] as $key => $value) {
+			if (strpos($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'], $key) === 0) {
+				$gmap_key = $value;
+				break;
+			}
+		}
+		
+		if (isset($gmap_key)) {
+			$this->tpl['gmap_key_ok'] = TRUE;
+			$main->html->head->add_script("text/javascript", "http://maps.google.com/maps?file=api&v=1&key=".$gmap_key);
+			$main->html->head->add_script("text/javascript", "?page=gmap&subpage=js&node=".get('node'));
+			$main->html->head->add_extra(
+				'<style type="text/css">
+					v\:* {
+		  			behavior:url(#default#VML);
+					}
+				</style>');
+			
+			$main->html->body->tags['onload'] = "gmap_onload()";
+		} else {
+			$this->tpl['gmap_key_ok'] = FALSE;
+		}
+
 		return template($this->tpl, __FILE__);
 	}
 
