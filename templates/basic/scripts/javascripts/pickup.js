@@ -27,3 +27,7 @@
 			list.options[x].selected = "true"
 		}
 	}
+
+	function pickup_value(object, value) {
+		object.value = value
+	}

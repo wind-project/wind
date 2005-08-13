@@ -143,6 +143,8 @@ $lang = array(
 	'no' => "Όχι",
 	'backbone' => "Backbone",
 	'unlinked' => "Ασύνδετοι",
+	'find_coordinates' => "Βρείτε τις συντεταγμένες σας",
+	'select_the_coordinates' => "Επιλογή των συντεταγμένων",
 
 	'db' => array(
 		'users__username' => 'Όνομα χρήστη',
@@ -163,8 +165,8 @@ $lang = array(
 		'nodes__date_in' => 'Δημιουργήθηκε',
 		'nodes__area_id' => 'Δήμος / Κοινότητα',
 		'nodes__latitude' => 'Γεωγραφικό πλάτος (lat)',
-		'nodes__longitude' => 'Γεωγραφικό μήκος (log)',
-		'nodes__elevation' => 'Υψόμετρο',
+		'nodes__longitude' => 'Γεωγραφικό μήκος (lon)',
+		'nodes__elevation' => 'Ύψος κτιρίου (μ)',
 		'nodes__info' => 'Πληροφορίες',
 		'nodes__name_ns' => 'Πρόθεμα nameserver',
 		

@@ -30,7 +30,8 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.node_info` $t1" content=$form_node}
+{include assign="t2" file="generic/link.tpl" content="`$lang.find_coordinates`" onclick="javascript: t = window.open('$link_gmap_pickup', 'popup_gmap_pickup', 'width=500,height=500,toolbar=0,resizable=0,scrollbars=0'); t.focus(); return false;"}
+{include file=generic/title1.tpl title="`$lang.node_info` $t1 $t2" content=$form_node}
 </td>
 </tr>
 {if $node != 'add'}

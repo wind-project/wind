@@ -331,6 +331,7 @@ class mynodes {
 				$this->tpl['link_subnet_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'subnet', 'node' => get('node'), 'subnet' => 'add'));
 				$this->tpl['link_ipaddr_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'ipaddr', 'node' => get('node'), 'ipaddr' => 'add'));
 			}
+			$this->tpl['link_gmap_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'gmap', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
 			return template($this->tpl, __FILE__);
 		}
 	}
