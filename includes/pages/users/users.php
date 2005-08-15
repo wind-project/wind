@@ -55,7 +55,7 @@ class users {
 		global $main, $construct, $db;
 		if (get('action') == 'activate') {
 			$t = $db->get('account_code', 'users', "id = '".get('user')."'");
-			if ($t[0]['account_code'] == get('account_code')) {
+			if ($t[0]['account_code'] != '' && $t[0]['account_code'] == get('account_code')) {
 				$db->set('users', array('status' => 'activated'), "id = '".get('user')."'");
 				$main->message->set_fromlang('info', 'activation_success');
 			} else {

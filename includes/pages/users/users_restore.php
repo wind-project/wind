@@ -77,7 +77,7 @@ class users_restore {
 	
 	function output_onpost_form_change_password() {
 		global $main, $db;
-		if ($db->cnt('', 'users', "account_code = '".get('account_code')."' AND id = '".get('user')."'") == 1) {
+		if ($db->cnt('', 'users', "account_code IS NOT NULL AND account_code = '".get('account_code')."' AND id = '".get('user')."'") == 1) {
 			if ($_POST['users__password'] == $_POST['users__password_c'] && $_POST['users__password'] != '') {
 				$ret = $db->set('users', array("password" => md5($_POST['users__password'])), "id = '".get('user')."'");
 				
