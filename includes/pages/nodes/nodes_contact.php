@@ -46,6 +46,9 @@ class nodes_contact {
 		$t = $db->get('id, name', 'nodes', "id = '".get('node')."'");
 		$this->tpl['node_name'] = $t[0]['name'];
 		$this->tpl['node_id'] = $t[0]['id'];
+		if (!$main->userdata->logged) {
+			$main->message->set_fromlang('error', 'not_logged_in');
+		}
 		return template($this->tpl, __FILE__);
 	}
 
