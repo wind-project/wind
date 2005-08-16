@@ -76,6 +76,26 @@ function get($key) {
 			$valid_array = getdirlist($root_path."includes/pages/");
 			array_unshift($valid_array, 'startup');
 			break;
+		case 'subpage':
+			$valid_array = getdirlist($root_path."includes/pages/".get('page').'/', FALSE, TRUE);
+			for ($key=0;$key<count($valid_array);$key++) {
+				$valid_array[$key] = basename($valid_array[$key], '.php');
+				if (substr($valid_array[$key], 0, strlen(get('page'))+1) != get('page').'_') {
+					array_splice($valid_array, $key, 1);
+					$key--;
+				} else {
+					$valid_array[$key] = substr($valid_array[$key], strlen(get('page'))+1);
+				}
+			}
+			array_unshift($valid_array, '');
+			break;
+		case 'lang':
+			$valid_array = getdirlist($root_path."globals/language/", FALSE, TRUE);
+			for ($key=0;$key<count($valid_array);$key++) {
+				$valid_array[$key] = basename($valid_array[$key], '.php');
+			}
+			array_unshift($valid_array, '');
+			break;
 	}
 	if (isset($valid_array) && !in_array($ret, $valid_array)) $ret = $valid_array[0];
 	return $ret;
