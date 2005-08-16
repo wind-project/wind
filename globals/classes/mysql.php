@@ -214,8 +214,11 @@ class mysql {
 		if ($num !== '') $this->error = $num;
 		if ($num !== '') $this->error_report = $report;
 		if (isset($main)) {
-			if ($main->userdata->privileges['admin'] === TRUE) $if_admin .= '<br /><br />Last MySQL query:<br />'.$this->last_query;
-			$main->message->set('MySQL Error', $this->get_error().$if_admin);
+			if ($main->userdata->privileges['admin'] === TRUE) {
+				$main->message->set('MySQL Error', $this->get_error().'<br /><br />Last MySQL query:<br />'.$this->last_query);
+			} else {
+				$main->message->set_fromlang('error', 'database_error');	
+			}
 		}
 	}
 	
