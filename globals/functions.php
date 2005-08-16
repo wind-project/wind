@@ -44,11 +44,11 @@ function redirect($url, $sec=0, $exit=TRUE) {
 		return;
 	}
 	if (@preg_match('/Microsoft|WebSTAR|Xitami/', getenv('SERVER_SOFTWARE')) || $sec>0) {
-		header("Refresh: $sec; URL=$url");
+		header("Refresh: $sec; URL=".html_entity_decode($url));
 		global $main;
 		$main->html->head->add_meta("$sec; url=$url", "", "refresh");
 	} else {
-		header("Location: $url");		
+		header("Location: ".html_entity_decode($url));		
 	}
 	if ($exit && !$main->message->show) {
 		exit;
