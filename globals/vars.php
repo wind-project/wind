@@ -22,7 +22,8 @@
 $vars = array(
 	
 	'info' => array(
-		'version' => '(snapshot)'
+		'version' => snapshot_version,
+		'min_template_version' => snapshot_min_template_version
 		)
 
 );
