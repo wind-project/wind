@@ -22,6 +22,8 @@
 var map;
 var nodes = Array();
 var links = Array();
+var markers = Array();
+var polylines = Array();
 
 // Markers Optimization
 GMap.prototype.addOverlays=function(a){ 
@@ -122,79 +124,86 @@ function gmap_onload() {
 				function (oldZoomLevel, newZoomLevel) {
 					if ((oldZoomLevel > 3 && newZoomLevel <= 3) ||
 						(oldZoomLevel <= 3 && newZoomLevel > 3))
-					gmap_refresh();
+							map.clearOverlays();
+							markers = Array();
+							polylines = Array();
+							gmap_reload();
 				});
-		var request = GXmlHttp.create();
-		request.open("GET", "{/literal}{$link_xml_page}{literal}", true);
-		request.onreadystatechange = 
-				function() {
-					if (request.readyState == 4) {
-						var xmlDoc = request.responseXML;
-						nodes = xmlDoc.documentElement.getElementsByTagName("node");
-						links = xmlDoc.documentElement.getElementsByTagName("link");
-						gmap_reload();
-					}
-				}
-		request.send(null);
+		gmap_refresh();
 	}
 }
 
 function gmap_reload() {
-	var markers = Array();
-	var polylines = Array();
+	var markers_t = Array();
+	var polylines_t = Array();
 	var bounds = map.getBoundsLatLng();
 	var ch_p2p = document.getElementsByName("p2p")[0];
 	var ch_aps = document.getElementsByName("aps")[0];
 	var ch_clients = document.getElementsByName("clients")[0];
 	var ch_unlinked = document.getElementsByName("unlinked")[0];
 	for (var i = 0; i < nodes.length; i++) {
-		var show_p2p = nodes[i].getAttribute("total_p2p") > 0 &&
+		if (markers[i] != undefined) continue;
+
+		var node_id = nodes[i].getAttribute("id");
+		var node_name = nodes[i].getAttribute("name");
+		var node_area = nodes[i].getAttribute("area");
+		var node_p2p = nodes[i].getAttribute("p2p") * 1;
+		var node_aps = nodes[i].getAttribute("aps") * 1;
+		var node_client_on_ap = nodes[i].getAttribute("client_on_ap") * 1;
+		var node_clients = nodes[i].getAttribute("clients") * 1;
+		var node_lat = nodes[i].getAttribute("lat");
+		var node_lon = nodes[i].getAttribute("lon");
+		var node_url = nodes[i].getAttribute("url");
+
+		var show_p2p = node_p2p > 0 &&
 						ch_p2p.checked == true;
-		var show_aps = nodes[i].getAttribute("total_aps") > 0 &&
+		var show_aps = node_aps > 0 &&
 						ch_aps.checked == true;
-		var show_clients = nodes[i].getAttribute("total_client_on_ap") > 0 &&
+		var show_clients = node_client_on_ap > 0 &&
 							ch_clients.checked == true;
-		var show_unl = nodes[i].getAttribute("total_p2p") == 0 && 
-						nodes[i].getAttribute("total_client_on_ap") == 0 &&
+		var show_unl = node_p2p == 0 && 
+						node_client_on_ap == 0 &&
 						ch_unlinked.checked == true;
 		var show_nodes = show_p2p || show_aps || show_clients || show_unl;
-		var inbounds = nodes[i].getAttribute("latitude") >= bounds.minY &&
-						nodes[i].getAttribute("latitude") <= bounds.maxY &&
-						nodes[i].getAttribute("longitude") >= bounds.minX &&
-						nodes[i].getAttribute("longitude") <= bounds.maxX;
+		var inbounds = node_lat >= bounds.minY &&
+						node_lat <= bounds.maxY &&
+						node_lon >= bounds.minX &&
+						node_lon <= bounds.maxX;
 		if (show_nodes && inbounds) {
-	    	var point = new GPoint(nodes[i].getAttribute("longitude"), 
-	    							nodes[i].getAttribute("latitude"));
+	    	var point = new GPoint(node_lon, 
+	    							node_lat);
 			var icon; var icon_s;
 			if (map.getZoomLevel() <= 3) {
 				var icon_scale = 1;
 		    } else {
 				var icon_scale = 0;
 		    }
-			if (nodes[i].getAttribute("total_aps") > 0) {
+			if (node_aps > 0) {
 				icon = icon_green[icon_scale];
 				icon_s = icon_green[0];
-			} else if (nodes[i].getAttribute("total_p2p") > 0) {
+			} else if (node_p2p > 0) {
 				icon = icon_orange[icon_scale];
 				icon_s = icon_orange[0];
-			} else if (nodes[i].getAttribute("total_client_on_ap") > 0) {
+			} else if (node_client_on_ap > 0) {
 				icon = icon_blue[0];
 				icon_s = icon_blue[0];
 			} else {
 				icon = icon_red[0];
 				icon_s = icon_red[0];
 			}
-			var html = "<div style=\"text-align:left; font-size:12px;font-weight:bold;\"><img src=\"" + icon_s.image + "\" alt=\"\" />" + nodes[i].getAttribute("name") + " (#" + nodes[i].getAttribute("id") + ")</div><br />" +
+			var html = "<div style=\"text-align:left; font-size:12px;font-weight:bold;\"><img src=\"" + icon_s.image + "\" alt=\"\" />" + node_name + " (#" + node_id + ")</div><br />" +
 						"<div style=\"text-align:left; font-size:10px;\">" +
-						nodes[i].getAttribute("areas__name") + "<br />" +
-						"{/literal}{$lang.links}{literal}: " + (parseInt(nodes[i].getAttribute("total_p2p")) + parseInt(nodes[i].getAttribute("total_client_on_ap"))) + " (+" + nodes[i].getAttribute("total_aps") + " {/literal}{$lang.aps}{literal})" + "<br />" +
-						"{/literal}{$lang.clients}{literal}: " + nodes[i].getAttribute("total_clients") + "<br /><br />" +
-						"<a href=\"" + nodes[i].getAttribute("url") + "\">{/literal}{$lang.node_page}{literal}</a></div>";
+						node_area + "<br />" +
+						"{/literal}{$lang.links}{literal}: " + (parseInt(node_p2p) + parseInt(node_client_on_ap)) + " (+" + node_aps + " {/literal}{$lang.aps}{literal})" + "<br />" +
+						"{/literal}{$lang.clients}{literal}: " + node_clients + "<br /><br />" +
+						"<a href=\"" + node_url + "\">{/literal}{$lang.node_page}{literal}</a></div>";
 			var marker = createMarker(point, html, icon);
-			markers.push(marker);
+			markers_t.push(marker);
+			markers[i] = true;
 		}
 	}
 	for (var i = 0; i < links.length; i++) {
+		if (polylines[i] != undefined) continue;
 		var show_l_p2p = links[i].getAttribute("type") == "p2p" &&
 							ch_p2p.checked == true;
 		var show_l_clients = links[i].getAttribute("type") == "client" &&
@@ -221,16 +230,39 @@ function gmap_reload() {
 									links[i].getAttribute("lat2"));
 			var polyline = new GPolyline([point1, point2], color,
 							(links[i].getAttribute("type")=="p2p"?3:1));
-			polylines.push(polyline);
+			polylines_t.push(polyline);
+			polylines[i] = true;
 		}
     }
-	map.addOverlays(markers);
-	map.addOverlays(polylines);
+	map.addOverlays(markers_t);
+	map.addOverlays(polylines_t);
 }
 
 function gmap_refresh() {
-	map.clearOverlays();
-	gmap_reload();
+	var ch_p2p = document.getElementsByName("p2p")[0];
+	var ch_aps = document.getElementsByName("aps")[0];
+	var ch_clients = document.getElementsByName("clients")[0];
+	var ch_unlinked = document.getElementsByName("unlinked")[0];
+	var request = GXmlHttp.create();
+	var xml_url = "{/literal}{$link_xml_page}{literal}" + 
+					(ch_p2p.checked == true?"&show_p2p=1":"") +
+					(ch_aps.checked == true?"&show_aps=1":"") +
+					(ch_clients.checked == true?"&show_clients=1":"") +
+					(ch_unlinked.checked == true?"&show_unlinked=1":"");
+	request.open("GET", xml_url, true);
+	request.onreadystatechange = 
+			function() {
+				if (request.readyState == 4) {
+					var xmlDoc = request.responseXML;
+					nodes = xmlDoc.documentElement.getElementsByTagName("node");
+					links = xmlDoc.documentElement.getElementsByTagName("link");
+					map.clearOverlays();
+					markers = Array();
+					polylines = Array();
+					gmap_reload();
+				}
+			}
+	request.send(null);
 }
 
 function createMarker(point, html, icon) {
