@@ -44,8 +44,8 @@ if ($db->error) {
 }
 
 $smarty = new Smarty;
-$smarty->template_dir = $root_path.'templates/basic/';
-$smarty->compile_dir = $root_path.'templates/basic_c/';
+$smarty->template_dir = $vars['templates']['path'].$vars['templates']['default'].'/';
+$smarty->compile_dir = $vars['templates']['compiled_path'].$vars['templates']['default'].'/';
 reset_smarty();
 
 if ($vars['mail']['smtp'] != '') {

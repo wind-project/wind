@@ -22,6 +22,12 @@ $config = array(
 		'delay' => 5
 		),
 
+	'templates' => array(
+		'path' => $root_path.'templates/',
+		'compiled_path' => $root_path.'templates/_compiled/',
+		'default' => 'basic'
+		),
+		
 	'language' => array(
 		'default' => 'greek'
 		),
