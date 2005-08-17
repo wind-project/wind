@@ -31,7 +31,7 @@ class ranges_search {
 		global $construct, $db;
 		$form_search_ranges = new form(array('FORM_NAME' => 'form_search_ranges'));
 		$form_search_ranges->data = array("0" => array("Field" => "ip", "fullField" => "ip"));
-		//$form_search_ranges->db_data('ip_ranges.status, ip_ranges.delete_req');
+		$form_search_ranges->db_data('ip_ranges.status');
 		$form_search_ranges->db_data_search();
 		return $form_search_ranges;
 	}
@@ -46,12 +46,12 @@ class ranges_search {
 				($s_ip !=''?"ip_ranges.ip_start <= ".ip2long($s_ip)." AND ip_ranges.ip_end >= ".ip2long($s_ip)." AND ":"");
 		if ($where!='') $where = substr($where, 0, -5);
 		$table_ip_ranges->db_data(
-			'"" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, nodes.name AS nodes__name, nodes.id AS nodes__id',
+			'"" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, nodes.name AS nodes__name, nodes.id AS nodes__id',
 			'ip_ranges
 			LEFT JOIN nodes ON ip_ranges.node_id = nodes.id',
-			($where !=''?"(".$where.") AND ":"")."ip_ranges.status = 'active'",
+			($where !=''?"(".$where.")":""),
 			"",
-			"ip_ranges.ip_start ASC");
+			"ip_ranges.status ASC, ip_ranges.ip_start ASC");
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
 			if ($key != 0) {
 				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);
@@ -63,6 +63,7 @@ class ranges_search {
 		}
 		$table_ip_ranges->info['EDIT_COLUMN'] = 'nodes__name';
 		$table_ip_ranges->db_data_remove('ip_start', 'ip_end', 'nodes__id');
+		$table_ip_ranges->db_data_translate('ip_ranges__status');
 		return $table_ip_ranges;
 	}
 

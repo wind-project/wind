@@ -29,7 +29,7 @@ class dnszones {
 	
 	function form_search_dns() {
 		$form_search_dns = new form(array('FORM_NAME' => 'form_search_dns'));
-		$form_search_dns->db_data('dns_zones.type, dns_zones.name');
+		$form_search_dns->db_data('dns_zones.type, dns_zones.name, dns_zones.status');
 		$form_search_dns->db_data_search();
 		return $form_search_dns;
 	}
@@ -41,12 +41,12 @@ class dnszones {
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 
 		$table_dns->db_data(
-			'dns_zones.id AS dns_zones__id, dns_zones.name AS dns_zones__name, dns_zones.type, dns_zones.date_in, nodes.name AS nodes__name, nodes.id AS nodes__id',
+			'dns_zones.id AS dns_zones__id, dns_zones.name AS dns_zones__name, dns_zones.type, dns_zones.date_in, dns_zones.status, nodes.name AS nodes__name, nodes.id AS nodes__id',
 			'dns_zones
 			LEFT JOIN nodes ON dns_zones.node_id = nodes.id',
 			$where,
-			($where !=''?"(".$where.") AND ":"")."dns_zones.status = 'active'",
-			"dns_zones.type ASC, dns_zones.name ASC");
+			($where !=''?"(".$where.")":""),
+			"dns_zones.status ASC, dns_zones.type ASC, dns_zones.name ASC");
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				$table_dns->data[$i]['nodes__name'] .= " (#".$table_dns->data[$i]['nodes__id'].")";
@@ -56,6 +56,7 @@ class dnszones {
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'nodes__name';
 		$table_dns->db_data_remove('dns_zones__id', 'type', 'nodes__id');
+		$table_dns->db_data_translate('dns_zones__status');
 		return $table_dns;
 	}
 
