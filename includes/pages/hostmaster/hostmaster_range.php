@@ -30,7 +30,7 @@ class hostmaster_range {
 	function form_range() {
 		global $construct, $db, $vars;
 		$form_range = new form(array('FORM_NAME' => 'form_range'));
-		$form_range->db_data('ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.subnetmask, ip_ranges.info, ip_ranges.status');
+		$form_range->db_data('ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.info, ip_ranges.status');
 		$form_range->db_data_values("ip_ranges", "id", get('iprange'));
 		$form_range->data[0]['value'] = long2ip($form_range->data[0]['value']);
 		$form_range->data[1]['value'] = long2ip($form_range->data[1]['value']);
