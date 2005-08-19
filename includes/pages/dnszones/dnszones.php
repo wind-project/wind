@@ -45,7 +45,7 @@ class dnszones {
 			'dns_zones
 			LEFT JOIN nodes ON dns_zones.node_id = nodes.id',
 			$where,
-			($where !=''?"(".$where.")":""),
+			"",
 			"dns_zones.status ASC, dns_zones.type ASC, dns_zones.name ASC");
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
