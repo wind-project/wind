@@ -114,7 +114,7 @@
 	{/if}
 	</tr>
 {/section}
-<tr><td class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="OK" /></td></tr>
+<tr><td class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td></tr>
 </table>
 </form>
 {if $use_pickup == TRUE}<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>{/if}

@@ -108,6 +108,7 @@ $lang = array(
 	'ip_ranges_allocation' => "Κατανομή διευθύνσεων IP",
 	'ip_ranges_search' => "Αναζήτηση IP C-Classes",
 	'change' => "Αλλαγή",
+	'submit' => "OK",
 	'add' => "Προσθήκη",
 	'remove' => "Αφαίρεση",
 	'update' => "Ανανέωση",

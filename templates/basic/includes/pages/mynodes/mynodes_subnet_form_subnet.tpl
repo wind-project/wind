@@ -87,7 +87,7 @@ function type_changed() {
 			</select>
 		</td></tr>	
 
-<tr><td colspan="2"><input type="submit" name="submit" value="OK" /></td></tr>
+<tr><td class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td></tr>
 </table>
 </form>
 <script type="text/javascript" language="javascript">
