@@ -365,7 +365,7 @@ $lang = array(
 			),
 			'request_diversion' => array(
 				'title' => "Ğñïşèçóç",
-				'body' => "Ôï áßôçìá óáò ğñïùèåßôáé."
+				'body' => "Ôï áßôçìÜ óáò ğñïùèåßôáé."
 			)
 		),
 		'error' => array(

@@ -159,7 +159,7 @@ class menu {
 			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "node" => $node[0]['id'])), '', '', TRUE);
 		} elseif (is_ip($_POST['quick_search'], FALSE)) {
 			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "ranges", "subpage" => "search", "form_search_ranges_search" => serialize(array("ip" => $_POST['quick_search'])))), '', '', TRUE);
-		} elseif (substr($_POST['quick_search'], -strlen($vars['dns']['root_zone'])) == $vars['dns']['root_zone']) {
+		} elseif (substr($_POST['quick_search'], -strlen(".".$vars['dns']['root_zone'])) == ".".$vars['dns']['root_zone']) {
 			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "dnszones", "form_search_dns_search" => serialize(array("dns_zones__name" => $_POST['quick_search'])))), '', '', TRUE);
 		} else {
 			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "form_search_nodes_search" => serialize(array("nodes__name" => $_POST['quick_search'])))), '', '', TRUE);

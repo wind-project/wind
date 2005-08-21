@@ -42,7 +42,7 @@ class pickup_gmap {
 		
 		if (isset($gmap_key)) {
 			$this->tpl['gmap_key_ok'] = TRUE;
-			$main->html->head->add_script("text/javascript", "http://maps.google.com/maps?file=api&v=1&key=".$gmap_key);
+			$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=1&key=".$gmap_key);
 			$main->html->head->add_script("text/javascript", "?page=gmap&subpage=pickup_js&object_lat=".get('object_lat')."&object_lon=".get('object_lon'));
 			$main->html->head->add_extra(
 				'<style type="text/css">

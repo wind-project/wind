@@ -99,7 +99,7 @@ class nodes_search {
 		
 		if (isset($gmap_key)) {
 			$this->tpl['gmap_key_ok'] = TRUE;
-			$main->html->head->add_script("text/javascript", "http://maps.google.com/maps?file=api&v=1&key=".$gmap_key);
+			$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=1&key=".$gmap_key);
 			$main->html->head->add_script("text/javascript", "?page=gmap&subpage=js&node=".get('node'));
 			$main->html->head->add_extra(
 				'<style type="text/css">
