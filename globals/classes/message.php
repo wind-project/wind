@@ -34,14 +34,14 @@ class message {
 
 	}
 
-	function set_fromlang($type, $message, $forward="", $image="") {
+	function set_fromlang($type, $message, $forward="", $image="", $hide_menu="", $override=FALSE) {
 		global $lang;
-		$this->set($lang['message'][$type][$message]['title'], $lang['message'][$type][$message]['body'], $forward, $image);
+		$this->set($lang['message'][$type][$message]['title'], $lang['message'][$type][$message]['body'], $forward, $image, $hide_menu, $override);
 	}
 	
-	function set($title, $message, $forward="", $image="", $hide_menu="") {
+	function set($title, $message, $forward="", $image="", $hide_menu="", $override=FALSE) {
 		global $main;
-		if ($this->show == TRUE) return FALSE;
+		if ($this->show == TRUE && !$override) return FALSE;
 		$this->show = TRUE;
 		$this->title = $title;
 		$this->message = $message;

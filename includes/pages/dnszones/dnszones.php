@@ -37,6 +37,9 @@ class dnszones {
 	function table_dns() {
 		global $construct, $db, $vars;
 		$form_search_dns = $this->form_search_dns();
+		if (substr($form_search_dns->data[1]['value'], -strlen(".".$vars['dns']['root_zone'])) == ".".$vars['dns']['root_zone']) {
+			$form_search_dns->data[1]['value'] = substr($form_search_dns->data[1]['value'], 0, -strlen(".".$vars['dns']['root_zone']));
+		}
 		$where = $form_search_dns->db_data_where(array("dns_zones__name" => "starts_with"));
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 

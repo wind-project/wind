@@ -72,7 +72,9 @@ class ranges_search {
 		global $construct;
 		$this->tpl['link_ranges_search'] = makelink(array("page" => "ranges", "subpage" => "search"));
 		$this->tpl['link_ranges_allocation'] = makelink(array("page" => "ranges", "subpage" => "allocation"));
-		$this->tpl['form_search_ranges'] = $construct->form($this->form_search_ranges(), __FILE__);
+		$form_search_ranges = $this->form_search_ranges();
+		if ($form_search_ranges->data[0]['value'] != '') $form_search_ranges->data[0]['value'] = correct_ip($form_search_ranges->data[0]['value']);
+		$this->tpl['form_search_ranges'] = $construct->form($form_search_ranges, __FILE__);
 		$this->tpl['table_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}

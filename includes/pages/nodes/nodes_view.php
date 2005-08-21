@@ -227,6 +227,16 @@ class nodes_view {
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $db, $vars, $main;
+		if ($db->cnt('',
+					'nodes ' .
+					'INNER JOIN users_nodes ON users_nodes.node_id = nodes.id ' .
+					'INNER JOIN users ON users_nodes.user_id = users.id',
+					"nodes.id = '".get('node')."' " .
+					'AND users.status = "activated"')
+			 == 0) {
+			$main->message->set_fromlang('error', 'node_not_found');
+			return;
+		}
 		$this->tpl['node'] = $db->get(
 			'nodes.id, nodes.name, nodes.date_in, nodes.latitude, nodes.longitude, nodes.elevation, nodes.info, areas.name as area_name, regions.name as region_name, users.username AS owner_username, users.email AS owner_email',
 			'nodes
