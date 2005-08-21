@@ -66,44 +66,49 @@
 			<td class="table-search-menu-text"><img src="templates/basic/images/search_ip.gif" width="33" height="32" alt="{$lang.all_ranges}" />&nbsp;<a href="{$link_allranges}">{$lang.all_ranges}</a></td>
 		  </tr>
 		  <tr>
+			<td class="table-search-menu-text">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table-search-menu">
+					<tr>
+						<td><img src="templates/basic/images/search.gif" width="32" height="32" alt="{$lang.quick_search}" /></td>
+						<td style="font-size: 12px;">{$form_quick_search}</td>
+					</tr>
+				</table>
+			</td>
+		  </tr>
+		  <tr>
 			<td class="table-middle-left-pad"></td>
 		  </tr>
 		</table>
 		</td>
 	  </tr>
+
+      <tr>
+        <td class="search-menu">
+			<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-search-menu">
+			  <tr>
+				<td colspan="2" class="quick-login-title">{$lang.statistics}</td>
+			  </tr>
+			  <tr>
+				<td rowspan="4" class="quick-login-text"><img src="templates/basic/images/stats.png" width="48" height="48" alt="{$lang.statistics}" /></td>
+				<td class="quick-login-text">{$stats_nodes_active}/{$stats_nodes_total} <span style="color: black;">{$lang.active_nodes|lower}</span></td>
+			  </tr>
+			  <tr>
+				<td class="quick-login-text">{$stats_backbone} <span style="color: black;">{$lang.backbone_nodes|lower}</span></td>
+			  </tr>
+			  <tr>
+				<td class="quick-login-text">{$stats_links} <span style="color: black;">{$lang.links|lower}</span></td>
+			  </tr>
+			  <tr>
+				<td class="quick-login-text">{$stats_aps} <span style="color: black;">{$lang.aps|lower}</span></td>
+			  </tr>
+			  <tr>
+				<td colspan="2" class="table-middle-left-pad"></td>
+			  </tr>
+			</table>
+        </td>
+      </tr>
+
    {if $logged==TRUE}
-          <tr>
-            <td class="search-menu">
-				<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-search-menu">
-				  <tr>
-					<td colspan="2" class="quick-login-title">{$lang.user_info}</td>
-				  </tr>
-				  <tr class="table-form-row2">
-					<td class="quick-login-text">{$lang.username}</td>
-					<td class="table-form-title">{$username|escape}</td>
-				  </tr>
-				  <tr class="table-form-row1">
-					<td class="quick-login-text">{$lang.registered_since}</td>
-					<td class="table-form-title">{$date_in|date_format:"%x"}</td>
-				  </tr>
-				  <tr class="table-form-row2">
-					<td class="quick-login-text">{$lang.name}</td>
-					<td class="table-form-title">{$name|escape}</td>
-				  </tr>
-				  <tr class="table-form-row1">
-					<td class="quick-login-text">{$lang.surname}</td>
-					<td class="table-form-title">{$surname|escape}</td>
-				  </tr>
-				  <tr class="table-form-row2">
-					<td class="quick-login-text">{$lang.last_visit}</td>
-					<td class="table-form-title">{$last_visit|date_format:"%x"}</td>
-				  </tr>
-				  <tr class="table-form-row1">
-					<td colspan="2" class="table-middle-left-pad"></td>
-				  </tr>
-				</table>
-            </td>
-          </tr>
 		<tr>
 		<td class="search-menu">
 			<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-mynodes">

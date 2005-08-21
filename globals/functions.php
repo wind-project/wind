@@ -282,4 +282,14 @@ function validate_name_ns($name, $node) {
 	return ($extension != '' ? $ret.$extension : $ret);
 }
 
+function is_ip ($ip, $full_ip=TRUE) {
+	$ip_ex = explode(".", $ip, 4);
+	if ($ip == '') return FALSE;
+	for ($i=0;$i<count($ip_ex);$i++) {
+		if ($i == count($ip_ex)-1 && $ip_ex[$i] == '') continue;
+		if (!is_numeric($ip_ex[$i]) || $ip_ex[$i] < 0 || $ip_ex[$i] > 255) return FALSE; 
+	}
+	return ($full_ip?(count($ip_ex)==4):TRUE);
+}
+
 ?>

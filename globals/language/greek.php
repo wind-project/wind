@@ -146,6 +146,10 @@ $lang = array(
 	'unlinked' => "Áóıíäåôïé",
 	'find_coordinates' => "Âñåßôå ôéò óõíôåôáãìİíåò óáò",
 	'select_the_coordinates' => "ÅğéëïãŞ ôùí óõíôåôáãìİíùí",
+	'quick_search' => "ÃñŞãïñç åıñåóç",
+	'statistics' => "ÓôáôéóôéêÜ",
+	'active_nodes' => "Åíåñãïß êüìâïé",
+	'backbone_nodes' => "Backbone êüìâïé",
 
 	'db' => array(
 		'users__username' => '¼íïìá ÷ñŞóôç',
@@ -358,6 +362,10 @@ $lang = array(
 			'message_sent' => array(
 				'title' => "Ôï ìŞíõìá åóôÜëåé",
 				'body' => "Ôï ìŞíõìá åóôÜëåé ìå åğéôõ÷ßá."
+			),
+			'request_diversion' => array(
+				'title' => "Ğñïşèçóç",
+				'body' => "Ôï áßôçìá óáò ğñïùèåßôáé."
 			)
 		),
 		'error' => array(
