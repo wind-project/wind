@@ -38,7 +38,7 @@ class pickup_links_ap {
 	}
 
 	function table_links_ap() {
-		global $construct, $db, $main;
+		global $construct, $db, $main, $lang;
 		$form_search_links_ap = $this->form_search_links_ap();
 		$where = $form_search_links_ap->db_data_where(array("links__ssid" => "starts_with", "nodes__name" => "starts_with"));
 		$table_links_ap = new table(array('TABLE_NAME' => 'table_links_ap'));
@@ -51,9 +51,12 @@ class pickup_links_ap {
 		$table_links_ap->db_data_search($form_search_links_ap);
 		for($i=1;$i<count($table_links_ap->data);$i++) {
 			if (isset($table_links_ap->data[$i])) {
+				if ($table_links_ap->data[$i]['ssid'] == '') {
+					$table_links_ap->data[$i]['ssid'] = $lang['null'];
+				}
 				$table_links_ap->data[$i]['nodes__name'] .= " (#".$table_links_ap->data[$i]['nodes__id'].")";
 				$table_links_ap->info['PICKUP_VALUE'][$i] = $table_links_ap->data[$i]['links__id'];
-				$table_links_ap->info['PICKUP_OUTPUT'][$i] = $table_links_ap->data[$i]['ssid'];
+				$table_links_ap->info['PICKUP_OUTPUT'][$i] = $table_links_ap->data[$i]['nodes__name']." [".$lang['db']['links__ssid'].": ".$table_links_ap->data[$i]['ssid']."]";
 			}
 		}
 		$table_links_ap->info['PICKUP_COLUMN'] = 'ssid';

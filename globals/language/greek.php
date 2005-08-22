@@ -150,6 +150,7 @@ $lang = array(
 	'statistics' => "Στατιστικά",
 	'active_nodes' => "Ενεργοί κόμβοι",
 	'backbone_nodes' => "Backbone κόμβοι",
+	'null' => "(Κενό)",
 
 	'db' => array(
 		'users__username' => 'Όνομα χρήστη',
