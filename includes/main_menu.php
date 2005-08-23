@@ -164,6 +164,7 @@ class menu {
 		} else {
 			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "form_search_nodes_search" => serialize(array("nodes__name" => $_POST['quick_search'])))), '', '', TRUE);
 		}
+		$main->message->forward_sec = 1;
 	}
 	
 }

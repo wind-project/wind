@@ -40,7 +40,7 @@ if (GBrowserIsCompatible()) {
 	    if (marker) map.removeOverlay(marker);
 	    marker = new GMarker(point);
 	    marker_point = point;
-		var html = '<div align="left">{/literal}{$lang.db.nodes__latitude}{literal}: ' + (Math.round(marker_point.y * 10000)/10000) + '<br />' + '{/literal}{$lang.db.nodes__longitude}{literal}: ' + (Math.round(marker_point.x * 10000)/10000) + '<br /><br />' + '<a href="" onclick="window.opener.pickup_value(window.opener.document.{/literal}{$object_lat}{literal}, Math.round(marker_point.y * 10000) / 10000); window.opener.pickup_value(window.opener.document.{/literal}{$object_lon}{literal}, Math.round(marker_point.x * 10000)/10000); window.close(); return false;">{/literal}{$lang.select_the_coordinates}{literal}</a></div>';
+		var html = '<div align="left">{/literal}{$lang.db.nodes__latitude}{literal}: ' + (Math.round(marker_point.y * 100000)/100000) + '<br />' + '{/literal}{$lang.db.nodes__longitude}{literal}: ' + (Math.round(marker_point.x * 100000)/100000) + '<br /><br />' + '<a href="" onclick="window.opener.pickup_value(window.opener.document.{/literal}{$object_lat}{literal}, Math.round(marker_point.y * 100000) / 100000); window.opener.pickup_value(window.opener.document.{/literal}{$object_lon}{literal}, Math.round(marker_point.x * 100000)/100000); window.close(); return false;">{/literal}{$lang.select_the_coordinates}{literal}</a></div>';
 	    map.addOverlay(marker);
 	    marker.openInfoWindowHtml(html);
 	  }
