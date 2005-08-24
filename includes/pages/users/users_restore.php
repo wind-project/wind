@@ -66,12 +66,12 @@ class users_restore {
 			$body = str_replace('##act_link##', $vars['site']['url']."?page=users&user=".$t[0]['id']."&action=restore&account_code=".$t[0]['account_code'], $body);
 			$ret = sendmail($_POST['users__email'], $subject, $body);
 			if ($ret) {
-				$main->message->set_fromlang('info', 'insert_success', makelink());
+				$main->message->set_fromlang('info', 'restore_success');
 			} else {
 				$main->message->set_fromlang('error', 'generic');		
 			}
 		} else {
-			$main->message->set_fromlang('error', 'generic');
+			$main->message->set_fromlang('error', 'login_failed');
 		}
 	}
 	
@@ -79,7 +79,7 @@ class users_restore {
 		global $main, $db;
 		if ($db->cnt('', 'users', "account_code IS NOT NULL AND account_code = '".get('account_code')."' AND id = '".get('user')."'") == 1) {
 			if ($_POST['users__password'] == $_POST['users__password_c'] && $_POST['users__password'] != '') {
-				$ret = $db->set('users', array("password" => md5($_POST['users__password'])), "id = '".get('user')."'");
+				$ret = $db->set('users', array("status" => "activated", "password" => md5($_POST['users__password'])), "id = '".get('user')."'");
 				
 				if ($ret) {
 					$main->message->set_fromlang('info', 'password_restored', makelink());

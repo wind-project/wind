@@ -45,7 +45,8 @@ class gmap_js {
 							" AND nodes.latitude <= ".str_replace(",", ".", $vars['gmap']['bounds']['max_latitude']).
 							" AND nodes.longitude >= ".str_replace(",", ".", $vars['gmap']['bounds']['min_longitude']).
 							" AND nodes.longitude <= ".str_replace(",", ".", $vars['gmap']['bounds']['max_longitude']).
-							" AND nodes.latitude IS NOT NULL AND nodes.longitude IS NOT NULL");
+							" AND nodes.latitude IS NOT NULL AND nodes.longitude IS NOT NULL",
+							'nodes.id');
 							
 			if (isset($t[0])) {
 				$max_lat = $t[0]['max_lat'];
