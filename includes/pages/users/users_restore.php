@@ -59,6 +59,11 @@ class users_restore {
 		
 		$t = $db->get('id, account_code', 'users', "username = '".$_POST['users__username']."' AND email = '".$_POST['users__email']."'");
 		if ($t[0]['id'] != '') {
+			if ($t[0]['account_code'] == '') {
+				$t[0]['account_code'] = generate_account_code();
+				$data['account_code'] = $t[0]['account_code'];
+				$db->set('users', $data, "id = '".$t[0]['id']."'");
+			}
 			$subject = $lang['email']['user_restore']['subject'];
 			$subject = str_replace('##username##', $_POST['users__username'], $subject);
 			$body = $lang['email']['user_restore']['body'];
@@ -79,7 +84,7 @@ class users_restore {
 		global $main, $db;
 		if ($db->cnt('', 'users', "account_code IS NOT NULL AND account_code = '".get('account_code')."' AND id = '".get('user')."'") == 1) {
 			if ($_POST['users__password'] == $_POST['users__password_c'] && $_POST['users__password'] != '') {
-				$ret = $db->set('users', array("status" => "activated", "password" => md5($_POST['users__password'])), "id = '".get('user')."'");
+				$ret = $db->set('users', array("status" => "activated", "account_code" => generate_account_code(), "password" => md5($_POST['users__password'])), "id = '".get('user')."'");
 				
 				if ($ret) {
 					$main->message->set_fromlang('info', 'password_restored', makelink());
