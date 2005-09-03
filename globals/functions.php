@@ -64,7 +64,7 @@ function get_qs() {
 }
 
 function get($key) {
-	global $page_admin, $main;
+	global $page_admin, $main, $root_path;
 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$ret = $_GET[$key];
 	} else {
@@ -290,6 +290,28 @@ function is_ip ($ip, $full_ip=TRUE) {
 		if (!is_numeric($ip_ex[$i]) || $ip_ex[$i] < 0 || $ip_ex[$i] > 255) return FALSE; 
 	}
 	return ($full_ip?(count($ip_ex)==4):TRUE);
+}
+
+function include_gmap() {
+	global $main, $vars;
+	$dirname = dirname($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+	$gmap_key = $vars['gmap']['keys'][$dirname];
+	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys'][$dirname."/"];
+	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys']["http://".$dirname];
+	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys']["http://".$dirname."/"];
+	if ($gmap_key == '') return FALSE;
+
+	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=1&key=".$gmap_key);
+	$main->html->head->add_script("text/javascript", "?page=gmap&subpage=js&node=".get('node'));
+	$main->html->head->add_extra(
+		'<style type="text/css">
+			v\:* {
+  			behavior:url(#default#VML);
+			}
+		</style>');
+	
+	$main->html->body->tags['onload'] = "gmap_onload()";	
+	return TRUE;
 }
 
 ?>

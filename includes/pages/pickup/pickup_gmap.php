@@ -33,28 +33,7 @@ class pickup_gmap {
 		$main->header->hide = TRUE;
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
-		foreach ($vars['gmap']['keys'] as $key => $value) {
-			if (strpos($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'], $key) === 0) {
-				$gmap_key = $value;
-				break;
-			}
-		}
-		
-		if (isset($gmap_key)) {
-			$this->tpl['gmap_key_ok'] = TRUE;
-			$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=1&key=".$gmap_key);
-			$main->html->head->add_script("text/javascript", "?page=gmap&subpage=pickup_js&object_lat=".get('object_lat')."&object_lon=".get('object_lon'));
-			$main->html->head->add_extra(
-				'<style type="text/css">
-	    			v\:* {
-	      			behavior:url(#default#VML);
-	    			}
-	    		</style>');
-	    	
-			$main->html->body->tags['onload'] = "gmap_onload()";
-		} else {
-			$this->tpl['gmap_key_ok'] = FALSE;
-		}		
+		$this->tpl['gmap_key_ok'] = include_gmap();
 		return template($this->tpl, __FILE__);
 	}
 
