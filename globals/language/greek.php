@@ -456,7 +456,7 @@ $lang = array(
 			'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΑνάκτηση κωδικού για το λογαριασμό ##username##\n\nΠατήστε εδώ: ##act_link##"
 		),
 
-		'user_change_mail' => array(
+		'user_change_email' => array(
 			'subject' => "Αλλαγή e-mail λογαριασμού: ##username##",
 			'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΑλλαγή e-mail λογαριασμού ##username##\n\nΠατήστε εδώ: ##act_link##"
 		),
