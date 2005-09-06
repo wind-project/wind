@@ -33,7 +33,7 @@ class pickup_gmap {
 		$main->header->hide = TRUE;
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
-		$this->tpl['gmap_key_ok'] = include_gmap();
+		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=pickup_js&object_lat=".get('object_lat')."&object_lon=".get('object_lon'));
 		return template($this->tpl, __FILE__);
 	}
 

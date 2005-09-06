@@ -90,7 +90,7 @@ class nodes_search {
 		$this->tpl['table_nodes'] = $construct->table($this->table_nodes(), __FILE__);
 
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
-		$this->tpl['gmap_key_ok'] = include_gmap();
+		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=js&node=".get('node'));
 
 		return template($this->tpl, __FILE__);
 	}

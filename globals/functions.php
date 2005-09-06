@@ -292,7 +292,7 @@ function is_ip ($ip, $full_ip=TRUE) {
 	return ($full_ip?(count($ip_ex)==4):TRUE);
 }
 
-function include_gmap() {
+function include_gmap($javascript) {
 	global $main, $vars;
 	$dirname = dirname($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
 	$gmap_key = $vars['gmap']['keys'][$dirname];
@@ -302,7 +302,7 @@ function include_gmap() {
 	if ($gmap_key == '') return FALSE;
 
 	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=1&key=".$gmap_key);
-	$main->html->head->add_script("text/javascript", "?page=gmap&subpage=js&node=".get('node'));
+	$main->html->head->add_script("text/javascript", $javascript);
 	$main->html->head->add_extra(
 		'<style type="text/css">
 			v\:* {

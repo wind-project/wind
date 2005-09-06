@@ -269,7 +269,7 @@ class nodes_view {
 		$this->tpl['link_plot_link'] = makelink(array("page" => "nodes", "subpage" => "plot_link", "a_node" => $this->tpl['node']['id']));
 
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
-		$this->tpl['gmap_key_ok'] = include_gmap();
+		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=js&node=".get('node'));
 		return template($this->tpl, __FILE__);
 	}
 

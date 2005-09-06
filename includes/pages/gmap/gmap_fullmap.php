@@ -30,7 +30,7 @@ class gmap_fullmap {
 	function output() {
 		global $main, $vars;
 		$main->menu->hide = true;
-		$this->tpl['gmap_key_ok'] = include_gmap();
+		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=js&node=".get('node'));
 		return template($this->tpl, __FILE__);
 	}
 
