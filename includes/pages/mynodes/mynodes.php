@@ -103,7 +103,7 @@ class mynodes {
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnszone", "zone" => $table_dns->data[$i]['id']));
+				$table_dns->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnszone", "zone" => $table_dns->data[$i]['id'], "node" => get('node')));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
@@ -132,7 +132,7 @@ class mynodes {
 		$table_nameservers->db_data_multichoice_checked('delete_req', 'Y');
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
-				$table_nameservers->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnsnameserver", "nameserver" => $table_nameservers->data[$i]['id']));
+				$table_nameservers->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnsnameserver", "nameserver" => $table_nameservers->data[$i]['id'], "node" => get('node')));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
@@ -344,7 +344,7 @@ class mynodes {
 			$form_node->db_data_remove('nodes__id');
 		}
 		if ($main->userdata->privileges['admin'] === TRUE && $_POST['nodes__name_ns'] != '') {
-			$name_ns = $_POST['nodes__name_ns'];
+			$name_ns = validate_name_ns($_POST['nodes__name_ns'], get('node'));
 		} else {
 			$name_ns = validate_name_ns($_POST['nodes__name'], get('node'));
 		}
@@ -354,10 +354,8 @@ class mynodes {
 		
 		if (get('node') != 'add') {
 			$old_v = $db->get('name, area_id', 'nodes', "id = '".get('node')."'");
-			if ($old_v[0]['name'] != $_POST['nodes__name'] && 
-					$db->cnt('', 'dns_nameservers', "node_id = '".get('node')."'") > 0) {
-				$main->message->set_fromlang('error', 'nodes_field_name', makelink("",TRUE));
-				return;
+			if ($old_v[0]['name'] != $_POST['nodes__name']) {
+				$name_ns = validate_name_ns($_POST['nodes__name'], get('node'));
 			}
 			if ($old_v[0]['area_id'] != $_POST['nodes__area_id'] && 
 					$db->cnt('', 'ip_ranges', "node_id = '".get('node')."'") > 0) {
