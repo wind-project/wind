@@ -50,31 +50,29 @@ class nodes_search {
 		}
 		$table_nodes = new table(array('TABLE_NAME' => 'table_nodes'));
 		$table_nodes->db_data(
-			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(DISTINCT l2.id) AS total_active_p2p, COUNT(DISTINCT aps.id) AS total_active_aps, COUNT(DISTINCT l1.id) AS total_active_peers, COUNT(DISTINCT cl.id) AS total_active_clients',
+			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(DISTINCT p2p.id) AS total_active_p2p, COUNT(DISTINCT aps.id) AS total_active_aps, COUNT(DISTINCT peers.id) AS total_active_peers, COUNT(DISTINCT cl.id) AS total_active_clients',
 			'nodes
 			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN regions ON areas.region_id = regions.id
-			LEFT JOIN links AS l1 ON nodes.id = l1.node_id
-			LEFT JOIN links AS l2 ON l1.type != "ap"
+			LEFT JOIN links ON nodes.id = links.node_id AND links.status = "active"
+			LEFT JOIN links AS peers ON (links.type = "p2p" AND peers.type = "p2p" AND links.peer_node_id = peers.node_id AND peers.peer_node_id = links.node_id) OR ' .
+					'(links.type = "client" AND peers.type = "ap" AND links.peer_ap_id = peers.id) ' .
+					'AND peers.status = "active"
+			LEFT JOIN links AS p2p ON links.type = "p2p" AND p2p.type = "p2p" AND links.peer_node_id = p2p.node_id AND p2p.peer_node_id = links.node_id AND p2p.status = "active"
 			LEFT JOIN links AS aps ON nodes.id = aps.node_id AND aps.type = "ap" AND aps.status = "active"
-			LEFT JOIN links AS cl ON l1.type = "ap" AND cl.status = "active" AND cl.type = "client" AND cl.peer_ap_id = l1.id ' .
+			LEFT JOIN links AS cl ON links.type = "ap" AND cl.type = "client" AND cl.peer_ap_id = links.id AND cl.status = "active" ' .
 			'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
 			'LEFT JOIN users ON users.id = users_nodes.user_id',
-			"(l1.type IS NULL OR (" .
-			"(l1.type = 'p2p' AND l2.type = 'p2p' AND l1.peer_node_id = l2.node_id AND l2.peer_node_id = l1.node_id) OR " .
-			"(l1.type = 'ap') OR " .
-			"(l1.type = 'client' AND l2.type = 'ap' AND l1.peer_ap_id = l2.id)) AND " .
-			"(l1.status = 'active' AND (l2.status = 'active' OR l1.type = 'ap'))) " .
-			"AND users.status = 'activated'".
+			"users.status = 'activated'".
 			($where!=''?' AND ('.$where.')':""),
 			'nodes.id'.
 			($having!=''?' HAVING ('.$having.')':""),
-			"total_active_peers DESC, total_active_clients DESC, nodes.id");
+			"total_active_peers DESC, total_active_aps DESC, total_active_clients DESC, nodes.id");
 		$table_nodes->db_data_search($form_search_nodes);
 		for($i=1;$i<count($table_nodes->data);$i++) {
 			if (isset($table_nodes->data[$i])) {
 				$table_nodes->data[$i]['nodes__name'] .= " (#".$table_nodes->data[$i]['id'].")";
-				$table_nodes->data[$i]['total_active_peers'] = $table_nodes->data[$i]['total_active_p2p'].($table_nodes->data[$i]['total_active_aps']>0?" (+".$table_nodes->data[$i]['total_active_aps']." ".$lang['aps'].")":"");
+				$table_nodes->data[$i]['total_active_peers'] = $table_nodes->data[$i]['total_active_peers'].($table_nodes->data[$i]['total_active_aps']>0?" (+".$table_nodes->data[$i]['total_active_aps']." ".$lang['aps'].")":"");
 				$table_nodes->info['EDIT'][$i] = makelink(array("page" => "nodes", "node" => $table_nodes->data[$i]['id']));
 			}
 		}

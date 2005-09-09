@@ -41,14 +41,14 @@ class mynodes_range {
 					"ip_ranges
 					INNER JOIN nodes ON nodes.id = ip_ranges.node_id
 					INNER JOIN areas ON nodes.area_id = areas.id",
-					"areas.ip_start <= ip_ranges.ip_start AND areas.ip_end >= ip_ranges.ip_end AND areas.id = '".$area_id."'", "" , "ip_end DESC");
+					"areas.ip_start <= ip_ranges.ip_start AND areas.ip_end >= ip_ranges.ip_end AND areas.id = '".$area_id."'", "" , "ip_end ASC");
 		
 		if (count($data) == 0) {
 			$ret['ip_start'] = $area_ip_start;
 			$ret['ip_end'] = $area_ip_start+$range-1;
-		} elseif ($data[count($data)-1]['area_ip_end']+$range <= $area_ip_end) {
-			$ret['ip_start'] = $data[count($data)-1]['area_ip_end']+1;
-			$ret['ip_end'] = $data[count($data)-1]['area_ip_end']+$range;
+		} elseif ($data[count($data)-1]['ip_end']+$range <= $area_ip_end) {
+			$ret['ip_start'] = $data[count($data)-1]['ip_end']+1;
+			$ret['ip_end'] = $data[count($data)-1]['ip_end']+$range;
 		} else {
 			for ($start = $area_ip_start; $start <= $area_ip_end; $start=$start+$range) {
 				$end = $start+$range-1;

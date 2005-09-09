@@ -51,6 +51,10 @@ class center {
 						}
 					}
 					if ($db->cnt('', "users_nodes", "node_id = '".get('node')."' AND user_id = '".$main->userdata->user."'") > 0) return TRUE;
+					if (get('subpage') == 'dnszone' && 
+						$db->cnt('', "users_nodes, dns_zones", "dns_zones.node_id = users_nodes.node_id AND dns_zones.id = '".get('zone')."' AND users_nodes.user_id = '".$main->userdata->user."'") > 0) return TRUE;
+					if (get('subpage') == 'dnsnameserver' && 
+						$db->cnt('', "users_nodes, dns_nameservers", "dns_nameservers.node_id = users_nodes.node_id AND dns_nameservers.id = '".get('nameserver')."' AND users_nodes.user_id = '".$main->userdata->user."'") > 0) return TRUE;
 				}
 				break;
 			case 'nodes':
