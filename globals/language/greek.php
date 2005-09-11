@@ -180,7 +180,9 @@ $lang = array(
 		'users_nodes__owner-Y' => 'Διαχειριστής',
 		'users_nodes__owner-N' => 'Συνδιαχειριστής',
 		'users_nodes__user_id' => 'Συνδιαχειριστές',
+		'users_nodes__node_id' => 'Συνδιαχείριση κόμβων',
 		'user_id_owner' => 'Διαχειριστής',
+		'node_id_owner' => 'Διαχείριση κόμβων',
 
 		'areas__id' => 'Δήμος / Κοινότητα',
 		'areas__name' => 'Δήμος / Κοινότητα',

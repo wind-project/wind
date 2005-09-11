@@ -41,6 +41,7 @@ class pickup_nodes {
 		global $construct, $db, $main;
 		$form_search_nodes = $this->form_search_nodes();
 		$where = $form_search_nodes->db_data_where(array("nodes__name" => "starts_with"));
+		if ($main->userdata->privileges['admin'] !== TRUE) $where = "users.status = 'activated'".($where!=''?' AND ('.$where.')':"");
 		$table_nodes = new table(array('TABLE_NAME' => 'table_nodes'));
 		$table_nodes->db_data(
 			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name',
@@ -49,7 +50,7 @@ class pickup_nodes {
 			LEFT JOIN regions ON areas.region_id = regions.id ' .
 			'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
 			'LEFT JOIN users ON users.id = users_nodes.user_id',
-			"users.status = 'activated'".($where!=''?' AND ('.$where.')':""),
+			($where!=''?$where:""),
 			"nodes.id",
 			"nodes.id ASC");
 		$table_nodes->db_data_search($form_search_nodes);

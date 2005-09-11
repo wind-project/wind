@@ -33,7 +33,7 @@ class users {
 	}
 	
 	function form_user() {
-		global $main;
+		global $main, $db;
 		$form_user = new form(array('FORM_NAME' => 'form_user'));
 		$form_user->db_data('users.username, users.password, users.surname, users.name, users.email, users.phone, users.info'.($main->userdata->privileges['admin'] === TRUE?', rights.type, users.status':''));
 		$form_user->db_data_values("users", "id", get('user'));
@@ -46,7 +46,12 @@ class users {
 		$form_user->data[2]['fullField'] .= '_c';
 		if ($main->userdata->privileges['admin'] === TRUE) {
 			$form_user->data[8]['Type'] = 'enum_multi';
-			$form_user->db_data_values_multi("rights", "user_id", get('user'), 'type');			
+			$form_user->db_data_values_multi("rights", "user_id", get('user'), 'type');	
+			$form_user->db_data('users_nodes.node_id, users_nodes.node_id');
+			$form_user->data[10]['Field'] = 'node_id_owner';
+			$form_user->data[10]['fullField'] = 'node_id_owner';
+			$form_user->db_data_pickup("node_id_owner", "nodes", $db->get("nodes.id AS value, CONCAT(nodes.name, ' (#', nodes.id, ')') AS output", "users_nodes, nodes", "nodes.id = users_nodes.node_id AND users_nodes.user_id = '".get('user')."' AND users_nodes.owner = 'Y'"), TRUE);
+			$form_user->db_data_pickup("users_nodes.node_id", "nodes", $db->get("nodes.id AS value, CONCAT(nodes.name, ' (#', nodes.id, ')') AS output", "users_nodes, nodes", "nodes.id = users_nodes.node_id AND users_nodes.user_id = '".get('user')."' AND users_nodes.owner != 'Y'"), TRUE);		
 		}
 		return $form_user;
 	}
@@ -115,6 +120,11 @@ class users {
 		}
 		if ($ret && $main->userdata->privileges['admin'] === TRUE) {
 			$ret = $form_user->db_set_multi(array(), "rights", "user_id", get('user'));
+			$ret = $ret && $form_user->db_set_multi(array('owner' => 'N'), "users_nodes", "user_id", $ins_id);
+			$ret = $ret && $db->del('users_nodes', "user_id = '".$ins_id."' AND owner = 'Y'");
+			foreach($_POST['node_id_owner'] as $value) {
+				$ret = $ret && $db->add('users_nodes', array("user_id" => $ins_id, "node_id" => $value, 'owner' => 'Y'));
+			}
 		}
 		if ($ret && (get('user') == 'add' || $v_old[0]['email'] != $_POST['users__email'])) {
 			if (get('user') == 'add') {
