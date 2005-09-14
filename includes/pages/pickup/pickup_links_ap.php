@@ -44,8 +44,11 @@ class pickup_links_ap {
 		$table_links_ap = new table(array('TABLE_NAME' => 'table_links_ap'));
 		$table_links_ap->db_data(
 			'links.id AS links__id, links.ssid, nodes.id AS nodes__id, nodes.name AS nodes__name, areas.name AS areas__name',
-			'links, nodes, areas, regions',
-			"links.type = 'ap' AND links.node_id = nodes.id AND nodes.area_id = areas.id AND areas.region_id = regions.id".($where!=''?' AND ('.$where.')':""),
+			'links ' .
+			'INNER JOIN nodes ON links.node_id = nodes.id ' .
+			'LEFT JOIN areas ON nodes.area_id = areas.id ' .
+			'LEFT JOIN regions ON areas.region_id = regions.id',
+			"links.type = 'ap'".($where!=''?' AND ('.$where.')':""),
 			"",
 			"nodes.id ASC");
 		$table_links_ap->db_data_search($form_search_links_ap);
