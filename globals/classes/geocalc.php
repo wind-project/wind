@@ -226,5 +226,4 @@ function ConvKilometersToMiles($dValue) {
 	return $dValue / 1.609344;
 }
 
-
 ?>
