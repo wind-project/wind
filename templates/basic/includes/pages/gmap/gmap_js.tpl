@@ -20,10 +20,20 @@
  *}
 {literal}
 var map;
-var nodes = Array();
-var links = Array();
+var selected = Array();
+var p2p_ap = Array();
+var p2p = Array();
+var aps = Array();
+var clients = Array();
+var unlinked = Array();
+var links_p2p = Array();
+var links_client = Array();
 var markers = Array();
 var polylines = Array();
+var ch_p2p;
+var ch_aps;
+var ch_clients;
+var ch_unlinked;
 
 // Markers Optimization
 GMap.prototype.addOverlays=function(a){ 
@@ -101,8 +111,27 @@ icon_red[1].shadowSize = new GSize(37, 34);
 icon_red[1].iconAnchor = new GPoint(9, 32);
 icon_red[1].infoWindowAnchor = new GPoint(10, 1);
 
+var icon_grey = Array(new GIcon(), new GIcon());
+icon_grey[0].image = "{$img_dir}gmap/mm_20_grey.png";
+icon_grey[0].shadow = "{$img_dir}gmap/mm_20_shadow.png";
+icon_grey[0].iconSize = new GSize(12, 20);
+icon_grey[0].shadowSize = new GSize(22, 20);
+icon_grey[0].iconAnchor = new GPoint(6, 20);
+icon_grey[0].infoWindowAnchor = new GPoint(5, 1);
+
+icon_grey[1].image = "{$img_dir}gmap/mm_50_grey.png";
+icon_grey[1].shadow = "{$img_dir}gmap/mm_50_shadow.png";
+icon_grey[1].iconSize = new GSize(20, 34);
+icon_grey[1].shadowSize = new GSize(37, 34);
+icon_grey[1].iconAnchor = new GPoint(9, 32);
+icon_grey[1].infoWindowAnchor = new GPoint(10, 1);
+
 {literal}
 function gmap_onload() {
+	ch_p2p = document.getElementsByName("p2p")[0];
+	ch_aps = document.getElementsByName("aps")[0];
+	ch_clients = document.getElementsByName("clients")[0];
+	ch_unlinked = document.getElementsByName("unlinked")[0];
 	if (GBrowserIsCompatible()) {
 		map = new GMap(document.getElementById("map"));
 		var center = new GPoint({/literal}{$center_longitude}{literal}, 
@@ -134,108 +163,17 @@ function gmap_onload() {
 }
 
 function gmap_reload() {
-	var markers_t = Array();
-	var polylines_t = Array();
-	var bounds = map.getBoundsLatLng();
-	var ch_p2p = document.getElementsByName("p2p")[0];
-	var ch_aps = document.getElementsByName("aps")[0];
-	var ch_clients = document.getElementsByName("clients")[0];
-	var ch_unlinked = document.getElementsByName("unlinked")[0];
-	for (var i = 0; i < nodes.length; i++) {
-		if (markers[i] != undefined) continue;
 
-		var node_id = nodes[i].getAttribute("id");
-		var node_name = nodes[i].getAttribute("name");
-		var node_area = nodes[i].getAttribute("area");
-		var node_p2p = nodes[i].getAttribute("p2p") * 1;
-		var node_aps = nodes[i].getAttribute("aps") * 1;
-		var node_client_on_ap = nodes[i].getAttribute("client_on_ap") * 1;
-		var node_clients = nodes[i].getAttribute("clients") * 1;
-		var node_lat = nodes[i].getAttribute("lat");
-		var node_lon = nodes[i].getAttribute("lon");
-		var node_url = nodes[i].getAttribute("url");
+	if (ch_aps.checked == true && ch_clients.checked == true) makePolylines(links_client, "#00ffff", "#ff0000", 2);
+	if (ch_p2p.checked == true) makePolylines(links_p2p, "#00ff00", "#ff0000", 3);
 
-		var show_p2p = node_p2p > 0 &&
-						ch_p2p.checked == true;
-		var show_aps = node_aps > 0 &&
-						ch_aps.checked == true;
-		var show_clients = node_client_on_ap > 0 &&
-							ch_clients.checked == true;
-		var show_unl = node_p2p == 0 && 
-						node_client_on_ap == 0 &&
-						ch_unlinked.checked == true;
-		var show_nodes = show_p2p || show_aps || show_clients || show_unl;
-		var inbounds = node_lat >= bounds.minY &&
-						node_lat <= bounds.maxY &&
-						node_lon >= bounds.minX &&
-						node_lon <= bounds.maxX;
-		if (show_nodes && inbounds) {
-	    	var point = new GPoint(node_lon, 
-	    							node_lat);
-			var icon; var icon_s;
-			if (map.getZoomLevel() <= 3) {
-				var icon_scale = 1;
-		    } else {
-				var icon_scale = 0;
-		    }
-			if (node_aps > 0) {
-				icon = icon_green[icon_scale];
-				icon_s = icon_green[0];
-			} else if (node_p2p > 0) {
-				icon = icon_orange[icon_scale];
-				icon_s = icon_orange[0];
-			} else if (node_client_on_ap > 0) {
-				icon = icon_blue[0];
-				icon_s = icon_blue[0];
-			} else {
-				icon = icon_red[0];
-				icon_s = icon_red[0];
-			}
-			var html = "<div style=\"text-align:left; font-size:12px;font-weight:bold;\"><img src=\"" + icon_s.image + "\" alt=\"\" />" + node_name + " (#" + node_id + ")</div><br />" +
-						"<div style=\"text-align:left; font-size:10px;\">" +
-						node_area + "<br />" +
-						"{/literal}{$lang.links}{literal}: " + (parseInt(node_p2p) + parseInt(node_client_on_ap)) + " (+" + node_aps + " {/literal}{$lang.aps}{literal})" + "<br />" +
-						"{/literal}{$lang.clients}{literal}: " + node_clients + "<br /><br />" +
-						"<a href=\"" + node_url + "\">{/literal}{$lang.node_page}{literal}</a></div>";
-			var marker = createMarker(point, html, icon);
-			markers_t.push(marker);
-			markers[i] = true;
-		}
-	}
-	for (var i = 0; i < links.length; i++) {
-		if (polylines[i] != undefined) continue;
-		var show_l_p2p = links[i].getAttribute("type") == "p2p" &&
-							ch_p2p.checked == true;
-		var show_l_clients = links[i].getAttribute("type") == "client" &&
-								ch_clients.checked == true;
-		var show_links = show_l_p2p || show_l_clients;
-		var l_inbound_1 = links[i].getAttribute("lat1") >= bounds.minY &&
-							links[i].getAttribute("lat1") <= bounds.maxY &&
-							links[i].getAttribute("lon1") >= bounds.minX &&
-							links[i].getAttribute("lon1") <= bounds.maxX;
-		var l_inbound_2 = links[i].getAttribute("lat2") >= bounds.minY &&
-							links[i].getAttribute("lat2") <= bounds.maxY &&
-							links[i].getAttribute("lon2") >= bounds.minX &&
-							links[i].getAttribute("lon2") <= bounds.maxX;
-		var l_inbounds = l_inbound_1 || l_inbound_2
-		if (show_links && l_inbounds) {
-			if (links[i].getAttribute("status") == 'active') {
-				var color = "#00ff00";
-			} else {
-				var color = "#ff0000";
-			}
-			var point1 = new GPoint(links[i].getAttribute("lon1"),
-									links[i].getAttribute("lat1"));
-			var point2 = new GPoint(links[i].getAttribute("lon2"),
-									links[i].getAttribute("lat2"));
-			var polyline = new GPolyline([point1, point2], color,
-							(links[i].getAttribute("type")=="p2p"?3:1));
-			polylines_t.push(polyline);
-			polylines[i] = true;
-		}
-    }
-	map.addOverlays(markers_t);
-	map.addOverlays(polylines_t);
+	if (ch_unlinked.checked == true) makeMarkers(unlinked, icon_red, -1);
+	if (ch_clients.checked == true) makeMarkers(clients, icon_blue, -1);
+	if (ch_aps.checked == true) makeMarkers(aps, icon_green, 3);
+	if (ch_p2p.checked == true) makeMarkers(p2p, icon_orange, 3);
+	if (ch_p2p.checked == true || ch_aps.checked == true) makeMarkers(p2p_ap, icon_green, 3);
+	makeMarkers(selected, icon_grey, 3);
+		
 }
 
 function gmap_refresh() {
@@ -243,19 +181,37 @@ function gmap_refresh() {
 	var ch_aps = document.getElementsByName("aps")[0];
 	var ch_clients = document.getElementsByName("clients")[0];
 	var ch_unlinked = document.getElementsByName("unlinked")[0];
+	if (((ch_p2p.checked == true && p2p.length > 0) || ch_p2p.checked == false) && 
+		((ch_aps.checked == true && aps.length > 0) || ch_aps.checked == false) &&
+		((ch_clients.checked == true && clients.length > 0) || ch_clients.checked == false) && 
+		((ch_unlinked.checked == true && unlinked.length > 0) || ch_unlinked.checked == false)) {
+			map.clearOverlays();
+			markers = Array();
+			polylines = Array();
+			gmap_reload();
+			return;
+	}
 	var request = GXmlHttp.create();
-	var xml_url = "{/literal}{$link_xml_page}{literal}" + 
-					(ch_p2p.checked == true?"&show_p2p=1":"") +
-					(ch_aps.checked == true?"&show_aps=1":"") +
-					(ch_clients.checked == true?"&show_clients=1":"") +
-					(ch_unlinked.checked == true?"&show_unlinked=1":"");
+	var xml_url = "{/literal}{$link_xml_page}{literal}" +
+					(ch_p2p.checked == true && p2p.length == 0?"&show_p2p=1":"") +
+					(ch_aps.checked == true && aps.length == 0?"&show_aps=1":"") +
+					(ch_clients.checked == true && clients.length == 0?"&show_clients=1":"") +
+					(ch_unlinked.checked == true && unlinked.length == 0?"&show_unlinked=1":"") +
+					(ch_p2p.checked == true && links_p2p.length == 0?"&show_links_p2p=1":"") +
+					(ch_aps.checked == true && ch_clients.checked == true && links_client.length == 0?"&show_links_client=1":"");
 	request.open("GET", xml_url, true);
 	request.onreadystatechange = 
 			function() {
 				if (request.readyState == 4) {
 					var xmlDoc = request.responseXML;
-					nodes = xmlDoc.documentElement.getElementsByTagName("node");
-					links = xmlDoc.documentElement.getElementsByTagName("link");
+					selected = xmlDoc.documentElement.getElementsByTagName("selected");
+					if ((ch_p2p.checked == true || ch_aps.checked == true) && p2p_ap.length == 0) p2p_ap = xmlDoc.documentElement.getElementsByTagName("p2p-ap");
+					if (ch_aps.checked == true && aps.length == 0) aps = xmlDoc.documentElement.getElementsByTagName("ap");
+					if (ch_p2p.checked == true && p2p.length == 0) p2p = xmlDoc.documentElement.getElementsByTagName("p2p");
+					if (ch_clients.checked == true && clients.length == 0) clients = xmlDoc.documentElement.getElementsByTagName("client");
+					if (ch_unlinked.checked == true && unlinked.length == 0) unlinked = xmlDoc.documentElement.getElementsByTagName("unlinked");
+					if (ch_p2p.checked == true && links_p2p.length == 0) links_p2p = xmlDoc.documentElement.getElementsByTagName("link_p2p");
+					if (ch_aps.checked == true && ch_clients.checked == true && links_client.length == 0) links_client = xmlDoc.documentElement.getElementsByTagName("link_client");
 					map.clearOverlays();
 					markers = Array();
 					polylines = Array();
@@ -273,5 +229,88 @@ function createMarker(point, html, icon) {
 		});
 
 	return marker;
+}
+
+function makeMarkers(nodes, icon_image, icon_zoom) {
+	var markers_t = Array();
+	var bounds = map.getBoundsLatLng();
+	for (var i = 0; i < nodes.length; i++) {
+		var node_id = nodes[i].getAttribute("id");
+		var node_lat = nodes[i].getAttribute("lat");
+		var node_lon = nodes[i].getAttribute("lon");
+		
+		if (markers[node_id] != undefined) continue;
+
+		var inbounds = node_lat >= bounds.minY &&
+						node_lat <= bounds.maxY &&
+						node_lon >= bounds.minX &&
+						node_lon <= bounds.maxX;
+		if (inbounds) {
+			var node_name = nodes[i].getAttribute("name");
+			var node_area = nodes[i].getAttribute("area");
+			var node_p2p = nodes[i].getAttribute("p2p") * 1;
+			var node_aps = nodes[i].getAttribute("aps") * 1;
+			var node_client_on_ap = nodes[i].getAttribute("client_on_ap") * 1;
+			var node_clients = nodes[i].getAttribute("clients") * 1;
+			var node_url = nodes[i].getAttribute("url");
+	    	
+	    	var point = new GPoint(node_lon, 
+	    							node_lat);
+			var icon; var icon_s;
+			if (map.getZoomLevel() <= icon_zoom) {
+				var icon_scale = 1;
+		    } else {
+				var icon_scale = 0;
+		    }
+			icon = icon_image[icon_scale];
+			icon_s = icon_image[0];
+			var html = "<div style=\"text-align:left; font-size:12px;font-weight:bold;\"><img src=\"" + icon_s.image + "\" alt=\"\" />" + node_name + " (#" + node_id + ")</div><br />" +
+						"<div style=\"text-align:left; font-size:10px;\">" +
+						node_area + "<br />" +
+						"{/literal}{$lang.links}{literal}: " + (parseInt(node_p2p) + parseInt(node_client_on_ap)) + " (+" + node_aps + " {/literal}{$lang.aps}{literal})" + "<br />" +
+						"{/literal}{$lang.clients}{literal}: " + node_clients + "<br /><br />" +
+						"<a href=\"" + node_url + "\">{/literal}{$lang.node_page}{literal}</a></div>";
+			var marker = createMarker(point, html, icon);
+			markers_t.push(marker);
+			markers[node_id] = true;
+		}
+	}
+	map.addOverlays(markers_t);
+}
+
+function makePolylines(links, color_active, color_inactive, size) {
+	var polylines_t = Array();
+	var bounds = map.getBoundsLatLng();
+	for (var i = 0; i < links.length; i++) {
+		var link_id = links[i].getAttribute("id");
+		if (polylines[link_id] != undefined) continue;
+		var link_lat1 = links[i].getAttribute("lat1");
+		var link_lon1 = links[i].getAttribute("lon1");
+		var link_lat2 = links[i].getAttribute("lat2");
+		var link_lon2 = links[i].getAttribute("lon2");
+		var l_inbound_1 = link_lat1 >= bounds.minY &&
+							link_lat1 <= bounds.maxY &&
+							link_lon1 >= bounds.minX &&
+							link_lon1 <= bounds.maxX;
+		var l_inbound_2 = link_lat2 >= bounds.minY &&
+							link_lat2 <= bounds.maxY &&
+							link_lon2 >= bounds.minX &&
+							link_lon2 <= bounds.maxX;
+		if (l_inbound_1 || l_inbound_2) {
+			if (links[i].getAttribute("status") == 'active') {
+				var color = color_active;
+			} else {
+				var color = color_inactive;
+			}
+			var point1 = new GPoint(link_lon1,
+									link_lat1);
+			var point2 = new GPoint(link_lon2,
+									link_lat2);
+			var polyline = new GPolyline([point1, point2], color, size);
+			polylines_t.push(polyline);
+			polylines[link_id] = true;
+		}
+    }
+    map.addOverlays(polylines_t);
 }
 {/literal}

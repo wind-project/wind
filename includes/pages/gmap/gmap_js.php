@@ -70,7 +70,7 @@ class gmap_js {
 			$this->tpl['min_longitude'] = str_replace(",", ".", $min_lon);
 			
 		}
-		$this->tpl['link_xml_page'] = makelink(array("page" => "gmap", "subpage" => "xml"), FALSE, TRUE, FALSE);
+		$this->tpl['link_xml_page'] = makelink(array("page" => "gmap", "subpage" => "xml", "node" => get('node')), FALSE, TRUE, FALSE);
 		
 		echo template($this->tpl, __FILE__);
 		exit;
