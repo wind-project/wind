@@ -28,7 +28,4 @@
 As such, it's still under heavy development and you
 should expect it to break and/or lose data.<br />
 </p>
-<p>
-$Id$
-</p>
 </center>
