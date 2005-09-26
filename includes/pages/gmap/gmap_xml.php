@@ -26,7 +26,7 @@ class gmap_xml {
 	}
 	
 	function output() {
-		global $db;
+		global $db, $lang;
 		
 		$node = $db->get('latitude, longitude', 'nodes', "id = '".get('node')."'");
 		$node = $node[0];
@@ -50,7 +50,7 @@ class gmap_xml {
 			"users.status = 'activated'",
 			'nodes.id' .
 			($having!=''?' HAVING '.$having:''));
-		$xml .= "<?xml version='1.0' encoding='iso-8859-7' standalone='yes'?>\r"; 
+		$xml .= "<?xml version='1.0' encoding='".$lang['charset']."' standalone='yes'?>\r"; 
 		$xml .= "<wind>\r";
 		$xml .= "<nodes>\r";
 		foreach ((array) $nodes as $key => $value) {
@@ -107,7 +107,7 @@ class gmap_xml {
 		$xml .= "</wind>\r";
 		
 		header("Expires: 0");
-		header("Content-type: text/xml; charset=iso-8859-7");
+		header("Content-type: text/xml; charset=".$lang['charset']);
 		echo $xml;
 		exit;
 	}

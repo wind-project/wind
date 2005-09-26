@@ -50,12 +50,6 @@ reset_smarty();
 
 $construct = new construct;
 
-$db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
-
-if ($db->error) {
-	die("WiND MySQL database error: $db->error_report");
-}
-
 if ($vars['mail']['smtp'] != '') {
 	ini_set('SMTP', $vars['mail']['smtp']);
 	ini_set('smtp_port', $vars['mail']['smtp_port']);
@@ -70,5 +64,11 @@ if (get('lang') != '') {
 	$tl = $vars['language']['default'];
 }
 include_once($root_path."globals/language/".$tl.".php");
+
+$db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
+
+if ($db->error) {
+	die("WiND MySQL database error: $db->error_report");
+}
 
 ?>

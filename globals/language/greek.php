@@ -25,6 +25,8 @@ setlocale(LC_ALL, 'el_GR', 'ell');
 $lang = array(
 
 	'charset' => 'iso-8859-7',
+	'iso639' => 'el',
+	'mysql_charset' => 'greek',
 	
 	'site_title' => "WiND - Wireless Nodes Database",
 	

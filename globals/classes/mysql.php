@@ -34,6 +34,7 @@ class mysql {
 	var $total_time=0;
 	
 	function mysql($server, $user, $password, $database) {
+		global $lang;
 		if (!$this->mysql_link = @mysql_connect($server, $user, $password, TRUE)) {
 			$this->error();
 			return;
@@ -42,6 +43,8 @@ class mysql {
 			$this->error();
 			return;
 		}
+		// Don't check for errors, SET NAMES is a 4.1+ feature
+		mysql_query("SET NAMES '".$lang['mysql_charset']."'", $this->mysql_link);
 	}
 	
 	function close_mysql() {
@@ -53,7 +56,6 @@ class mysql {
 		$this->last_query=$query;
 		$this->total_queries += 1;
 		$mt = $this->getmicrotime();
-		#echo $query;
 		$q = mysql_query($query, $this->mysql_link);
 		$this->total_time += ($this->getmicrotime() - $mt);
 		$this->error();
@@ -193,8 +195,6 @@ class mysql {
 	
 	function output_error_duplicate_entry() {
 		global $main, $lang;
-		//$t = explode(" ", $this->error_report);
-		//$duplicate_key = $t[count($t)-1];
 		ereg(".*'(.*)'.*", $this->error_report, $ereg);
 		$duplicate_entries = $ereg[1];
 		$main->message->set($lang['message']['error']['duplicate_entry']['title'], str_replace("##duplicate_entries##", $duplicate_entries, $lang['message']['error']['duplicate_entry']['body']));
