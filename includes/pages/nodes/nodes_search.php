@@ -55,8 +55,8 @@ class nodes_search {
 			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN regions ON areas.region_id = regions.id
 			LEFT JOIN links ON nodes.id = links.node_id AND links.status = "active"
-			LEFT JOIN links AS peers ON (links.type = "p2p" AND peers.type = "p2p" AND links.peer_node_id = peers.node_id AND peers.peer_node_id = links.node_id) OR ' .
-					'(links.type = "client" AND peers.type = "ap" AND links.peer_ap_id = peers.id) ' .
+			LEFT JOIN links AS peers ON ((links.type = "p2p" AND peers.type = "p2p" AND links.peer_node_id = peers.node_id AND peers.peer_node_id = links.node_id) OR ' .
+					'(links.type = "client" AND peers.type = "ap" AND links.peer_ap_id = peers.id)) ' .
 					'AND peers.status = "active"
 			LEFT JOIN links AS p2p ON links.type = "p2p" AND p2p.type = "p2p" AND links.peer_node_id = p2p.node_id AND p2p.peer_node_id = links.node_id AND p2p.status = "active"
 			LEFT JOIN links AS aps ON nodes.id = aps.node_id AND aps.type = "ap" AND aps.status = "active"
