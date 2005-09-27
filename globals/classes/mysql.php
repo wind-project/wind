@@ -44,21 +44,28 @@ class mysql {
 			return;
 		}
 		// Don't check for errors, SET NAMES is a 4.1+ feature
-		mysql_query("SET NAMES '".$lang['mysql_charset']."'", $this->mysql_link);
+		$this->rawquery("SET NAMES '".$lang['mysql_charset']."'", FALSE);
 	}
 	
 	function close_mysql() {
 		return mysql_close($this->mysql_link);
 	}
 	
+	function rawquery($query, $errors=TRUE) {
+		$mt = $this->getmicrotime();
+		$q = mysql_query($query, $this->mysql_link);
+		$this->total_time += ($this->getmicrotime() - $mt);
+		if ($errors) { 
+			$this->error();
+		}
+		return $q;
+	}
+	
 	function query($query) {
 		$this->insert_id = 0;
 		$this->last_query=$query;
 		$this->total_queries += 1;
-		$mt = $this->getmicrotime();
-		$q = mysql_query($query, $this->mysql_link);
-		$this->total_time += ($this->getmicrotime() - $mt);
-		$this->error();
+		$q = $this->rawquery($query);
 		if ($q === FALSE) {
 			return FALSE;
 		} elseif ($q === TRUE) {
@@ -179,7 +186,7 @@ class mysql {
 	function cnt($select="*", $table, $where="", $group_by="", $order_by="", $limit="") {
 		if ($select == '') $select = '*';
 		$query = "SELECT $select FROM $table".($where==""?"":" WHERE $where").($group_by==""?"":" GROUP BY $group_by").($order_by==""?"":" ORDER BY $order_by").($limit==""?"":" LIMIT $limit");
-		$q = mysql_query($query, $this->mysql_link);
+		$q = $this->rawquery($query);
 		return mysql_num_rows($q);
 	}
 	
