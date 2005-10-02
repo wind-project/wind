@@ -50,20 +50,36 @@ class nodes_search {
 		}
 		$table_nodes = new table(array('TABLE_NAME' => 'table_nodes'));
 		$table_nodes->db_data(
-			'nodes.id, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(DISTINCT p2p.id) AS total_active_p2p, COUNT(DISTINCT aps.id) AS total_active_aps, COUNT(DISTINCT peers.id) AS total_active_peers, COUNT(DISTINCT cl.id) AS total_active_clients',
+			'nodes.id,
+        	nodes.name AS nodes__name,
+        	areas.name AS areas__name,
+        	COUNT(DISTINCT p2p.id) AS total_active_p2p,
+        	COUNT(DISTINCT aps.id) AS total_active_aps,
+        	COUNT(DISTINCT p2p.id)+COUNT(DISTINCT client.id) AS total_active_peers,
+        	COUNT(DISTINCT cl.id) AS total_active_clients',
 			'nodes
 			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN regions ON areas.region_id = regions.id
-			LEFT JOIN links ON nodes.id = links.node_id AND links.status = "active"
-			LEFT JOIN links AS peers ON ((links.type = "p2p" AND peers.type = "p2p" AND links.peer_node_id = peers.node_id AND peers.peer_node_id = links.node_id) OR ' .
-					'(links.type = "client" AND peers.type = "ap" AND links.peer_ap_id = peers.id)) ' .
-					'AND peers.status = "active"
-			LEFT JOIN links AS p2p ON links.type = "p2p" AND p2p.type = "p2p" AND links.peer_node_id = p2p.node_id AND p2p.peer_node_id = links.node_id AND p2p.status = "active"
-			LEFT JOIN links AS aps ON nodes.id = aps.node_id AND aps.type = "ap" AND aps.status = "active"
-			LEFT JOIN links AS cl ON links.type = "ap" AND cl.type = "client" AND cl.peer_ap_id = links.id AND cl.status = "active" ' .
-			'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
-			'LEFT JOIN users ON users.id = users_nodes.user_id',
-			"users.status = 'activated'".
+			LEFT JOIN links ON nodes.id = links.node_id
+			LEFT JOIN links AS client ON links.peer_ap_id = client.id
+									  AND links.type = "client"
+									  AND client.type = "ap"
+									  AND client.status = "active"
+			LEFT JOIN links AS p2p ON p2p.peer_node_id = links.node_id
+								   AND links.peer_node_id = p2p.node_id
+								   AND links.type = "p2p"
+								   AND p2p.type = "p2p"
+								   AND p2p.status = "active"
+			LEFT JOIN links AS aps ON nodes.id = aps.node_id
+								   AND aps.type = "ap"
+								   AND aps.status = "active"
+			LEFT JOIN links AS cl ON cl.peer_ap_id = links.id
+								  AND links.type = "ap"
+								  AND cl.type = "client"
+								  AND cl.status = "active"
+			INNER JOIN users_nodes ON nodes.id = users_nodes.node_id 
+			LEFT JOIN users ON users.id = users_nodes.user_id',
+			'users.status = "activated" AND links.status = "active"'.
 			($where!=''?' AND ('.$where.')':""),
 			'nodes.id'.
 			($having!=''?' HAVING ('.$having.')':""),
