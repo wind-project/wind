@@ -34,7 +34,6 @@ class mysql {
 	var $total_time=0;
 	
 	function mysql($server, $user, $password, $database) {
-		global $lang;
 		if (!$this->mysql_link = @mysql_connect($server, $user, $password, TRUE)) {
 			$this->error();
 			return;
@@ -43,58 +42,57 @@ class mysql {
 			$this->error();
 			return;
 		}
-		// Don't check for errors, SET NAMES is a 4.1+ feature
-		$this->rawquery("SET NAMES '".$lang['mysql_charset']."'", FALSE);
 	}
 	
 	function close_mysql() {
 		return mysql_close($this->mysql_link);
 	}
 	
-	function rawquery($query, $errors=TRUE) {
-		$mt = $this->getmicrotime();
-		$q = mysql_query($query, $this->mysql_link);
-		$this->total_time += ($this->getmicrotime() - $mt);
-		if ($errors) { 
-			$this->error();
-		}
-		return $q;
-	}
-	
 	function query($query) {
 		$this->insert_id = 0;
 		$this->last_query=$query;
 		$this->total_queries += 1;
-		$q = $this->rawquery($query);
-		if ($q === FALSE) {
+		$mt = $this->getmicrotime();
+		$q = mysql_query($query, $this->mysql_link);
+		$this->total_time += ($this->getmicrotime() - $mt);
+		$this->error();
+		return $q;
+	}
+	
+	function query_data($query) {
+		$q = $this->query($query);
+		return $this->result_to_data($q);
+	}
+	
+	function result_to_data($result) {
+		if ($result === FALSE) {
 			return FALSE;
-		} elseif ($q === TRUE) {
-			$this->insert_id = mysql_insert_id($this->mysql_link);
+		} elseif ($result === TRUE) {
 			return TRUE;
 		}
 		$i = 0;
-		while ($ret = mysql_fetch_assoc($q)) {
+		while ($ret = mysql_fetch_assoc($result)) {
 			while (list ($key, $value) = each ($ret)) {
 				$res[$i][$key] = $value;
 			}
 			$i++;
 		}
-		mysql_free_result($q);
+		mysql_free_result($result);
 		return $res;
 	}
 	
 	function get_fields($table) {
-		return $this->query("SHOW FIELDS FROM `$table`");
+		return $this->query_data("SHOW FIELDS FROM `$table`");
 	}
 
 	function get($select="*", $from, $where="", $group_by="", $order_by="", $limit="") {
-		return $this->query("SELECT $select FROM $from".($where==""?"":" WHERE $where").($group_by==""?"":" GROUP BY $group_by").($order_by==""?"":" ORDER BY $order_by").($limit==""?"":" LIMIT $limit"));
+		return $this->query_data("SELECT $select FROM $from".($where==""?"":" WHERE $where").($group_by==""?"":" GROUP BY $group_by").($order_by==""?"":" ORDER BY $order_by").($limit==""?"":" LIMIT $limit"));
 	}
 	
 	function add($table, $data, $addlog=TRUE, $try_date_in=TRUE) {
 		$table_start = preg_split("/[\s,]+/", $table);
 		$table_start = $table_start[0];
-		$db_fields = $this->query("SHOW FIELDS FROM `$table_start`");
+		$db_fields = $this->query_data("SHOW FIELDS FROM `$table_start`");
 		for ($i=0;$i<count($db_fields);$i++) {
 			$nulls[$db_fields[$i]['Field']] = $db_fields[$i]['Null'];
 			$nulls['`'.$db_fields[$i]['Field'].'`'] = $db_fields[$i]['Null'];
@@ -124,7 +122,8 @@ class mysql {
 			if ($addlog) $this->add_log('ADD', $table, $this->insert_id, serialize($data), $query, $this->get_error());
 			return FALSE;
 		}
-		$res = $this->query($query);
+		$res = $this->query_data($query);
+		if ($res === TRUE) $this->insert_id = mysql_insert_id($this->mysql_link);
 		if ($addlog) $this->add_log('ADD', $table, $this->insert_id, serialize($data), $query, (!$res?$this->get_error():''));
 		return $res;
 	}
@@ -132,8 +131,8 @@ class mysql {
 	function set($table, $data, $where='', $addlog=TRUE) {
 		$table_start = preg_split("/[\s,]+/", $table);
 		$table_start = $table_start[0];
-		if ($addlog && $this->log) $aff = $this->query("SELECT ".$table_start.".id FROM $table WHERE $where");
-		$db_fields = $this->query("SHOW FIELDS FROM `$table_start`");
+		if ($addlog && $this->log) $aff = $this->query_data("SELECT ".$table_start.".id FROM $table WHERE $where");
+		$db_fields = $this->query_data("SHOW FIELDS FROM `$table_start`");
 		for ($i=0;$i<count($db_fields);$i++) {
 			$nulls[$db_fields[$i]['Field']] = $db_fields[$i]['Null'];
 			$nulls['`'.$db_fields[$i]['Field'].'`'] = $db_fields[$i]['Null'];
@@ -160,7 +159,7 @@ class mysql {
 			}
 			return FALSE;
 		}
-		$res = $this->query($query);
+		$res = $this->query_data($query);
 		if ($addlog) {
 			for ($i=0;$i<count($aff);$i++) {
 				$this->add_log('EDIT', $table_start, $aff[$i]['id'], serialize($data), $query, (!$res?$this->get_error():''));
@@ -172,9 +171,9 @@ class mysql {
 	function del($table, $where="", $addlog=TRUE) {
 		$table_start = preg_split("/[\s,]+/", $table);
 		$table_start = $table_start[0];
-		if ($addlog && $this->log) $aff = $this->query("SELECT ".$table_start.".id FROM $table".($where==""?"":" WHERE $where"));
+		if ($addlog && $this->log) $aff = $this->query_data("SELECT ".$table_start.".id FROM $table".($where==""?"":" WHERE $where"));
 		$query = "DELETE FROM $table".($where==""?"":" WHERE $where");
-		$res = $this->query($query);
+		$res = $this->query_data($query);
 		if ($addlog) {
 			for ($i=0;$i<count($aff);$i++) {
 				$this->add_log('DELETE', $table_start, $aff[$i]['id'], '', $query, (!$res?$this->get_error():''));
@@ -186,7 +185,7 @@ class mysql {
 	function cnt($select="*", $table, $where="", $group_by="", $order_by="", $limit="") {
 		if ($select == '') $select = '*';
 		$query = "SELECT $select FROM $table".($where==""?"":" WHERE $where").($group_by==""?"":" GROUP BY $group_by").($order_by==""?"":" ORDER BY $order_by").($limit==""?"":" LIMIT $limit");
-		$q = $this->rawquery($query);
+		$q = $this->query($query);
 		return mysql_num_rows($q);
 	}
 	
@@ -202,6 +201,8 @@ class mysql {
 	
 	function output_error_duplicate_entry() {
 		global $main, $lang;
+		//$t = explode(" ", $this->error_report);
+		//$duplicate_key = $t[count($t)-1];
 		ereg(".*'(.*)'.*", $this->error_report, $ereg);
 		$duplicate_entries = $ereg[1];
 		$main->message->set($lang['message']['error']['duplicate_entry']['title'], str_replace("##duplicate_entries##", $duplicate_entries, $lang['message']['error']['duplicate_entry']['body']));
@@ -250,7 +251,7 @@ class mysql {
 		$log_query = "INSERT INTO ".$this->logs_table." (date, user_type, user_id, type, ip, dns, tablename, affected_id, data, query, error) VALUES ($date, $user_type, $user_id, $type, $ip, $dns, $table, $affected_id, $data, $query, $error)";
 		$insert_id_return = $this->insert_id;
 		$last_query_return = $this->last_query;
-		$this->query($log_query);
+		$this->query_data($log_query);
 		$this->log_insert_id = $this->insert_id;
 		$this->log_last_query = $this->last_query;
 		

@@ -54,11 +54,12 @@ class main {
 		$this->html->head->add_meta("text/html; charset=".$lang['charset'], "", "Content-Type");
 		
 		$this->html->body->tpl['center'] = $this->center->output();
+		$this->html->body->tpl['menu'] = $this->menu->output();
 		$this->html->body->tpl['header'] = $this->header->output();
 		$this->html->body->tpl['footer'] = $this->footer->output();
-		$this->html->body->tpl['menu'] = $this->menu->output();
 		if ($this->message->show) $this->html->body->tpl['message'] = $this->message->output();
-
+		
+		header("Content-Type: text/html; charset=".$lang['charset']);
 		return $this->html->output();
 	}
 	

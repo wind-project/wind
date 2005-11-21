@@ -28,6 +28,9 @@ $vars = array_merge($vars, $config);
 include_once($vars['templates']['path'].$vars['templates']['default'].'/config.php');
 $vars = array_merge($vars, $template_config);
 include_once($root_path."globals/functions.php");
+
+$php_start = getmicrotime();
+
 include_once($root_path."globals/classes/mysql.php");
 include_once($root_path."globals/classes/construct.php");
 include_once($root_path."globals/classes/form.php");
@@ -66,6 +69,8 @@ if (get('lang') != '') {
 include_once($root_path."globals/language/".$tl.".php");
 
 $db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
+
+$db->query("SET NAMES '".$lang['mysql_charset']."'");
 
 if ($db->error) {
 	die("WiND MySQL database error: $db->error_report");

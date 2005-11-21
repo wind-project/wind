@@ -20,12 +20,15 @@
  *}
 <table cellpadding="5" cellspacing="0" class="table-main">
       <tr>
-        <td class="footer" align="left">
+        <td class="footer" align="left" width="33%">
         	<a href="http://www.php.net/"><img src="{$img_dir}logo-php.gif" alt="PHP Hypertext Preprocessor" /></a>
         	<a href="http://www.mysql.com/"><img src="{$img_dir}logo-mysql.gif" alt="MySQL database server" /></a>
         	<a href="http://smarty.php.net/"><img src="{$img_dir}logo-smarty.gif" alt="smarty template engine" /></a>
         </td>
-        <td class="footer" align="right">
+        <td class="footer" align="center" width="33%">
+        	PHP time: {$php_time|round:3}<br />MySQL time: {$mysql_time|round:3}
+        </td>
+        <td class="footer" align="right" width="33%">
         	<b>WiND - Wireless Nodes Database</b><br />
         	Project page: <a href="http://wind.cube.gr/">http://wind.cube.gr/</a><br /><br />
         	&copy; 2005 <a href="http://wind.cube.gr/project/wiki/Team">WiND development team</a>

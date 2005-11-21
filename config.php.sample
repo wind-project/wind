@@ -70,8 +70,12 @@ $config = array(
 			'max_latitude' => MAXLAT_GPS_COORDINATE,
 			'max_longitude' => MAXLON_GPS_COORDINATE
 			)
+		),
+	
+	'debug' => array(
+		'enabled' => FALSE
 		)
-
+		
 );
 
 ?>

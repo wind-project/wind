@@ -64,7 +64,7 @@ class userdata {
 	function load_info() {
 		if ($this->logged) {
 			global $db;
-			$get_res = $db->get($this->info_keys, $this->users_table, $this->primary_key." = $this->user");		
+			$get_res = $db->get($this->info_keys, $this->users_table, $this->primary_key." = '$this->user'");		
 			$this->info = $get_res[0];
 			
 			// EDIT HERE
@@ -124,15 +124,15 @@ class userdata {
 	function reset_visit($uid="") {
 		if ($uid == "") $uid = $this->user;
 		global $db;
-		$ret = $db->get($this->last_session_key, $this->users_table, $this->primary_key." = $uid");
+		$ret = $db->get($this->last_session_key, $this->users_table, $this->primary_key." = '$uid'");
 		$ret = $ret[0];
-		$db->set($this->users_table, array($this->last_visit_key => $ret[$this->last_session_key]), $this->primary_key." = $uid", FALSE);
+		$db->set($this->users_table, array($this->last_visit_key => $ret[$this->last_session_key]), $this->primary_key." = '$uid'", FALSE);
 	}
 	
 	function refresh_session($uid="") {
 		if ($uid == "") $uid = $this->user;
 		global $db;
-		$db->set($this->users_table, array($this->last_session_key => date_now()), $this->primary_key." = $uid", FALSE);
+		$db->set($this->users_table, array($this->last_session_key => date_now()), $this->primary_key." = '$uid'", FALSE);
 	}
 
 }

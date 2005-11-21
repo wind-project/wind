@@ -28,7 +28,10 @@ class footer {
 	}
 	
 	function output() {
+		global $db, $php_start;
 		if ($this->hide) return;
+		$this->tpl['php_time'] = getmicrotime() - $php_start;
+		$this->tpl['mysql_time'] = $db->total_time;
 		return template($this->tpl, __FILE__);
 	}
 	
