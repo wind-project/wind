@@ -88,11 +88,11 @@ class menu {
 				$db->cnt('',
 						'nodes ' .
 						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
-						'INNER JOIN links AS l2 ON (l1.type = "p2p" AND l2.type = "p2p" AND l1.node_id = l2.peer_node_id AND l2.node_id = l1.peer_node_id) ' .
-													'OR (l1.type = "client" AND l1.peer_ap_id = l2.id) ' .
+						'LEFT JOIN links AS p2p ON (l1.type = "p2p" AND p2p.type = "p2p" AND l1.node_id = p2p.peer_node_id AND p2p.node_id = l1.peer_node_id) ' .
+						'LEFT JOIN links AS clients ON (l1.type = "client" AND l1.peer_ap_id = clients.id) ' .
 						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
 						'LEFT JOIN users ON users.id = users_nodes.user_id',
-						'users.status = "activated" AND l1.status = "active" AND l2.status = "active"',
+						'users.status = "activated" AND l1.status = "active" AND (p2p.status = "active" OR clients.status = "active")',
 						'nodes.id'
 						);
 		$this->tpl['stats_nodes_total'] =
@@ -117,11 +117,11 @@ class menu {
 				$db->cnt('',
 						'nodes ' .
 						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
-						'INNER JOIN links AS l2 ON (l1.id < l2.id AND l1.type = "p2p" AND l2.type = "p2p" AND l1.node_id = l2.peer_node_id AND l2.node_id = l1.peer_node_id) ' .
-													'OR (l1.type = "client" AND l1.peer_ap_id = l2.id) ' .
+						'LEFT JOIN links AS p2p ON (l1.id < p2p.id AND l1.type = "p2p" AND p2p.type = "p2p" AND l1.node_id = p2p.peer_node_id AND p2p.node_id = l1.peer_node_id) ' .
+						'LEFT JOIN links AS clients ON (l1.type = "client" AND l1.peer_ap_id = clients.id) ' .
 						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
 						'LEFT JOIN users ON users.id = users_nodes.user_id',
-						'users.status = "activated" AND l1.status = "active" AND l2.status = "active"',
+						'users.status = "activated" AND l1.status = "active" AND (p2p.status = "active" OR clients.status = "active")',
 						'l1.id'
 						);
 		$this->tpl['stats_aps'] =

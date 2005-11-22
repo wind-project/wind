@@ -60,7 +60,7 @@ class nodes_search {
 			'nodes
 			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN regions ON areas.region_id = regions.id
-			LEFT JOIN links ON nodes.id = links.node_id
+			LEFT JOIN links ON nodes.id = links.node_id AND links.status = "active"
 			LEFT JOIN links AS client ON links.peer_ap_id = client.id
 									  AND links.type = "client"
 									  AND client.type = "ap"
@@ -79,7 +79,7 @@ class nodes_search {
 								  AND cl.status = "active"
 			INNER JOIN users_nodes ON nodes.id = users_nodes.node_id 
 			LEFT JOIN users ON users.id = users_nodes.user_id',
-			'users.status = "activated" AND links.status = "active"'.
+			'users.status = "activated"'.
 			($where!=''?' AND ('.$where.')':""),
 			'nodes.id'.
 			($having!=''?' HAVING ('.$having.')':""),

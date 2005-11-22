@@ -82,15 +82,17 @@ class gmap_xml {
 		}
 		$xml .= "</nodes>\r";
 		
-		if (get('show_links_p2p') == 1) $where .= ($where!=''?' OR ':'')."l2.type = 'p2p'";
-		if (get('show_links_client') == 1) $where .= ($where!=''?' OR ':'')."l2.type = 'client'";
+		if (get('show_links_p2p') == 1) $where .= ($where!=''?' OR ':'')."p2p.type = 'p2p'";
+		if (get('show_links_client') == 1) $where .= ($where!=''?' OR ':'')."clients.type = 'client'";
 		if ($where != '') $links = $db->get(
-			'l2.id AS id, l2.type AS type, n1.latitude AS n1_lat, n1.longitude AS n1_lon, n2.latitude AS n2_lat, n2.longitude AS n2_lon, l1.status AS l1_status, l2.status AS l2_status',
+			'IFNULL(p2p.id, clients.id) AS id, IFNULL(p2p.type, clients.type) AS type, n1.latitude AS n1_lat, n1.longitude AS n1_lon, IFNULL(n_p2p.latitude, n_clients.latitude) AS n2_lat, IFNULL(n_p2p.longitude, n_clients.longitude) AS n2_lon, l1.status AS l1_status, IFNULL(p2p.status, clients.status) AS l2_status',
 			'links AS l1 ' .
-			"INNER JOIN links AS l2 ON (l1.id < l2.id AND l1.type = 'p2p' AND l2.type = 'p2p' AND l1.node_id = l2.peer_node_id AND l2.node_id = l1.peer_node_id) OR (l1.type = 'ap' AND l2.type = 'client' AND l1.id = l2.peer_ap_id) " .
+			"LEFT JOIN links AS p2p ON (l1.id < p2p.id AND l1.type = 'p2p' AND p2p.type = 'p2p' AND l1.node_id = p2p.peer_node_id AND p2p.node_id = l1.peer_node_id) " .
+			"LEFT JOIN links AS clients ON (l1.type = 'ap' AND clients.type = 'client' AND l1.id = clients.peer_ap_id) " .
 			"LEFT JOIN nodes AS n1 ON l1.node_id = n1.id " .
-			"LEFT JOIN nodes AS n2 ON l2.node_id = n2.id",
-			($where!=''?'('.$where.') AND ':'')."n1.latitude IS NOT NULL AND n1.longitude IS NOT NULL AND n2.latitude IS NOT NULL AND n2.longitude IS NOT NULL"
+			"LEFT JOIN nodes AS n_p2p ON p2p.node_id = n_p2p.id " .
+			"LEFT JOIN nodes AS n_clients ON clients.node_id = n_clients.id",
+			($where!=''?'('.$where.')':'')." HAVING n1_lat IS NOT NULL AND n1_lon IS NOT NULL AND n2_lat IS NOT NULL AND n2_lon IS NOT NULL"
 			);
 		$xml .= "<links>\r";
 		foreach ((array) $links as $key => $value) {

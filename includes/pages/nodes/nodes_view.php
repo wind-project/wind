@@ -205,16 +205,39 @@ class nodes_view {
 		$table_ipaddr_subnets->db_data(
 			'ip_addresses.date_in, ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type AS ip_addresses__type, ip_addresses.always_on, ip_addresses.info, subnets.ip_start, subnets.ip_end, subnets.type, nodes.name AS nodes__name, nodes.id AS nodes__id, links.type AS links__type',
 			'subnets ' .
-				'LEFT JOIN links ON links.id = subnets.link_id ' .
-				"LEFT JOIN ip_addresses ON " .
-					"((ip_addresses.node_id = '".get('node')."') " .
-					"OR (ip_addresses.node_id = subnets.client_node_id) " .
-					"OR (links.peer_node_id = '".get('node')."' AND ip_addresses.node_id = links.node_id AND subnets.node_id = links.node_id)) " .
-					"AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip)" .
-				"LEFT JOIN nodes ON (links.node_id = '".get('node')."' AND links.peer_node_id = nodes.id) OR (links.peer_node_id = '".get('node')."' AND links.node_id = nodes.id) OR subnets.client_node_id = nodes.id",
-			"subnets.node_id = '".get('node')."' OR links.peer_node_id = '".get('node')."'",
+			"LEFT JOIN links ON links.id = subnets.link_id " .
+			"LEFT JOIN ip_addresses ON " .
+				"ip_addresses.node_id = '".get('node')."' " .
+			"LEFT JOIN nodes ON subnets.node_id = nodes.id",
+			"subnets.node_id = '".get('node')."' AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip)",
 			"",
-			"subnets.type ASC, links.type DESC, subnets.ip_start ASC, ip_addresses.ip");
+			"subnets.type ASC, links.type DESC, subnets.ip_start ASC, ip_addresses.ip",
+			FALSE);
+
+		$table_ipaddr_subnets->db_data(
+			'ip_addresses.date_in, ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type AS ip_addresses__type, ip_addresses.always_on, ip_addresses.info, subnets.ip_start, subnets.ip_end, subnets.type, nodes.name AS nodes__name, nodes.id AS nodes__id, links.type AS links__type',
+			'subnets ' .
+			"LEFT JOIN links ON links.id = subnets.link_id " .
+			"LEFT JOIN ip_addresses ON " .
+				"links.peer_node_id = '".get('node')."' AND ip_addresses.node_id = links.node_id AND subnets.node_id = links.node_id " .
+			"LEFT JOIN nodes ON (links.peer_node_id = '".get('node')."' AND links.node_id = nodes.id)",
+			"(subnets.node_id = '".get('node')."' OR links.peer_node_id = '".get('node')."') AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip)",
+			"",
+			"subnets.type ASC, links.type DESC, subnets.ip_start ASC, ip_addresses.ip",
+			FALSE);
+
+		$table_ipaddr_subnets->db_data(
+			'ip_addresses.date_in, ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type AS ip_addresses__type, ip_addresses.always_on, ip_addresses.info, subnets.ip_start, subnets.ip_end, subnets.type, nodes.name AS nodes__name, nodes.id AS nodes__id, links.type AS links__type',
+			'subnets ' .
+			"LEFT JOIN links ON links.id = subnets.link_id " .
+			"LEFT JOIN ip_addresses ON " .
+				"ip_addresses.node_id = subnets.client_node_id " .
+			"LEFT JOIN nodes ON subnets.client_node_id = nodes.id",
+			"(subnets.node_id = '".get('node')."') AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip)",
+			"",
+			"subnets.type ASC, links.type DESC, subnets.ip_start ASC, ip_addresses.ip",
+			FALSE);
+				
 		foreach( (array) $table_ipaddr_subnets->data as $key => $value) {
 			if ($key != 0) {
 				$table_ipaddr_subnets->data[$key]['ip'] = long2ip($table_ipaddr_subnets->data[$key]['ip']);

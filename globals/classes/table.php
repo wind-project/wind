@@ -30,7 +30,7 @@ class table {
 	
 	function db_data($select, $from, $where="", $group_by="", $order_by="", $limit="") {
 		global $db, $vars;
-		if ($limit == '') {
+		if ($limit == '' && $limit !== FALSE) {
 			$cnt = $db->cnt($select, $from, $where, $group_by);
 			if ($vars['constructor']['max_rows'] != '' && $cnt > $vars['constructor']['max_rows']) {
 				$this->info['TOTAL_PAGES'] = ceil($cnt / $vars['constructor']['max_rows']);
