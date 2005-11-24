@@ -73,8 +73,7 @@ class nodes_search {
 			LEFT JOIN links AS aps ON nodes.id = aps.node_id
 								   AND aps.type = "ap"
 								   AND aps.status = "active"
-			LEFT JOIN links AS cl ON cl.peer_ap_id = links.id
-								  AND links.type = "ap"
+			LEFT JOIN links AS cl ON cl.peer_ap_id = aps.id
 								  AND cl.type = "client"
 								  AND cl.status = "active"
 			INNER JOIN users_nodes ON nodes.id = users_nodes.node_id 
