@@ -19,11 +19,11 @@
  *
  */
 
-if (!file_exists($root_path."config.php")) {
-	die("WiND error: Please make config.php file ...");
+if (!file_exists($root_path."config/config.php")) {
+	die("WiND error: Please make config/config.php file ...");
 }
 include_once($root_path."globals/vars.php");
-include_once($root_path."config.php");
+include_once($root_path."config/config.php");
 $vars = array_merge($vars, $config);
 include_once($vars['templates']['path'].$vars['templates']['default'].'/config.php');
 $vars = array_merge($vars, $template_config);
@@ -67,6 +67,10 @@ if (get('lang') != '') {
 	$tl = $vars['language']['default'];
 }
 include_once($root_path."globals/language/".$tl.".php");
+if (file_exists($root_path."config/language/".$tl."_overwrite.php")) {
+	include_once($root_path."config/language/".$tl."_overwrite.php");
+	$lang = array_merge($lang, $lang_overwrite);
+}
 
 $db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
 
