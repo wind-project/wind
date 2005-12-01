@@ -264,8 +264,8 @@ function makeMarkers(nodes, icon_image, icon_zoom) {
 		    }
 			icon = icon_image[icon_scale];
 			icon_s = icon_image[0];
-			var html = "<div style=\"text-align:left; font-size:12px;font-weight:bold;\"><img src=\"" + icon_s.image + "\" alt=\"\" />" + node_name + " (#" + node_id + ")</div><br />" +
-						"<div style=\"text-align:left; font-size:10px;\">" +
+			var html = "<div style=\"white-space: nowrap; text-align:left; font-size:12px;font-weight:bold;\"><img src=\"" + icon_s.image + "\" alt=\"\" />" + node_name + " (#" + node_id + ")</div><br />" +
+						"<div style=\"white-space: nowrap; text-align:left; font-size:10px;\">" +
 						node_area + "<br />" +
 						"{/literal}{$lang.links}{literal}: " + (parseInt(node_p2p) + parseInt(node_client_on_ap)) + " (+" + node_aps + " {/literal}{$lang.aps}{literal})" + "<br />" +
 						"{/literal}{$lang.clients}{literal}: " + node_clients + "<br /><br />" +

@@ -41,11 +41,11 @@ $config = array(
 		),
 	
 	'dns' => array(
-		'root_zone' => 'domain',
-		'ns_zone' => 'ns.domain',
+		'root_zone' => 'yourdomain',
+		'ns_zone' => 'ns.yourdomain',
 		'reverse_zone' => 'in-addr.arpa',
-		'forward_zone_schema' => $root_path.'poller/domain-forward.schema',
-		'reverse_zone_schema' => $root_path.'poller/domain-reverse.schema'
+		'forward_zone_schema' => $root_path.'tools/dnszones-poller/yourdomain.schema',
+		'reverse_zone_schema' => $root_path.'tools/dnszones-poller/10.in-addr.arpa.schema'
 		),
 	
 	'folders' => array(
