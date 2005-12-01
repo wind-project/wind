@@ -59,14 +59,18 @@ class nodes_contact {
 		$main->footer->hide = TRUE;
 		$from = $db->get('username, email', 'users', "id = '".$main->userdata->user."'");
 		$to_db = $db->get('email', 'users INNER JOIN users_nodes ON users_nodes.user_id = users.id', "users_nodes.node_id = '".get('node')."'".($POST['email_to_type']=='owner'?" AND users_nodes.owner = 'Y'":""));
+		$node = $db->get('name, id', 'nodes', "id = '".get('node')."'");
 		$to = array();
 		for($i=0;$i<count($to_db);$i++) {
 			array_push($to, $to_db[$i]['email']);
 		}
 		$to = implode(', ', $to);
 		$subject = $lang['email']['node_contact']['subject_prefix'].$_POST['email_subject'].$lang['email']['node_contact']['subject_suffix'];
-		$body = str_replace("##username##", $from[0]['username'], $lang['email']['node_contact']['body_prefix']).$_POST['email_body'].str_replace("##username##", $from[0]['username'], $lang['email']['node_contact']['body_suffix']);
-		$ret = @mail($to, $subject, $body, "From: ".$from[0]['username']." <".$from[0]['email'].">");
+		$body = $lang['email']['node_contact']['body_prefix'].$_POST['email_body'].$lang['email']['node_contact']['body_suffix'];
+		$body = str_replace("##username##", $from[0]['username'], $body);
+		$body = str_replace("##node_name##", $node[0]['name'], $body);
+		$body = str_replace("##node_id##", $node[0]['id'], $body);
+		$ret = @sendmail($to, $subject, $body, $from[0]['username']." <".$from[0]['email'].">");
 
 		if ($ret) {
 			$main->message->set_fromlang('info', 'message_sent');
