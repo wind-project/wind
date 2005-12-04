@@ -26,7 +26,7 @@
         	<a href="http://smarty.php.net/"><img src="{$img_dir}logo-smarty.gif" alt="smarty template engine" /></a>
         </td>
         <td class="footer" align="center" width="33%">
-        	PHP time: {$php_time|round:3}<br />MySQL time: {$mysql_time|round:3}{if $debug_mysql}<br />Debug: <a href="{$debug_mysql}" target="debug">MySQL</a>{/if}
+        	PHP time: {$php_time|round:3} s<br />MySQL time: {$mysql_time|round:3} s{if $debug_mysql}<br />Debug: <a href="{$debug_mysql}" target="debug">MySQL</a>{/if}
         </td>
         <td class="footer" align="right" width="33%">
         	<b>WiND - Wireless Nodes Database</b><br />
