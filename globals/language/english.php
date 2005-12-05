@@ -374,7 +374,7 @@ $lang = array(
 			),
 			'message_sent' => array(
 				'title' => "Message was sent",
-				'body' => "Your message was sent successfully."
+				'body' => "Your message was sent successfully. Possible answer will be send by the administrators of the node, at your e-mail account defined at your profile."
 			),
 			'request_diversion' => array(
 				'title' => "Queueing",
@@ -468,7 +468,7 @@ $lang = array(
 		'node_contact' => array(
 			'subject_prefix' => "WiND: ",
 			'subject_suffix' => "",
-			'body_prefix' => "Contacting administrators of node ##node_name## (##node_id##).\nThe user ##username## has sent to you the following message\nthrough the application WiND - Wireless Nodes Database:\n-------------------------------------------------------------------\n\n",
+			'body_prefix' => "Contacting administrators of node ##node_name## (###node_id##).\nThe user ##username## has sent to you the following message\nthrough the application WiND - Wireless Nodes Database:\n-------------------------------------------------------------------\n\n",
 			'body_suffix' => "\n\n-------------------------------------------------------------------\nReply to this message to contact with the sender.\nWiND - Wireless Nodes Database\n-------------------------------------------------------------------"
 		),
 
