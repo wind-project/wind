@@ -30,18 +30,12 @@ class menu {
 		return $form_login;
 	}
 
-	function form_quick_search() {
-		$form_quick_search = new form(array('FORM_NAME' => 'form_quick_search'));
-		return $form_quick_search;
-	}
-
 	function output() {
 		if ($this->hide) return;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $main, $db;
 		$this->tpl['logged'] = $main->userdata->logged;
 		$this->tpl['form_login'] = $construct->form($this->form_login(), __FILE__);
-		$this->tpl['form_quick_search'] = $construct->form($this->form_quick_search(), __FILE__);
 		$main->html->dody->tpl['form_login'] = $this->tpl['form_login'];
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
@@ -78,12 +72,14 @@ class menu {
 				$this->tpl['ranges_req_del'] = $db->cnt('', "ip_ranges", "delete_req = 'Y'");
 			}
 		}
+		$this->tpl['link_home'] = makelink(array());
 		$this->tpl['link_allnodes'] = makelink(array("page" => "nodes"));
 		$this->tpl['link_allranges'] = makelink(array("page" => "ranges", "subpage" => "search"));
 		$this->tpl['link_alldnszones'] = makelink(array("page" => "dnszones"));
 		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
 		$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
 		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
+		parse_str(substr(makelink(array("page" => "quick_search"), FALSE, TRUE, FALSE), 1), &$this->tpl['query_string']);
 		$this->tpl['stats_nodes_active'] =
 				$db->cnt('',
 						'nodes ' .
@@ -148,23 +144,6 @@ class menu {
 		} else {
 			$main->message->set_fromlang('error', 'login_failed', makelink("", TRUE));
 		}
-	}
-
-	function output_onpost_form_quick_search() {
-		global $main, $db, $vars;
-		if (is_numeric($_POST['quick_search']) && strpos($_POST['quick_search'], ".") === FALSE) {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "node" => $_POST['quick_search'])), '', '', TRUE);
-		} elseif ($db->cnt('', 'nodes', "name = '".$_POST['quick_search']."'") == 1) {
-			$node = $db->get('id', 'nodes', "name = '".$_POST['quick_search']."'");
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "node" => $node[0]['id'])), '', '', TRUE);
-		} elseif (is_ip($_POST['quick_search'], FALSE)) {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "ranges", "subpage" => "search", "form_search_ranges_search" => serialize(array("ip" => $_POST['quick_search'])))), '', '', TRUE);
-		} elseif (substr($_POST['quick_search'], -strlen(".".$vars['dns']['root_zone'])) == ".".$vars['dns']['root_zone']) {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "dnszones", "form_search_dns_search" => serialize(array("dns_zones__name" => $_POST['quick_search'])))), '', '', TRUE);
-		} else {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "form_search_nodes_search" => serialize(array("nodes__name" => $_POST['quick_search'])))), '', '', TRUE);
-		}
-		$main->message->forward_sec = 1;
 	}
 	
 }

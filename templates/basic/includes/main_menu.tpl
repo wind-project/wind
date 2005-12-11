@@ -23,7 +23,7 @@
 		<td class="small-menu">
 			<table width="100%"  border="0" cellspacing="0" cellpadding="0">
 			  <tr bgcolor="#FFFFFF">
-				<td class="table-small-menu-text"><a href="/" class="menu-link">{$lang.home}</a></td>
+				<td class="table-small-menu-text"><a href="{$link_home}" class="menu-link">{$lang.home}</a></td>
 			  </tr>
 		  
 		  
@@ -70,7 +70,20 @@
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table-search-menu">
 					<tr>
 						<td><img src="templates/basic/images/search.gif" width="32" height="32" alt="{$lang.quick_search}" /></td>
-						<td style="font-size: 12px;">{$form_quick_search}</td>
+						<td style="font-size: 12px;">
+							<form name="form_quick_search" method="get" action="?">
+							{include file="generic/qs.tpl" qs=$query_string}
+							<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-main">
+							<tr>
+							<td style="font-size: 12px;" width="100%">&nbsp;{$lang.quick_search} <input type="image" src="templates/basic/images/submit1.png" /></td>
+							</tr><tr>
+							<td>
+							<input type="text" name="quick_search" />
+							</td>
+							</tr>
+							</table>
+							</form>
+						</td>
 					</tr>
 				</table>
 			</td>
