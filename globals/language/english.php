@@ -19,13 +19,13 @@
  *
  */
 
-setlocale(LC_ALL, 'en', "english");
+setlocale(LC_ALL, 'en', 'english');
 
 $lang = array(
 
-	'charset' => 'iso-8859-1',
+	'charset' => 'utf-8',
 	'iso639' => 'en',
-	'mysql_charset' => 'latin1',
+	'mysql_charset' => 'utf8',
 
 	'site_title' => "WiND - Wireless Nodes Database",
 	
@@ -157,7 +157,7 @@ $lang = array(
 	'db' => array(
 		'users__username' => 'User Name',
 		'users__password' => 'Password',
-		'users__password_c' => 'Confirm password����� ���',
+		'users__password_c' => 'Confirm password',
 		'users__surname' => 'Last Name',
 		'users__name' => 'First Name',
 		'users__email' => 'E-mail',
@@ -380,7 +380,7 @@ $lang = array(
 		'error' => array(
 			'database_error' => array(
 				'title' => "Database error",
-				'body' => "�database error occured. Please, report the problem to the administrator(s)."
+				'body' => "A database error has occured. Please report the problem to the administrator(s)."
 			),
 			'not_logged_in' => array(
 				'title' => "Not logged in",
@@ -566,7 +566,7 @@ $lang = array(
 		),
 		'mynodes_ipaddr_edit' => array(
 			'title' => 'Edit IP address',
-			'body' => 'In this page you can edit an IP address for your node. ����� �� ���� � ������� �������IP ����� �� The field Hostname describes the device that the corresponding IP address belongs to and must be the same for all the IP addresses of that device.'
+			'body' => 'In this page you can add or edit an IP address for your node. The \'Hostname\' field describes the device that the corresponding IP address belongs to and must be the same for all the IP addresses of that device.'
 		),
 		'nodes_search' => array(
 			'title' => 'Network nodes',

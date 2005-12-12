@@ -229,7 +229,7 @@ function sendmail($to, $subject, $body, $from="") {
 	global $vars;
 	$headers  = 'From: ' . ($from==""?$vars['mail']['from_name']." <".$vars['mail']['from'].">":$from) . "\n";
 	$headers .= 'Content-Type: text/plain; charset='.$lang['charset']."\n";
-	return @mail($to, $subject, $body, $headers);
+	return @mb_send_mail($to, $subject, $body, $headers);
 }
 
 function sendmail_fromlang($to, $message) {

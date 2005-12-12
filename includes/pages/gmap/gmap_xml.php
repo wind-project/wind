@@ -69,8 +69,8 @@ class gmap_xml {
 				$xml .= 'unlinked';
 			}
 			$xml .= ' id="'.$value['id'].'"';
-			$xml .= ' name="'.htmlspecialchars($value['nodes__name']).'"';
-			$xml .= ' area="'.htmlspecialchars($value['areas__name']).'"';
+			$xml .= ' name="'.htmlspecialchars($value['nodes__name'], ENT_COMPAT, $lang['charset']).'"';
+			$xml .= ' area="'.htmlspecialchars($value['areas__name'], ENT_COMPAT, $lang['charset']).'"';
 			if ($value['total_p2p'] != 0) $xml .= ' p2p="'.$value['total_p2p'].'"';
 			if ($value['total_aps'] != 0) $xml .= ' aps="'.$value['total_aps'].'"';
 			if ($value['total_client_on_ap'] != 0) $xml .= ' client_on_ap="'.$value['total_client_on_ap'].'"';

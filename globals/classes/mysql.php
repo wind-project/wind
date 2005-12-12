@@ -201,9 +201,7 @@ class mysql {
 	
 	function output_error_duplicate_entry() {
 		global $main, $lang;
-		//$t = explode(" ", $this->error_report);
-		//$duplicate_key = $t[count($t)-1];
-		ereg(".*'(.*)'.*", $this->error_report, $ereg);
+		mb_ereg(".*'(.*)'.*", $this->error_report, $ereg);
 		$duplicate_entries = $ereg[1];
 		$main->message->set($lang['message']['error']['duplicate_entry']['title'], str_replace("##duplicate_entries##", $duplicate_entries, $lang['message']['error']['duplicate_entry']['body']));
 	}

@@ -48,6 +48,7 @@ if ($vars['template']['version'] < $vars['info']['min_template_version']
 
 $smarty = new Smarty;
 $smarty->template_dir = $vars['templates']['path'].$vars['templates']['default'].'/';
+$smarty->plugins_dir = array($vars['templates']['path'].$vars['templates']['default'].'/plugins/', 'plugins');
 $smarty->compile_dir = $vars['templates']['compiled_path'].$vars['templates']['default'].'/';
 reset_smarty();
 
@@ -71,6 +72,9 @@ if (file_exists($root_path."config/language/".$tl."_overwrite.php")) {
 	include_once($root_path."config/language/".$tl."_overwrite.php");
 	$lang = array_merge($lang, $lang_overwrite);
 }
+
+mb_internal_encoding($lang['charset']);
+mb_language($lang['charset'] == 'utf-8' ? 'uni' : 'en');
 
 $db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
 
