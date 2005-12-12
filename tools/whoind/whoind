@@ -1,0 +1,588 @@
+#!/usr/bin/perl -T
+
+# Simple WHOIS server to serve WiND data
+# For more information have a look at http://wind.cube.gr/
+#
+# Copyright (c) 2005 Faidon Liambotis <faidon@cube.gr>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 dated June, 1991.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Pod::Usage;
+use DBI;
+use Socket qw(:DEFAULT :crlf);
+use POSIX qw(:sys_wait_h);
+use Sys::Syslog;
+use Fcntl;
+use Cwd;
+
+### Default command-line options
+
+# Process
+my $daemon = 0;
+my $user = 'nobody';
+my $group = 'nogroup';
+my $port = 43;
+
+# Location of the configuration file
+my $conf = '/etc/whoind.conf';
+my $pidfile = '/var/run/whoind/whoind.pid';
+
+### Version & Copyright info
+
+my $version = '0.9';
+my $name = "whoind $version\n";
+my $copyright = <<DONE ;
+Copyright (c) 2005 Faidon Liambotis <faidon\@cube.gr>
+Report bugs to http://wind.cube.gr/
+
+DONE
+
+### Let's do the job! ;-)
+
+# Configuration's variables
+my (%database, %zone, $header, $footer, $website);
+
+# Function prototypes
+sub usage();
+sub readconf($);
+sub daemonize();
+sub writepid($);
+sub drop_privileges();
+sub prepare();
+sub serve();
+sub cleanup();
+sub lookup($);
+sub msg($$);
+sub isIP($);
+sub ip2long($);
+sub long2ip($);
+sub formatipr($$);
+sub outpad($$);
+
+# Parse command-line options
+GetOptions( 'daemon|d!' => \$daemon,
+	    'port|p=i' => \$port,
+	    'user|u=s' => \$user,
+	    'group|g=s' => \$group,
+	    'config|conf|c=s' => \$conf,
+	    'pidfile|pid|i=s' => \$pidfile,
+	    'help|h|?' => \&usage )
+	or usage;
+
+# Handle HUP...
+$SIG{HUP} =
+	sub {
+		print msg('notice',
+			  "Received HUP signal, reloading configuration\n");
+	};
+# ... and INT/TERM
+$SIG{INT} = $SIG{TERM} = 
+	sub { 
+		die "Received $_[0] signal, terminating.\n";
+	};
+
+# syslog die() and warn() calls
+$SIG{__DIE__} =
+	sub {
+		my $err = "@_";
+		chomp($err);
+		msg('crit', $err);
+		cleanup;
+		die "$err\n";
+	};
+
+# Print program title/version and copyright information
+print $name.$copyright;
+
+# Foreground or background?
+unless ($daemon) {
+	print "Hit Ctrl+C to quit.\n";
+} else {
+	print "Forking to the background.\n";
+}
+
+# Use absolute path for the conf because we chdir '/' when we daemonize
+$conf = Cwd::abs_path($conf);
+
+# Syslog init
+openlog($0, 'cons,pid', 'daemon') if $daemon;
+msg('notice', "Starting $name");
+
+# Prepare socket; bind and listen
+prepare;
+# Security: drop privileges to $user/$group
+drop_privileges;
+# Daemonize if requested
+daemonize if $daemon;
+
+# Loop until SIGHUP breaks us
+while (1) {
+	# Read the configuration
+	readconf($conf);
+	# Serve incoming requests
+	serve;
+}
+
+# Should never reach here
+die "Abnormal termination\n";
+
+sub usage() {
+	pod2usage(-verbose => 1, -exitval => 2);
+}
+
+# Read and parse the configuration file
+sub readconf($) {
+	my $filename = shift;
+	my %opt;
+
+	# Cleanup previous values
+	undef %database; undef %zone;
+	undef $header; undef $footer; undef $website;
+	
+	# Open it
+	sysopen(FH, $filename, O_RDONLY)
+		or die "Error while opening $filename: $!\n";
+	# Filter it and put all options to %opt
+	while (<FH>) {
+		chomp;
+		# Remove comments...
+		s/(\s|^)+#.*//;
+		# ...leading whitespace...
+		s/^\s+//;
+		# ...and trailing whitespace
+		s/\s+$//;
+		next unless length;
+
+		# foo = bar becomes $opt{foo} = bar
+		my ($var, $value) = split(/\s*=\s*/, $_, 2);
+		$opt{$var} = $value;
+	}
+	close FH;
+
+	# Parse options to the respective variables
+	my ($key, $opt);
+	foreach $key (qw/host user password db charset/) {
+		$opt = $opt{"database.$key"};
+		defined $opt or
+			die "Error while parsing config $filename\n";
+		$database{$key} = $opt;
+	}
+	foreach $key (qw/forward ns/) {
+		$opt = $opt{"zone.$key"};
+		defined $opt or
+			die "Error while parsing config $filename\n";
+		$zone{$key} = $opt;
+	}
+	$header = $opt{header};
+	$footer = $opt{footer};
+	$website = $opt{website};
+}
+
+# Fork to the background properly
+sub daemonize() {
+	# "I'm a good daemon"
+	chdir '/'
+		or die "Error: Can't chdir to /, $!\n";
+	open STDIN, '/dev/null'
+		or die "Error: Can't read /dev/null, $!\n";
+	open STDOUT, '>/dev/null'
+		or die "Error: Can't write to /dev/null, $!\n";
+
+	# Fork to the background
+	defined(my $pid = fork)
+		or die "Error: Could not fork child, $!\n";
+	exit if $pid;
+	
+	POSIX::setsid
+		or die "Error: Can't start a new session, $!\n";
+	
+	writepid($pidfile);
+
+	# Redirect stderr too
+	open STDERR, '>&STDOUT'
+		or die "Error: Can't dup stdout, $!\n";
+}
+
+# Write PID file
+sub writepid($) {
+	my $filename = shift;
+	# Check if a pidfile exists and is writeable...
+	unless (sysopen(FH, $filename, O_WRONLY)) {
+		# ...else delete it and create a new one
+		unlink $filename;
+        	sysopen(FH, $filename, O_WRONLY|O_CREAT)
+			or die "Error while opening $filename: $!\n";
+	}
+	print FH "$$\n";
+	close FH;
+}
+
+sub drop_privileges() {
+	# Drop privileges, we don't need them any more
+	if ($group) {
+		my $gid = getgrnam($group)
+			or die "Unable to get ID of $group: $!\n";
+		POSIX::setgid($gid)
+			or die "Error: Could not drop group ID: $!\n";
+	}
+	if ($user) {
+		my $uid = getpwnam($user)
+			or die "Unable to get ID of $user: $!\n";
+		POSIX::setuid($uid)
+			or die "Error: Could not drop user ID: $!\n";
+	}
+}
+
+# Prepare SOCKET, bind & listen
+sub prepare() {
+	# Create the socket
+	socket(SERVER, PF_INET, SOCK_STREAM, getprotobyname('tcp'))
+		or die "Error: Could not create socket: $!\n";
+
+	# Make it reusable	
+	setsockopt(SERVER, SOL_SOCKET, SO_REUSEADDR, 1)
+		or die "Error: Could not set socket options: $!\n";
+
+	# Untaint port...
+	if ($port =~ m/^([0-9]+)$/) {
+		$port = $1;
+	} else {
+		die "Error: Invalid port number\n";
+	}
+	# ...and grab it
+	my $sockaddr = sockaddr_in($port, INADDR_ANY);
+	
+	# bind & listen
+	bind(SERVER, $sockaddr)
+		or die "Error: Could not bind to port $port: $!\n";
+	listen(SERVER, SOMAXCONN)
+		or die "Error: Could not listen on port $port: $!\n";
+}
+
+# Serve requests
+sub serve() {
+	# Avoid zombie processes
+	local $SIG{CHLD} = 'IGNORE';
+
+	# Forking server
+	while (accept(CLIENT, SERVER)) {
+		# Fork a child
+		next if my $pid = fork;
+
+		### Child
+		# Close SERVER socket, useless to child
+		close(SERVER);
+
+		# "All requests are terminated with
+		# ASCII CR and then ASCII LF." --RFC 3912, WHOIS Protocol
+		local ($/) = $CRLF;
+		
+		# alarm: 10-second timeout for client input
+		local $SIG{ALRM} = sub { close(CLIENT); exit; };
+		alarm(10);
+
+		# Read a line
+		chomp(my $input = <CLIENT>);
+
+		# Restore alarm
+		alarm(0);
+		local $SIG{ALRM} = 'DEFAULT';
+
+		# Respond to request
+		print CLIENT "$header\n" if defined $header;
+		print CLIENT $copyright;
+		
+		my $lookup = lookup($input);
+		if (ref($lookup) eq 'ARRAY') {
+			foreach my $entry (@$lookup) {
+				my ($key, $value) = %$entry;
+				print CLIENT outpad($key, $value);
+			}
+		} elsif (ref($lookup) eq 'SCALAR') {
+			print CLIENT $$lookup;
+		}
+		print CLIENT "\n";
+		print CLIENT "$footer\n" if defined $footer;
+
+		# We're done, close socket and exit child
+		close (CLIENT);
+		exit;
+	} continue { 
+		### Parent
+		# Close CLIENT socket, useless to parent
+		close(CLIENT);
+	}
+}
+
+# Cleanup: close open handles etc.
+sub cleanup() {
+	close SERVER;
+	closelog if $daemon;
+	unlink $pidfile if $daemon;
+}
+
+# Lookups an IP/Domain in the database
+# Returns a reference to an array
+#  or, in case of an error, a reference to a scalar with the error message
+sub lookup($) {
+	my $qr = shift;
+
+	# Input validation
+	return \qq/Malformed request "$qr", please try again.\n/
+		if ($qr =~ /[ @]/);
+
+	# Query is IP address or not
+	my $isip = isIP($qr);
+
+	# Connect to MySQL
+	my $dbh = DBI->connect("DBI:mysql:$database{db}:$database{host}",
+				"$database{user}", "$database{password}",
+				{PrintError => !$daemon} )
+		or return \msg('warning',
+		   "Error '$DBI::err' while connecting to the database.\n");
+
+	# Set connection character set (MySQL 4.1+, no error handling)
+	$dbh->do("SET NAMES '$database{charset}';");
+
+	my ($querystr, $query);
+	# Are we searching for domains or IP ranges?
+	if ($isip) {
+		my $longip = ip2long($qr);
+
+		$querystr = qq/
+		SELECT	ipr.date_in AS date,
+			nodes.name AS nodename,
+			users.username AS owner,
+			ipr.node_id AS id,
+			areas.name AS area,
+			regions.name AS region,
+			ipr.ip_start AS longip_start,
+			ipr.ip_end AS longip_end
+				FROM		ip_ranges AS ipr
+				LEFT JOIN	nodes
+					ON ipr.node_id = nodes.id
+				LEFT JOIN	areas
+					ON nodes.area_id = areas.id
+				LEFT JOIN	regions
+					ON areas.region_id = regions.id
+				LEFT JOIN	users_nodes AS un
+					ON nodes.id = un.node_id
+					AND un.owner='Y'
+				LEFT JOIN	users
+					ON users.id = un.user_id AND
+					   users.status='activated'
+				WHERE	ipr.status = 'active' AND 
+					ipr.ip_start <= $longip AND
+					ipr.ip_end >= $longip; /;
+	} else {
+		# Remove trailing dot (.) if exists
+		$qr =~ s/\.?$//;
+
+		# Strip off forward zone suffix
+		$qr =~ s/\.$zone{forward}$//;
+
+		my $domain = $dbh->quote($qr);
+		$querystr = qq/
+			SELECT zone.date_in AS date,
+			nodes.name AS nodename,
+			users.username AS owner,
+			zone.node_id AS id,
+			areas.name AS area,
+			regions.name AS region,
+			CONCAT(ns.name, ".", nsowner.name_ns) AS ns_prefix
+				FROM		dns_zones AS zone
+				LEFT JOIN	nodes
+					ON zone.node_id = nodes.id
+				LEFT JOIN	areas
+					ON nodes.area_id = areas.id
+				LEFT JOIN	regions
+					ON areas.region_id = regions.id
+				LEFT JOIN	dns_zones_nameservers AS zn
+					ON zone.id = zn.zone_id
+				LEFT JOIN	dns_nameservers AS ns
+					ON zn.nameserver_id = ns.id AND
+					   ns.status='active'
+				LEFT JOIN	nodes AS nsowner
+					ON ns.node_id = nsowner.id
+				LEFT JOIN	users_nodes AS un
+					ON nodes.id = un.node_id AND
+					   un.owner='Y'
+				LEFT JOIN	users
+					ON users.id = un.user_id AND
+					   users.status='activated'
+				WHERE	zone.status = 'active' AND
+					zone.name = $domain; /;
+	}
+	$query = $dbh->prepare($querystr);
+	$query->execute
+		or return \msg('warning',
+		   "Error '$DBI::err' while querying the database.\n");
+
+	my $found;
+	# Common for both IP & Domain
+	my ($date, $nodename, $owner, $id, $area, $region);
+	my ($network, @ns);
+	my $webpage;
+	while (my @row = $query->fetchrow_array) {
+		# The first row contains everything we need...
+		unless ($found) {
+			$found = 1;
+			($date, $nodename, $owner, $id, $area, $region) = @row;
+			$network = formatipr(pop(@row), pop(@row)) if $isip;
+			$webpage = sprintf($website, $id) if defined $website;
+		}
+		# ...except the secondary nameservers
+		unless ($isip) {
+			push(@ns, pop(@row));
+		}
+	}
+	# Disconnect from the database
+	$dbh->disconnect;
+
+	# Return if no match
+	return \"No match for \"$qr\".\n" unless $found;
+	
+	my @response;
+	if ($isip) {
+		push(@response, {'Network' => $network});
+	} else {
+		push(@response, {'Domain Name' => "$qr.$zone{forward}"});
+	}
+	push(@response, {'Creation Date' => $date});
+	push(@response, {'Node' => "$nodename (#$id)"});
+	push(@response, {'Node Owner' => $owner});
+	push(@response, {'Area/Region' => "$area, $region"});
+
+	foreach my $ns (@ns) {
+		push(@response, {'Name Server' => "$ns.$zone{ns}"}) if $ns;
+	}
+	push(@response, {'Website' => $webpage});
+
+	return \@response;
+}
+
+# Syslog-related functions
+sub msg($$) {
+	my ($level, $err) = ($_[0], $_[1]);
+	chomp($err);
+	syslog($level, $err) if $daemon;
+	# Return as entered; with or without newline
+	return $_[1];
+}
+
+# Checks if a string is a valid IP address
+sub isIP($) {
+	my $d = '(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])';
+	return ($_[0] =~ m/^$d\.$d\.$d\.$d$/);
+}
+
+# IP <-> LongIP conversions
+sub ip2long($) { return unpack('N',inet_aton(shift)); }
+sub long2ip($) { return inet_ntoa(pack 'N', shift); }
+
+# Format IP range output
+sub formatipr($$) {
+	my $start = shift;
+	my $end = shift;
+	($start, $end) = ($end, $start) if $start > $end;
+	my $cidr = eval { log($end-$start+1)/log(2) };
+	if ($cidr and int($cidr) == $cidr) {
+		# It's a valid subnet, output '1.2.3.4/5'
+		my $network = ($start >> $cidr) << $cidr;
+		return long2ip($network).'/'.(32 - $cidr)
+			if $start == $network;
+	}
+	# It's just a range, output '1.2.3.4 - 4.3.2.1'
+	return long2ip($start).' - '.long2ip($end);
+}
+
+# Formats output lines
+sub outpad($$) {
+	my $ret;
+	$ret .= "  $_[0]";
+	$ret .= '.' x (20 - length($_[0]));
+	$ret .= " $_[1]\n" if defined $_[1];
+}
+
+__END__
+
+=head1 NAME
+
+whoind - WiND WHOIS server
+
+=head1 SYNOPSIS
+
+whoind [options]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<-d, --daemon>
+
+Fork to the background
+
+=item B<-no-d, --no-daemon>
+
+Don't fork to the background (default)
+
+=item B<-p, --port>
+
+Port to listen to (default: 43)
+
+=item B<-u, --user>
+
+User to drop privileges to (default: nobody)
+
+=item B<-g, --group>
+
+Group to drop privileges to (default: nogroup)
+
+=item B<-c, --conf, --config>
+
+Configuration file path (default: /etc/whoind.conf)
+
+=item B<-c, --conf, --config>
+
+pidfile path (default: /var/run/whoid.pid)
+
+=item B<-h, --help>
+
+Show usage
+
+=back
+
+=head1 DESCRIPTION
+
+B<whoind> is a simple WHOIS protocol server intended to serve data from
+the WiND (Wireless Nodes Database) database.
+
+=head1 AUTHOR AND COPYRIGHT
+
+whoind was written by Faidon Liambotis <faidon@cube.gr> for the WiND project.
+Report bugs to http://wind.cube.gr/
+
+Copyright (c) 2005 Faidon Liambotis <faidon@cube.gr>
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; version 2 dated June, 1991.
+
+=cut
+

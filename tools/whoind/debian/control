@@ -1,0 +1,15 @@
+Source: whoind
+Section: net
+Priority: optional
+Maintainer: Faidon Liambotis <faidon@cube.gr>
+Build-Depends: debhelper (>= 4.0.0), perl
+Standards-Version: 3.6.2.1
+
+Package: whoind
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}, libdbi-perl, libdbd-mysql-perl
+Description: WiND WHOIS server
+ whoind is a simple WHOIS protocol server intended to serve data from
+ a WiND (Wireless Nodes Database) database.
+ .
+ For more information, please see http://wind.cube.gr/

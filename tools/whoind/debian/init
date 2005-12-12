@@ -1,0 +1,62 @@
+#! /bin/sh
+#
+# whoind init.d script
+# Copyright (c) 2005, Faidon Liambotis <faidon@cube.gr>
+#
+# You are allowed to use, copy, modify, distribute this file
+# without any restrictions whatsoever.
+# It is provided WITHOUT ANY WARRANTY; use it at your own risk.
+
+if [ -f /etc/default/whoind ] ; then
+	. /etc/default/whoind
+fi
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/whoind
+DAEMON_OPTS="$DAEMON_OPTS --daemon --config=/etc/whoind.conf"
+PIDFILE=/var/run/whoind/whoind.pid
+NAME=whoind
+DESC="WiND WHOIS Server"
+
+test -x $DAEMON || exit 0
+
+set -e
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	echo -n "$NAME";
+	if start-stop-daemon --start --quiet --exec $DAEMON --pidfile $PIDFILE \
+		-- $DAEMON_OPTS > /dev/null; then
+		echo "."
+		exit 0 # EXIT_SUCCESS
+	else
+		echo "...failed."
+		exit 1 # EXIT_FAILURE
+	fi
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	echo -n "$NAME"
+	start-stop-daemon --stop --quiet --pidfile $PIDFILE || true
+	echo "."
+	;;
+  reload)
+	echo -n "Reloading $DESC: "
+	echo -n "$NAME";
+	start-stop-daemon --stop --quiet --pidfile $PIDFILE --signal 1 || true
+	echo "."
+	;;
+  restart|force-reload)
+  	$0 stop
+	sleep 1
+	$0 start
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
