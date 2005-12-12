@@ -376,10 +376,6 @@ $lang = array(
 				'title' => "Message was sent",
 				'body' => "Your message was sent successfully. Possible answer will be send by the administrators of the node, at your e-mail account defined at your profile."
 			),
-			'request_diversion' => array(
-				'title' => "Queueing",
-				'body' => "Your request is being gueued."
-			)
 		),
 		'error' => array(
 			'database_error' => array(

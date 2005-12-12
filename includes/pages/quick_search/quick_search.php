@@ -28,21 +28,29 @@ class quick_search {
 	}
 	
 	function output() {
-		global $main, $db, $vars;
+		global $db, $vars;
 		$quick_search = get('quick_search');
 		if (is_numeric($quick_search) && strpos($quick_search, ".") === FALSE) {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "node" => $quick_search)), '', '', TRUE);
+			$page = array("page" => "nodes", "node" => $quick_search);
 		} elseif ($db->cnt('', 'nodes', "name = '".$quick_search."'") == 1) {
 			$node = $db->get('id', 'nodes', "name = '".$quick_search."'");
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "node" => $node[0]['id'])), '', '', TRUE);
+			$page = array("page" => "nodes", "node" => $node[0]['id']);
 		} elseif (is_ip($quick_search, FALSE)) {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "ranges", "subpage" => "search", "form_search_ranges_search" => serialize(array("ip" => $quick_search)))), '', '', TRUE);
+			$page = array("page" => "ranges",
+						  "subpage" => "search",
+						  "form_search_ranges_search" => serialize(array("ip" => $quick_search))
+						  );
 		} elseif (substr($quick_search, -strlen(".".$vars['dns']['root_zone'])) == ".".$vars['dns']['root_zone']) {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "dnszones", "form_search_dns_search" => serialize(array("dns_zones__name" => $quick_search)))), '', '', TRUE);
+			$page = array("page" => "dnszones",
+						  "form_search_dns_search" => serialize(array("dns_zones__name" => $quick_search))
+						  );
 		} else {
-			$main->message->set_fromlang('info', 'request_diversion', makelink(array("page" => "nodes", "form_search_nodes_search" => serialize(array("nodes__name" => $quick_search)))), '', '', TRUE);
+			$page = array("page" => "nodes",
+						  "form_search_nodes_search" => serialize(array("nodes__name" => $quick_search))
+						  );
 		}
-		$main->message->forward_sec = 1;
+		header("Location: ".makelink($page, '', '', FALSE));
+		exit;
 	}
 
 }
