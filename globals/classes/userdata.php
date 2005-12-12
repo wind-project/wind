@@ -36,6 +36,8 @@ class userdata {
 	var $last_visit_key = "last_visit";
 	
 	function userdata() {
+		// Allow browser caching
+		ini_set('session.cache_limiter', 'private');
 		session_start();
 		if (isset($_SESSION['userdata'][$this->primary_key])) {
 			$this->logged = TRUE;
