@@ -71,14 +71,14 @@
 					<tr>
 						<td><img src="templates/basic/images/search.gif" width="32" height="32" alt="{$lang.quick_search}" /></td>
 						<td style="font-size: 12px;">
-							<form name="form_quick_search" method="get" action="?">
+							<form name="search" method="get" action="?">
 							{include file="generic/qs.tpl" qs=$query_string}
 							<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-main">
 							<tr>
-							<td style="font-size: 12px;" width="100%">&nbsp;{$lang.quick_search} <input type="image" src="templates/basic/images/submit1.png" /></td>
+							<td style="font-size: 12px;" width="100%">&nbsp;{$lang.quick_search} <a href="javascript:document.search.submit()"><img src="templates/basic/images/submit1.png" alt="{$lang.submit}" /></a></td>
 							</tr><tr>
 							<td>
-							<input type="text" name="quick_search" />
+							<input type="text" name="q" />
 							</td>
 							</tr>
 							</table>

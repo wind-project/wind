@@ -19,34 +19,34 @@
  *
  */
 
-class quick_search {
+class search {
 
 	var $tpl;
 	
-	function quick_search() {
+	function search() {
 		
 	}
 	
 	function output() {
 		global $db, $vars;
-		$quick_search = get('quick_search');
-		if (is_numeric($quick_search) && strpos($quick_search, ".") === FALSE) {
-			$page = array("page" => "nodes", "node" => $quick_search);
-		} elseif ($db->cnt('', 'nodes', "name = '".$quick_search."'") == 1) {
-			$node = $db->get('id', 'nodes', "name = '".$quick_search."'");
+		$q = get('q');
+		if (is_numeric($q) && strpos($q, ".") === FALSE) {
+			$page = array("page" => "nodes", "node" => $q);
+		} elseif ($db->cnt('', 'nodes', "name = '".$q."'") == 1) {
+			$node = $db->get('id', 'nodes', "name = '".$q."'");
 			$page = array("page" => "nodes", "node" => $node[0]['id']);
-		} elseif (is_ip($quick_search, FALSE)) {
+		} elseif (is_ip($q, FALSE)) {
 			$page = array("page" => "ranges",
 						  "subpage" => "search",
-						  "form_search_ranges_search" => serialize(array("ip" => $quick_search))
+						  "form_search_ranges_search" => serialize(array("ip" => $q))
 						  );
-		} elseif (substr($quick_search, -strlen(".".$vars['dns']['root_zone'])) == ".".$vars['dns']['root_zone']) {
+		} elseif (substr($q, -strlen(".".$vars['dns']['root_zone'])) == ".".$vars['dns']['root_zone']) {
 			$page = array("page" => "dnszones",
-						  "form_search_dns_search" => serialize(array("dns_zones__name" => $quick_search))
+						  "form_search_dns_search" => serialize(array("dns_zones__name" => $q))
 						  );
 		} else {
 			$page = array("page" => "nodes",
-						  "form_search_nodes_search" => serialize(array("nodes__name" => $quick_search))
+						  "form_search_nodes_search" => serialize(array("nodes__name" => $q))
 						  );
 		}
 		header("Location: ".makelink($page, '', '', FALSE));

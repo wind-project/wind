@@ -79,7 +79,7 @@ class menu {
 		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
 		$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
 		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
-		parse_str(substr(makelink(array("page" => "quick_search"), FALSE, TRUE, FALSE), 1), &$this->tpl['query_string']);
+		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), &$this->tpl['query_string']);
 		$this->tpl['stats_nodes_active'] =
 				$db->cnt('',
 						'nodes ' .
