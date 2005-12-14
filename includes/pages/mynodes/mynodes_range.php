@@ -96,7 +96,7 @@ class mynodes_range {
 		}
 		$form_getrange = $this->form_getrange();
 		$nextr = $this->calculate_next_range();
-		$status = "pending";
+		$status = "waiting";
 		$ret = TRUE;
 		$ret = $form_getrange->db_set(array("node_id" => get('node'), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "status" => $status));
 		if ($ret) {

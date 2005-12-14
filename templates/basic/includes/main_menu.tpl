@@ -183,7 +183,7 @@
 			<td colspan="2" class="table-form-title"><img src="templates/basic/images/node-small.png" alt="{$lang.ip_ranges}" />&nbsp;<a href="{$link_ranges}">{$lang.ip_ranges}</a></td>
 			</tr>
 			<tr>
-			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_ranges_pending content="$ranges_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_ranges_req_del content="$ranges_req_del `$lang.for_deletion`"}</td>
+			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_ranges_waiting content="$ranges_waiting `$lang.waiting`"} {include file="generic/link.tpl" link=$link_ranges_req_del content="$ranges_req_del `$lang.for_deletion`"}</td>
 			</tr>
 			{/if}
 			{if $link_dnszones != ''}
@@ -191,7 +191,7 @@
 			<td colspan="2" class="table-form-title"><img src="templates/basic/images/dns-small.png" alt="{$lang.dns_zones}" />&nbsp;<a href="{$link_dnszones}">{$lang.dns_zones}</a></td>
 			</tr>
 			<tr>
-			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnszones_pending content="$dnszones_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_dnszones_req_del content="$dnszones_req_del `$lang.for_deletion`"}</td>
+			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnszones_waiting content="$dnszones_waiting `$lang.waiting`"} {include file="generic/link.tpl" link=$link_dnszones_req_del content="$dnszones_req_del `$lang.for_deletion`"}</td>
 			</tr>
 			{/if}
 			{if $link_dnsnameservers != ''}
@@ -199,7 +199,7 @@
 			<td colspan="2" class="table-form-title"><img src="templates/basic/images/nameserver.gif" alt="{$lang.dns_nameservers}" />&nbsp;<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a></td>
 			</tr>
 			<tr>
-			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnsnameservers_pending content="$dnsnameservers_pending `$lang.pending`"} {include file="generic/link.tpl" link=$link_dnsnameservers_req_del content="$dnsnameservers_req_del `$lang.for_deletion`"}</td>
+			<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnsnameservers_waiting content="$dnsnameservers_waiting `$lang.waiting`"} {include file="generic/link.tpl" link=$link_dnsnameservers_req_del content="$dnsnameservers_req_del `$lang.for_deletion`"}</td>
 			</tr>
 			{/if}
 			<tr>

@@ -22,6 +22,11 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
+{include file=generic/title1.tpl title="`$lang.dnszone_edit`" content=$form_zone}
+</td>
+</tr>
+<tr>
+<td class="table-page-pad">
 {include file=generic/title1.tpl title="`$lang.node_info`" content=$table_node_info}
 </td>
 </tr>
@@ -32,7 +37,7 @@
 </tr>
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.dnszone_edit`" content=$form_zone}
+{include file=generic/title1.tpl title="`$lang.links`" content=$table_links}
 </td>
 </tr>
 </table>

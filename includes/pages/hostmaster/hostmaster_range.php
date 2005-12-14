@@ -57,6 +57,14 @@ class hostmaster_range {
 			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN regions ON areas.region_id = regions.id',
 			"ip_ranges.id = '".get('iprange')."'");
+		for($i=1;$i<count($table_node_info->data);$i++) {
+			if (isset($table_node_info->data[$i])) {
+				$table_node_info->data[$i]['nodes__name'] .= " (#".$table_node_info->data[$i]['id'].")";
+				$table_node_info->info['EDIT'][$i] = makelink(array("page" => "mynodes", "node" => $table_node_info->data[$i]['id']));
+			}
+		}
+		$table_node_info->info['EDIT_COLUMN'] = 'nodes__name';
+		$table_node_info->db_data_remove('id');
 		return $table_node_info;
 	}
 
@@ -64,23 +72,63 @@ class hostmaster_range {
 		global $db;
 		$table_user_info = new table(array('TABLE_NAME' => 'table_user_info'));
 		$table_user_info->db_data(
-			'users_nodes.owner, users.username, users.surname, users.name, users.name, users.email, users.phone, users.info',
+			'users.id, users.username, users_nodes.owner, users.surname, users.name, users.name, users.email, users.phone, users.info',
 			'ip_ranges ' .
 			'LEFT JOIN users_nodes ON users_nodes.node_id = ip_ranges.node_id 
 			LEFT JOIN users ON users_nodes.user_id = users.id',
 			"ip_ranges.id = '".get('iprange')."'",
 			'',
 			'users_nodes.owner ASC');
+		for($i=1;$i<count($table_user_info->data);$i++) {
+			if (isset($table_user_info->data[$i])) {
+				$table_user_info->info['EDIT'][$i] = makelink(array("page" => "users", "user" => $table_user_info->data[$i]['id']));
+			}
+		}
+		$table_user_info->info['EDIT_COLUMN'] = 'username';
+		$table_user_info->db_data_remove('id');
 		$table_user_info->db_data_translate('users_nodes__owner');
 		return $table_user_info;
 	}
 
+	function table_links() {
+		global $db;
+		$table_links = new table(array('TABLE_NAME' => 'table_links', 'FORM_NAME' => 'table_links'));
+		$table_links->db_data(
+			'links.id, links.type, "" AS peer, links.peer_node_id, n_p.name AS peer_node_name, n_c.name AS peer_ap_nodename, n_c.id AS peer_ap_nodeid, l_c.ssid AS peer_ap_ssid, links.ssid, links.status AS links__status, l_p.status AS l_p__status, l_c.status AS l_c__status',
+			'links
+			LEFT JOIN ip_ranges ON ip_ranges.node_id = links.node_id
+			LEFT JOIN links AS l_p ON links.peer_node_id = l_p.node_id AND links.node_id = l_p.peer_node_id
+			LEFT JOIN nodes AS n_p ON links.peer_node_id = n_p.id
+			LEFT JOIN links AS l_c ON links.peer_ap_id = l_c.id
+			LEFT JOIN nodes AS n_c ON l_c.node_id = n_c.id',
+			"ip_ranges.id = '".get('iprange')."' AND (links.type != 'p2p' OR l_p.node_id IS NOT NULL)",
+			"",
+			"links.type ASC, links.date_in ASC");
+		for($i=1;$i<count($table_links->data);$i++) {
+			if (isset($table_links->data[$i])) {
+				if ($table_links->data[$i]['type'] == 'p2p') {
+					$table_links->data[$i]['peer'] = $table_links->data[$i]['peer_node_name']." (#".$table_links->data[$i]['peer_node_id'].")";
+					$table_links->data[$i]['links__status'] = ($table_links->data[$i]['l_p__status']=="inactive"?"inactive":$table_links->data[$i]['links__status']);
+				}
+				if ($table_links->data[$i]['type'] == 'client') {
+					$table_links->data[$i]['peer'] = $table_links->data[$i]['peer_ap_nodename']." (#".$table_links->data[$i]['peer_ap_nodeid'].")";
+					$table_links->data[$i]['ssid'] = $table_links->data[$i]['peer_ap_ssid'];
+					$table_links->data[$i]['links__status'] = ($table_links->data[$i]['l_c__status']=="inactive"?"inactive":$table_links->data[$i]['links__status']);
+				}				
+			}
+		}
+		$table_links->db_data_remove('id', 'peer_node_id', 'peer_node_name', 'peer_ap_nodename', 'peer_ap_nodeid', 'peer_ap_ssid', 'l_c__status', 'l_p__status');
+		$table_links->db_data_translate('links__type', 'links__status');
+		return $table_links;
+	}
+	
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
 		$this->tpl['form_range'] = $construct->form($this->form_range(), __FILE__);
 		$this->tpl['table_node_info'] = $construct->table($this->table_node_info(), __FILE__);
 		$this->tpl['table_user_info'] = $construct->table($this->table_user_info(), __FILE__);
+		$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 
