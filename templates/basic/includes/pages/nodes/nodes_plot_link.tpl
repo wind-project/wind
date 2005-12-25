@@ -29,14 +29,14 @@
 <table cellpadding="4" cellspacing="0" class="plot-link-table">
 <tr>
 <td width="25%" align="left">
-	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('?page=pickup&subpage=nodes&object=form_nodes_plot_link.a_node', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('?page=pickup&subpage=nodes&object=form_nodes_plot_link.a_node', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 	<br />
 	<input type="hidden" name="a_node" value="{$a_node}" />
 	<input class="fld-form-input-pickup" type="text" disabled="disabled" name="a_node_output" value="{$a_node_output|escape}" />
 </td>
 <td width="50%" align="center"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td>
 <td width="25%" align="right">
-	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('?page=pickup&subpage=nodes&object=form_nodes_plot_link.b_node', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('?page=pickup&subpage=nodes&object=form_nodes_plot_link.b_node', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 	<br />
 	<input type="hidden" name="b_node" value="{$b_node}" />
 	<input style="text-align:right;" class="fld-form-input-pickup" type="text" disabled="disabled" name="b_node_output" value="{$b_node_output|escape}" />

@@ -84,7 +84,7 @@ function sendmail_changed() {{/literal}
 			<option value="{$data.2.Type_Pickup[e].value|escape}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data.2.Type_Pickup[e].output}</option>
 			{/section}
 		</select>
-		{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: t = window.open('`$data.2.Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+		{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: t = window.open('`$data.2.Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 		{include file=generic/link.tpl content="`$lang.remove`" onclick="javascript: remove_selected(window.document.`$extra_data.FORM_NAME`.elements['`$data.2.fullField`[]']); return false;"}
 	</td>	
 	</tr>

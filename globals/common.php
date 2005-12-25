@@ -50,6 +50,7 @@ $smarty = new Smarty;
 $smarty->template_dir = $vars['templates']['path'].$vars['templates']['default'].'/';
 $smarty->plugins_dir = array($vars['templates']['path'].$vars['templates']['default'].'/plugins/', 'plugins');
 $smarty->compile_dir = $vars['templates']['compiled_path'].$vars['templates']['default'].'/';
+$smarty->register_modifier('stripslashes', 'stripslashes');
 reset_smarty();
 
 $construct = new construct;

@@ -68,7 +68,7 @@
 	{if $extra_data.PICKUP_COLUMN != ''}
 		{assign var=edit_column value="`$extra_data.PICKUP_COLUMN`"}
 		{assign var=edit value=""}
-		{assign var=onclick value="javascript: window.opener.pickup(window.opener.document.`$extra_data.PICKUP_OBJECT`,'`$extra_data.PICKUP_OUTPUT[row]`','`$extra_data.PICKUP_VALUE[row]`', window); return false;"}
+		{assign var=onclick value="javascript: window.opener.pickup(window.opener.document.`$extra_data.PICKUP_OBJECT`,'`$extra_data.PICKUP_OUTPUT[row]`','`$extra_data.PICKUP_VALUE[row]`', window); return false;"|stripslashes}
 	{/if}
 	<td class="{$cellclass}">{if $key==$edit_column && $smarty.section.row.index != 0}<a href="{$edit}"{if $extra_data.PICKUP_COLUMN != ''} onclick="{$onclick}"{/if}>{$cell|escape}</a>{else}{$cell|escape}{/if}</td>
 	{/if}

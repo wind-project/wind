@@ -91,7 +91,7 @@ function type_changed() {
 		<td class="table-form-field">
 			<input type="hidden" name="{$data[1].fullField}" value="{$data[1].Type_Pickup.value|escape}" />
 			<input type="text" disabled="disabled" class="fld-form-input-pickup" name="{$data[1].fullField}_output" value="{$data[1].Type_Pickup.output|escape}" />
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 			{if $data[1].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[1].fullField`.value = ''; `$data[1].fullField`_output.innerText = ''; return false;"}{/if}
 		</td>	
 		</tr>	
@@ -100,7 +100,7 @@ function type_changed() {
 		<td class="table-form-field">
 			<input type="hidden" name="{$data[2].fullField}" value="{$data[2].Type_Pickup.value|escape}" />
 			<input type="text" disabled="disabled" class="fld-form-input-pickup" name="{$data[2].fullField}_output" value="{$data[2].Type_Pickup.output|escape}" />
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup_pickup', 'width=500,height=400,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 			{if $data[2].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[2].fullField`.value = ''; `$data[2].fullField`_output.innerText = ''; return false;"}{/if}
 		</td>	
 		</tr>	
