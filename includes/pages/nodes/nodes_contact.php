@@ -70,7 +70,7 @@ class nodes_contact {
 		$body = str_replace("##username##", $from[0]['username'], $body);
 		$body = str_replace("##node_name##", $node[0]['name'], $body);
 		$body = str_replace("##node_id##", $node[0]['id'], $body);
-		$ret = @sendmail($to, $subject, $body, $from[0]['username']." <".$from[0]['email'].">");
+		$ret = @sendmail($to, $subject, $body, $from[0]['username'], $from[0]['email']);
 
 		if ($ret) {
 			$main->message->set_fromlang('info', 'message_sent');
