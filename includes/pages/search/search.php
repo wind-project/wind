@@ -49,8 +49,7 @@ class search {
 						  "form_search_nodes_search" => serialize(array("nodes__name" => $q))
 						  );
 		}
-		header("Location: ".makelink($page, '', '', FALSE));
-		exit;
+		redirect( makelink($page, '', '', FALSE) );
 	}
 
 }
