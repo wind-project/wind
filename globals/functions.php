@@ -225,7 +225,7 @@ function reverse_zone_from_ip($ip) {
 	return $ret;
 }
 
-function encode_rfc2047($str, $charset) {
+function encode_rfc2047($str, $charset='') {
 	// Encode a string using RFC 2057 MIME Header Extensions
 	global $lang;
 	if (!strlen($str)) return '';
@@ -243,7 +243,7 @@ function encode_rfc2047($str, $charset) {
 	return $str;
 }
 
-function sendmail($to, $subject, $body, $from_name, $from_email) {
+function sendmail($to, $subject, $body, $from_name='', $from_email='', $cc_to_sender=FALSE) {
 	global $vars, $lang;
 	if (!strlen($from_email)) {
 		$from_name = $vars['mail']['from_name'];
@@ -253,6 +253,7 @@ function sendmail($to, $subject, $body, $from_name, $from_email) {
 	$subject = encode_rfc2047($subject);
 	$body = chunk_split(base64_encode($body));
 	$headers  = "From: $from\r\n";
+	if ($cc_to_sender) $headers  .= "Cc: $from\r\n";
 	$headers .= "MIME-Version: 1.0\r\n";
 	$headers .= 'Content-Type: text/plain; charset='.$lang['charset']."\r\n";
 	$headers .= "Content-Transfer-Encoding: base64";

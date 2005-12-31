@@ -474,38 +474,38 @@ $lang = array(
 		'range' => array(
 			'pending' => array(
 				'subject' => "##range##: Pending",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class has been queued with status 'pending'.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class has been queued with status 'pending'.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'active' => array(
 				'subject' => "##range##: Activated",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class has been activated.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class has been activated.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'rejected' => array(
 				'subject' => "##range##: Rejected",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class has been rejected.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class has been rejected.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'invalid' => array(
 				'subject' => "##range##: Invalid",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class was invalid.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nNode: ##node_name## (###node_id##)\n\nThe above IP C-Class was invalid.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			)
 		),
 		
 		'zone' => array(
 			'pending' => array(
 				'subject' => "##zone##: Pending",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone has been queued with status 'pending'.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone has been queued with status 'pending'.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'active' => array(
 				'subject' => "##zone##: Activated",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone has been activated.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone has been activated.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'rejected' => array(
 				'subject' => "##zone##: Rejected",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone has been rejected.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone has been rejected.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'invalid' => array(
 				'subject' => "##zone##: Invalid",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone was invalid.\n\nThe WiND Hostmaster team"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nDNS zone: ##zone##\nNode: ##node_name## (###node_id##)\n\nThe above DNS zone was invalid.\n\nRepresenting the WiND Hostmaster team,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			)
 		)
 	),

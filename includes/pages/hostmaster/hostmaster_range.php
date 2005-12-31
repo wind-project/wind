@@ -28,7 +28,7 @@ class hostmaster_range {
 	}
 	
 	function form_range() {
-		global $construct, $db, $vars;
+		global $construct, $db, $vars, $main;
 		$form_range = new form(array('FORM_NAME' => 'form_range'));
 		$form_range->db_data('ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.info, ip_ranges.status');
 		$form_range->db_data_values("ip_ranges", "id", get('iprange'));
@@ -44,6 +44,9 @@ class hostmaster_range {
 		$t = $db->get('nodes.id, nodes.name', 'nodes, ip_ranges', "ip_ranges.node_id = nodes.id AND ip_ranges.id = '".get('iprange')."'");
 		$form_range->info['node_name'] = $t[0]['name'];
 		$form_range->info['node_id'] = $t[0]['id'];
+		$form_range->info['hostmaster_username'] = $main->userdata->info['username'];
+		$form_range->info['hostmaster_name'] = $main->userdata->info['name'];
+		$form_range->info['hostmaster_surname'] = $main->userdata->info['surname'];
 		return $form_range;
 	}
 	
@@ -143,7 +146,7 @@ class hostmaster_range {
 								"ip_ranges", "id", $range);
 		if ($_POST['sendmail'] == 'Y') {
 			$_POST['email_to'] = str_replace(";", ", ", $_POST['email_to']);
-			if ($ret) $ret = $ret && sendmail($_POST['email_to'], $_POST['email_subject'], $_POST['email_body']);
+			if ($ret) $ret = $ret && sendmail($_POST['email_to'], $_POST['email_subject'], $_POST['email_body'], '', '', TRUE);
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'edit_success', makelink(array("page" => "hostmaster", "subpage" => "ranges")));

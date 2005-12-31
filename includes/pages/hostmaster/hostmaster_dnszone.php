@@ -28,7 +28,7 @@ class hostmaster_dnszone {
 	}
 	
 	function form_zone() {
-		global $db, $vars;
+		global $db, $vars, $main;
 		$form_zone = new form(array('FORM_NAME' => 'form_zone'));
 		$form_zone->db_data('dns_zones.name, dns_zones.info, dns_zones_nameservers.nameserver_id, dns_zones.status');
 		$form_zone->db_data_values("dns_zones", "id", get('zone'));
@@ -45,6 +45,9 @@ class hostmaster_dnszone {
 		$t = $db->get('nodes.id, nodes.name', 'nodes, dns_zones', "dns_zones.node_id = nodes.id AND dns_zones.id = '".get('zone')."'");
 		$form_zone->info['node_name'] = $t[0]['name'];
 		$form_zone->info['node_id'] = $t[0]['id'];
+		$form_zone->info['hostmaster_username'] = $main->userdata->info['username'];
+		$form_zone->info['hostmaster_name'] = $main->userdata->info['name'];
+		$form_zone->info['hostmaster_surname'] = $main->userdata->info['surname'];
 		return $form_zone;
 	}
 	
@@ -144,7 +147,7 @@ class hostmaster_dnszone {
 
 		if ($_POST['sendmail'] == 'Y') {
 			$_POST['email_to'] = str_replace(";", ", ", $_POST['email_to']);
-			if ($ret) $ret = $ret && sendmail($_POST['email_to'], $_POST['email_subject'], $_POST['email_body']);
+			if ($ret) $ret = $ret && sendmail($_POST['email_to'], $_POST['email_subject'], $_POST['email_body'], '', '', TRUE);
 		}
 		
 		if ($ret) {

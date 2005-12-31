@@ -475,38 +475,38 @@ $lang = array(
 		'range' => array(
 			'pending' => array(
 				'subject' => "##range##: Σε αναμονή",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class μπήκε σε κατάσταση αναμονής.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class μπήκε σε κατάσταση αναμονής.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'active' => array(
 				'subject' => "##range##: Ενεργοποιήθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ενεργοποιήθηκε.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ενεργοποιήθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'rejected' => array(
 				'subject' => "##range##: Απορρίφθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class απορρίφθηκε.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class απορρίφθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'invalid' => array(
 				'subject' => "##range##: Ακυρώθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ακυρώθηκε.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ακυρώθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			)
 		),
 		
 		'zone' => array(
 			'pending' => array(
 				'subject' => "##zone##: Σε αναμονή",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone μπήκε σε κατάσταση αναμονής.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone μπήκε σε κατάσταση αναμονής.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'active' => array(
 				'subject' => "##zone##: Ενεργοποιήθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ενεργοποιήθηκε.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ενεργοποιήθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'rejected' => array(
 				'subject' => "##zone##: Απορρίφθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone απορρίφθηκε.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone απορρίφθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			),
 			'invalid' => array(
 				'subject' => "##zone##: Ακυρώθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ακυρώθηκε.\n\nΗ ομάδα WiND Hostmaster"
+				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ακυρώθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			)
 		)
 	),
