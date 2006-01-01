@@ -125,6 +125,28 @@ class hostmaster_range {
 		return $table_links;
 	}
 	
+	function table_ip_ranges() {
+		global $db;
+		$table_ip_ranges = new table(array('TABLE_NAME' => 'table_ip_ranges', 'FORM_NAME' => 'table_ip_ranges'));
+		$table_ip_ranges->db_data(
+			'"" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status',
+			'ip_ranges ' .
+			'LEFT JOIN ip_ranges AS t_ip_ranges ON t_ip_ranges.node_id = ip_ranges.node_id',
+			"t_ip_ranges.id = '".get('iprange')."'",
+			"",
+			"ip_ranges.date_in ASC");
+		foreach( (array) $table_ip_ranges->data as $key => $value) {
+			if ($key != 0) {
+				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);
+				$table_ip_ranges->data[$key]['ip_end'] = long2ip($table_ip_ranges->data[$key]['ip_end']);
+				$table_ip_ranges->data[$key]['ip_range'] = $table_ip_ranges->data[$key]['ip_start']." - ".$table_ip_ranges->data[$key]['ip_end'];
+			}
+		}
+		$table_ip_ranges->db_data_remove('ip_start', 'ip_end');
+		$table_ip_ranges->db_data_translate('ip_ranges__status');
+		return $table_ip_ranges;
+	}
+
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
@@ -132,6 +154,7 @@ class hostmaster_range {
 		$this->tpl['table_node_info'] = $construct->table($this->table_node_info(), __FILE__);
 		$this->tpl['table_user_info'] = $construct->table($this->table_user_info(), __FILE__);
 		$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
+		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 

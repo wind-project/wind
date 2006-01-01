@@ -42,7 +42,7 @@
 </tr>
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.links`" content=$table_dns}
+{include file=generic/title1.tpl title="`$lang.dns_zones`" content=$table_dns}
 </td>
 </tr>
 </table>

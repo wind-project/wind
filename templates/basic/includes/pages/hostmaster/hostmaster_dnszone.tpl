@@ -40,4 +40,14 @@
 {include file=generic/title1.tpl title="`$lang.links`" content=$table_links}
 </td>
 </tr>
+<tr>
+<td class="table-page-pad">
+{include file=generic/title1.tpl title="`$lang.ip_ranges`" content=$table_ip_ranges}
+</td>
+</tr>
+<tr>
+<td class="table-page-pad">
+{include file=generic/title1.tpl title="`$lang.dns_zones`" content=$table_dns}
+</td>
+</tr>
 </table>

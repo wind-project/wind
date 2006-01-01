@@ -126,6 +126,50 @@ class hostmaster_dnszone {
 		return $table_links;
 	}
 	
+	function table_ip_ranges() {
+		global $db;
+		$table_ip_ranges = new table(array('TABLE_NAME' => 'table_ip_ranges', 'FORM_NAME' => 'table_ip_ranges'));
+		$table_ip_ranges->db_data(
+			'"" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status',
+			'ip_ranges ' .
+			'LEFT JOIN dns_zones ON dns_zones.node_id = ip_ranges.node_id',
+			"dns_zones.id = '".get('zone')."'",
+			"",
+			"ip_ranges.date_in ASC");
+		foreach( (array) $table_ip_ranges->data as $key => $value) {
+			if ($key != 0) {
+				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);
+				$table_ip_ranges->data[$key]['ip_end'] = long2ip($table_ip_ranges->data[$key]['ip_end']);
+				$table_ip_ranges->data[$key]['ip_range'] = $table_ip_ranges->data[$key]['ip_start']." - ".$table_ip_ranges->data[$key]['ip_end'];
+			}
+		}
+		$table_ip_ranges->db_data_remove('ip_start', 'ip_end');
+		$table_ip_ranges->db_data_translate('ip_ranges__status');
+		return $table_ip_ranges;
+	}
+
+	function table_dns() {
+		global $db, $vars;
+		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
+		$table_dns->db_data(
+			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
+			'dns_zones ' .
+			'LEFT JOIN dns_zones AS t_dns_zones ON t_dns_zones.node_id = dns_zones.node_id',
+			't_dns_zones.id = '.get('zone'),
+			"",
+			"dns_zones.type ASC, dns_zones.date_in ASC");
+		for($i=1;$i<count($table_dns->data);$i++) {
+			if (isset($table_dns->data[$i])) {
+				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
+				$table_dns->info['EDIT'][$i] = makelink(array("page" => "hostmaster", "subpage" => "dnszone", "zone" => $table_dns->data[$i]['id'], "node" => get('node')));
+			}
+		}
+		$table_dns->info['EDIT_COLUMN'] = 'name';
+		$table_dns->db_data_remove('id', 'delete_req', 'type');
+		$table_dns->db_data_translate('dns_zones__status');
+		return $table_dns;
+	}
+
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $db;
@@ -133,6 +177,8 @@ class hostmaster_dnszone {
 		$this->tpl['table_node_info'] = $construct->table($this->table_node_info(), __FILE__);
 		$this->tpl['table_user_info'] = $construct->table($this->table_user_info(), __FILE__);
 		$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
+		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
+		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 
