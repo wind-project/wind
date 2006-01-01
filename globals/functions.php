@@ -349,4 +349,20 @@ function getmicrotime(){
 	return ((float)$usec + (float)$sec); 
 } 
 
+function array_multimerge ($array1, $array2) {
+	if (is_array($array2) && count($array2)) {
+		foreach ($array2 as $k => $v) {
+			if (is_array($v) && count($v)) {
+				$array1[$k] = array_multimerge($array1[$k], $v);
+			} else {
+				$array1[$k] = $v;
+			}
+		}
+	} else {
+		$array1 = $array2;
+	}
+	
+	return $array1;
+}
+
 ?>

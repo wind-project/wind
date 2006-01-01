@@ -71,7 +71,7 @@ if (get('lang') != '') {
 include_once($root_path."globals/language/".$tl.".php");
 if (file_exists($root_path."config/language/".$tl."_overwrite.php")) {
 	include_once($root_path."config/language/".$tl."_overwrite.php");
-	$lang = array_merge($lang, $lang_overwrite);
+	$lang = array_multimerge($lang, $lang_overwrite);
 }
 // Set-up mbstring's internal encoding (mainly for supporting UTF-8)
 mb_internal_encoding($lang['charset']);
