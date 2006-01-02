@@ -48,6 +48,8 @@ class hostmaster_dnszone {
 		$form_zone->info['hostmaster_username'] = $main->userdata->info['username'];
 		$form_zone->info['hostmaster_name'] = $main->userdata->info['name'];
 		$form_zone->info['hostmaster_surname'] = $main->userdata->info['surname'];
+		$t = $db->get('type', 'dns_zones', "id = '".get('zone')."'");
+		if ($t[0]['type'] == 'forward') $form_zone->data[0]['value'] .= ".".$vars['dns']['root_zone'];
 		return $form_zone;
 	}
 	
