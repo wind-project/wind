@@ -225,32 +225,14 @@ function reverse_zone_from_ip($ip) {
 	return $ret;
 }
 
-function encode_rfc2047($str, $charset='') {
-	// Encode a string using RFC 2057 MIME Header Extensions
-	global $lang;
-	if (!strlen($str)) return '';
-	if (!strlen($charset)) $charset = $lang['charset'];
-	$start = "=?$charset?B?"; 
-	$end = "?=";
-	$spacer = "$end\r\n $start"; 
-	$length = 75 - strlen($start) - strlen($end);
-	$length = floor($length/2) * 2;
-	$str = base64_encode($str);
-	$str = chunk_split($str, $length, $spacer);
-	$spacer = preg_quote($spacer);
-	$str = preg_replace("/" . $spacer . "$/", "", $str);
-	$str = $start . $str . $end;
-	return $str;
-}
-
 function sendmail($to, $subject, $body, $from_name='', $from_email='', $cc_to_sender=FALSE) {
 	global $vars, $lang;
 	if (!strlen($from_email)) {
 		$from_name = $vars['mail']['from_name'];
 		$from_email = $vars['mail']['from'];
 	}
-	$from = encode_rfc2047($from_name).' <'.$from_email.'>';
-	$subject = encode_rfc2047($subject);
+	$from = mb_encode_mimeheader($from_name).' <'.$from_email.'>';
+	$subject = mb_encode_mimeheader($subject);
 	$body = chunk_split(base64_encode($body));
 	$headers  = "From: $from\r\n";
 	if ($cc_to_sender) $headers  .= "Cc: $from\r\n";
