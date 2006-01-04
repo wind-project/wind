@@ -39,8 +39,6 @@ class nodes_plot {
 
 		$point_a = new elevation($a_node[0]['latitude'], $a_node[0]['longitude']);
 		$point_b = new elevation($b_node[0]['latitude'], $b_node[0]['longitude']);
-		//echo pvar($a_node);
-		//echo pvar($b_node);
 		$image = plotlink($width, $height, $point_a, $point_b, (integer)$a_node[0]['elevation'], (integer)$b_node[0]['elevation']);
 		
 		header('Content-type: image/png');

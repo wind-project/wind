@@ -19,23 +19,6 @@
  *
  */
 
-function pvar($var) {
-	if (is_array($var)) {
-		$ret .= '<ul>';
-		while(list($key) = each($var)) {
-			if (is_array($var[$key])) {
-				$ret .= '<li>'.$key.pvar($var[$key]).'</li>';
-			} else {
-				$ret .= '<li>'.$key.' = '.$var[$key].'</li>';
-			}
-		}
-		$ret .= '</ul>';		
-		return $ret;
-	} else {
-		return $var;
-	}
-}
-
 function redirect($url, $sec=0, $exit=TRUE) {
 	global $main;
 	$sec = (integer)($sec);
@@ -45,7 +28,6 @@ function redirect($url, $sec=0, $exit=TRUE) {
 	}
 	if (@preg_match('/Microsoft|WebSTAR|Xitami/', getenv('SERVER_SOFTWARE')) || $sec>0) {
 		header("Refresh: $sec; URL=".html_entity_decode($url));
-		global $main;
 		$main->html->head->add_meta("$sec; url=$url", "", "refresh");
 	} else {
 		header("Location: ".html_entity_decode($url));		
@@ -101,7 +83,7 @@ function get($key) {
 	return $ret;
 }
 
-function getdirlist ($dirName, $dirs=TRUE, $files=FALSE) { 
+function getdirlist($dirName, $dirs=TRUE, $files=FALSE) { 
 	$d = dir($dirName);
 	$a = array();
 	while($entry = $d->read()) { 
@@ -131,7 +113,7 @@ function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars
 	return ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
 }
 
-function query_str ($params) {
+function query_str($params) {
    $str = '';
    foreach( (array) $params as $key => $value) {
    		if ($value == '') continue;
@@ -242,11 +224,6 @@ function sendmail($to, $subject, $body, $from_name='', $from_email='', $cc_to_se
 	return @mail($to, $subject, $body, $headers);
 }
 
-function sendmail_fromlang($to, $message) {
-	global $lang;
-	return sendmail($to, $lang['email'][$message]['subject'], $lang['email'][$message]['body']);
-}
-
 function correct_ip($ip, $ret_null=TRUE) {
 	if ($ip == '' && $ret_null === TRUE) return '';
 	$t = explode(".", $ip, 4);
@@ -294,7 +271,7 @@ function validate_name_ns($name, $node) {
 	return ($extension != '' ? $ret.$extension : $ret);
 }
 
-function is_ip ($ip, $full_ip=TRUE) {
+function is_ip($ip, $full_ip=TRUE) {
 	$ip_ex = explode(".", $ip, 4);
 	if ($ip == '') return FALSE;
 	for ($i=0;$i<count($ip_ex);$i++) {
@@ -331,7 +308,7 @@ function getmicrotime(){
 	return ((float)$usec + (float)$sec); 
 } 
 
-function array_multimerge ($array1, $array2) {
+function array_multimerge($array1, $array2) {
 	if (is_array($array2) && count($array2)) {
 		foreach ($array2 as $k => $v) {
 			if (is_array($v) && count($v)) {

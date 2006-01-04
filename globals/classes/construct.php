@@ -23,7 +23,6 @@ class construct {
 	
 	function form($form, $template='constructors/form.tpl') {
 		global $smarty;
-		//echo pvar($data);
 		if (substr(strrchr($template, "."), 1) != "tpl") {
 			$path_parts = pathinfo($template);
 			$tpl_file = 'includes'.substr($path_parts['dirname'], strpos($path_parts['dirname'], 'includes') + 8)."/".basename($path_parts['basename'], '.'.$path_parts['extension']).'_'.$form->info['FORM_NAME'].'.tpl';
@@ -47,7 +46,6 @@ class construct {
 				$template='constructors/table.tpl';
 			}
 		}
-		//echo pvar($table->data);
 		return template(array("data" => $table->data, "extra_data" => $table->info, "hidden_qs" => get_qs()), $template);
 	}
 		
