@@ -34,7 +34,7 @@
 	<input type="hidden" name="a_node" value="{$a_node}" />
 	<input class="fld-form-input-pickup" type="text" disabled="disabled" name="a_node_output" value="{$a_node_output|escape}" />
 </td>
-<td width="50%" align="center"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td>
+<td width="50%" align="center"><input class="fld-form-submit" type="submit" name="submitbutton" value="{$lang.submit}" /></td>
 <td width="25%" align="right">
 	{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('?page=pickup&subpage=nodes&object=form_nodes_plot_link.b_node', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 	<br />
@@ -46,21 +46,29 @@
 <tr>
 <td align="left">
 {$lang.azimuth}: {$a_node_azimuth|round:2}&#176;<br />
-{$lang.elevation}: {$a_node_elevation|round:0} m<br />
+{$lang.elevation}: {$a_node_geo_elevation|round:0} (+{$a_node_elevation|round:0}) m<br />
 {$lang.tilt}: {$a_node_tilt|round:2}&#176;
 </td>
 <td align="center">
-{$lang.distance}: {$distance|round:3} km<br />
-{$lang.fsl}: {$fsl|round:2} dBm
+<--- {$lang.distance}: {$distance|round:3} km ---><br />
+<span style="color: brown;">
+{$lang.fsl}:<br />
+{$fsl|round:2} dBm @ 
+<select name="frequency" onchange="this.form.submit();" style="font-size: 10px;">
+	<option value="2450"{if $frequency == 2450} selected="selected"{/if}>2450</option>
+	<option value="5500"{if $frequency == 5500} selected="selected"{/if}>5500</option>
+</select>
+ MHz
+</span>
 </td>
 <td align="right">
 {$lang.azimuth}: {$b_node_azimuth|round:2}&#176;<br />
-{$lang.elevation}: {$b_node_elevation|round:0} m<br />
+{$lang.elevation}: {$b_node_geo_elevation|round:0} (+{$b_node_elevation|round:0}) m<br />
 {$lang.tilt}: {$b_node_tilt|round:2}&#176;
 </td>
 </tr>
 <tr>
-<td height="100%" colspan="3" align="center"><img src="?page=nodes&subpage=plot&a_node={$a_node}&b_node={$b_node}&width=570&height=250" width="570" height="250" /></td>
+<td height="100%" colspan="3" align="center"><img src="{$plot_image}&amp;width=570&amp;height=250" width="570" height="250" /></td>
 </tr>
 {else}
 <tr>

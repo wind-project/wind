@@ -19,9 +19,11 @@
  *
  */
  
-$plot_path = $root_path."plot/";
-include_once $root_path."plot/elevation.php";
 include_once($root_path.'globals/classes/geocalc.php');
+$geocalc = new geocalc();
+
+include_once($root_path.'globals/classes/srtm.php');
+$srtm = new srtm($vars['srtm']['path']);
 
 class nodes_plot_link {
 
@@ -32,7 +34,7 @@ class nodes_plot_link {
 	}
 
 	function output() {
-		global $main, $db;
+		global $main, $db, $geocalc, $srtm;
 		$main->header->hide = TRUE;
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
@@ -50,17 +52,28 @@ class nodes_plot_link {
 		}
 		
 		if ($this->tpl['a_node'] != '' && $this->tpl['b_node'] != '') {
-			$gc = new GeoCalc();
-			$this->tpl['a_node_azimuth'] = $gc->GCAzimuth($a_node_data['latitude'], $a_node_data['longitude'], $b_node_data['latitude'], $b_node_data['longitude']);
-			$this->tpl['b_node_azimuth'] = $gc->GCAzimuth($b_node_data['latitude'], $b_node_data['longitude'], $a_node_data['latitude'], $a_node_data['longitude']);
-			$this->tpl['a_node_elevation'] = get_elevation($a_node_data['latitude'], $a_node_data['longitude']) + $a_node_data['elevation']; 
-			$this->tpl['b_node_elevation'] = get_elevation($b_node_data['latitude'], $b_node_data['longitude']) + $b_node_data['elevation']; 
-			$frequency = 2400000000;
+			$this->tpl['a_node_azimuth'] = $geocalc->GCAzimuth($a_node_data['latitude'], $a_node_data['longitude'], $b_node_data['latitude'], $b_node_data['longitude']);
+			$this->tpl['b_node_azimuth'] = $geocalc->GCAzimuth($b_node_data['latitude'], $b_node_data['longitude'], $a_node_data['latitude'], $a_node_data['longitude']);
+			$this->tpl['a_node_geo_elevation'] = $srtm->get_elevation($a_node_data['latitude'], $a_node_data['longitude']); 
+			$this->tpl['b_node_geo_elevation'] = $srtm->get_elevation($b_node_data['latitude'], $b_node_data['longitude']);
+			$this->tpl['a_node_elevation'] = $a_node_data['elevation']; 
+			$this->tpl['b_node_elevation'] = $b_node_data['elevation']; 
+			
+			$a_node_total_elevation = $this->tpl['a_node_geo_elevation'] + $this->tpl['a_node_elevation']; 
+			$b_node_total_elevation = $this->tpl['b_node_geo_elevation'] + $this->tpl['b_node_elevation']; 
+			
+			$this->tpl['distance'] = $geocalc->GCDistance($a_node_data['latitude'], $a_node_data['longitude'], $b_node_data['latitude'], $b_node_data['longitude']);
+			$this->tpl['a_node_tilt'] = rad2deg(atan(($b_node_total_elevation - $a_node_total_elevation) / ($this->tpl['distance'] * 1000)));
+			$this->tpl['b_node_tilt'] = rad2deg(atan(($a_node_total_elevation - $b_node_total_elevation) / ($this->tpl['distance'] * 1000)));
+			$this->tpl['distance'] = sqrt( pow($this->tpl['distance'] * 1000, 2) + pow( abs($a_node_total_elevation - $b_node_total_elevation), 2 ) ) / 1000;
+
+			$this->tpl['frequency'] = (integer)$_POST['frequency'];
+			if ($this->tpl['frequency'] <= 0) $this->tpl['frequency'] = 2450;
+			$frequency = $this->tpl['frequency'] * 1000000;
 			$c = 299792.458; // light speed in km
-			$this->tpl['distance'] = $gc->GCDistance($a_node_data['latitude'], $a_node_data['longitude'], $b_node_data['latitude'], $b_node_data['longitude']);
 			$this->tpl['fsl'] = 20 * log10(4 * pi() * $this->tpl['distance'] * ($frequency / $c));
-			$this->tpl['a_node_tilt'] = rad2deg(atan(($this->tpl['b_node_elevation'] - $this->tpl['a_node_elevation']) / ($this->tpl['distance'] * 1000)));
-			$this->tpl['b_node_tilt'] = rad2deg(atan(($this->tpl['a_node_elevation'] - $this->tpl['b_node_elevation']) / ($this->tpl['distance'] * 1000)));
+			
+			$this->tpl['plot_image'] = makelink(array("page" => "nodes", "subpage" => "plot", "a_node" => $this->tpl['a_node'], "b_node" => $this->tpl['b_node'], "frequency" => $_POST['frequency']));
 		}
 		
 		$this->tpl['hidden_qs'] = get_qs();

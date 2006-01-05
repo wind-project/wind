@@ -59,6 +59,10 @@ $config = array(
 		'from_name' => 'WiND Hostmaster'
 		),
 	
+	'srtm' => array(
+		'path' => $root_path.'files/srtm/'
+		),
+		
 	'gmap' => array(
 		'server' => 'maps.google.com',
 		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable

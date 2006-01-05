@@ -19,8 +19,11 @@
  *
  */
 
-$plot_path = $root_path."plot/";
-include_once $root_path."plot/elevation.php";
+include_once($root_path.'globals/classes/geocalc.php');
+$geocalc = new geocalc();
+
+include_once($root_path.'globals/classes/srtm.php');
+$srtm = new srtm($vars['srtm']['path']);
 
 class nodes_view {
 
@@ -31,7 +34,7 @@ class nodes_view {
 	}
 
 	function calculate_distance($a_node, $b_node) {
-		global $db;
+		global $db, $geocalc, $srtm;
 		$a_node_i = $db->get('latitude, longitude, elevation', 'nodes', "id = '".$a_node."'");
 		$b_node_i = $db->get('latitude, longitude, elevation', 'nodes', "id = '".$b_node."'");
 		
@@ -40,30 +43,18 @@ class nodes_view {
 		$lat2 = $b_node_i[0]['latitude'];
 		$lon2 = $b_node_i[0]['longitude'];
 
-		$a_node_el = str_replace(",", ".", get_elevation($lat1, $lon1, FALSE));
-		$b_node_el = str_replace(",", ".", get_elevation($lat2, $lon2, FALSE));
+		$a_node_el = str_replace(",", ".", $srtm->get_elevation($lat1, $lon1, FALSE));
+		$b_node_el = str_replace(",", ".", $srtm->get_elevation($lat2, $lon2, FALSE));
 		
-		$dist   = acos(sin(deg2rad($lat1))
-				  * sin(deg2rad($lat2))
-				  + cos(deg2rad($lat1))
-				  * cos(deg2rad($lat2))
-				  * cos(deg2rad($lon1 - $lon2)));
-		
-		$dist   = rad2deg($dist);
-		
-		$miles  = (float) $dist * 69;
-		
-		$meters = (float) $miles * 1610;
+		$dist   = $geocalc->GCDistance($lat1, $lon1, $lat2, $lon2);
 		
 		if ($a_node_el != FALSE && $b_node_el != FALSE) {
 			$a_node_el += (integer)$a_node_i[0]['elevation'];
 			$b_node_el += (integer)$b_node_i[0]['elevation'];
-			$meters = sqrt( pow($meters, 2) + pow( abs($a_node_el - $b_node_el), 2 ) );
+			$dist = sqrt( pow($dist * 1000, 2) + pow( abs($a_node_el - $b_node_el), 2 ) ) / 1000;
 		}
-		
-		$km     = (float) $meters / 1000;
 
-		return $km;
+		return $dist;
 	}
 	
 	function table_ip_ranges() {
