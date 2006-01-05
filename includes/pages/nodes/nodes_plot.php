@@ -19,8 +19,14 @@
  *
  */
 
-$plot_path = $root_path.'plot/';
-include $root_path."plot/link.php";
+include_once($root_path.'globals/classes/geocalc.php');
+$geocalc = new geocalc();
+
+include_once($root_path.'globals/classes/srtm.php');
+$srtm = new srtm($vars['srtm']['path']);
+
+include_once($root_path.'globals/classes/geoimage.php');
+$geoimage = new geoimage();
 
 class nodes_plot {
 
@@ -29,7 +35,7 @@ class nodes_plot {
 	}
 	
 	function output() {
-		global $db;
+		global $db, $geoimage;
 		$a_node = $db->get('latitude, longitude, elevation', 'nodes', "id = '".get('a_node')."'");
 		$b_node = $db->get('latitude, longitude, elevation', 'nodes', "id = '".get('b_node')."'");
 		$width = (integer)$_GET['width'];
@@ -37,9 +43,9 @@ class nodes_plot {
 		if ($width == 0) $width = 600;
 		if ($height == 0) $height = 300;
 
-		$point_a = new elevation($a_node[0]['latitude'], $a_node[0]['longitude']);
-		$point_b = new elevation($b_node[0]['latitude'], $b_node[0]['longitude']);
-		$image = plotlink($width, $height, $point_a, $point_b, (integer)$a_node[0]['elevation'], (integer)$b_node[0]['elevation']);
+		$point_a = new coordinate($a_node[0]['latitude'], $a_node[0]['longitude']);
+		$point_b = new coordinate($b_node[0]['latitude'], $b_node[0]['longitude']);
+		$image = $geoimage->plotlink($width, $height, $point_a, $point_b, (integer)$a_node[0]['elevation'], (integer)$b_node[0]['elevation']);
 		
 		header('Content-type: image/png');
 		imagepng($image);
