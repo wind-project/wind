@@ -185,7 +185,10 @@ class hostmaster_dnszone {
 	}
 
 	function output_onpost_form_zone() {
-		global $construct, $main, $db;
+		global $construct, $main, $db, $vars;
+		if (substr($_POST['dns_zones__name'], -strlen($vars['dns']['root_zone'])-1) == ".".$vars['dns']['root_zone']) {
+			$_POST['dns_zones__name'] = substr($_POST['dns_zones__name'], 0, -strlen($vars['dns']['root_zone'])-1);
+		}
 		$form_zone = $this->form_zone();
 		$ret = TRUE;
 		$ret = $form_zone->db_set(array(),
