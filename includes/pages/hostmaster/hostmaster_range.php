@@ -169,7 +169,7 @@ class hostmaster_range {
 								"ip_ranges", "id", $range);
 		if ($_POST['sendmail'] == 'Y') {
 			$_POST['email_to'] = str_replace(";", ", ", $_POST['email_to']);
-			if ($ret) $ret = $ret && sendmail($_POST['email_to'], $_POST['email_subject'], $_POST['email_body'], '', '', TRUE);
+			if ($ret) $ret = $ret && sendmail(stripslashes($_POST['email_to']), stripslashes($_POST['email_subject']), stripslashes($_POST['email_body']), '', '', TRUE);
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'edit_success', makelink(array("page" => "hostmaster", "subpage" => "ranges")));

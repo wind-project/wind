@@ -65,8 +65,8 @@ class nodes_contact {
 			array_push($to, $to_db[$i]['email']);
 		}
 		$to = implode(', ', $to);
-		$subject = $lang['email']['node_contact']['subject_prefix'].$_POST['email_subject'].$lang['email']['node_contact']['subject_suffix'];
-		$body = $lang['email']['node_contact']['body_prefix'].$_POST['email_body'].$lang['email']['node_contact']['body_suffix'];
+		$subject = $lang['email']['node_contact']['subject_prefix'].stripslashes($_POST['email_subject']).$lang['email']['node_contact']['subject_suffix'];
+		$body = $lang['email']['node_contact']['body_prefix'].stripslashes($_POST['email_body']).$lang['email']['node_contact']['body_suffix'];
 		$body = str_replace("##username##", $from[0]['username'], $body);
 		$body = str_replace("##node_name##", $node[0]['name'], $body);
 		$body = str_replace("##node_id##", $node[0]['id'], $body);
