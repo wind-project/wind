@@ -207,6 +207,13 @@ function reverse_zone_from_ip($ip) {
 	return $ret;
 }
 
+function is8bit($str) {
+	for($i=0; $i <= strlen($str); $i++)
+		if(ord(substr($str, $i, 1)) >> 7)
+			return TRUE;
+	return FALSE;
+}
+
 function sendmail($to, $subject, $body, $from_name='', $from_email='', $cc_to_sender=FALSE) {
 	global $vars, $lang;
 	if (!strlen($from_email)) {
@@ -215,12 +222,11 @@ function sendmail($to, $subject, $body, $from_name='', $from_email='', $cc_to_se
 	}
 	$from = mb_encode_mimeheader($from_name).' <'.$from_email.'>';
 	$subject = mb_encode_mimeheader($subject);
-	$body = chunk_split(base64_encode($body));
-	$headers  = "From: $from\r\n";
-	if ($cc_to_sender) $headers  .= "Cc: $from\r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= 'Content-Type: text/plain; charset='.$lang['charset']."\r\n";
-	$headers .= "Content-Transfer-Encoding: base64";
+	$headers  = "From: $from\n";
+	if ($cc_to_sender) $headers  .= "Cc: $from\n";
+	$headers .= "MIME-Version: 1.0\n";
+	$headers .= 'Content-Type: text/plain; charset='.$lang['charset']."\n";
+	$headers .= 'Content-Transfer-Encoding: '.(is8bit($body) ? '8bit' : '7bit');
 	return @mail($to, $subject, $body, $headers);
 }
 
