@@ -209,21 +209,26 @@ function reverse_zone_from_ip($ip) {
 
 function is8bit($str) {
 	for($i=0; $i <= strlen($str); $i++)
-		if(ord(substr($str, $i, 1)) >> 7)
+		if(ord($str{$i}) >> 7)   
 			return TRUE;
 	return FALSE;
 }
 
 function sendmail($to, $subject, $body, $from_name='', $from_email='', $cc_to_sender=FALSE) {
 	global $vars, $lang;
-	if (!strlen($from_email)) {
+	$subject = mb_encode_mimeheader($subject, $lang['charset'], 'B', "\n");
+	if (empty($from_email)) {
 		$from_name = $vars['mail']['from_name'];
 		$from_email = $vars['mail']['from'];
 	}
-	$from = mb_encode_mimeheader($from_name).' <'.$from_email.'>';
-	$subject = mb_encode_mimeheader($subject);
-	$headers  = "From: $from\n";
-	if ($cc_to_sender) $headers  .= "Cc: $from\n";
+	$from_name = mb_encode_mimeheader($from_name, $lang['charset'], 'B', "\n");
+	if ($from_name == $from_email) {
+		$from = $from_email;
+	} else {
+		$from = $from_name.' <'.$from_email.'>';
+	}
+	$headers = "From: $from\n";
+	if ($cc_to_sender) $headers .= "Cc: $from\n";
 	$headers .= "MIME-Version: 1.0\n";
 	$headers .= 'Content-Type: text/plain; charset='.$lang['charset']."\n";
 	$headers .= 'Content-Transfer-Encoding: '.(is8bit($body) ? '8bit' : '7bit');
