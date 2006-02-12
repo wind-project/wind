@@ -44,13 +44,13 @@ class center {
 				if ($main->userdata->logged === TRUE) {
 					if (get('node') == 'add') return TRUE;
 					if (get('node') != 'add' && get('action') == 'delete') {
-						if ($db->cnt('', "users_nodes", "node_id = '".get('node')."' AND user_id = '".$main->userdata->user."' AND owner = 'Y'") > 0) {
+						if ($db->cnt('', "users_nodes", "node_id = ".intval(get('node'))." AND user_id = '".$main->userdata->user."' AND owner = 'Y'") > 0) {
 							return TRUE;
 						} else {
 							return FALSE;
 						}
 					}
-					if ($db->cnt('', "users_nodes", "node_id = '".get('node')."' AND user_id = '".$main->userdata->user."'") > 0) return TRUE;
+					if ($db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) return TRUE;
 					if (get('subpage') == 'dnszone' && 
 						$db->cnt('', "users_nodes, dns_zones", "dns_zones.node_id = users_nodes.node_id AND dns_zones.id = '".get('zone')."' AND users_nodes.user_id = '".$main->userdata->user."'") > 0) return TRUE;
 					if (get('subpage') == 'dnsnameserver' && 

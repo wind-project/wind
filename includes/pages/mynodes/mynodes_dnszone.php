@@ -35,7 +35,7 @@ class mynodes_dnszone {
 			if (get('type') == 'reverse') {
 				$ipr = $db->get("ip_start, ip_end",
 						"ip_ranges",
-						"node_id = '".get('node')."'");
+						"node_id = ".intval(get('node')));
 				foreach( (array) $ipr as $key => $value) {
 					$ipr[$key]['ip_start'] = long2ip($value['ip_start']);
 					$ipr[$key]['ip_end'] = long2ip($value['ip_end']);
@@ -44,7 +44,7 @@ class mynodes_dnszone {
 				}
 				$form_zone->db_data_enum('dns_zones.name', $ipr);
 			} else {
-				$form_zone->data[0]['value'] = $db->get('name_ns', 'nodes', "id = '".get('node')."'");
+				$form_zone->data[0]['value'] = $db->get('name_ns', 'nodes', "id = ".intval(get('node')));
 				$form_zone->data[0]['value'] = $form_zone->data[0]['value'][0]['name_ns'];
 				$form_zone->data[0]['value'] .= ".".$vars['dns']['root_zone'];
 			}
@@ -71,7 +71,7 @@ class mynodes_dnszone {
 		$ret = TRUE;
 		$f = array();
 		if (get('zone') == 'add') {
-			$f = array('dns_zones.status' => 'waiting', 'dns_zones.type' => get('type'), "dns_zones.node_id" => get('node'));
+			$f = array('dns_zones.status' => 'waiting', 'dns_zones.type' => get('type'), "dns_zones.node_id" => intval(get('node')));
 			$ret = $form_zone->db_set($f,
 									"dns_zones", "id", get('zone'));
 		}
@@ -79,7 +79,7 @@ class mynodes_dnszone {
 		$ret = $ret && $form_zone->db_set_multi(array(), "dns_zones_nameservers", "zone_id", $ins_id);
 
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnszone_success':'edit_success'), makelink(array("page" => "mynodes", "node" => get('node'))));
+			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnszone_success':'edit_success'), makelink(array("page" => "mynodes", "node" => intval(get('node')))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

@@ -52,7 +52,7 @@ class mynodes_ipaddr {
 		$ipaddr = get('ipaddr');
 		$ret = TRUE;
 		$_POST['ip_addresses__ip'] = ip2long($_POST['ip_addresses__ip']);
-		$ret = $form_ipaddr->db_set(array('node_id' => get('node')),
+		$ret = $form_ipaddr->db_set(array('node_id' => intval(get('node'))),
 								"ip_addresses", "id", $ipaddr);
 		
 		if ($ret) {

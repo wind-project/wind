@@ -32,7 +32,7 @@ class mynodes_range {
 		$range = 256;
 		$data2 = $db->get("areas.id AS area_id, ip_start, ip_end",
 					"areas
-					INNER JOIN nodes ON nodes.area_id = areas.id AND nodes.id = '".get('node')."'");
+					INNER JOIN nodes ON nodes.area_id = areas.id AND nodes.id = ".intval(get('node')));
 		$area_id = $data2[0]['area_id'];
 		$area_ip_start = $data2[0]['ip_start'];
 		$area_ip_end = $data2[0]['ip_end'];
@@ -82,14 +82,14 @@ class mynodes_range {
 		global $construct, $db;
 		$this->tpl['form_getrange'] = $construct->form($this->form_getrange(), __FILE__);
 		$this->tpl['node_id'] = get('node');
-		$this->tpl['node_name'] = $db->get('name', 'nodes', "id = '".get('node')."'");
+		$this->tpl['node_name'] = $db->get('name', 'nodes', "id = ".intval(get('node')));
 		$this->tpl['node_name'] = $this->tpl['node_name'][0]['name'];
 		return template($this->tpl, __FILE__);
 	}
 
 	function output_onpost_form_getrange() {
 		global $main, $db;
-		$t = $db->get('area_id', 'nodes', "id = '".get('node')."'");
+		$t = $db->get('area_id', 'nodes', "id = ".intval(get('node')));
 		if ($t[0]['area_id'] == '') {
 			$main->message->set_fromlang('error', 'nodes_no_area_id');
 			return;
@@ -98,7 +98,7 @@ class mynodes_range {
 		$nextr = $this->calculate_next_range();
 		$status = "waiting";
 		$ret = TRUE;
-		$ret = $form_getrange->db_set(array("node_id" => get('node'), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "status" => $status));
+		$ret = $form_getrange->db_set(array("node_id" => intval(get('node')), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "status" => $status));
 		if ($ret) {
 			$main->message->set_fromlang('info', 'request_range_success', makelink(array("page" => "mynodes", "node" => get('node'))));
 		} else {

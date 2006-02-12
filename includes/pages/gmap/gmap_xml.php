@@ -28,10 +28,10 @@ class gmap_xml {
 	function output() {
 		global $db, $lang;
 		
-		$node = $db->get('latitude, longitude', 'nodes', "id = '".get('node')."'");
+		$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
 		$node = $node[0];
 		
-		if (get('node') != '') $having .= ($having!=''?' OR ':'')."id = '".get('node')."'";
+		if (get('node') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node'));
 		if (get('show_p2p') == 1) $having .= ($having!=''?' OR ':'').'total_p2p > 0';
 		if (get('show_aps') == 1) $having .= ($having!=''?' OR ':'').'total_aps > 0';
 		if (get('show_clients') == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap > 0)';

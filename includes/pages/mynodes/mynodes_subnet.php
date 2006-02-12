@@ -34,7 +34,7 @@ class mynodes_subnet {
 		$links = $db->get('links.id AS value, links.type, links.ssid, nodes.name, links.peer_node_id, "" AS output',
 							"links
 							LEFT JOIN nodes ON links.peer_node_id = nodes.id",
-							"(links.type = 'ap' OR links.type = 'p2p') AND node_id = '".get('node')."'",
+							"(links.type = 'ap' OR links.type = 'p2p') AND node_id = ".intval(get('node')),
 							"",
 							"links.type ASC, links.date_in ASC");
 		foreach ( (array) $links as $key => $value) {
@@ -53,7 +53,7 @@ class mynodes_subnet {
 							"LEFT JOIN links AS ap_l ON cl_l.peer_ap_id = ap_l.id
 							LEFT JOIN nodes AS ap_n ON ap_l.node_id = ap_n.id " .
 							"LEFT JOIN nodes AS cl_n ON cl_l.node_id = cl_n.id",
-							"cl_l.type = 'client' AND ap_l.type = 'ap' AND ap_l.node_id = '".get('node')."'",
+							"cl_l.type = 'client' AND ap_l.type = 'ap' AND ap_l.node_id = ".intval(get('node')),
 							"",
 							"ap_l.date_in ASC, cl_l.date_in ASC");
 		foreach ( (array) $clients as $key => $value) {
@@ -88,13 +88,13 @@ class mynodes_subnet {
 			if ($db->cnt(
 				'',
 				'ip_ranges',
-				"node_id = '".get('node')."' AND ip_ranges.ip_start <= '".$_POST['subnets__ip_start']."' AND ip_ranges.ip_end >= '".$_POST['subnets__ip_start']."' " .
+				"node_id = ".intval(get('node'))." AND ip_ranges.ip_start <= '".$_POST['subnets__ip_start']."' AND ip_ranges.ip_end >= '".$_POST['subnets__ip_start']."' " .
 						"AND ip_ranges.ip_start <= '".$_POST['subnets__ip_end']."' AND ip_ranges.ip_end >= '".$_POST['subnets__ip_end']."'") == 0) {
 					$main->message->set_fromlang('error', 'subnet_backbone_no_ip_range');
 					return;
 				}
 		}
-		$ret = $form_subnet->db_set(array('node_id' => get('node')),
+		$ret = $form_subnet->db_set(array('node_id' => intval(get('node'))),
 								"subnets", "id", $subnet);
 		
 		if ($ret) {

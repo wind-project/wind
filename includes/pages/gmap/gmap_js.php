@@ -31,7 +31,7 @@ class gmap_js {
 		global $db, $lang, $vars;
 		
 		if (get('node') != '') {
-			$node = $db->get('latitude, longitude', 'nodes', "id = '".get('node')."'");
+			$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
 			$this->tpl['center_latitude'] = $node[0]['latitude'];
 			$this->tpl['center_longitude'] = $node[0]['longitude'];
 			$this->tpl['zoom'] = 3;

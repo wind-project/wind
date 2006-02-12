@@ -63,7 +63,7 @@ class nodes_view {
 		$table_ip_ranges->db_data(
 			'ip_ranges.id, "" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, ip_ranges.delete_req',
 			'ip_ranges',
-			'ip_ranges.node_id = '.get('node'),
+			'ip_ranges.node_id = '.intval(get('node')),
 			"",
 			"ip_ranges.date_in ASC");
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
@@ -87,7 +87,7 @@ class nodes_view {
 		$table_dns->db_data(
 			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
 			'dns_zones',
-			'dns_zones.node_id = '.get('node'),
+			'dns_zones.node_id = '.intval(get('node')),
 			"",
 			"dns_zones.type ASC, dns_zones.date_in ASC");
 		$table_dns->db_data_multichoice('dns_zones', 'id');
@@ -111,7 +111,7 @@ class nodes_view {
 		$table_nameservers->db_data(
 			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns, dns_nameservers.delete_req',
 			'dns_nameservers, nodes',
-			"nodes.id = '".get('node')."' AND dns_nameservers.node_id = nodes.id",
+			"nodes.id = ".intval(get('node'))." AND dns_nameservers.node_id = nodes.id",
 			"",
 			"dns_nameservers.name ASC");
 		foreach( (array) $table_nameservers->data as $key => $value) {
@@ -143,7 +143,7 @@ class nodes_view {
 			INNER JOIN links AS l2 ON l1.peer_node_id = l2.node_id
 			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
 			INNER JOIN nodes AS n2 ON l2.node_id = n2.id',
-			"l1.node_id = '".get('node')."' AND l2.peer_node_id = l1.node_id AND l1.type ='p2p' AND l2.type = 'p2p'",
+			"l1.node_id = ".intval(get('node'))." AND l2.peer_node_id = l1.node_id AND l1.type ='p2p' AND l2.type = 'p2p'",
 			"",
 			"l1.date_in ASC");
 		$table_links->db_data(
@@ -152,7 +152,7 @@ class nodes_view {
 			INNER JOIN links AS l2 ON l1.peer_ap_id = l2.id
 			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
 			INNER JOIN nodes AS n2 ON l2.node_id = n2.id',
-			"l1.node_id = '".get('node')."' AND l1.type ='client' AND l2.type = 'ap'",
+			"l1.node_id = ".intval(get('node'))." AND l1.type ='client' AND l2.type = 'ap'",
 			"",
 			"l1.date_in ASC");
 		foreach( (array) $table_links->data as $key => $value) {
@@ -198,9 +198,9 @@ class nodes_view {
 			'subnets ' .
 			"LEFT JOIN links ON links.id = subnets.link_id " .
 			"LEFT JOIN ip_addresses ON " .
-				"ip_addresses.node_id = '".get('node')."' AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip) " .
+				"ip_addresses.node_id = ".intval(get('node'))." AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip) " .
 			"LEFT JOIN nodes ON links.peer_node_id = nodes.id",
-			"subnets.node_id = '".get('node')."' AND subnets.type IN ('local', 'link')",
+			"subnets.node_id = ".intval(get('node'))." AND subnets.type IN ('local', 'link')",
 			"",
 			"subnets.type ASC, links.type DESC, subnets.ip_start ASC, ip_addresses.ip",
 			FALSE);
@@ -212,7 +212,7 @@ class nodes_view {
 			"LEFT JOIN ip_addresses ON " .
 				"ip_addresses.node_id = links.node_id AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip) " .
 			"LEFT JOIN nodes ON links.node_id = nodes.id",
-			"links.peer_node_id = '".get('node')."' AND subnets.type = 'link'",
+			"links.peer_node_id = ".intval(get('node'))." AND subnets.type = 'link'",
 			"",
 			"subnets.ip_start ASC, ip_addresses.ip",
 			FALSE);
@@ -223,7 +223,7 @@ class nodes_view {
 			"LEFT JOIN ip_addresses ON " .
 				"ip_addresses.node_id = subnets.client_node_id AND (subnets.ip_start <= ip_addresses.ip AND subnets.ip_end >= ip_addresses.ip) " .
 			"LEFT JOIN nodes ON subnets.client_node_id = nodes.id",
-			"subnets.node_id = '".get('node')."' AND subnets.type = 'client'",
+			"subnets.node_id = ".intval(get('node'))." AND subnets.type = 'client'",
 			"",
 			"subnets.ip_start ASC, ip_addresses.ip",
 			FALSE);
@@ -247,8 +247,8 @@ class nodes_view {
 					'nodes ' .
 					'INNER JOIN users_nodes ON users_nodes.node_id = nodes.id ' .
 					'INNER JOIN users ON users_nodes.user_id = users.id',
-					"nodes.id = '".get('node')."' " .
-					'AND users.status = "activated"')
+					"nodes.id = ".intval(get('node')).
+					' AND users.status = "activated"')
 			 == 0) {
 			$main->message->set_fromlang('error', 'node_not_found');
 			return;
@@ -260,7 +260,7 @@ class nodes_view {
 			LEFT JOIN regions ON areas.region_id = regions.id
 			LEFT JOIN users_nodes ON users_nodes.node_id = nodes.id
 			LEFT JOIN users ON users.id = users_nodes.user_id',
-			"nodes.id = '".get('node')."' AND (users_nodes.owner = 'Y' OR users_nodes.owner IS NULL)");
+			"nodes.id = ".intval(get('node'))." AND (users_nodes.owner = 'Y' OR users_nodes.owner IS NULL)");
 		$this->tpl['node'] = $this->tpl['node'][0];
 		$this->tpl['link_contact'] = makelink(array("subpage" => "contact"), TRUE);
 		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
@@ -268,14 +268,14 @@ class nodes_view {
 		$this->tpl['table_nameservers'] = $construct->table($this->table_nameservers(), __FILE__);
 		$this->tpl['table_links_p2p'] = $construct->table($this->table_links_p2p(), __FILE__);
 
-		$t = $db->get('id, type', 'links', "node_id = '".get('node')."'");
+		$t = $db->get('id, type', 'links', "node_id = ".intval(get('node')));
 		foreach( (array) $t as $key => $value) {
 			if ($value['type'] == 'ap') $this->tpl['table_links_ap'][$value['id']] = $construct->table($this->table_links_ap($value['id']), __FILE__);
 		}
 
 		$this->tpl['table_ipaddr_subnets'] = $construct->table($this->table_ipaddr_subnets(), __FILE__);
 		
-		$t = $db->get('id, date_in, view_point, info', 'photos', "node_id = '".get('node')."'");
+		$t = $db->get('id, date_in, view_point, info', 'photos', "node_id = ".intval(get('node')));
 		foreach( (array) $t as $key => $value) {
 			$this->tpl['photosview'][$value['view_point']] = $value;
 			$this->tpl['photosview'][$value['view_point']]['image_s'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'-s.jpg';

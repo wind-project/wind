@@ -43,7 +43,7 @@ class nodes_contact {
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
 		$this->tpl['form_contact'] = $construct->form($this->form_contact(), __FILE__);
-		$t = $db->get('id, name', 'nodes', "id = '".get('node')."'");
+		$t = $db->get('id, name', 'nodes', "id = ".intval(get('node')));
 		$this->tpl['node_name'] = $t[0]['name'];
 		$this->tpl['node_id'] = $t[0]['id'];
 		if (!$main->userdata->logged) {
@@ -58,8 +58,8 @@ class nodes_contact {
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
 		$from = $db->get('username, email', 'users', "id = '".$main->userdata->user."'");
-		$to_db = $db->get('email', 'users INNER JOIN users_nodes ON users_nodes.user_id = users.id', "users_nodes.node_id = '".get('node')."'".($POST['email_to_type']=='owner'?" AND users_nodes.owner = 'Y'":""));
-		$node = $db->get('name, id', 'nodes', "id = '".get('node')."'");
+		$to_db = $db->get('email', 'users INNER JOIN users_nodes ON users_nodes.user_id = users.id', "users_nodes.node_id = ".intval(get('node')).($POST['email_to_type']=='owner'?" AND users_nodes.owner = 'Y'":""));
+		$node = $db->get('name, id', 'nodes', "id = ".intval(get('node')));
 		$to = array();
 		for($i=0;$i<count($to_db);$i++) {
 			array_push($to, $to_db[$i]['email']);

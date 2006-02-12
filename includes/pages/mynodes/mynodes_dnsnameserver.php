@@ -50,13 +50,13 @@ class mynodes_dnsnameserver {
 		if (get('nameserver') == 'add') {
 			$_POST['dns_nameservers__ip'] = ip2long($_POST['dns_nameservers__ip']);
 		}
-		$f['node_id'] = get('node');
+		$f['node_id'] = intval(get('node'));
 		$ret = TRUE;
 		$ret = $form_nameserver->db_set($f,
 								"dns_nameservers", "id", $nameserver);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnsnameserver_success':'edit_success'), makelink(array("page" => "mynodes", "node" => get('node'))));
+			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnsnameserver_success':'edit_success'), makelink(array("page" => "mynodes", "node" => intval(get('node')))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
