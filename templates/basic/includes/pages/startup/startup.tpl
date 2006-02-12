@@ -19,6 +19,9 @@
  *
  *}
 {include file=generic/page-title.tpl title="`$lang.welcome`"}
+{if $startup_html != ''}
+{$startup_html}
+{else}
 <center>
 <p>
 <font size="5"><strong>WiND - Wireless Nodes Database</strong></font>
@@ -29,3 +32,4 @@ As such, it's still under heavy development and you
 should expect it to break and/or lose data.<br />
 </p>
 </center>
+{/if}

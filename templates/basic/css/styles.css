@@ -67,8 +67,14 @@ background-repeat:repeat-x;
 background-position:top;
 }
 
-td.table-header-td {
+td.table-header-td-left {
 height:100%;
+text-align: left;
+}
+
+td.table-header-td-right {
+height:100%;
+text-align: right;
 }
 
 /* MIDDLE TABLE */

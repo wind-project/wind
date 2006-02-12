@@ -28,6 +28,8 @@ class startup {
 	}
 	
 	function output() {
+		global $root_path;
+		if (file_exists($root_path."config/startup.html")) $this->tpl['startup_html'] = file_get_contents($root_path."config/startup.html");
 		return template($this->tpl, __FILE__);
 	}
 
