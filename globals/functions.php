@@ -26,7 +26,7 @@ function redirect($url, $sec=0, $exit=TRUE) {
 		if ($main->message->forward == '') $main->message->forward = $url;
 		return;
 	}
-	if (@preg_match('/Microsoft|WebSTAR|Xitami/', getenv('SERVER_SOFTWARE')) || $sec>0) {
+	if (@preg_match('/Microsoft|WebSTAR|Xitami/', getenv('SERVER_SOFTWARE')) || @preg_match('/Safari/', $_SERVER['HTTP_USER_AGENT']) || $sec>0) {
 		header("Refresh: $sec; URL=".html_entity_decode($url));
 		$main->html->head->add_meta("$sec; url=$url", "", "refresh");
 	} else {
