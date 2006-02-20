@@ -1,0 +1,131 @@
+#!/bin/bash
+# zone_update bash script Version 0.7
+# Copyleft 2005 - Ernest0x (ernest0x at yahoo dot gr)
+
+# Discription
+# -----------
+# If it is needed, this script  updates a DNS zone file from another 
+# php-generated zone file. 
+# It is meant to be used by the WiND project (http://wind.cube.gr).
+
+
+# Notes
+# -----
+# - The php-generated zone file must include a line that contains a "; serial" substring. 
+#   This line gives its place to a new serial line, constructed by this script.
+# --------------------------------------------------------------------------------------- #
+
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11
+
+# Root path for zone files
+#_THIS SHOULD BE CHANGED TO THE PATH WHERE DNS ZONE FILES ARE STORED_.
+ZONES_ROOT="/etc/bind/zones/"
+
+# The php script to generate the new zone file. 
+#_THIS SHOULD BE CHANGED TO YOUR PHP SCRIPT_.
+PHP_SCRIPT="/usr/local/lib/zones-poller/zones-poller.php"
+
+# The current zone file (just the filename, not the fullpath).
+# This is given as an argument when calling the script.
+CUR_ZONE=${1}
+
+# Check that an existing file was passed as an argument by the caller.
+if [ -z $CUR_ZONE ]; then
+   echo "Usage: $0 ZONE_FILENAME"
+   exit
+fi
+
+if [ ! -e $ZONES_ROOT$CUR_ZONE ]; then
+   echo "file '$ZONES_ROOT$CUR_ZONE' does not exist"
+   exit
+fi
+ 
+# Where we will temporarily save the php-generated zone file.
+PHP_ZONE="/tmp/php-zone"
+
+# Where we will temporarily save the stripped (without the "serial" line) current zone file.
+CUR_ZONE_S="/tmp/cur-zone-s"
+
+# Where we will temporarily save the stripped (without the "serial" line) php-generated zone file.
+PHP_ZONE_S="/tmp/php-zone-s"
+
+# Make PHP_ZONE
+php $PHP_SCRIPT $CUR_ZONE > $PHP_ZONE
+
+# Extract the serial number of the current zone file.
+# Remember to change '2' to '3' on the next millenium change. :P
+CUR_SERIAL=`grep "; serial" $ZONES_ROOT$CUR_ZONE | grep -o "2........."`
+
+# Day Of CUR_SERIAL
+DCS=`echo $CUR_SERIAL | tail -c +7 | head -c 2`
+
+# Version of CUR_SERIAL
+VCS=`echo $CUR_SERIAL | tail -c +9`
+
+# If it is less than or equal to 9 delete leading zero (so that 08 or less is not interpreted as octal)
+if [ $VCS -le 9 ]; then
+  if [ $VCS -ne 0 ]; then
+     VCS=`echo $VCS|tr -d 0`
+  else
+     VCS=0
+  fi
+fi
+
+# Remove "serial" lines.
+grep -v "; serial" $ZONES_ROOT$CUR_ZONE > $CUR_ZONE_S
+grep -v "; serial" $PHP_ZONE > $PHP_ZONE_S
+
+# If stripped versions of current zone file and php-generated zone file are identical, remove temp files and exit.
+# Else, replace current zone file with the php-generated zone file and include the proper serial line.
+if diff $CUR_ZONE_S $PHP_ZONE_S > /dev/null ; then
+  rm -f $PHP_ZONE $CUR_ZONE_S $PHP_ZONE_S
+  exit
+else
+  # Verion of Serial to Append.
+  VSA="00"
+  
+  # Day of the Month, Now.
+  DMN=`date +"%d"`
+  
+  # If day has not changed append previous serial version incremented by 1.
+  if [ "$DMN" -eq "$DCS" ]; then
+     let VSA=VCS+1
+     
+     # if VSA is less than or equal to 9, prepend a '0' to make it a 2 digit number.
+     if [ "$VSA" -le 9 ]; then
+        VSA="0$VSA"
+     fi
+  fi
+  
+  # The new serial.
+  NEW_SERIAL=`date +"%Y%m%d"`$VSA
+  
+  # Serial Line Number.
+  SLN=`grep -n "; serial" $PHP_ZONE | head  -c 1`
+  # Line Number Before Serial.
+  let LNBS=SLN-1
+  # Line Number After Serial.
+  let LNAS=SLN+1
+  
+  # Build the final zone file
+  head -n $LNBS $PHP_ZONE > /tmp/$CUR_ZONE
+  echo "				$NEW_SERIAL ; serial" >> /tmp/$CUR_ZONE
+  tail -n +$LNAS $PHP_ZONE >> /tmp/$CUR_ZONE
+
+  # Check that the final zone file describes correclty its zone
+  if named-checkzone -q $CUR_ZONE /tmp/$CUR_ZONE ; then
+     mv -f /tmp/$CUR_ZONE $ZONES_ROOT
+  else
+     echo "PHP-generated file has errors (possible database failure)"
+     rm -f $PHP_ZONE $CUR_ZONE_S $PHP_ZONE_S /tmp/$CUR_ZONE
+     exit
+  fi
+  
+  # Reload zone files in dns server
+  rndc reload
+
+fi
+
+# Remove temp files.
+rm -f $PHP_ZONE $CUR_ZONE_S $PHP_ZONE_S /tmp/$CUR_ZONE
