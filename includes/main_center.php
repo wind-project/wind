@@ -63,6 +63,7 @@ class center {
 			case 'dnszones':
 			case 'pickup':
 			case 'gmap':
+			case 'gearth':
 			case 'search':
 				return TRUE;
 				break;

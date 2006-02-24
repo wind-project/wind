@@ -103,6 +103,7 @@ class nodes_search {
 		$this->tpl['table_nodes'] = $construct->table($this->table_nodes(), __FILE__);
 
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
+		$this->tpl['link_gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=js&node=".get('node'));
 
 		return template($this->tpl, __FILE__);

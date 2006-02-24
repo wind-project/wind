@@ -33,8 +33,8 @@
 </td>
 <td class="table-page-split">
 <table bgcolor="#DBE0D7" cellpadding="0" cellspacing="2">
-<tr><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td></tr>
-<tr><td style="font-size:12px; text-align:center; width: 500px; height: 500px">
+<tr><td align="left">{include file=generic/link.tpl link=$link_gearth content="Google earth"}</td><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td></tr>
+<tr><td style="font-size:12px; text-align:center; width: 500px; height: 500px" colspan="2">
 {if $gmap_key_ok}
 <div id="map" style="width: 500px; height: 500px"></div>
 {else}
