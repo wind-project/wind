@@ -19,22 +19,22 @@
  *
  */
 
-if (!file_exists($root_path."config/config.php")) {
+if (!file_exists(ROOT_PATH."config/config.php")) {
 	die("WiND error: Please make config/config.php file ...");
 }
-include_once($root_path."globals/vars.php");
-include_once($root_path."config/config.php");
+include_once(ROOT_PATH."globals/vars.php");
+include_once(ROOT_PATH."config/config.php");
 $vars = array_merge($vars, $config);
 include_once($vars['templates']['path'].$vars['templates']['default'].'/config.php');
 $vars = array_merge($vars, $template_config);
-include_once($root_path."globals/functions.php");
+include_once(ROOT_PATH."globals/functions.php");
 
 $php_start = getmicrotime();
 
-include_once($root_path."globals/classes/mysql.php");
-include_once($root_path."globals/classes/construct.php");
-include_once($root_path."globals/classes/form.php");
-include_once($root_path."globals/classes/table.php");
+include_once(ROOT_PATH."globals/classes/mysql.php");
+include_once(ROOT_PATH."globals/classes/construct.php");
+include_once(ROOT_PATH."globals/classes/form.php");
+include_once(ROOT_PATH."globals/classes/table.php");
 
 if (!file_exists($vars['smarty']['class'])) {
 	die("WiND error: Cannot find Smarty lib. Please check config.php ...");
@@ -68,9 +68,9 @@ if (get('lang') != '') {
 } else {
 	$tl = $vars['language']['default'];
 }
-include_once($root_path."globals/language/".$tl.".php");
-if (file_exists($root_path."config/language/".$tl."_overwrite.php")) {
-	include_once($root_path."config/language/".$tl."_overwrite.php");
+include_once(ROOT_PATH."globals/language/".$tl.".php");
+if (file_exists(ROOT_PATH."config/language/".$tl."_overwrite.php")) {
+	include_once(ROOT_PATH."config/language/".$tl."_overwrite.php");
 	$lang = array_multimerge($lang, $lang_overwrite);
 }
 // Set-up mbstring's internal encoding (mainly for supporting UTF-8)

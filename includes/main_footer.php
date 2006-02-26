@@ -33,7 +33,7 @@ class footer {
 		$this->tpl['php_time'] = getmicrotime() - $php_start;
 		$this->tpl['mysql_time'] = $db->total_time;
 		if ($main->userdata->privileges['admin'] === TRUE && $vars['debug']['enabled'] == TRUE) {
-			$this->tpl['debug_mysql'] = $root_path."debug/mysql.php?".get_qs();
+			$this->tpl['debug_mysql'] = ROOT_PATH."debug/mysql.php?".get_qs();
 		}
 		return template($this->tpl, __FILE__);
 	}

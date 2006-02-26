@@ -19,7 +19,7 @@
  *
  */
 
-if (get('subpage') != '') include_once($root_path."includes/pages/mynodes/mynodes_".get('subpage').".php");
+if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/mynodes/mynodes_".get('subpage').".php");
 
 class mynodes {
 
@@ -492,14 +492,14 @@ class mynodes {
 	}
 	
 	function output_onpost_table_photosview() {
-		global $root_path, $vars, $db, $main;
+		global $vars, $db, $main;
 		foreach( (array) $_POST['id'] as $key => $value) {
 			$db->del("photos", "id = '".$value."'");
 			$uploaddir = $vars['folders']['photos'];
 			$filename = 'photo-'.$value.".*";
-			delfile($root_path.$uploaddir.$filename);
+			delfile(ROOT_PATH.$uploaddir.$filename);
 			$filename = 'photo-'.$value."-*.*";
-			delfile($root_path.$uploaddir.$filename);
+			delfile(ROOT_PATH.$uploaddir.$filename);
 		}
 		foreach( (array) array('N','NE','E','SE','S','SW','W','NW', 'PANORAMIC') as $value) {
 			if ($_FILES[$value]['tmp_name'] != '') {
@@ -509,17 +509,17 @@ class mynodes {
 				$uploaddir = $vars['folders']['photos'];
 				$filename = 'photo-'.$ins_id.'.jpg';
 				$filename_s = 'photo-'.$ins_id.'-s.jpg';
-				if (@move_uploaded_file($_FILES[$value]['tmp_name'], $root_path.$uploaddir.$filename) === FALSE) {
+				if (@move_uploaded_file($_FILES[$value]['tmp_name'], ROOT_PATH.$uploaddir.$filename) === FALSE) {
 					$db->del("photos", "id = '".$ins_id."'");
 					$main->message->set_fromlang("error", "upload_file_failed");
 					return;
 				}
 				if ($value == 'PANORAMIC') {
-					$image_s = resizeJPG($root_path.$uploaddir.$filename, 600, 200);
+					$image_s = resizeJPG(ROOT_PATH.$uploaddir.$filename, 600, 200);
 				} else {
-					$image_s = resizeJPG($root_path.$uploaddir.$filename, 200, 200);
+					$image_s = resizeJPG(ROOT_PATH.$uploaddir.$filename, 200, 200);
 				}
-				imagejpeg($image_s, $root_path.$uploaddir.$filename_s);
+				imagejpeg($image_s, ROOT_PATH.$uploaddir.$filename_s);
 			} elseif ($_POST['info-'.$value] != '') {
 				$db->set("photos", array('info' => $_POST['info-'.$value]), "node_id = ".intval(get('node'))." AND view_point = '".$value."'");
 			}

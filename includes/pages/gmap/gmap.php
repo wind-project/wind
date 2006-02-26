@@ -20,9 +20,9 @@
  */
 
 if (get('subpage') != '') {
-	include_once($root_path."includes/pages/gmap/gmap_".get('subpage').".php");
+	include_once(ROOT_PATH."includes/pages/gmap/gmap_".get('subpage').".php");
 } else {
-	include_once($root_path."includes/pages/gmap/gmap_fullmap.php");
+	include_once(ROOT_PATH."includes/pages/gmap/gmap_fullmap.php");
 }
 
 class gmap {

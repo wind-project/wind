@@ -20,12 +20,12 @@
  */
 
 if (get('subpage') != '') {
-	include_once($root_path."includes/pages/nodes/nodes_".get('subpage').".php");
+	include_once(ROOT_PATH."includes/pages/nodes/nodes_".get('subpage').".php");
 } else {
 	if (get('node') != '') {
-		include_once($root_path."includes/pages/nodes/nodes_view.php");
+		include_once(ROOT_PATH."includes/pages/nodes/nodes_view.php");
 	} else {
-		include_once($root_path."includes/pages/nodes/nodes_search.php");
+		include_once(ROOT_PATH."includes/pages/nodes/nodes_search.php");
 	}
 }
 

@@ -46,7 +46,7 @@ function get_qs() {
 }
 
 function get($key) {
-	global $page_admin, $main, $root_path;
+	global $page_admin, $main;
 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$ret = $_GET[$key];
 	} else {
@@ -55,11 +55,11 @@ function get($key) {
 	}
 	switch ($key) {
 		case 'page':
-			$valid_array = getdirlist($root_path."includes/pages/");
+			$valid_array = getdirlist(ROOT_PATH."includes/pages/");
 			array_unshift($valid_array, 'startup');
 			break;
 		case 'subpage':
-			$valid_array = getdirlist($root_path."includes/pages/".get('page').'/', FALSE, TRUE);
+			$valid_array = getdirlist(ROOT_PATH."includes/pages/".get('page').'/', FALSE, TRUE);
 			for ($key=0;$key<count($valid_array);$key++) {
 				$valid_array[$key] = basename($valid_array[$key], '.php');
 				if (substr($valid_array[$key], 0, strlen(get('page'))+1) != get('page').'_') {
@@ -72,7 +72,7 @@ function get($key) {
 			array_unshift($valid_array, '');
 			break;
 		case 'lang':
-			$valid_array = getdirlist($root_path."globals/language/", FALSE, TRUE);
+			$valid_array = getdirlist(ROOT_PATH."globals/language/", FALSE, TRUE);
 			for ($key=0;$key<count($valid_array);$key++) {
 				$valid_array[$key] = basename($valid_array[$key], '.php');
 			}

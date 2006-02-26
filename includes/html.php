@@ -19,8 +19,8 @@
  *
  */
 
-include_once($root_path."includes/head.php");
-include_once($root_path."includes/body.php");
+include_once(ROOT_PATH."includes/head.php");
+include_once(ROOT_PATH."includes/body.php");
 
 class html {
 	

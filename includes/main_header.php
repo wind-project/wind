@@ -28,11 +28,10 @@ class header {
 	
 	
 	function output() {
-		global $root_path;
 		if ($this->hide) return;
-		if (file_exists($root_path.'config/mylogo.png')) {
+		if (file_exists(ROOT_PATH.'config/mylogo.png')) {
 			$this->tpl['mylogo'] = TRUE;
-			$this->tpl['mylogo_dir'] = $root_path.'config/';
+			$this->tpl['mylogo_dir'] = ROOT_PATH.'config/';
 		}
 		return template($this->tpl, __FILE__);
 	}

@@ -24,8 +24,8 @@ $config = array(
 		),
 
 	'templates' => array(
-		'path' => $root_path.'templates/',
-		'compiled_path' => $root_path.'templates/_compiled/',
+		'path' => ROOT_PATH.'templates/',
+		'compiled_path' => ROOT_PATH.'templates/_compiled/',
 		'default' => 'basic'
 		),
 		
@@ -45,12 +45,12 @@ $config = array(
 		'root_zone' => 'yourdomain',
 		'ns_zone' => 'ns.yourdomain',
 		'reverse_zone' => 'in-addr.arpa',
-		'forward_zone_schema' => $root_path.'tools/dnszones-poller/yourdomain.schema',
-		'reverse_zone_schema' => $root_path.'tools/dnszones-poller/10.in-addr.arpa.schema'
+		'forward_zone_schema' => ROOT_PATH.'tools/dnszones-poller/yourdomain.schema',
+		'reverse_zone_schema' => ROOT_PATH.'tools/dnszones-poller/10.in-addr.arpa.schema'
 		),
 	
 	'folders' => array(
-		'photos' => $root_path.'files/photos/'
+		'photos' => ROOT_PATH.'files/photos/'
 		),
 	
 	'mail' => array(
@@ -61,7 +61,7 @@ $config = array(
 		),
 	
 	'srtm' => array(
-		'path' => $root_path.'files/srtm/'
+		'path' => ROOT_PATH.'files/srtm/'
 		),
 		
 	'gmap' => array(

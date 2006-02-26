@@ -21,11 +21,11 @@
 
 ob_start();
 
-$root_path = "./";
+define("ROOT_PATH","./");
 
-include_once($root_path."globals/common.php");
+include_once(ROOT_PATH."globals/common.php");
 
-include_once($root_path."includes/main.php");
+include_once(ROOT_PATH."includes/main.php");
 
 $main = new main;
 

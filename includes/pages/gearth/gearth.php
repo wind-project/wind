@@ -21,9 +21,9 @@
 
 
 if (get('subpage') != '') {
-	include_once($root_path."includes/pages/gearth/gearth_".get('subpage').".php");
+	include_once(ROOT_PATH."includes/pages/gearth/gearth_".get('subpage').".php");
 } else {
-	include_once($root_path."includes/pages/gearth/gearth_main.php");
+	include_once(ROOT_PATH."includes/pages/gearth/gearth_main.php");
 }
 
 class gearth {

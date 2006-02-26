@@ -19,10 +19,10 @@
  *
  */
  
-include_once($root_path.'globals/classes/geocalc.php');
+include_once(ROOT_PATH.'globals/classes/geocalc.php');
 $geocalc = new geocalc();
 
-include_once($root_path.'globals/classes/srtm.php');
+include_once(ROOT_PATH.'globals/classes/srtm.php');
 $srtm = new srtm($vars['srtm']['path']);
 
 class nodes_plot_link {

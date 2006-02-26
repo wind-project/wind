@@ -19,7 +19,7 @@
  *
  */
 
-if (get('subpage') != '') include_once($root_path."includes/pages/pickup/pickup_".get('subpage').".php");
+if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/pickup/pickup_".get('subpage').".php");
 
 class pickup {
 

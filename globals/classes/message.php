@@ -51,7 +51,7 @@ class message {
 	}
 	
 	function output() {
-		global $vars, $design, $root_path, $smarty, $lang;
+		global $vars, $design, $smarty, $lang;
 		
 		if (isset($this->forward)) {
 			$sec = (isset($this->forward_sec)?$this->forward_sec:$vars['message']['delay']);

@@ -19,7 +19,7 @@
  *
  */
 
-if (get('action') == 'restore') include_once($root_path."includes/pages/users/users_restore.php");
+if (get('action') == 'restore') include_once(ROOT_PATH."includes/pages/users/users_restore.php");
 
 class users {
 

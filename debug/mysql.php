@@ -21,9 +21,9 @@
 
 ob_start();
 
-$root_path = "../";
+define("ROOT_PATH","../");
 
-include_once($root_path."globals/common.php");
+include_once(ROOT_PATH."globals/common.php");
 if ($vars['debug']['enabled'] == FALSE) die("WiND: Debug mode is not enabled. Check the config file.") ;
 
 class mysql_debug extends mysql {
@@ -62,7 +62,7 @@ if ($db->error) {
 	die("WiND MySQL database error: $db->error_report");
 }
 
-include_once($root_path."includes/main.php");
+include_once(ROOT_PATH."includes/main.php");
 
 echo '<table border="1">';
 $db->query("FLUSH QUERY CACHE");

@@ -19,13 +19,13 @@
  *
  */
 
-include_once($root_path."includes/html.php");
-include_once($root_path."globals/classes/userdata.php");
-include_once($root_path."globals/classes/message.php");
-include_once($root_path."includes/main_header.php");
-include_once($root_path."includes/main_center.php");
-include_once($root_path."includes/main_footer.php");
-include_once($root_path."includes/main_menu.php");
+include_once(ROOT_PATH."includes/html.php");
+include_once(ROOT_PATH."globals/classes/userdata.php");
+include_once(ROOT_PATH."globals/classes/message.php");
+include_once(ROOT_PATH."includes/main_header.php");
+include_once(ROOT_PATH."includes/main_center.php");
+include_once(ROOT_PATH."includes/main_footer.php");
+include_once(ROOT_PATH."includes/main_menu.php");
 
 class main {
 	
@@ -48,7 +48,7 @@ class main {
 	}
 	
 	function output() {
-		global $root_path, $lang;
+		global $lang;
 		
 		$this->html->head->add_title($lang['site_title']);
 		$this->html->head->add_meta("text/html; charset=".$lang['charset'], "", "Content-Type");

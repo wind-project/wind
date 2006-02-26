@@ -19,7 +19,7 @@
  *
  */
 
-include_once($root_path."includes/pages/".get('page')."/".get('page').".php");
+include_once(ROOT_PATH."includes/pages/".get('page')."/".get('page').".php");
 
 class center {
 
