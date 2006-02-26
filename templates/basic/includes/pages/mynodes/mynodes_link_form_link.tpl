@@ -31,11 +31,21 @@ function type_changed() {
 			form.links__protocol.disabled = false
 			form.links__ssid.disabled = false
 			form.links__channel.disabled = false
-			t.rows[1].style.display = ""
+			try {
+				t.rows[1].style.display = 'table-row';
+			} catch(e) {
+				t.rows[1].style.display = 'block';
+			}
 			t.rows[2].style.display = "none"
-			t.rows[3].style.display = ""
-			t.rows[4].style.display = ""
-			t.rows[5].style.display = ""
+			try {
+				t.rows[3].style.display = 'table-row';
+				t.rows[4].style.display = 'table-row';
+				t.rows[5].style.display = 'table-row';
+			} catch(e) {
+				t.rows[3].style.display = 'block';
+				t.rows[4].style.display = 'block';
+				t.rows[5].style.display = 'block';
+			}
 			break
 		case 'ap':
 			form.links__peer_node_id.value = ''
@@ -47,9 +57,15 @@ function type_changed() {
 			form.links__channel.disabled = false
 			t.rows[1].style.display = "none"
 			t.rows[2].style.display = "none"
-			t.rows[3].style.display = ""
-			t.rows[4].style.display = ""
-			t.rows[5].style.display = ""
+			try {
+				t.rows[3].style.display = 'table-row';
+				t.rows[4].style.display = 'table-row';
+				t.rows[5].style.display = 'table-row';
+			} catch(e) {
+				t.rows[3].style.display = 'block';
+				t.rows[4].style.display = 'block';
+				t.rows[5].style.display = 'block';
+			}
 			break
 		case 'client':
 			form.links__peer_node_id.disabled = true
@@ -61,7 +77,11 @@ function type_changed() {
 			form.links__ssid.value = ''
 			form.links__channel.value = ''
 			t.rows[1].style.display = "none"
-			t.rows[2].style.display = ""
+			try {
+				t.rows[2].style.display = 'table-row';
+			} catch(e) {
+				t.rows[2].style.display = "block";
+			}
 			t.rows[3].style.display = "none"
 			t.rows[4].style.display = "none"
 			t.rows[5].style.display = "none"
