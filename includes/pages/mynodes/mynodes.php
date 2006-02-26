@@ -197,10 +197,10 @@ class mynodes {
 	}
 
 	function table_subnets() {
-		global $construct, $db;
+		global $construct, $db, $lang;
 		$table_subnets = new table(array('TABLE_NAME' => 'table_subnets', 'FORM_NAME' => 'table_subnets'));
 		$table_subnets->db_data(
-			'subnets.id, "" AS subnet, subnets.ip_start, subnets.ip_end, subnets.type, "" AS peer, n_l.name AS link_node_name, n_l.id AS link_node_id, n_c.name AS client_node_name, n_c.id AS client_node_id',
+			'subnets.id, "" AS subnet, subnets.ip_start, subnets.ip_end, subnets.type, "" AS peer, n_l.name AS link_node_name, n_l.id AS link_node_id, n_c.name AS client_node_name, n_c.id AS client_node_id, links.type AS links_type, links.ssid AS links_ssid',
 			'subnets
 			LEFT JOIN links ON links.id = subnets.link_id
 			LEFT JOIN nodes AS n_l ON n_l.id = links.peer_node_id
@@ -214,7 +214,10 @@ class mynodes {
 				$table_subnets->data[$key]['ip_end'] = long2ip($table_subnets->data[$key]['ip_end']);
 				$table_subnets->data[$key]['subnet'] = $table_subnets->data[$key]['ip_start']." - ".$table_subnets->data[$key]['ip_end'];
 				if ($table_subnets->data[$key]['type'] == 'link') {
-					$table_subnets->data[$key]['peer'] = $table_subnets->data[$key]['link_node_name']." (#".$table_subnets->data[$key]['link_node_id'].")";
+					if($table_subnets->data[$key]['links_type'] == 'p2p')
+						$table_subnets->data[$key]['peer'] = $table_subnets->data[$key]['link_node_name']." (#".$table_subnets->data[$key]['link_node_id'].")";
+					elseif ($table_subnets->data[$key]['links_type'] == 'ap')
+						$table_subnets->data[$key]['peer'] = $lang['ap']." - ".$table_subnets->data[$key]['links_ssid'];
 				}
 				if ($table_subnets->data[$key]['type'] == 'client') {
 					$table_subnets->data[$key]['peer'] = $table_subnets->data[$key]['client_node_name']." (#".$table_subnets->data[$key]['client_node_id'].")";
@@ -229,7 +232,7 @@ class mynodes {
 		}
 		$table_subnets->info['EDIT_COLUMN'] = 'subnet';
 		$table_subnets->info['MULTICHOICE_LABEL'] = 'delete';
-		$table_subnets->db_data_remove('id', 'ip_start', 'ip_end', 'link_node_name', 'link_node_id', 'client_node_name', 'client_node_id');
+		$table_subnets->db_data_remove('id', 'ip_start', 'ip_end', 'link_node_name', 'link_node_id', 'client_node_name', 'client_node_id','links_type','links_ssid');
 		$table_subnets->db_data_translate('subnets__type');
 		return $table_subnets;
 	}

@@ -6,7 +6,8 @@ $config = array(
 		'server' => "server.example.org",
 		'username' => "youruser",
 		'password' => "yourpassword",
-		'database' => "yourdatabase"
+		'database' => "yourdatabase",
+		'version' => yourversion		//Ex. 4.0, 4.1, 5
 		),
 		
 	'site' => array(

@@ -78,7 +78,8 @@ mb_internal_encoding($lang['charset']);
 
 $db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
 
-$db->query("SET NAMES '".$lang['mysql_charset']."'");
+if($vars['db']['version']>=4.1)
+	$db->query("SET NAMES '".$lang['mysql_charset']."'");
 
 if ($db->error) {
 	die("WiND MySQL database error: $db->error_report");

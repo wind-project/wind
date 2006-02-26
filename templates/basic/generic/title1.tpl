@@ -19,23 +19,23 @@
  *
  *}
 <table width="100%"  border="0" cellspacing="0" cellpadding="0" class="table-d1">
-<tr>
-<td width="6" class="table-d1-side">&nbsp;</td>
-<td nowrap="nowrap" class="table-d1-title-text" >
-{$title}
-</td>
-<td width="10" class="table-d1-title-space"></td>
-<td width="299" class="table-d1-title-border">&nbsp;</td>
-<td width="6" class="table-d1-side2">&nbsp;</td>
-</tr>
-<tr>
-<td rowspan="2" class="table-d1-side">&nbsp;</td>
-<td colspan="3" class="table-d1-title-down"></td>
-<td rowspan="2" class="table-d1-side2">&nbsp;</td>
-</tr>
-<tr>
-<td colspan="3" class="table-d1-text1">
-{$content}
-</td>
-</tr>
+	<tr>
+		<td width="6" class="table-d1-side">&nbsp;</td>
+		<td nowrap="nowrap" class="table-d1-title-text" >
+			{$title}
+		</td>
+		<td width="10" class="table-d1-title-space"></td>
+		<td width="299" class="table-d1-title-border">&nbsp;</td>
+		<td width="6" class="table-d1-side2">&nbsp;</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="table-d1-side">&nbsp;</td>
+		<td colspan="3" class="table-d1-title-down"></td>
+		<td rowspan="2" class="table-d1-side2">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3" class="table-d1-text1">
+			{$content}
+		</td>
+	</tr>
 </table>

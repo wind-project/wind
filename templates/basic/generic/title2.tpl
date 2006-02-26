@@ -19,12 +19,13 @@
  *
  *}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-list">
-<tr>
-<td class="table-list-title">{$title}</td>
-</tr>
-<tr>
-<td width="100%">
-{$content}
-</td>
-</tr>
+	<tr>
+		<td width="100%" class="table-list-title">{$title}</td>
+		<td width="200"></td> {*Workaround IE, Opera display problem*}
+	</tr>
+	<tr>
+		<td width="100%" colspan="2">
+			{$content}
+		</td>
+	</tr>
 </table>
