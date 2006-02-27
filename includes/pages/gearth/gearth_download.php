@@ -40,6 +40,7 @@ class gearth_download {
 		$node = $node[0];
 
 		if (get('node') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node'));
+		if (get('node2') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node2'));
 		if (get('show_p2p') == 1) $having .= ($having!=''?' OR ':'').'total_p2p > 0';
 		if (get('show_aps') == 1) $having .= ($having!=''?' OR ':'').'total_aps > 0';
 		if (get('show_clients') == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap > 0)';
@@ -95,7 +96,22 @@ class gearth_download {
 					$xml2 .= "</Placemark>\n";
 					$selected_node['longitude'] = $value['longitude'];
 					$selected_node['latitude'] = $value['latitude'];
+					$selected_node['name'] = $value['nodes__name'];
+					$selected_node['id'] = $value['id'];
 					$selected .= $xml2;
+				} elseif ($value['id'] == get('node2')) {
+					$xml2 .= "<scale>0.6</scale>\n";
+					$xml2 .= "<Icon>\n";
+					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/gmap/mm_50_grey.png</href>\n";
+					$xml2 .= "</Icon>\n";
+					$xml2 .= "</IconStyle>\n";
+					$xml2 .= "</Style>\n";
+					$xml2 .= "</Placemark>\n";
+					$selected2_node['longitude'] = $value['longitude'];
+					$selected2_node['latitude'] = $value['latitude'];
+					$selected2_node['name'] = $value['nodes__name'];
+					$selected2_node['id'] = $value['id'];
+					$selected2 .= $xml2;
 				} elseif ($value['total_aps'] != 0 ) {
 					$xml2 .= "<scale>0.6</scale>\n";
 					$xml2 .= "<Icon>\n";
@@ -103,6 +119,10 @@ class gearth_download {
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
+					if($selected2 != "")
+						$xml2 .= "<visibility>0</visibility>\n";
+					else
+						$xml2 .= "<visibility>1</visibility>\n";
 					$xml2 .= "</Placemark>\n";
 					$ap .= $xml2;
 				} elseif ($value['total_p2p'] != 0 ) {
@@ -112,6 +132,10 @@ class gearth_download {
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
+					if($selected2 != "")
+						$xml2 .= "<visibility>0</visibility>\n";
+					else
+						$xml2 .= "<visibility>1</visibility>\n";
 					$xml2 .= "</Placemark>\n";
 					$bb .= $xml2;
 				} elseif ($value['total_client_on_ap'] != 0) {
@@ -121,6 +145,10 @@ class gearth_download {
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
+					if($selected2 != "")
+						$xml2 .= "<visibility>0</visibility>\n";
+					else
+						$xml2 .= "<visibility>1</visibility>\n";
 					$xml2 .= "</Placemark>\n";
 					$clients .= $xml2;
 				} else {
@@ -153,7 +181,11 @@ class gearth_download {
 				if(($value['l1_status']!='active' || $value['l2_status']!='active'?'inactive':'active')=='active') {
 					$xml2 = "<Placemark>\n";
 					$xml2 .= "<name>".htmlspecialchars($value['node1_name'])." (#".$value['node1_id'].") - ".htmlspecialchars($value['node2_name'])." (#".$value['node2_id'].")</name>\n";
-					$xml2 .= "<visibility>1</visibility>\n";
+					
+					if($selected2 != "")
+						$xml2 .= "<visibility>0</visibility>\n";
+					else
+						$xml2 .= "<visibility>1</visibility>\n";
 					$xml2 .= "<Style>\n";
 					$xml2 .= "<LineStyle>\n";
 					if($value['type'] == "p2p")
@@ -194,7 +226,7 @@ class gearth_download {
 			if($selected_node['latitude'] != "") {
 				$xml .= "<longitude>".$selected_node['longitude']."</longitude>\n";
 				$xml .= "<latitude>".$selected_node['latitude']."</latitude>\n";
-				$xml .= "<range>1600</range>\n";	
+				$xml .= "<range>1600</range>\n";
 			} else {
 				$xml .= "<longitude>23.763247</longitude>\n";
 				$xml .= "<latitude>37.980869</latitude>\n";
@@ -203,19 +235,49 @@ class gearth_download {
 			$xml .= "</LookAt>\n";
 			if($selected != "") {
 				$xml .= $selected;
+				if($selected2 != "") {
+					$xml .= $selected2;
+					$xml .= "<Placemark>\n";
+					$xml .= "<name>".htmlspecialchars($selected_node['name'])." (#".$selected_node['id'].") - ".htmlspecialchars($selected2_node['name'])." (#".$selected2_node['id'].")</name>\n";
+					$xml .= "<visibility>1</visibility>\n";
+					$xml .= "<Style>\n";
+					$xml .= "<LineStyle>\n";
+					$xml .= "<width>5</width>\n";
+					$xml .= "</LineStyle>\n";
+					$xml .= "<PolyStyle>\n";
+					$xml .= "<color>7f00ff00</color>\n";
+					$xml .= "</PolyStyle>\n";
+					$xml .= "</Style>\n";
+					$xml .= "<LineString>\n";
+					$xml .= "<extrude>0</extrude>\n";
+					$xml .= "<tessellate>0</tessellate>\n";
+					$xml .= "<altitudeMode>clampedToGround</altitudeMode>\n";
+					$xml .= "<coordinates>\n";
+					$xml .= $selected_node['longitude'].",".$selected_node['latitude'].",0\n";
+					$xml .= $selected2_node['longitude'].",".$selected2_node['latitude'].",0\n";
+					$xml .= "</coordinates>\n";
+					$xml .= "</LineString>\n";
+					$xml .= "</Placemark>\n";
+				}
 			}
 			$xml .= "<Folder>\n";
 			$xml .= "<name>".$lang['nodes']."</name>\n";
 			$xml .= "<Folder>\n";
 			$xml .= "<name>".$lang['backbone']."</name>\n";
 			$xml .= "<open>0</open>\n";
-			$xml .= "<visibility>1</visibility>\n";
+			if($selected2 != "")
+				$xml .= "<visibility>0</visibility>\n";
+			else
+				$xml .= "<visibility>1</visibility>\n";
 			$xml .= $bb;
 			$xml .= "</Folder>\n";
 			$xml .= "<Folder>\n";
 			$xml .= "<name>".$lang['aps']."</name>\n";
 			$xml .= "<open>0</open>\n";
-			$xml .= "<visibility>1</visibility>\n";
+			if($selected2 != "")
+				$xml .= "<visibility>0</visibility>\n";
+			else
+				$xml .= "<visibility>1</visibility>\n";
 			$xml .= $ap;
 			$xml .= "</Folder>\n";
 			if (get('show_clients') == 1) {
@@ -241,14 +303,20 @@ class gearth_download {
 				$xml .= "<Folder>\n";
 				$xml .= "<name>".$lang['backbone']."</name>\n";
 				$xml .= "<open>0</open>\n";
-				$xml .= "<visibility>1</visibility>\n";
+				if($selected2 != "")
+					$xml .= "<visibility>0</visibility>\n";
+				else
+					$xml .= "<visibility>1</visibility>\n";
 				$xml .= $links_bb;
 				$xml .= "</Folder>\n";
 				if (get('show_clients') == 1 && get('show_links_client') == 1) {
 					$xml .= "<Folder>\n";
 					$xml .= "<name>".$lang['clients']."</name>\n";
 					$xml .= "<open>0</open>\n";
-					$xml .= "<visibility>1</visibility>\n";
+					if($selected2 != "")
+						$xml .= "<visibility>0</visibility>\n";
+					else
+						$xml .= "<visibility>1</visibility>\n";
 					$xml .= $links_clients;
 					$xml .= "</Folder>\n";
 				}

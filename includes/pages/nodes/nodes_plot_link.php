@@ -66,7 +66,7 @@ class nodes_plot_link {
 			$this->tpl['a_node_tilt'] = rad2deg(atan(($b_node_total_elevation - $a_node_total_elevation) / ($this->tpl['distance'] * 1000)));
 			$this->tpl['b_node_tilt'] = rad2deg(atan(($a_node_total_elevation - $b_node_total_elevation) / ($this->tpl['distance'] * 1000)));
 			$this->tpl['distance'] = sqrt( pow($this->tpl['distance'] * 1000, 2) + pow( abs($a_node_total_elevation - $b_node_total_elevation), 2 ) ) / 1000;
-
+			$this->tpl['gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('a_node'), "node2" => get('b_node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 			$this->tpl['frequency'] = (integer)$_POST['frequency'];
 			if ($this->tpl['frequency'] <= 0) $this->tpl['frequency'] = 2450;
 			$frequency = $this->tpl['frequency'] * 1000000;
