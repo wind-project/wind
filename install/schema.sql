@@ -194,6 +194,7 @@ CREATE TABLE `users` (
   `last_visit` datetime default NULL,
   `status` enum('activated','pending') NOT NULL default 'pending',
   `account_code` varchar(20) default NULL,
+  `language` varchar(30) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
