@@ -30,7 +30,10 @@ $config = array(
 		),
 		
 	'language' => array(
-		'default' => 'greek'
+		'default' => 'greek',
+		'enabled' => array(
+			'greek' => TRUE,
+			'english' => TRUE)
 		),
 		
 	'smarty' => array(

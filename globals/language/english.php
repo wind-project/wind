@@ -36,6 +36,7 @@ $lang = array(
 	'delete' => "Delete",
 	'home' => "Home",
 	'edit_profile' => "User profile",
+	'edit_node' => "Node edit",
 	'log_out' => "Log out",
 	'login' => "Log in",
 	'register' => "Register",
@@ -75,6 +76,7 @@ $lang = array(
 	'user_edit' => "User profile",
 	'node' => "Node",
 	'node_info' => "Node info",
+	'node_view' => "Node view",
 	'node_delete' => "Delete node",
 	'ip_range_request' => "IP C-Class request",
 	'ip_range_request_for_node' => "IP C-Class request for node",
@@ -155,6 +157,8 @@ $lang = array(
 	'active_nodes' => "Active nodes",
 	'backbone_nodes' => "Backbone nodes",
 	'null' => "(null)",
+	'default' => 'Default',
+	'logged' => 'Logged in as',
 
 	'db' => array(
 		'users__username' => 'User Name',
@@ -168,6 +172,7 @@ $lang = array(
 		'users__status' => 'Registration',
 		'users__status-pending' => 'Pending',
 		'users__status-activated' => 'Activated',
+		'users__language' => 'Language',
 		'fullname' => 'Full Name',
 		
 		'nodes__id' => 'Node ID',
@@ -605,6 +610,11 @@ $lang = array(
 			'title' => 'Send message',
 			'body' => 'In this page you can send a message to the administrator(s) of the node. Your e-mail address will appear to your message, so that you can get a reply from the receiver(s). Each reply to your message will be sent to your e-mail address and will contain the e-mail address of the sender(s), so that you can reply to them back.'
 		)
+	),
+	
+	'languages' => array(
+		'greek' => 'Greek',
+		'english' => 'English'
 	)
 
 );

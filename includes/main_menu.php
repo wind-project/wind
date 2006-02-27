@@ -33,10 +33,21 @@ class menu {
 	function output() {
 		if ($this->hide) return;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		global $construct, $main, $db;
+		global $construct, $main, $db, $vars, $lang;
 		$this->tpl['logged'] = $main->userdata->logged;
 		$this->tpl['form_login'] = $construct->form($this->form_login(), __FILE__);
-		$main->html->dody->tpl['form_login'] = $this->tpl['form_login'];
+		
+		$main->html->body->tpl['form_login'] = $this->tpl['form_login'];
+		$main->html->body->tpl['logged_username'] = $main->userdata->info['username'];
+		$main->html->body->tpl['link_logged_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));
+		
+		foreach($vars['language']['enabled'] as $key => $value) {
+			if ($value) {
+				$main->html->body->tpl['languages'][$key]['name'] = ($lang['languages'][$key]==''?$key:$lang['languages'][$key]);
+				$main->html->body->tpl['languages'][$key]['link'] = makelink(array("session_lang" => $key), TRUE);
+			}
+		}
+		
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
 			$this->tpl['mynodes'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");

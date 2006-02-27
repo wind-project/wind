@@ -33,10 +33,9 @@ class users {
 	}
 	
 	function form_user() {
-		global $main, $db;
+		global $main, $db, $vars, $lang;
 		$form_user = new form(array('FORM_NAME' => 'form_user'));
 		$form_user->db_data('users.username, users.password, users.surname, users.name, users.email, users.phone, users.info'.($main->userdata->privileges['admin'] === TRUE?', rights.type, users.status':''));
-		$form_user->db_data_values("users", "id", get('user'));
 		// Hide password...
 		$form_user->data[1]['value'] = '';
 		// ...and show it as required
@@ -53,6 +52,15 @@ class users {
 			$form_user->db_data_pickup("node_id_owner", "nodes", $db->get("nodes.id AS value, CONCAT(nodes.name, ' (#', nodes.id, ')') AS output", "users_nodes, nodes", "nodes.id = users_nodes.node_id AND users_nodes.user_id = '".get('user')."' AND users_nodes.owner = 'Y'"), TRUE);
 			$form_user->db_data_pickup("users_nodes.node_id", "nodes", $db->get("nodes.id AS value, CONCAT(nodes.name, ' (#', nodes.id, ')') AS output", "users_nodes, nodes", "nodes.id = users_nodes.node_id AND users_nodes.user_id = '".get('user')."' AND users_nodes.owner != 'Y'"), TRUE);		
 		}
+		$form_user->db_data('users.language');
+		$form_user->data[12]['Type'] = 'enum';
+		$form_user->data[12]['Null'] = '';
+		$form_user->data[12]['Type_Enums'][0] = array("value" => "", "output" => $lang['default']);
+		foreach($vars['language']['enabled'] as $key => $value) {
+			if ($value) array_push($form_user->data[12]['Type_Enums'], array("value" => $key, "output" => ($lang['languages'][$key]==''?$key:$lang['languages'][$key])));
+		}
+		$form_user->db_data_values("users", "id", get('user'));
+		$form_user->data[1]['value'] = '';
 		return $form_user;
 	}
 

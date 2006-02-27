@@ -31,7 +31,7 @@ class userdata {
 	var $primary_key = "id";
 	var $username_key = "username";
 	var $password_key = "password";
-	var $info_keys = "username, name, surname, date_in, last_visit, last_session, status";
+	var $info_keys = "username, name, surname, date_in, last_visit, last_session, status, language";
 	var $last_session_key = "last_session";
 	var $last_visit_key = "last_visit";
 	

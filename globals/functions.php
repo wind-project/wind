@@ -71,13 +71,6 @@ function get($key) {
 			}
 			array_unshift($valid_array, '');
 			break;
-		case 'lang':
-			$valid_array = getdirlist(ROOT_PATH."globals/language/", FALSE, TRUE);
-			for ($key=0;$key<count($valid_array);$key++) {
-				$valid_array[$key] = basename($valid_array[$key], '.php');
-			}
-			array_unshift($valid_array, '');
-			break;
 	}
 	if (isset($valid_array) && !in_array($ret, $valid_array)) $ret = $valid_array[0];
 	return $ret;
@@ -335,4 +328,40 @@ function array_multimerge($array1, $array2) {
 	return $array1;
 }
 
+function language_set($language='', $force=FALSE) {
+	global $vars, $db, $lang;
+	if ($force) {
+		$tl = $lang;
+	} elseif (get('lang') != '') {
+		$tl = get('lang');
+	} elseif ($_SESSION['lang'] != '') {
+		$tl = $_SESSION['lang'];
+	} elseif ($language != '') {
+		$tl = $language;
+	} else {
+		$tl = $vars['language']['default'];
+	}
+	
+	if ($vars['language']['enabled'][$tl] === TRUE && 
+			file_exists(ROOT_PATH."globals/language/".$tl.".php")) {
+
+		include_once(ROOT_PATH."globals/language/".$tl.".php");
+		if (file_exists(ROOT_PATH."config/language/".$tl."_overwrite.php")) {
+			include_once(ROOT_PATH."config/language/".$tl."_overwrite.php");
+			$lang = array_multimerge($lang, $lang_overwrite);
+		}
+		// Set-up mbstring's internal encoding (mainly for supporting UTF-8)
+		mb_internal_encoding($lang['charset']);
+		
+		// Set-up NAMES on database system
+		if($vars['db']['version']>=4.1)
+			$db->query("SET NAMES '".$lang['mysql_charset']."'");
+
+	} else {
+
+		if ($tl == $_SESSION['lang']) unset($_SESSION['lang']);
+		die("WiND error: Selected language not found.");
+
+	}
+}
 ?>

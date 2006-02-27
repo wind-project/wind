@@ -50,6 +50,9 @@ class main {
 	function output() {
 		global $lang;
 		
+		if (get('session_lang') != '') $_SESSION['lang'] = get('session_lang');
+		language_set($this->userdata->info['language']);
+		
 		$this->html->head->add_title($lang['site_title']);
 		$this->html->head->add_meta("text/html; charset=".$lang['charset'], "", "Content-Type");
 		

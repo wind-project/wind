@@ -33,25 +33,41 @@
     
     <td class="table-middle-right-td">
 	<table border="0" cellpadding="0" cellspacing="0" class="table-middle-right">
-  {if $menu != '' && $form_login != '' && $logged != TRUE}
-		<tr><td class="quick-login">
-		{$form_login}
-		</td></tr>
-  {/if}
-		<tr><td class="main-page">
-    {if $message==''}
-		{$center}
-    {else}
-    	<table width="100%" border="0" cellpadding="50" cellspacing="0">
-    	<tr><td align="center">
-    	{$message}
-    	</td></tr>
-    	</table>
-    {/if}
-	</td></tr>
+  	{if $menu != ''}
+		<tr>
+			<td class="quick-login" width="100%">
+			{if $logged}
+				{include file="includes/main_menu_logged.tpl"}
+			{else}
+				{$form_login}
+			{/if}
+			</td>
+			<td nowrap="nowrap" class="quick-login-field">
+				{foreach key=key item=item from=$languages}
+				<a href="{$item.link}"><img alt="{$item.name}" src="{$img_dir}flags/{$key}.gif" /></a> 
+				{/foreach}
+			</td>
+		</tr>
+	  {/if}
+		<tr>
+			<td class="main-page" colspan="2">
+    			{if $message==''}
+					{$center}
+    			{else}
+    				<table width="100%" border="0" cellpadding="50" cellspacing="0">
+    					<tr>
+    						<td align="center">
+    							{$message}
+    						</td>
+    					</tr>
+    				</table>
+    			{/if}
+			</td>
+		</tr>
 	</table>
-
-</td></tr>
+	
+	</td>
+</tr>
     
   {if $footer != ''}
   <tr>

@@ -60,26 +60,7 @@ if ($vars['mail']['smtp'] != '') {
 	ini_set('smtp_port', $vars['mail']['smtp_port']);
 }
 
-//INCLUDE LANGUAGE
-if (get('lang') != '') {
-	$tl = get('lang');
-} elseif ($_SESSION['lang'] != '') {
-	$tl = $_SESSION['lang'];
-} else {
-	$tl = $vars['language']['default'];
-}
-include_once(ROOT_PATH."globals/language/".$tl.".php");
-if (file_exists(ROOT_PATH."config/language/".$tl."_overwrite.php")) {
-	include_once(ROOT_PATH."config/language/".$tl."_overwrite.php");
-	$lang = array_multimerge($lang, $lang_overwrite);
-}
-// Set-up mbstring's internal encoding (mainly for supporting UTF-8)
-mb_internal_encoding($lang['charset']);
-
 $db = new mysql($vars['db']['server'], $vars['db']['username'], $vars['db']['password'], $vars['db']['database']);
-
-if($vars['db']['version']>=4.1)
-	$db->query("SET NAMES '".$lang['mysql_charset']."'");
 
 if ($db->error) {
 	die("WiND MySQL database error: $db->error_report");
