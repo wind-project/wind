@@ -149,12 +149,23 @@ class hostmaster_range {
 
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		global $construct;
+		global $construct,$db,$main;
+		if(get('action') === "delete")
+		{
+			$ret = $db->del("ip_ranges", "id = '".get('iprange')."'");
+			if ($ret) {
+				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "hostmaster", "subpage" => "ranges")));
+			} else {
+				$main->message->set_fromlang('error', 'generic');		
+			}
+			return ;
+		}
 		$this->tpl['form_range'] = $construct->form($this->form_range(), __FILE__);
 		$this->tpl['table_node_info'] = $construct->table($this->table_node_info(), __FILE__);
 		$this->tpl['table_user_info'] = $construct->table($this->table_user_info(), __FILE__);
 		$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
 		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
+		$this->tpl['link_range_delete'] = makelink (array("action" => "delete"),TRUE);
 		return template($this->tpl, __FILE__);
 	}
 

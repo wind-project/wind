@@ -22,7 +22,8 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.nameserver_edit`" content=$form_nameserver}
+{include assign=nameserver_delete file=generic/link.tpl content="`$lang.delete`" link=$link_nameserver_delete confirm=TRUE}
+{include file=generic/title1.tpl title="`$lang.nameserver_edit`" right="$nameserver_delete" content=$form_nameserver}
 </td>
 </tr>
 <tr>

@@ -66,6 +66,16 @@ class users {
 
 	function output() {
 		global $main, $construct, $db;
+		if(get('action') === "delete" && $main->userdata->privileges['admin'] === TRUE)
+		{
+			$ret = $db->del("users", "id = '".get('user')."'");
+			if ($ret) {
+				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "admin", "subpage" => "users")));
+			} else {
+				$main->message->set_fromlang('error', 'generic');		
+			}
+			return ;
+		}
 		if (get('action') == 'activate') {
 			$t = $db->get('account_code', 'users', "id = '".get('user')."'");
 			if ($t[0]['account_code'] != '' && $t[0]['account_code'] == get('account_code')) {
@@ -89,6 +99,8 @@ class users {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		if (get('user') != '') {
 			$this->tpl['user_method'] = (get('user') == 'add' ? 'add' : 'edit');
+			if(get('user') != 'add' && $main->userdata->privileges['admin'] === TRUE)
+				$this->tpl['link_user_delete'] = makelink(array("action" => "delete"),TRUE);
 			$this->tpl['form_user'] = $construct->form($this->form_user(), __FILE__);
 		}
 		return template($this->tpl, __FILE__);

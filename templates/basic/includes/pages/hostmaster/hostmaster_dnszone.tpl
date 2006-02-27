@@ -22,7 +22,8 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.dnszone_edit`" content=$form_zone}
+{include assign=dnszone_delete file=generic/link.tpl content="`$lang.delete`" link=$link_dnszone_delete confirm=TRUE}
+{include file=generic/title1.tpl title="`$lang.dnszone_edit`" right="$dnszone_delete" content=$form_zone}
 </td>
 </tr>
 <tr>

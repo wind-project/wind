@@ -22,7 +22,8 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.ip_range_edit`" content=$form_range}
+{include assign=range_delete file=generic/link.tpl content="`$lang.delete`" link=$link_range_delete confirm=TRUE}
+{include file=generic/title1.tpl title="`$lang.ip_range_edit`" right="$range_delete" content=$form_range}
 </td>
 </tr>
 <tr>

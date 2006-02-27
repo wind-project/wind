@@ -174,13 +174,24 @@ class hostmaster_dnszone {
 
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		global $construct, $db;
+		global $construct, $db, $main;
+		if(get('action') === "delete")
+		{
+			$ret = $db->del("dns_zones", "id = '".get('zone')."'");
+			if ($ret) {
+				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "hostmaster", "subpage" => "dnszones")));
+			} else {
+				$main->message->set_fromlang('error', 'generic');		
+			}
+			return ;
+		}
 		$this->tpl['form_zone'] = $construct->form($this->form_zone(), __FILE__);
 		$this->tpl['table_node_info'] = $construct->table($this->table_node_info(), __FILE__);
 		$this->tpl['table_user_info'] = $construct->table($this->table_user_info(), __FILE__);
 		$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
 		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
+		$this->tpl['link_dnszone_delete'] = makelink (array("action" => "delete"),TRUE);
 		return template($this->tpl, __FILE__);
 	}
 
