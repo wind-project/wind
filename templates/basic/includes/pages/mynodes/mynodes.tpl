@@ -24,6 +24,7 @@
 {else}
 {include assign=help file=generic/help.tpl help=mynodes}
 {assign var=t value="`$lang.node` $node_name (#$node_id)"|escape}
+{include assign="view" file="generic/link.tpl" link=$link_node_view content="`$lang.node_view`"}
 {include assign="t1" file="generic/link.tpl" link=$link_node_delete content="`$lang.node_delete`" confirm=TRUE}
 {/if}
 {include file=generic/page-title.tpl title="$t" right="$help"}
@@ -31,7 +32,7 @@
 <tr>
 <td class="table-page-pad">
 {include assign="t2" file="generic/link.tpl" content="`$lang.find_coordinates`" onclick="javascript: t = window.open('$link_gmap_pickup', 'popup_gmap_pickup', 'width=500,height=500,toolbar=0,resizable=0,scrollbars=0'); t.focus(); return false;"}
-{include file=generic/title1.tpl title="`$lang.node_info` $t1 $t2" content=$form_node}
+{include file=generic/title1.tpl title="`$lang.node_info` $t2" right="$view $t1" content=$form_node}
 </td>
 </tr>
 {if $node != 'add'}

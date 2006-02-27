@@ -42,6 +42,7 @@ class menu {
 			$this->tpl['mynodes'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");
 			foreach( (array) $this->tpl['mynodes'] as $key => $value) {
 				$this->tpl['mynodes'][$key]['url'] = makelink(array("page" => "mynodes", "node" => $this->tpl['mynodes'][$key]['id']));
+				$this->tpl['mynodes'][$key]['url_view'] = makelink(array("page" => "nodes", "node" => $this->tpl['mynodes'][$key]['id']));
 			}
 			$this->tpl['link_addnode'] = makelink(array("page" => "mynodes", "node" => "add"));
 			$this->tpl['link_edit_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));

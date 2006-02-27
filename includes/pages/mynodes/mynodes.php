@@ -326,6 +326,7 @@ class mynodes {
 				$this->tpl['table_ipaddr'] = $construct->table($this->table_ipaddr(), __FILE__);
 				$this->tpl['table_photosview'] = $construct->table($this->table_photosview(), __FILE__);
 				if ($this->has_owner_access()) $this->tpl['link_node_delete'] = makelink(array('action' => 'delete'), TRUE);
+				$this->tpl['link_node_view'] = makelink(array('page' => 'nodes', 'node' => get('node')));
 				$this->tpl['link_req_cclass'] = makelink(array('page' => 'mynodes', 'subpage' => 'range', 'node' => get('node')));
 				$this->tpl['link_req_dns_for'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_req_dns_rev'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));

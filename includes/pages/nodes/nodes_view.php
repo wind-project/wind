@@ -280,10 +280,10 @@ class nodes_view {
 			$this->tpl['photosview'][$value['view_point']] = $value;
 			$this->tpl['photosview'][$value['view_point']]['image_s'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'-s.jpg';
 			$this->tpl['photosview'][$value['view_point']]['image'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'.jpg';
-		}		
+		}
 		
 		$this->tpl['link_plot_link'] = makelink(array("page" => "nodes", "subpage" => "plot_link", "a_node" => $this->tpl['node']['id']));
-
+		if($main->userdata->privileges['admin'] === TRUE || $db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) $this->tpl['edit_node'] = makelink(array("page" => "mynodes", "node" => get('node')));
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
 		$this->tpl['link_gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=js&node=".get('node'));
