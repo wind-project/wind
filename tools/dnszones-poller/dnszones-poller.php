@@ -47,7 +47,7 @@ if ($conf['zone_type'] == 'forward') {
 			  INNER JOIN dns_nameservers ON dns_zones_nameservers.nameserver_id = dns_nameservers.id
 			  INNER JOIN nodes ON dns_nameservers.node_id = nodes.id
 			  WHERE dns_nameservers.status = 'active' AND dns_zones.type = 'forward' AND dns_zones.status = 'active'
-			  ORDER BY dns_zones.name ASC";
+			  ORDER BY dns_zones.name ASC, dns_zones_nameservers.id ASC";
 	$q = mysql_query($query, $mysql_link);
 	echo mysql_error();
 	while ($ret = mysql_fetch_assoc($q)) {
@@ -91,7 +91,7 @@ if ($conf['zone_type'] == 'forward') {
 			  INNER JOIN dns_nameservers ON dns_zones_nameservers.nameserver_id = dns_nameservers.id
 			  INNER JOIN nodes ON dns_nameservers.node_id = nodes.id
 			  WHERE dns_nameservers.status = 'active' AND dns_zones.type = 'reverse' AND dns_zones.status = 'active'
-			  ORDER BY dns_zones.name ASC";
+			  ORDER BY dns_zones.name ASC, dns_zones_nameservers.id ASC";
 	$q = mysql_query($query, $mysql_link);
 	echo mysql_error();
 	while ($ret = mysql_fetch_assoc($q)) {

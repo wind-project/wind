@@ -50,7 +50,16 @@ class mynodes_dnszone {
 			}
 		}
 
-		$form_zone->db_data_pickup("dns_zones_nameservers.nameserver_id", "dns_nameservers", $db->get('dns_nameservers.id AS value, CONCAT(dns_nameservers.name, ".", nodes.name_ns, ".", "'.$vars['dns']['ns_zone'].'") AS output', "dns_zones_nameservers, dns_nameservers, nodes", "dns_nameservers.node_id = nodes.id AND dns_nameservers.id = dns_zones_nameservers.nameserver_id AND dns_zones_nameservers.zone_id = '".get('zone')."'"), TRUE);
+		$form_zone->db_data_pickup(
+					"dns_zones_nameservers.nameserver_id",
+					"dns_nameservers",
+					$db->get('dns_nameservers.id AS value, ' .
+							'CONCAT(dns_nameservers.name, ".", nodes.name_ns, ".", "'.$vars['dns']['ns_zone'].'") AS output', 
+							"dns_zones_nameservers, dns_nameservers, nodes", 
+							"dns_nameservers.node_id = nodes.id AND dns_nameservers.id = dns_zones_nameservers.nameserver_id AND dns_zones_nameservers.zone_id = '".get('zone')."'",
+							"",
+							"dns_zones_nameservers.id ASC")
+					, TRUE);
 		return $form_zone;
 	}
 
