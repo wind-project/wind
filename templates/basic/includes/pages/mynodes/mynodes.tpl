@@ -25,7 +25,9 @@
 {include assign=help file=generic/help.tpl help=mynodes}
 {assign var=t value="`$lang.node` $node_name (#$node_id)"|escape}
 {include assign="view" file="generic/link.tpl" link=$link_node_view content="`$lang.node_view`"}
-{include assign="t1" file="generic/link.tpl" link=$link_node_delete content="`$lang.node_delete`" confirm=TRUE}
+{if $link_node_delete}
+	{include assign="t1" file="generic/link.tpl" link=$link_node_delete content="`$lang.node_delete`" confirm=TRUE}
+{/if}
 {/if}
 {include file=generic/page-title.tpl title="$t" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
