@@ -364,4 +364,16 @@ function language_set($language='', $force=FALSE) {
 
 	}
 }
+
+function url_fix ($url, $default_prefix="http://") {
+	// Windows shares (samba) check
+	if (substr(stripslashes($url), 0, 2) == '\\\\') {
+		return 'file://'.str_replace('\\', '/', substr(stripslashes($url), 2));
+	}
+	// Insert default prefix
+	if (strpos($url, '://') === FALSE) {
+		return $default_prefix.$url;
+	}
+}
+
 ?>

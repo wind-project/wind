@@ -84,6 +84,12 @@
 </tr>
 <tr>
 <td class="table-page-pad">
+{include assign="t1" file="generic/link.tpl" link=$link_services_add content="`$lang.services_add`"}
+{include file=generic/title2.tpl title="`$lang.services` $t1" content=$table_services}
+</td>
+</tr>
+<tr>
+<td class="table-page-pad">
 {include file=generic/title2.tpl title="`$lang.myview`" content=$table_photosview}
 </td>
 </tr>

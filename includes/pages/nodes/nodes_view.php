@@ -133,7 +133,7 @@ class nodes_view {
 		$table_nameservers->db_data_translate('dns_nameservers__status');
 		return $table_nameservers;
 	}
-
+	
 	function table_links_p2p() {
 		global $db;
 		$table_links = new table(array('TABLE_NAME' => 'table_links_p2p'));
@@ -239,7 +239,36 @@ class nodes_view {
 		$table_ipaddr_subnets->db_data_hide('subnets__ip_start', 'subnets__ip_end', 'subnets__type', 'nodes__name', 'nodes__id', 'links__type');
 		return $table_ipaddr_subnets;
 	}
-		
+
+	function table_services() {
+		global $db, $vars, $lang;
+		$table_services = new table(array('TABLE_NAME' => 'table_services', 'FORM_NAME' => 'table_services'));
+		$table_services->db_data(
+			'services.title, nodes_services.id, nodes.id AS nodes__id, ip_addresses.ip, nodes_services.url, nodes_services.info, nodes_services.status, nodes_services.date_in, IFNULL(nodes_services.protocol, services.protocol) AS protocol, IFNULL(nodes_services.port, services.port) AS port',
+			'nodes_services
+			LEFT JOIN nodes on nodes_services.node_id = nodes.id
+			LEFT JOIN services on nodes_services.service_id = services.id
+			LEFT JOIN ip_addresses ON ip_addresses.id = nodes_services.ip_id',
+			"nodes_services.node_id = '".get('node')."'",
+			'',
+			"services.title ASC");
+
+		foreach( (array) $table_services->data as $key => $value) {
+			if ($key != 0) {
+				if ($table_services->data[$key]['ip']) {
+					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
+					if ($table_services->data[$key]['protocol'] && $table_services->data[$key]['port']) {
+						$table_services->data[$key]['ip'] .= ' ('.$lang['db']['nodes_services__protocol-'.$table_services->data[$key]['protocol']].'/'.$table_services->data[$key]['port'].')';
+					}
+				}
+				$table_services->info['LINK']['services__title'][$key] = $table_services->data[$key]['url'];
+			}
+		}
+		$table_services->db_data_remove('id','nodes__id', 'url', 'protocol', 'port');
+		$table_services->db_data_translate('nodes_services__status');
+		return $table_services;
+	}
+	
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $db, $vars, $main;
@@ -274,7 +303,7 @@ class nodes_view {
 		}
 
 		$this->tpl['table_ipaddr_subnets'] = $construct->table($this->table_ipaddr_subnets(), __FILE__);
-		
+		$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 		$t = $db->get('id, date_in, view_point, info', 'photos', "node_id = ".intval(get('node')));
 		foreach( (array) $t as $key => $value) {
 			$this->tpl['photosview'][$value['view_point']] = $value;

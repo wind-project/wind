@@ -65,6 +65,9 @@
 			  	<tr>
 					<td class="table-search-menu-text"><img src="templates/basic/images/search_ip.gif" width="33" height="32" alt="{$lang.all_ranges}" />&nbsp;<a href="{$link_allranges}">{$lang.all_ranges}</a></td>
 				</tr>
+				<tr>
+					<td class="table-search-menu-text"><img src="templates/basic/images/services.gif" width="33" height="32" alt="{$lang.all_services}" />&nbsp;<a href="{$link_allservices}">{$lang.all_services}</a></td>
+		  		</tr>
 			  	<tr>
 					<td class="table-search-menu-text">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table-search-menu">
@@ -103,7 +106,7 @@
 					<td colspan="2" class="quick-login-title">{$lang.statistics}</td>
 			  	</tr>
 			  	<tr>
-					<td rowspan="4" class="quick-login-text"><img src="templates/basic/images/stats.png" width="48" height="48" alt="{$lang.statistics}" /></td>
+					<td rowspan="5" class="quick-login-text"><img src="templates/basic/images/stats.png" width="48" height="48" alt="{$lang.statistics}" /></td>
 					<td class="quick-login-text">{$stats_nodes_active}/{$stats_nodes_total} <span style="color: black;">{$lang.active_nodes|lower}</span></td>
 			  	</tr>
 			  	<tr>
@@ -115,6 +118,9 @@
 			  	<tr>
 					<td class="quick-login-text">{$stats_aps} <span style="color: black;">{$lang.aps|lower}</span></td>
 			  	</tr>
+			  	<tr>
+					<td class="quick-login-text">{$stats_services_active}/{$stats_services_total} <span style="color: black;">{$lang.active_services|lower}</span></td>
+			  </tr>
 			  	<tr>
 					<td colspan="2" class="table-middle-left-pad"></td>
 			  	</tr>
@@ -165,6 +171,12 @@
 				</tr>
 				<tr class="table-form-row1">
 					<td colspan="2" class="table-form-title"><img src="templates/basic/images/user-small.png" alt="{$lang.users}" />&nbsp;<a href="{$link_admin_users}">{$lang.users}</a></td>
+				</tr>
+				<tr class="table-form-row1">
+					<td colspan="2" class="table-form-title"><img src="templates/basic/images/services-small.png" alt="{$lang.services}" />&nbsp;<a href="{$link_admin_nodes_services}">{$lang.services}</a></td>
+				</tr>
+				<tr class="table-form-row1">
+					<td colspan="2" class="table-form-title"><img src="templates/basic/images/services-small.png" alt="{$lang.services_categories}" />&nbsp;<a href="{$link_admin_services}">{$lang.services_categories}</a></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="table-middle-left-pad"></td>

@@ -72,6 +72,18 @@ $lang = array(
 	'users_found' => "Users found",
 	'dns_zones_search' => "Search for DNS zones",
 	'dns_zones_found' => "DNS zones found",
+	
+	'all_services' => "Network services",
+	'active_services' => "Active services",
+	'services_search' => "Search services",
+	'services_found' => "Services found",
+	'services_categories' => "Services categories",
+	'services_categories_add' => "Add service category",
+	'services_categories_edit' => "Edit service category",
+	'services_edit' => "Edit service",
+	'services_add' => "Add service",
+	'services' => "Services",
+	
 	'user_add' => "New user",
 	'user_edit' => "User profile",
 	'node' => "Node",
@@ -296,6 +308,26 @@ $lang = array(
 		'ip_addresses__always_on-N' => 'No',
 		'ip_addresses__info' => 'Info',
 
+		'services__title' => 'Category',
+		'services__protocol' => 'Protocol',
+		'services__protocol-tcp' => 'TCP',
+		'services__protocol-udp' => 'UDP',
+		'services__port' => 'Port',
+
+		'nodes_services__node_id' => 'Node',
+		'nodes_services__service_id' => 'Category',
+		'nodes_services__date_in' => 'Added',
+		'nodes_services__ip_id' => 'IP Address',
+		'nodes_services__url' => 'URL',
+		'nodes_services__status' => 'Status',
+		'nodes_services__status-active' => 'Active',
+		'nodes_services__status-inactive' => 'Inactive',
+		'nodes_services__info' => 'Info',
+		'nodes_services__protocol' => 'Protocol',
+		'nodes_services__protocol-tcp' => 'TCP',
+		'nodes_services__protocol-udp' => 'UDP',
+		'nodes_services__port' => 'Port',
+		
 		'photos__date_in' => 'Date',
 		'photos__view_point' => 'Aspect',
 		'photos__view_point-N' => 'North',
@@ -522,6 +554,12 @@ $lang = array(
 			'title' => 'DNS zones',
 			'body' => 'In this page you can search for DNS zones of the network by filling in the corresponding fields. The results are displayed in the follwing table. Furthermore, you cat choose a node for viewing.'
 		),
+		
+		'services' => array(
+			'title' => 'Services',
+			'body' => 'In this page you can search for network services by filling in the corresponding fields. The results are displayed in the follwing table. Furthermore, you cat choose a service or a node for viewing.'
+		),
+		
 		'mynodes_add' => array(
 			'title' => 'Add node',
 			'body' => 'In this page you can add a node. Be sure to submit accurate data.'
@@ -578,6 +616,20 @@ $lang = array(
 			'title' => 'Edit IP address',
 			'body' => 'In this page you can add or edit an IP address for your node. The \'Hostname\' field describes the device that the corresponding IP address belongs to and must be the same for all the IP addresses of that device.'
 		),
+		
+		'mynodes_services_add' => array(
+			'title' => 'Add Service',
+			'body' => 'In this page you can add a service of your node. The IP Address field should contain the IP address that the service is listening at. The URL field should contain a link to the service or a link to a page about the service. The Protocol and Port should contain the protocol (ie. tcp,udp) and the port that the service uses.'
+		),
+		'mynodes_services_edit' => array(
+			'title' => 'Edit Service',
+			'body' => 'In this page you can edit a service of your node. The IP Address field contains all the IP addresses that you have commit and should contain the IP address that the service is listening at. The URL field should contain a link to the service or a link to a page about the service. The Protocol and Port should contain the protocol (ie. tcp,udp) and the port that the service uses.'
+		),
+		'admin_services' => array(
+			'title' => 'Services Administration',
+			'body' => 'In this page you can add, edit or delete a Services Category. From the <<Edit Services>> link you can see all network services and edit them.'
+		),
+		
 		'nodes_search' => array(
 			'title' => 'Network nodes',
 			'body' => 'In this page you can search for network nodes by filling the corresponding fields. The results are displayed in the following table. Furthermore, you can choose a node for viewing.'

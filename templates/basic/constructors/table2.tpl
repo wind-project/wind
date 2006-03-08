@@ -40,7 +40,15 @@
 		{assign var="cell" value=$itm}
 	{/if}
 	
-	<td class="{$cellclass}">{$cell|escape}</td>
+	<td class="{$cellclass}">
+		{if $extra_data.LINK.$fullkey[row] != ''}
+		<a href="{$extra_data.LINK.$fullkey[row]}">
+		{/if}
+		{$cell|escape}
+		{if $extra_data.LINK.$fullkey[row] != ''}
+		</a>
+		{/if}
+	</td>
 	{/if}
 	{/foreach}
 </tr>

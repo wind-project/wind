@@ -61,6 +61,8 @@ class menu {
 				$this->tpl['is_admin'] = TRUE;
 				$this->tpl['link_admin_nodes'] = makelink(array("page" => "admin", "subpage" => "nodes"));
 				$this->tpl['link_admin_users'] = makelink(array("page" => "admin", "subpage" => "users"));
+				$this->tpl['link_admin_nodes_services'] = makelink(array("page" => "admin", "subpage" => "nodes_services"));
+				$this->tpl['link_admin_services'] = makelink(array('page' => 'admin', 'subpage' => 'services'));
 			}
 			if ($main->userdata->privileges['admin'] === TRUE || $main->userdata->privileges['hostmaster'] === TRUE) {
 				$this->tpl['is_hostmaster'] = TRUE;
@@ -87,6 +89,7 @@ class menu {
 		$this->tpl['link_home'] = makelink(array());
 		$this->tpl['link_allnodes'] = makelink(array("page" => "nodes"));
 		$this->tpl['link_allranges'] = makelink(array("page" => "ranges", "subpage" => "search"));
+		$this->tpl['link_allservices'] = makelink(array("page" => "services"));
 		$this->tpl['link_alldnszones'] = makelink(array("page" => "dnszones"));
 		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
 		$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
@@ -140,6 +143,16 @@ class menu {
 						'LEFT JOIN users ON users.id = users_nodes.user_id',
 						'users.status = "activated"',
 						'links.id'
+						);
+		$this->tpl['stats_services_active'] =
+				$db->cnt('',
+						'nodes_services',
+						'nodes_services.status = "active"'
+						);
+		$this->tpl['stats_services_total'] =
+				$db->cnt('',
+						'nodes_services',
+						''
 						);
 		return template($this->tpl, __FILE__);
 	}

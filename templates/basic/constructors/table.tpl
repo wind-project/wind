@@ -70,7 +70,19 @@
 		{assign var=edit value=""}
 		{assign var=onclick value="javascript: window.opener.pickup(window.opener.document.`$extra_data.PICKUP_OBJECT`,'`$extra_data.PICKUP_OUTPUT[row]`','`$extra_data.PICKUP_VALUE[row]`', window); return false;"|stripslashes}
 	{/if}
-	<td class="{$cellclass}">{if $key==$edit_column && $smarty.section.row.index != 0}<a href="{$edit}"{if $extra_data.PICKUP_COLUMN != ''} onclick="{$onclick}"{/if}>{$cell|escape}</a>{else}{$cell|escape}{/if}</td>
+	<td class="{$cellclass}">
+		{if $key==$edit_column && $smarty.section.row.index != 0}
+		<a href="{$edit}"{if $extra_data.PICKUP_COLUMN != ''} onclick="{$onclick}"{/if}>
+		{/if}
+		{if $extra_data.LINK.$fullkey[row] != ''}
+		<a href="{$extra_data.LINK.$fullkey[row]}">
+		{/if}
+		{$cell|escape}
+		{if $key==$edit_column && $smarty.section.row.index != 0}</a>{/if}
+		{if $extra_data.LINK.$fullkey[row] != ''}
+		</a>
+		{/if}
+	</td>
 	{/if}
 	{/foreach}
 	{if $extra_data.MULTICHOICE[row] != ''}

@@ -73,6 +73,11 @@
 </tr>
 <tr>
 <td colspan="2" class="table-page-pad">
+{include file=generic/title2.tpl title="`$lang.services`" content=$table_services}
+</td>
+</tr>
+<tr>
+<td colspan="2" class="table-page-pad">
 {include assign=t file=includes/pages/nodes/myview.tpl}
 {include file=generic/title2.tpl title="`$lang.myview`" content=$t}
 </td>

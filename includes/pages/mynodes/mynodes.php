@@ -264,6 +264,33 @@ class mynodes {
 		return $table_ipaddr;
 	}
 
+	function table_services() {
+		global $construct, $db, $main;
+		$table_services = new table(array('TABLE_NAME' => 'table_services', 'FORM_NAME' => 'table_services'));
+		$table_services->db_data(
+			'services.title, nodes_services.id, nodes.id AS nodes__id, ip_addresses.ip, nodes_services.url, nodes_services.info, nodes_services.status, nodes_services.date_in',
+			'nodes_services
+			LEFT JOIN nodes on nodes_services.node_id = nodes.id
+			LEFT JOIN services on nodes_services.service_id = services.id
+			LEFT JOIN ip_addresses ON ip_addresses.id = nodes_services.ip_id',
+			"nodes_services.node_id = '".get('node')."'",
+			'',
+			"nodes_services.date_in ASC");
+		foreach( (array) $table_services->data as $key => $value) {
+			if ($key != 0) {
+				if ($table_services->data[$key]['ip']) 
+					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
+				$table_services->info['EDIT'][$key] = makelink(array("page" => "mynodes", "subpage" => "services", "node" => intval(get('node')), "service" => $table_services->data[$key]['id']));
+			}
+		}
+		$table_services->info['EDIT_COLUMN'] = 'title';
+		$table_services->db_data_translate('nodes_services__status');
+		$table_services->db_data_multichoice('nodes_services', 'id');
+		$table_services->info['MULTICHOICE_LABEL'] = 'delete';
+		$table_services->db_data_remove('id','nodes__id');
+		return $table_services;
+	}
+	
 	function table_photosview() {
 		global $db, $vars;
 		$table_photosview = new table(array('TABLE_NAME' => 'table_photosview', 'FORM_NAME' => 'table_photosview'));
@@ -324,6 +351,7 @@ class mynodes {
 				}
 				$this->tpl['table_subnets'] = $construct->table($this->table_subnets(), __FILE__);
 				$this->tpl['table_ipaddr'] = $construct->table($this->table_ipaddr(), __FILE__);
+				$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 				$this->tpl['table_photosview'] = $construct->table($this->table_photosview(), __FILE__);
 				if ($this->has_owner_access()) $this->tpl['link_node_delete'] = makelink(array('action' => 'delete'), TRUE);
 				$this->tpl['link_node_view'] = makelink(array('page' => 'nodes', 'node' => get('node')));
@@ -334,6 +362,8 @@ class mynodes {
 				$this->tpl['link_link_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'link', 'node' => get('node'), 'link' => 'add'));
 				$this->tpl['link_subnet_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'subnet', 'node' => get('node'), 'subnet' => 'add'));
 				$this->tpl['link_ipaddr_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'ipaddr', 'node' => get('node'), 'ipaddr' => 'add'));
+				$this->tpl['link_services_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'services', 'node' => get('node'), 'service' => 'add'));
+
 			}
 			$this->tpl['link_gmap_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'gmap', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
 			return template($this->tpl, __FILE__);
@@ -374,6 +404,7 @@ class mynodes {
 			$db->set('dns_zones', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('ip_addresses', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('ip_ranges', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
+			$db->set('services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
 			$db->set('links', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('links', array('peer_node_id' => $_POST['nodes__id']), "peer_node_id = ".intval(get('node')));
 			$db->set('photos', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
@@ -484,6 +515,19 @@ class mynodes {
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
 			$ret = $ret && $db->del("ip_addresses", "id = '".$value."'");
+		}
+		if ($ret) {
+			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+		} else {
+			$main->message->set_fromlang('error', 'generic');		
+		}
+	}
+	
+	function output_onpost_table_services() {
+		global $db, $main;
+		$ret = TRUE;
+		foreach( (array) $_POST['id'] as $key => $value) {
+			$ret = $ret && $db->del("nodes_services", "id = '".$value."'");
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));

@@ -64,6 +64,7 @@ class center {
 			case 'pickup':
 			case 'gmap':
 			case 'gearth':
+			case 'services':
 			case 'search':
 				return TRUE;
 				break;
