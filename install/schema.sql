@@ -132,6 +132,23 @@ CREATE TABLE `nodes` (
   KEY `longitude` (`longitude`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
+CREATE TABLE `nodes_services` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
+  `node_id` int(10) unsigned NOT NULL default '0',
+  `service_id` int(10) unsigned NOT NULL default '0',
+  `ip_id` int(10) unsigned default '0',
+  `url` varchar(255) default NULL,
+  `info` text,
+  `status` enum('active','inactive') NOT NULL default 'active',
+  `protocol` enum('tcp','udp') default NULL,
+  `port` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `date_in` (`date_in`),
+  KEY `node_id` (`node_id`),
+  KEY `service_id` (`service_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `photos` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -165,6 +182,15 @@ CREATE TABLE `rights` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`type`,`user_id`),
   KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `services` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `title` varchar(255) NOT NULL default '',
+  `protocol` enum('tcp','udp') default NULL,
+  `port` int(10) unsigned default '0',
+  PRIMARY KEY  (`id`),
+  KEY `title` (`title`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `subnets` (
