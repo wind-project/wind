@@ -237,6 +237,55 @@ function correct_ip($ip, $ret_null=TRUE) {
 	return implode(".", $t);
 }
 
+function correct_ip_min($ip, $ret_null=TRUE, $pad=3) {
+	if ($ip == '' && $ret_null === TRUE) return '';
+	$t = explode(".", $ip, 4);
+	for ($i=0;$i<4;$i++) {
+		if(!isset($t[$i+1]) && $t[$i] != null) {
+			switch (substr($t[$i], 0, 1)) {
+			case '0':
+				break;
+			case '1':
+			case '2':
+				$t[$i] = intval(str_pad($t[$i], (substr($t[$i], 1, 1) >= 6?2:$pad), "0"));
+				break;
+			default:
+				$t[$i] = intval(str_pad($t[$i], ($pad==3?2:$pad), "0"));
+			}
+		}elseif($t[$i] == null) {
+			$t[$i] = 0;
+		}else{
+			$t[$i] = (integer)($t[$i]);
+		}
+	}
+	return implode(".", $t);
+}
+
+function correct_ip_max($ip, $ret_null=TRUE, $pad=3) {
+	if ($ip == '' && $ret_null === TRUE) return '';
+	$t = explode(".", $ip, 4);
+	for ($i=0;$i<4;$i++) {
+		if(!isset($t[$i+1]) && $t[$i] != null) {
+			switch (substr($t[$i], 0, 1)) {
+			case '0':
+				break;
+			case '1':
+			case '2':
+				$t[$i] = intval(str_pad($t[$i], (substr($t[$i], 1, 1) >= 6?2:$pad), "9"));
+				break;
+			default:
+				$t[$i] = intval(str_pad($t[$i], ($pad==3?2:$pad), "9"));
+			}
+			if ($t[$i] > 255) $t[$i] = 255;
+		}elseif($t[$i] == null) {
+			$t[$i] = 255;
+		}else{
+			$t[$i] = (integer)($t[$i]);
+		}
+	}
+	return implode(".", $t);
+}
+
 function generate_account_code() {
 	for ($i=1;$i<=20;$i++) {
 		$ret .= rand(0, 9);
@@ -374,6 +423,12 @@ function url_fix ($url, $default_prefix="http://") {
 	if (strpos($url, '://') === FALSE) {
 		return $default_prefix.$url;
 	}
+}
+
+function replace_sql_wildcards($str) {
+	$str = str_replace("*", "%", $str);
+	$str = str_replace("?", "_", $str);
+	return $str;
 }
 
 ?>

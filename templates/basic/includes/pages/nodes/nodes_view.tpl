@@ -33,6 +33,7 @@
 		<div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 	</td>
 	<td class="table-page-split">
+	{if $gmap_key_ok!=="nomap"}
 		<table bgcolor="#DBE0D7" cellpadding="0" cellspacing="2">
 			<tr>
 				<td align="left" nowrap="nowrap">{include file=generic/link.tpl link=$link_gearth content="Google earth"}</td>
@@ -56,7 +57,9 @@
 				</td>
 			</tr>
 		</table>
+	{/if}
 	</td>
+	
 </tr>
 <tr>
 <td colspan="2" class="table-page-pad">

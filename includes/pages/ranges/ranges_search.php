@@ -41,9 +41,13 @@ class ranges_search {
 		$form_search_ranges = $this->form_search_ranges();
 		$where = $form_search_ranges->db_data_where(array('ip' => 'exclude'));
 		$table_ip_ranges = new table(array('TABLE_NAME' => 'table_ip_ranges', 'FORM_NAME' => 'table_ip_ranges'));
-		$s_ip = correct_ip($form_search_ranges->data[0]['value']);
-		$where = ($where !=''?"(".$where.") AND ":"").
-				($s_ip !=''?"ip_ranges.ip_start <= ".ip2long($s_ip)." AND ip_ranges.ip_end >= ".ip2long($s_ip)." AND ":"");
+		$s_ip = $form_search_ranges->data[0]['value'];
+		$where = ($where !=''?"(".$where.") AND ":"");
+		if ($s_ip !='') $where .= '(ip_ranges.ip_start >= '.ip2long(correct_ip_min($s_ip, TRUE, 1)).' AND ip_ranges.ip_start <= '.ip2long(correct_ip_max($s_ip, TRUE, 1)).") OR ".
+						'(ip_ranges.ip_start >= '.ip2long(correct_ip_min($s_ip, TRUE, 2)).' AND ip_ranges.ip_start <= '.ip2long(correct_ip_max($s_ip, TRUE, 2)).") OR ".
+						'(ip_ranges.ip_start >= '.ip2long(correct_ip_min($s_ip, TRUE, 3)).' AND ip_ranges.ip_start <= '.ip2long(correct_ip_max($s_ip, TRUE, 3)).") AND ";
+		//$where = 
+		//		($s_ip !=''?"ip_ranges.ip_start <= ".ip2long($s_ip)." AND ip_ranges.ip_end >= ".ip2long($s_ip)." AND ":"");
 		if ($where!='') $where = substr($where, 0, -5);
 		$table_ip_ranges->db_data(
 			'"" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, nodes.name AS nodes__name, nodes.id AS nodes__id',
@@ -73,7 +77,7 @@ class ranges_search {
 		$this->tpl['link_ranges_search'] = makelink(array("page" => "ranges", "subpage" => "search"));
 		$this->tpl['link_ranges_allocation'] = makelink(array("page" => "ranges", "subpage" => "allocation"));
 		$form_search_ranges = $this->form_search_ranges();
-		if ($form_search_ranges->data[0]['value'] != '') $form_search_ranges->data[0]['value'] = correct_ip($form_search_ranges->data[0]['value']);
+		//if ($form_search_ranges->data[0]['value'] != '') $form_search_ranges->data[0]['value'] = correct_ip($form_search_ranges->data[0]['value']);
 		$this->tpl['form_search_ranges'] = $construct->form($form_search_ranges, __FILE__);
 		$this->tpl['table_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		return template($this->tpl, __FILE__);

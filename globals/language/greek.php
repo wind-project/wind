@@ -73,7 +73,7 @@ $lang = array(
 	'users_found' => "Χρήστες που βρέθηκαν",
 	'dns_zones_search' => "Αναζήτηση ζώνης DNS",
 	'dns_zones_found' => "Ζώνες DNS που βρέθηκαν",
-
+	'not_found' => "Δεν βρέθηκαν αποτελέσματα",
 	'all_services' => "Υπηρεσίες δικτύου",
 	'active_services' => "Ενεργές υπηρεσίες",
 	'services_search' => "Αναζήτηση υπηρεσιών",

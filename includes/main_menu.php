@@ -154,6 +154,7 @@ class menu {
 						'nodes_services',
 						''
 						);
+		$main->html->head->add_script("text/javascript", makelink(array("page" => "search", "subpage" => "suggest_js")));
 		return template($this->tpl, __FILE__);
 	}
 

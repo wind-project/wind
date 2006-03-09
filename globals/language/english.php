@@ -72,7 +72,7 @@ $lang = array(
 	'users_found' => "Users found",
 	'dns_zones_search' => "Search for DNS zones",
 	'dns_zones_found' => "DNS zones found",
-	
+	'not_found' => "No results found",	
 	'all_services' => "Network services",
 	'active_services' => "Active services",
 	'services_search' => "Search services",
