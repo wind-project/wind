@@ -82,8 +82,10 @@
 										</tr>
 										<tr>
 											<td>			
+												<div>
 												<input type="text" id="q" name="q" autocomplete="off" onfocus="hover('',this.value);" onkeyup="hover(event.keyCode,this.value);"  onblur="setTimeout('hideSearch()',500); hov=0;" />
-												<div align="left" id="searchResult" name="searchResult" style="font-family:Arial; font-size:12px; width:140px; background-color: white; border:#000000 dashed 1px; padding:0px; display: none; position: absolute;  "></div>
+												</div>
+												<div align="left" id="searchResult" name="searchResult" style="font-family:Arial; font-size:12px; background-color: white; border:#000000 dashed 1px; padding:0px; display: none; position: absolute; width: 150px;"></div>
 											</td>
 										</tr>
 									</table>

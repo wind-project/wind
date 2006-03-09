@@ -54,7 +54,7 @@ function processChange(evt) {
 	// The page has loaded and the HTTP status code is 200 OK
 	if (req.readyState == 4) {
 		if (req.status == 200) {
-			document.getElementById('searchResult').style.display = 'inline-table';
+			document.getElementById('searchResult').style.display = 'block';
 			// Write the contents of this URL to the searchResult layer
 			if (req.responseText == '')
 			searchResult.style.display = 'none';
