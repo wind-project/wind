@@ -55,6 +55,7 @@ class main {
 		
 		$this->html->head->add_title($lang['site_title']);
 		$this->html->head->add_meta("text/html; charset=".$lang['charset'], "", "Content-Type");
+		header("Content-Type: text/html; charset=".$lang['charset']);
 		
 		$this->html->body->tpl['center'] = $this->center->output();
 		$this->html->body->tpl['menu'] = $this->menu->output();
@@ -62,7 +63,6 @@ class main {
 		$this->html->body->tpl['footer'] = $this->footer->output();
 		if ($this->message->show) $this->html->body->tpl['message'] = $this->message->output();
 		
-		header("Content-Type: text/html; charset=".$lang['charset']);
 		return $this->html->output();
 	}
 	

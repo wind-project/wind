@@ -71,8 +71,7 @@ class gearth_download {
 					else  $xml2 .= $lang['aps'].": ".$value['total_aps']."<br />";
 				}
 				if ($value['total_clients'] != 0) $xml2 .= $lang['clients'].": ".$value['total_clients']."<br />";
-				//if ($value['total_client_on_ap'] != 0) $xml2 .= "Client on: ".$value['total_client_on_ap']." Access Point(s)<br />";
-				$xml2 .= "<a href=\"".$vars['site']['url'].makelink(array("page" => "nodes", "node" => $value['id']))."\">".$lang['node_page']."</a><br />";
+				$xml2 .= "<a href=\"".$vars['site']['url'].makelink(array("page" => "nodes", "node" => $value['id'], "show_map" => "no"))."\">".$lang['node_page']."</a><br />";
 				$xml2 .= "</description>";
 				$xml2 .= "<name>".htmlspecialchars($value['nodes__name'], ENT_COMPAT, $lang['charset'])."</name>\n";
 				$xml2 .= "<LookAt>\n";

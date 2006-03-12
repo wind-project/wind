@@ -43,7 +43,7 @@ class search_suggest {
 										'nodes.id',
 										'nodes.id ASC',
 										$this->limit);
-			foreach ($this->tpl['nodes_search'] as $key => $value) {
+			foreach ((array)$this->tpl['nodes_search'] as $key => $value) {
 				$this->tpl['nodes_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['nodes_search'][$key]['id']));
 			}
 		} elseif (is_ip($q, FALSE)) {

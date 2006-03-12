@@ -56,10 +56,11 @@ function processChange(evt) {
 		if (req.status == 200) {
 			document.getElementById('searchResult').style.display = 'block';
 			// Write the contents of this URL to the searchResult layer
-			if (req.responseText == '')
-			searchResult.style.display = 'none';
+			if (origval == null) {
+				document.getElementById('searchResult').style.display = 'none';
+			}
 			else
-			getObject("searchResult").innerHTML = req.responseText;
+				getObject("searchResult").innerHTML = req.responseText;
 		}
 	}
 }
@@ -81,8 +82,10 @@ function hideSearch() {
 
 function hover(ev,val) {
 	test = document.getElementById('searchResult').getElementsByTagName('tr');
-
+	if(document.getElementById('q').value == "") origval = null;
 	if(ev == 38 && hov != -1){
+		if(document.getElementById('searchResult').style.display == 'none')
+			document.getElementById('searchResult').style.display = 'block';
 		hov--;
 		if(hov<0) {
 			document.getElementById('q').value = origval;
@@ -97,8 +100,11 @@ function hover(ev,val) {
 				test[i].style.background='white';
 			}
 		}
+		document.getElementById('q').select();
 	}
 	else if(ev == 40) {
+		if(document.getElementById('searchResult').style.display == 'none')
+			document.getElementById('searchResult').style.display = 'block';
 		hov++;
 		if(hov==test.length) hov=test.length-1;
 		for (var i=0; i<test.length; i++) {
@@ -111,9 +117,14 @@ function hover(ev,val) {
 				test[i].style.background='white';
 			}
 		}
+		document.getElementById('q').select();
 	}
 	else if(ev == 13 && hov != -1) {
 		document.getElementById('searchResult').style.display = 'none';
+	}
+	else if(ev == 27) {
+		document.getElementById('searchResult').style.display = 'none';
+		document.getElementById('q').select();
 	}
 	else if(ev == "mouse") {
 		for (var i=0; i<test.length; i++) {
