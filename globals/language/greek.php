@@ -172,6 +172,12 @@ $lang = array(
 	'null' => "(Κενό)",
 	'default' => "Προεπιλεγμένη",
 	'logged' => "Σύνδεση ως",
+	'regions' => "Νομαρχίες",
+	'region_add' => "Προσθήκη νομαρχίας",
+	'region_edit' => "Επεξεργασία νομαρχίας",
+	'areas' => "Δήμοι / Κοινότητες",
+	'area_add' => "Προσθήκη δήμου / κοινότητας",
+	'area_edit' => "Επεξεργασία δήμου / κοινότητας",
 
 	'db' => array(
 		'users__username' => 'Όνομα χρήστη',
@@ -207,10 +213,17 @@ $lang = array(
 		'node_id_owner' => 'Διαχείριση κόμβων',
 
 		'areas__id' => 'Δήμος / Κοινότητα',
+		'areas__region_id' => 'Νομαρχία',
 		'areas__name' => 'Δήμος / Κοινότητα',
+		'areas__ip_start' => 'IP από',
+		'areas__ip_end' => 'IP μέχρι',
+		'areas__info' => 'Πληροφορίες',
 
 		'regions__id' => 'Νομαρχία',
 		'regions__name' => 'Νομαρχία',
+		'regions__ip_start' => 'IP από',
+		'regions__ip_end' => 'IP μέχρι',
+		'regions__info' => 'Πληροφορίες',
 
 		'ip_ranges__date_in' => 'Ημερομηνία',
 		'ip_ranges__ip_start' => 'Από',

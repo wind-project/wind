@@ -18,12 +18,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-{assign var=t value="services_categories_`$services_method`"}
+{assign var=t value="area_`$area_method`"}
 {include file=generic/page-title.tpl title="`$lang.$t`"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.$t`" content=$form_services}
+{include file=generic/title2.tpl title="`$lang.$t`" content=$form_area}
 </td>
 </tr>
 </table>

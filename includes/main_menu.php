@@ -63,6 +63,8 @@ class menu {
 				$this->tpl['link_admin_users'] = makelink(array("page" => "admin", "subpage" => "users"));
 				$this->tpl['link_admin_nodes_services'] = makelink(array("page" => "admin", "subpage" => "nodes_services"));
 				$this->tpl['link_admin_services'] = makelink(array('page' => 'admin', 'subpage' => 'services'));
+				$this->tpl['link_admin_regions'] = makelink(array('page' => 'admin', 'subpage' => 'regions'));
+				$this->tpl['link_admin_areas'] = makelink(array('page' => 'admin', 'subpage' => 'areas'));
 			}
 			if ($main->userdata->privileges['admin'] === TRUE || $main->userdata->privileges['hostmaster'] === TRUE) {
 				$this->tpl['is_hostmaster'] = TRUE;

@@ -18,8 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-{include assign=help file=generic/help.tpl help=admin_services}
-{include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.services_categories`" right="$help"}
+{include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.services_categories`"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">

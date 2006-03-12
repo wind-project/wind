@@ -171,6 +171,12 @@ $lang = array(
 	'null' => "(null)",
 	'default' => 'Default',
 	'logged' => 'Logged in as',
+	'regions' => 'Districts',
+	'region_add' => 'Add district',
+	'region_edit' => 'Edit district',
+	'areas' => 'Areas',
+	'area_add' => 'Add area',
+	'area_edit' => 'Edit area',
 
 	'db' => array(
 		'users__username' => 'User Name',
@@ -206,10 +212,17 @@ $lang = array(
 		'node_id_owner' => 'Nodes administration',
 
 		'areas__id' => 'Area',
+		'areas__region_id' => 'District',
 		'areas__name' => 'Area',
+		'areas__ip_start' => 'IP from',
+		'areas__ip_end' => 'IP up to',
+		'areas__info' => 'Info',
 
 		'regions__id' => 'District',
 		'regions__name' => 'District',
+		'regions__ip_start' => 'IP from',
+		'regions__ip_end' => 'IP up to',
+		'regions__info' => 'Info',
 
 		'ip_ranges__date_in' => 'Date',
 		'ip_ranges__ip_start' => 'From',

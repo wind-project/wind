@@ -181,6 +181,12 @@
 				<tr class="table-form-row1">
 					<td colspan="2" class="table-form-title"><img src="templates/basic/images/services-small.png" alt="{$lang.services_categories}" />&nbsp;<a href="{$link_admin_services}">{$lang.services_categories}</a></td>
 				</tr>
+				<tr class="table-form-row1">
+					<td colspan="2" class="table-form-title"><img src="templates/basic/images/regions-small.png" alt="{$lang.regions}" />&nbsp;<a href="{$link_admin_regions}">{$lang.regions}</a></td>
+				</tr>
+				<tr class="table-form-row1">
+					<td colspan="2" class="table-form-title"><img src="templates/basic/images/areas-small.png" alt="{$lang.areas}" />&nbsp;<a href="{$link_admin_areas}">{$lang.areas}</a></td>
+				</tr>
 				<tr>
 					<td colspan="2" class="table-middle-left-pad"></td>
 				</tr>
