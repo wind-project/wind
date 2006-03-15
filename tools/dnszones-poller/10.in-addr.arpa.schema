@@ -1,6 +1,6 @@
 $ORIGIN .
 $TTL 5	; 5 seconds
-10.in-addr.arpa		IN SOA	ns.awmn. hostmaster.example.org. (
+10.in-addr.arpa		IN SOA	yourns.yourdomain. hostmaster.example.org. (
 				##SERIAL## ; serial
 				43200      ; refresh (12 hours)
 				900        ; retry (15 minutes)
