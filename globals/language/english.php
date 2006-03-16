@@ -28,7 +28,8 @@ $lang = array(
 	'mysql_charset' => 'utf8',
 
 	'site_title' => "WiND - Wireless Nodes Database",
-	
+	'title_small' => "WiND",	
+
 	'forward_text' => "Click here to go directly to the next page...",
 	
 	'delete_request' => "Delete Request",

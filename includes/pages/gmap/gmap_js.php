@@ -71,6 +71,7 @@ class gmap_js {
 			
 		}
 		$this->tpl['link_xml_page'] = makelink(array("page" => "gmap", "subpage" => "xml", "node" => get('node')), FALSE, TRUE, FALSE);
+		$this->tpl['maps_available'] = $vars['gmap']['maps_available'];
 		
 		echo template($this->tpl, __FILE__);
 		exit;

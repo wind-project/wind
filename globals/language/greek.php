@@ -29,6 +29,7 @@ $lang = array(
 	'mysql_charset' => 'utf8',
 	
 	'site_title' => "WiND - Wireless Nodes Database",
+	'title_small' => "WiND",
 	
 	'forward_text' => "Αν δεν επιθυμείτε να περιμένετε πατήστε εδώ...",
 	

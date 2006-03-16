@@ -127,13 +127,53 @@ icon_grey[1].iconAnchor = new GPoint(9, 32);
 icon_grey[1].infoWindowAnchor = new GPoint(10, 1);
 
 {literal}
+
+function copy_obj(o) {
+	var c = new Object(); for (var e in o) { c[e] = o[e]; } return c;
+}
+
 function gmap_onload() {
 	ch_p2p = document.getElementsByName("p2p")[0];
 	ch_aps = document.getElementsByName("aps")[0];
 	ch_clients = document.getElementsByName("clients")[0];
 	ch_unlinked = document.getElementsByName("unlinked")[0];
 	if (GBrowserIsCompatible()) {
-		map = new GMap(document.getElementById("map"));
+{/literal}
+{foreach from=$maps_available item=map_enabled key=map_name}
+	{if $map_enabled===true}
+		{if $map_types != null}
+			{assign var=map_types value="`$map_types`,"}
+		{/if}
+		{assign var=map_types value="`$map_types` G_`$map_name`_TYPE"}
+	{/if}
+{/foreach}
+{foreach from=$maps_available.custom_maps item=custom_type}
+	{if $custom_type.coordinates_type == "map"}
+		G_CUSTOM_{$custom_type.name|upper}_TYPE = copy_obj(G_MAP_TYPE);
+	{elseif $custom_type.coordinates_type == "satellite"}
+		G_CUSTOM_{$custom_type.name|upper}_TYPE = copy_obj(G_SATELLITE_TYPE);
+	{/if}
+	G_CUSTOM_{$custom_type.name|upper}_TYPE.baseUrls = new Array();
+	G_CUSTOM_{$custom_type.name|upper}_TYPE.baseUrls[0] = "{$custom_type.url}";
+	G_CUSTOM_{$custom_type.name|upper}_TYPE.lowResBaseUrls = new Array();
+	G_CUSTOM_{$custom_type.name|upper}_TYPE.lowResBaseUrls[0] = "{$custom_type.url}";
+	{literal}
+		G_CUSTOM_{/literal}{$custom_type.name|upper}{literal}_TYPE.getLinkText = function() { return '{/literal}{$custom_type.name}{literal}'; }
+	{/literal}
+	{if $map_types != null}
+                        {assign var=map_types value="`$map_types`,"}
+         {/if}
+         {assign var=map_types value="`$map_types` G_CUSTOM_`$custom_type.name`_TYPE"}
+{/foreach}
+{literal}
+		var map_types = [{/literal}{$map_types|upper}{literal}];
+		map = new GMap(document.getElementById("map"), map_types);
+
+		if(map_types.length > 1)
+			map.addControl(new GMapTypeControl());
+
+		map.setMapType(G_CUSTOM_{/literal}{$maps_available.default|upper}{literal}_TYPE);
+
 		var center = new GPoint({/literal}{$center_longitude}{literal}, 
 								{/literal}{$center_latitude}{literal});
 		var s_long = 	({/literal}{$max_longitude|default:0}{literal}) -
@@ -147,7 +187,6 @@ function gmap_onload() {
 		}
 		map.centerAndZoom(center, zoom);
 		map.addControl(new GLargeMapControl());
-		map.setMapType(G_SATELLITE_TYPE);
 		GEvent.addListener(map, "moveend", gmap_reload);
 		GEvent.addListener(map, "zoom",
 				function (oldZoomLevel, newZoomLevel) {

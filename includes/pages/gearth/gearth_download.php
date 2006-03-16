@@ -218,7 +218,7 @@ class gearth_download {
 			$xml .= "<?xml version='1.0' encoding='".$lang['charset']."'?>\n";
 			$xml .= "<kml xmlns='http://earth.google.com/kml/2.0'>\n";
 			$xml .= "<Folder>\n";
-			$xml .= "<name>AWMN</name>\n";
+			$xml .= "<name>".$lang['title_small']."</name>\n";
 			$xml .= "<open>1</open>\n";
 			$xml .= "<description>".$lang['all_nodes']."</description>\n";
 			$xml .= "<LookAt>\n";
@@ -227,8 +227,10 @@ class gearth_download {
 				$xml .= "<latitude>".$selected_node['latitude']."</latitude>\n";
 				$xml .= "<range>1600</range>\n";
 			} else {
-				$xml .= "<longitude>23.763247</longitude>\n";
-				$xml .= "<latitude>37.980869</latitude>\n";
+				$long = str_replace(",",".",($vars['gmap']['bounds']['max_longitude'] + $vars['gmap']['bounds']['min_longitude'])/2);
+				$lat = str_replace(",",".",($vars['gmap']['bounds']['max_latitude'] + $vars['gmap']['bounds']['min_latitude'])/2);
+				$xml .= "<longitude>".$long."</longitude>\n";
+				$xml .= "<latitude>".$lat."</latitude>\n";
 				$xml .= "<range>40000</range>\n";
 			}
 			$xml .= "</LookAt>\n";
@@ -350,7 +352,7 @@ class gearth_download {
 			$xml .= "<!-- Geneterated by WiND -->";
 
 			header("Expires: 0");
-			header("Content-Disposition: attachment; filename=awmn.kml");
+			header("Content-Disposition: attachment; filename=".$lang['title_small'].".kml");
 			header("Content-type: application/vnd.google-earth.kml; charset=".$lang['charset']);
 			echo $xml;
 			exit;

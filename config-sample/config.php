@@ -59,7 +59,7 @@ $config = array(
 	'mail' => array(
 		'smtp' => '', // if not set default used from php.ini file
 		'smtp_port' => '25',
-		'from' => 'hostmaster@wind.cube.gr',
+		'from' => 'hostmaster@server.example.org',
 		'from_name' => 'WiND Hostmaster'
 		),
 	
@@ -69,6 +69,25 @@ $config = array(
 		
 	'gmap' => array(
 		'server' => 'maps.google.com',
+		'maps_available' => array(
+                        'satellite' => true,
+                        'map' => false,
+                        'hybrid' => false,
+			//Sample scripts for custom image map server can be found in the tools subdirectory
+                        /*'custom_maps' => array(
+                              0 => array(
+                                      'url' => 'http://server.example.org/maps/index.php?', 
+                                      'name' => 'Custom1',
+                                      'coordinates_type' => 'map'
+                                      ),
+                                1 => array(
+                                        'url' => 'http://server.example.org/maps/index.php?',
+                                        'name' => 'Custom2',
+                                        'coordinates_type' => 'satellite'
+                                        ),
+                                ),*/
+                        'default' => 'satellite'
+                        ),
 		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
 			'server.example.org/path' => 'example_key'
 			),
