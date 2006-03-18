@@ -172,7 +172,7 @@ function gmap_onload() {
 		if(map_types.length > 1)
 			map.addControl(new GMapTypeControl());
 
-		map.setMapType(G_CUSTOM_{/literal}{$maps_available.default|upper}{literal}_TYPE);
+		map.setMapType(G_{/literal}{$maps_available.default|upper}{literal}_TYPE);
 
 		var center = new GPoint({/literal}{$center_longitude}{literal}, 
 								{/literal}{$center_latitude}{literal});

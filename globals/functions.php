@@ -380,7 +380,7 @@ function array_multimerge($array1, $array2) {
 function language_set($language='', $force=FALSE) {
 	global $vars, $db, $lang;
 	if ($force) {
-		$tl = $lang;
+		$tl = $language;
 	} elseif (get('lang') != '') {
 		$tl = get('lang');
 	} elseif ($_SESSION['lang'] != '') {
