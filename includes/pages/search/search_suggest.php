@@ -58,7 +58,7 @@ class search_suggest {
 										'',
 										'ip_ranges.status ASC, ip_ranges.ip_start ASC',
 										$this->limit);
-			foreach ($this->tpl['ip_search'] as $key => $value) {
+			foreach ((array)$this->tpl['ip_search'] as $key => $value) {
 				$this->tpl['ip_search'][$key]['ip_start'] = long2ip($this->tpl['ip_search'][$key]['ip_start']);
 				$this->tpl['ip_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['ip_search'][$key]['id']));
 			}
@@ -71,7 +71,7 @@ class search_suggest {
 										'',
 										'dns_zones.status ASC, dns_zones.name ASC',
 										$this->limit);
-			foreach ($this->tpl['dns_search'] as $key => $value) {
+			foreach ((array)$this->tpl['dns_search'] as $key => $value) {
 				if($this->tpl['dns_search'][$key]['type'] == "forward") $this->tpl['dns_search'][$key]['name'] .= ".".$vars['dns']['root_zone'];
 				$this->tpl['dns_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['dns_search'][$key]['id']));
 			}
@@ -85,7 +85,7 @@ class search_suggest {
 										'nodes.id',
 										'nodes.name ASC',
 										$this->limit);
-			foreach ($this->tpl['nodes_search'] as $key => $value) {
+			foreach ((array)$this->tpl['nodes_search'] as $key => $value) {
 				$this->tpl['nodes_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['nodes_search'][$key]['id']));
 			}
 		}
