@@ -106,11 +106,11 @@ CREATE TABLE `links` (
   `equipment` text,
   `info` text,
   PRIMARY KEY  (`id`),
-  KEY `node_id` (`node_id`),
-  KEY `peer_node_id` (`peer_node_id`),
+  KEY `node_id` (`node_id`,`type`,`status`),
+  KEY `peer_node_id` (`peer_node_id`,`type`,`status`),
   KEY `type` (`type`),
   KEY `status` (`status`),
-  KEY `peer_ap_id` (`peer_ap_id`)
+  KEY `peer_ap_id` (`peer_ap_id`,`type`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nodes` (

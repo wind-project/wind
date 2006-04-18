@@ -31,22 +31,23 @@ class table {
 	function db_data($select, $from, $where="", $group_by="", $order_by="", $limit="") {
 		global $db, $vars;
 		if ($limit == '' && $limit !== FALSE) {
-			$cnt = $db->cnt($select, $from, $where, $group_by);
+			if ($this->info['CURRENT_PAGE'] == '' && $_SERVER['REQUEST_METHOD'] == 'GET') $this->info['CURRENT_PAGE'] = get($this->info['TABLE_NAME']."_showpage");
+			if ($this->info['CURRENT_PAGE'] == '') $this->info['CURRENT_PAGE'] = 1;
+			$page = $this->info['CURRENT_PAGE'];
+			$limit = (($page-1)*$vars['constructor']['max_rows']).', '.$vars['constructor']['max_rows'];
+			$want_pages = true;
+			}
+		$data = $db->get("SQL_CALC_FOUND_ROWS ".$select, $from, $where, $group_by, $order_by, $limit);
+		if (isset($want_pages)) {
+			$cnt = $db->query_data("SELECT FOUND_ROWS()");
+			$cnt = $cnt[0]['FOUND_ROWS()'];
 			if ($vars['constructor']['max_rows'] != '' && $cnt > $vars['constructor']['max_rows']) {
 				$this->info['TOTAL_PAGES'] = ceil($cnt / $vars['constructor']['max_rows']);
-				
-				if ($this->info['CURRENT_PAGE'] == '' && $_SERVER['REQUEST_METHOD'] == 'GET') $this->info['CURRENT_PAGE'] = get($this->info['TABLE_NAME']."_showpage");
-				if ($this->info['CURRENT_PAGE'] == '') $this->info['CURRENT_PAGE'] = 1;
-				
-				$page = $this->info['CURRENT_PAGE'];
-				$limit = (($page-1)*$vars['constructor']['max_rows']).', '.$vars['constructor']['max_rows'];
-
 				for ($i=1;$i<=$this->info['TOTAL_PAGES'];$i++) {
 					$this->info['PAGES'][$i] = makelink(array($this->info['TABLE_NAME']."_showpage" => $i), TRUE);
 				}
 			}
 		}
-		$data = $db->get($select, $from, $where, $group_by, $order_by, $limit);
 		if (isset($data[0])) {
 			$isset = TRUE;
 			array_unshift($data, $data[0]);
