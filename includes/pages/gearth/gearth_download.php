@@ -36,8 +36,10 @@ class gearth_download {
 		$links_bb = "";
 		$links_clients = "";
 		$unlinked = "";
-		$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
-		$node = $node[0];
+		if (get('node') != '') {
+			$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
+			$node = $node[0];
+		}
 
 		if (get('node') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node'));
 		if (get('node2') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node2'));
@@ -161,8 +163,9 @@ class gearth_download {
 					$xml2 .= "</Placemark>\n";
 					$unlinked .= $xml2;
 				}
+				unset($xml2);
 			}
-
+			unset($nodes);
 			if (get('show_links_p2p') == 1) $where .= ($where!=''?' OR ':'')."p2p.type = 'p2p'";
 			if (get('show_clients') == 1 && get('show_links_client') == 1) $where .= ($where!=''?' OR ':'')."clients.type = 'client'";
 			if ($where != '') $links = $db->get(
@@ -212,8 +215,10 @@ class gearth_download {
 					elseif ($value['type'] == "client")
 						$links_clients .= $xml2;
 				}
+				unset($xml2);
 			}
 
+			unset($links);
 
 			$xml .= "<?xml version='1.0' encoding='".$lang['charset']."'?>\n";
 			$xml .= "<kml xmlns='http://earth.google.com/kml/2.0'>\n";
@@ -271,6 +276,7 @@ class gearth_download {
 			else
 				$xml .= "<visibility>1</visibility>\n";
 			$xml .= $bb;
+			unset($bb);
 			$xml .= "</Folder>\n";
 			$xml .= "<Folder>\n";
 			$xml .= "<name>".$lang['aps']."</name>\n";
@@ -280,6 +286,7 @@ class gearth_download {
 			else
 				$xml .= "<visibility>1</visibility>\n";
 			$xml .= $ap;
+			unset($ap);
 			$xml .= "</Folder>\n";
 			if (get('show_clients') == 1) {
 				$xml .= "<Folder>\n";
@@ -287,6 +294,7 @@ class gearth_download {
 				$xml .= "<visibility>0</visibility>\n";
 				$xml .= "<open>0</open>\n";
 				$xml .= $clients;
+				unset($clients);
 				$xml .= "</Folder>\n";
 			}
 			if($unlinked!="") {
@@ -295,6 +303,7 @@ class gearth_download {
 				$xml .= "<visibility>0</visibility>\n";
 				$xml .= "<open>0</open>\n";
 				$xml .= $unlinked;
+				unset($unlinked);
 				$xml .= "</Folder>\n";
 			}
 			$xml .= "</Folder>";
@@ -309,6 +318,7 @@ class gearth_download {
 				else
 					$xml .= "<visibility>1</visibility>\n";
 				$xml .= $links_bb;
+				unset($links_bb);
 				$xml .= "</Folder>\n";
 				if (get('show_clients') == 1 && get('show_links_client') == 1) {
 					$xml .= "<Folder>\n";
@@ -319,6 +329,7 @@ class gearth_download {
 					else
 						$xml .= "<visibility>1</visibility>\n";
 					$xml .= $links_clients;
+					unset($links_clients);
 					$xml .= "</Folder>\n";
 				}
 				$xml .= "</Folder>\n";
