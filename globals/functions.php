@@ -415,6 +415,9 @@ function language_set($language='', $force=FALSE) {
 }
 
 function url_fix ($url, $default_prefix="http://") {
+	if($url == "") {
+		return;
+	}
 	// Windows shares (samba) check
 	if (substr(stripslashes($url), 0, 2) == '\\\\') {
 		return 'file://'.str_replace('\\', '/', substr(stripslashes($url), 2));
@@ -423,6 +426,8 @@ function url_fix ($url, $default_prefix="http://") {
 	if (strpos($url, '://') === FALSE) {
 		return $default_prefix.$url;
 	}
+	return $url;
+	
 }
 
 function replace_sql_wildcards($str) {
