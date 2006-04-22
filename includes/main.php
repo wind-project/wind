@@ -52,6 +52,8 @@ class main {
 		
 		if (get('session_lang') != '') $_SESSION['lang'] = get('session_lang');
 		language_set($this->userdata->info['language']);
+		// Reload user info from database using SET NAMES (workaround)
+		$this->userdata->load_info();
 		
 		$this->html->head->add_title($lang['site_title']);
 		$this->html->head->add_meta("text/html; charset=".$lang['charset'], "", "Content-Type");
