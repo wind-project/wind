@@ -509,7 +509,7 @@ $lang = array(
 
 		'user_restore' => array(
 			'subject' => "Password recovery: ##username##",
-			'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nPassword recovery for the account ##username##\n\nClicke here: ##act_link##"
+			'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nPassword recovery for the account ##username##\n\nClick here: ##act_link##"
 		),
 
 		'user_change_email' => array(
