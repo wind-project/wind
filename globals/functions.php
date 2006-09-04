@@ -95,6 +95,7 @@ function getdirlist($dirName, $dirs=TRUE, $files=FALSE) {
 function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
 	global $qs_vars;
 	$o = array();
+	if(get('show_map') == "no") $o = array_merge($o,array("show_map" => "no"));
 	if ($cur_qs == TRUE) {
 		parse_str(get_qs(), $qs);
 		$o = array_merge($o, $qs);
@@ -343,7 +344,7 @@ function include_gmap($javascript) {
 	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys']["http://".$dirname."/"];
 	if ($gmap_key == '') return FALSE;
 
-	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=1&key=".$gmap_key);
+	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=2&key=".$gmap_key);
 	$main->html->head->add_script("text/javascript", $javascript);
 	$main->html->head->add_extra(
 		'<style type="text/css">

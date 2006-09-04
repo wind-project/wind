@@ -95,7 +95,7 @@ function hover(ev,val) {
 			if(i==hov) {
 				test2 = test[i].getElementsByTagName('td');
 				document.getElementById('q').value = test2[0].innerHTML +' '+ test2[1].innerHTML;
-				test[i].style.background='blue';
+				test[i].style.background='orange';
 			} else {
 				test[i].style.background='white';
 			}
@@ -112,7 +112,7 @@ function hover(ev,val) {
 			if(i==hov) {
 				test2 = test[i].getElementsByTagName('td');
 				document.getElementById('q').value = test2[0].innerHTML +' '+ test2[1].innerHTML;
-				test[i].style.background='blue';
+				test[i].style.background='orange';
 			} else {
 				test[i].style.background='white';
 			}
@@ -130,7 +130,7 @@ function hover(ev,val) {
 		for (var i=0; i<test.length; i++) {
 			test[i].style.background='white';
 		}
-		val.style.background='blue';
+		val.style.background='orange';
 	}
 	else {
 		loadXMLDoc(val);

@@ -47,7 +47,9 @@ class gmap_pickup_js {
 		
 		$this->tpl['object_lat'] = stripslashes(get('object_lat'));
 		$this->tpl['object_lon'] = stripslashes(get('object_lon'));
-
+		
+		$this->tpl['maps_available'] = $vars['gmap']['maps_available'];
+		
 		echo template($this->tpl, __FILE__);
 		exit;
 	}

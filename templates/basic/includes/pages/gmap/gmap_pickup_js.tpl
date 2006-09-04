@@ -24,36 +24,50 @@ var marker;
 var marker_point;
 
 function gmap_onload() {
-if (GBrowserIsCompatible()) {
-  map = new GMap(document.getElementById("map"));
-  if (window.opener.document.{/literal}{$object_lat}{literal}.value != '' &&
-  			window.opener.document.{/literal}{$object_lon}{literal}.value != '') {
-	  var center = new GPoint(window.opener.document.{/literal}{$object_lon}{literal}.value, window.opener.document.{/literal}{$object_lat}{literal}.value);
-	  var zoom = 0; 
-	  marker = new GMarker(center);
-	  marker_point = center;
-  } else {
-	  var center = new GPoint({/literal}{$center_longitude}{literal}, {/literal}{$center_latitude}{literal});
-	  var span = new GSize((({/literal}{$max_longitude|default:0}{literal})-({/literal}{$min_longitude|default:0}{literal})),(({/literal}{$max_latitude|default:0}{literal})-({/literal}{$min_latitude|default:0}{literal}))); 
-	  var zoom = map.spec.getLowestZoomLevel(center, span, map.viewSize); 
-  }
-  map.centerAndZoom(center, zoom);
-  map.addControl(new GLargeMapControl());
-  map.setMapType(G_SATELLITE_TYPE);
-	GEvent.addListener(map, 'click', function(overlay, point) {
-	  if (overlay) {
-	    map.removeOverlay(overlay);
-	  } else if (point) {
-	    if (marker) map.removeOverlay(marker);
-	    marker = new GMarker(point);
-	    marker_point = point;
-		var html = '<div style="padding-right: 15px; white-space: nowrap; text-align:left; font-size:10px;">{/literal}{$lang.db.nodes__latitude}{literal}: ' + (Math.round(marker_point.y * 100000)/100000) + '<br />' + '{/literal}{$lang.db.nodes__longitude}{literal}: ' + (Math.round(marker_point.x * 100000)/100000) + '<br /><br />' + '<a href="" onclick="window.opener.pickup_value(window.opener.document.{/literal}{$object_lat|escape:"quotes"}{literal}, Math.round(marker_point.y * 100000) / 100000); window.opener.pickup_value(window.opener.document.{/literal}{$object_lon|escape:"quotes"}{literal}, Math.round(marker_point.x * 100000)/100000); window.close(); return false;">{/literal}{$lang.select_the_coordinates}{literal}</a></div>';
-	    map.addOverlay(marker);
-	    marker.openInfoWindowHtml(html);
-	  }
-	});
-  if (marker) map.addOverlay(marker);
-}
+	if (GBrowserIsCompatible()) {
+		{/literal}
+		{foreach from=$maps_available item=map_enabled key=map_name}
+			{if $map_enabled===true}
+				{if $map_types != null}
+					{assign var=map_types value="`$map_types`,"}
+				{/if}
+				{assign var=map_types value="`$map_types` G_`$map_name`_MAP"}
+			{/if}
+		{/foreach}
+		{literal}
+		var map_types = [{/literal}{$map_types|upper}{literal}];
+		map = new GMap2(document.getElementById("map"));
+		if(map_types.length > 1)
+			map.addControl(new GMapTypeControl());
+		map.addControl(new GLargeMapControl());
+		if (window.opener.document.{/literal}{$object_lat}{literal}.value != '' && window.opener.document.{/literal}{$object_lon}{literal}.value != '') {
+			var center = new GLatLng(window.opener.document.{/literal}{$object_lat}{literal}.value, window.opener.document.{/literal}{$object_lon}{literal}.value);
+			var zoom = 16;
+			marker = new GMarker(center);
+			marker_point = center;
+		} else {
+			var center = new GLatLng({/literal}{$center_latitude}{literal}, {/literal}{$center_longitude}{literal});
+			var bound_sw = new GLatLng({/literal}{$min_latitude|default:$center_latitude}{literal},{/literal}{$min_longitude|default:$center_longitude}{literal});
+			var bound_ne = new GLatLng({/literal}{$max_latitude|default:$center_latitude}{literal},{/literal}{$max_longitude|default:$center_longitude}{literal});
+			var bounds = new GLatLngBounds(bound_sw, bound_ne);
+			var zoom = map.getBoundsZoomLevel(bounds);
+
+		}
+		map.setCenter(center, zoom, G_{/literal}{$maps_available.default|upper}{literal}_MAP);
+		GEvent.addListener(map, 'click', function(overlay, point) {
+			if (overlay) {
+				map.removeOverlay(overlay);
+			} else if (point) {
+				if (marker) map.removeOverlay(marker);
+				marker = new GMarker(point);
+				marker_point = point;
+				var html = '<div style="padding-right: 15px; white-space: nowrap; text-align:left; font-size:10px;">{/literal}{$lang.db.nodes__latitude}{literal}: ' + (Math.round(marker_point.y * 1000000)/1000000) + '<br />' + '{/literal}{$lang.db.nodes__longitude}{literal}: ' + (Math.round(marker_point.x * 1000000)/1000000) + '<br /><br />' + '<a href="" onclick="window.opener.pickup_value(window.opener.document.{/literal}{$object_lat|escape:"quotes"}{literal}, Math.round(marker_point.y * 1000000) / 1000000); window.opener.pickup_value(window.opener.document.{/literal}{$object_lon|escape:"quotes"}{literal}, Math.round(marker_point.x * 1000000)/1000000); window.close(); return false;">{/literal}{$lang.select_the_coordinates}{literal}</a></div>';
+				map.addOverlay(marker);
+				marker.openInfoWindowHtml(html);
+		}
+		});
+		if (marker) map.addOverlay(marker);
+	}
 }
 
 {/literal}
