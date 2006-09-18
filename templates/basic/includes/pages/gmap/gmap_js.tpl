@@ -294,9 +294,11 @@ function makeMarkers(nodes, icon_image, icon_zoom) {
                                 "{/literal}{$lang.links}{literal}: " + (parseInt(node_p2p) + parseInt(node_client_on_ap)) + " (+" + node_aps + " {/literal}{$lang.aps}{literal})" + "<br />" +
 				"{/literal}{$lang.clients}{literal}: " + node_clients + "<br /><br />" +
                                 "<a href=\"" + node_url + "\">{/literal}{$lang.node_page}{literal}</a>";
+			if(selected[0]) {
 			var this_node = selected[0].getAttribute("id");
-			if(this_node != node_id) {
-				html = html + "<br /><a href=\"\" onclick=\"javascript: t = window.open('?page=nodes&subpage=plot_link&a_node="+ selected[0].getAttribute("id") +"&b_node="+ node_id +"', 'popup_plot_link', 'width=600,height=450,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;\">{/literal}{$lang.plot}{literal}</a></div>";
+				if(this_node != node_id) {
+					html = html + "<br /><a href=\"\" onclick=\"javascript: t = window.open('?page=nodes&subpage=plot_link&a_node="+ selected[0].getAttribute("id") +"&b_node="+ node_id +"', 'popup_plot_link', 'width=600,height=450,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;\">{/literal}{$lang.plot}{literal}</a></div>";
+				}
 			} else {
 				html = html + "</div>";
 			}
