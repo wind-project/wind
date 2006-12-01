@@ -344,7 +344,7 @@ function include_gmap($javascript) {
 	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys']["http://".$dirname."/"];
 	if ($gmap_key == '') return FALSE;
 
-	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=2&key=".$gmap_key);
+	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=".$vars['gmap']['api']."&key=".$gmap_key);
 	$main->html->head->add_script("text/javascript", $javascript);
 	$main->html->head->add_extra(
 		'<style type="text/css">

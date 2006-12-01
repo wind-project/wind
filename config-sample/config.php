@@ -88,6 +88,7 @@ $config = array(
                                 ),*/
                         'default' => 'satellite'
                         ),
+		'api' => '2.66',
 		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
 			'server.example.org/path' => 'example_key'
 			),
