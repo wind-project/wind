@@ -71,7 +71,7 @@ $config = array(
 		'server' => 'maps.google.com',
 		'maps_available' => array(
                         'satellite' => true,
-                        'map' => false,
+                        'normal' => false,
                         'hybrid' => false,
 			//Sample scripts for custom image map server can be found in the tools subdirectory
                         /*'custom_maps' => array(
