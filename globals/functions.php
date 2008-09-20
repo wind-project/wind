@@ -336,7 +336,7 @@ function is_ip($ip, $full_ip=TRUE) {
 }
 
 function include_gmap($javascript) {
-	global $main, $vars;
+	global $main, $vars, $lang;
 	$dirname = dirname($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
 	$gmap_key = $vars['gmap']['keys'][$dirname];
 	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys'][$dirname."/"];
@@ -344,7 +344,7 @@ function include_gmap($javascript) {
 	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys']["http://".$dirname."/"];
 	if ($gmap_key == '') return FALSE;
 
-	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=".$vars['gmap']['api']."&key=".$gmap_key);
+	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=".$vars['gmap']['api']."&key=".$gmap_key."&hl=".$lang["iso639"]);
 	$main->html->head->add_script("text/javascript", $javascript);
 	$main->html->head->add_extra(
 		'<style type="text/css">
@@ -354,6 +354,7 @@ function include_gmap($javascript) {
 		</style>');
 	
 	$main->html->body->tags['onload'] = "gmap_onload()";	
+    $main->html->body->tags['onunload'] = "GUnload()"; //added to reduce IE memory leaks
 	return TRUE;
 }
 

@@ -130,12 +130,14 @@ function gmap_onload() {
 		        {/if}
 		{/foreach}
 		{literal}
-		var map_types = [{/literal}{$map_types|upper}{literal}];
-		map = new GMap2(document.getElementById("map"));
-		if(map_types.length > 1)
-	                        map.addControl(new GMapTypeControl());
-		map.addControl(new GLargeMapControl());
-		//map.addControl(new GOverviewMapControl());
+        gmapOptions = {
+                mapTypes: [{/literal}{$map_types|upper}{literal}]
+        }
+        map = new GMap2(document.getElementById("map"), gmapOptions);
+        if(gmapOptions.mapTypes.length > 1)
+                        map.addControl(new GMapTypeControl());
+        map.addControl(new GLargeMapControl());
+        //map.addControl(new GOverviewMapControl());
 		var center = new GLatLng({/literal}{$center_latitude}{literal},{/literal}{$center_longitude}{literal});
 		if ('{/literal}{$zoom}{literal}' != '') {
                         zoom = {/literal}{$zoom|default:0}{literal};

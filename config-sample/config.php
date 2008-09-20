@@ -71,9 +71,11 @@ $config = array(
 		'server' => 'maps.google.com',
 		'maps_available' => array(
                         'satellite' => true,
-                        'normal' => false,
-                        'hybrid' => false,
-			//Sample scripts for custom image map server can be found in the tools subdirectory
+                        'normal' => true,
+                        'hybrid' => true,
+						'physical' => true,
+
+						//Sample scripts for custom image map server can be found in the tools subdirectory
                         /*'custom_maps' => array(
                               0 => array(
                                       'url' => 'http://server.example.org/maps/index.php?', 
@@ -86,7 +88,8 @@ $config = array(
                                         'coordinates_type' => 'satellite'
                                         ),
                                 ),*/
-                        'default' => 'satellite'
+                        
+                        'default' => 'hybrid'
                         ),
 		'api' => '2.66',
 		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
