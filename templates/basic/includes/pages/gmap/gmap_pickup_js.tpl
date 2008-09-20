@@ -43,8 +43,14 @@ function gmap_onload() {
 		if (window.opener.document.{/literal}{$object_lat}{literal}.value != '' && window.opener.document.{/literal}{$object_lon}{literal}.value != '') {
 			var center = new GLatLng(window.opener.document.{/literal}{$object_lat}{literal}.value, window.opener.document.{/literal}{$object_lon}{literal}.value);
 			var zoom = 16;
-			marker = new GMarker(center);
+			marker = new GMarker(center, {draggable: true});
 			marker_point = center;
+			GEvent.addListener(marker, 'dragend', function() {
+					marker_point.x = marker.getPoint().x;
+					marker_point.y = marker.getPoint().y;
+					var html = '<div style="padding-right: 15px; white-space: nowrap; text-align:left; font-size:10px;">{/literal}{$lang.db.nodes__latitude}{literal}: ' + (Math.round(marker_point.y * 1000000)/1000000) + '<br />' + '{/literal}{$lang.db.nodes__longitude}{literal}: ' + (Math.round(marker_point.x * 1000000)/1000000) + '<br /><br />' + '<a href="" onclick="window.opener.pickup_value(window.opener.document.{/literal}{$object_lat|escape:"quotes"}{literal}, Math.round(marker_point.y * 1000000) / 1000000); window.opener.pickup_value(window.opener.document.{/literal}{$object_lon|escape:"quotes"}{literal}, Math.round(marker_point.x * 1000000)/1000000); window.close(); return false;">{/literal}{$lang.select_the_coordinates}{literal}</a></div>';
+					marker.openInfoWindowHtml(html);
+				});
 		} else {
 			var center = new GLatLng({/literal}{$center_latitude}{literal}, {/literal}{$center_longitude}{literal});
 			var bound_sw = new GLatLng({/literal}{$min_latitude|default:$center_latitude}{literal},{/literal}{$min_longitude|default:$center_longitude}{literal});
@@ -56,16 +62,26 @@ function gmap_onload() {
 		map.setCenter(center, zoom, G_{/literal}{$maps_available.default|upper}{literal}_MAP);
 		GEvent.addListener(map, 'click', function(overlay, point) {
 			if (overlay) {
-				map.removeOverlay(overlay);
+				map.clearOverlays();
 			} else if (point) {
-				if (marker) map.removeOverlay(marker);
-				marker = new GMarker(point);
+				if (marker) map.clearOverlays();
+				marker = new GMarker(point, {draggable: true});
 				marker_point = point;
 				var html = '<div style="padding-right: 15px; white-space: nowrap; text-align:left; font-size:10px;">{/literal}{$lang.db.nodes__latitude}{literal}: ' + (Math.round(marker_point.y * 1000000)/1000000) + '<br />' + '{/literal}{$lang.db.nodes__longitude}{literal}: ' + (Math.round(marker_point.x * 1000000)/1000000) + '<br /><br />' + '<a href="" onclick="window.opener.pickup_value(window.opener.document.{/literal}{$object_lat|escape:"quotes"}{literal}, Math.round(marker_point.y * 1000000) / 1000000); window.opener.pickup_value(window.opener.document.{/literal}{$object_lon|escape:"quotes"}{literal}, Math.round(marker_point.x * 1000000)/1000000); window.close(); return false;">{/literal}{$lang.select_the_coordinates}{literal}</a></div>';
 				map.addOverlay(marker);
 				marker.openInfoWindowHtml(html);
+				GEvent.addListener(marker, 'dragstart', function() {
+					map.closeInfoWindow();
+				});
+				GEvent.addListener(marker, 'dragend', function() {
+					marker_point.x = marker.getPoint().x;
+					marker_point.y = marker.getPoint().y;
+					var html = '<div style="padding-right: 15px; white-space: nowrap; text-align:left; font-size:10px;">{/literal}{$lang.db.nodes__latitude}{literal}: ' + (Math.round(marker_point.y * 1000000)/1000000) + '<br />' + '{/literal}{$lang.db.nodes__longitude}{literal}: ' + (Math.round(marker_point.x * 1000000)/1000000) + '<br /><br />' + '<a href="" onclick="window.opener.pickup_value(window.opener.document.{/literal}{$object_lat|escape:"quotes"}{literal}, Math.round(marker_point.y * 1000000) / 1000000); window.opener.pickup_value(window.opener.document.{/literal}{$object_lon|escape:"quotes"}{literal}, Math.round(marker_point.x * 1000000)/1000000); window.close(); return false;">{/literal}{$lang.select_the_coordinates}{literal}</a></div>';
+					marker.openInfoWindowHtml(html);
+				});
 		}
 		});
+		
 		if (marker) map.addOverlay(marker);
 	}
 }
