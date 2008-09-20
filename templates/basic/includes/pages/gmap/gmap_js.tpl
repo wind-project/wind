@@ -224,10 +224,10 @@ function makePolylines(links, color_active, color_inactive, size) {
         for (var i = 0; i < links.length; i++) {
                 var link_id = links[i].getAttribute("id");
                 if (polylines[link_id] != undefined) continue;
-                var link_lat1 = links[i].getAttribute("lat1");
-                var link_lon1 = links[i].getAttribute("lon1");
-                var link_lat2 = links[i].getAttribute("lat2");
-                var link_lon2 = links[i].getAttribute("lon2");
+                var link_lat1 = parseFloat(links[i].getAttribute("lat1"));
+                var link_lon1 = parseFloat(links[i].getAttribute("lon1"));
+                var link_lat2 = parseFloat(links[i].getAttribute("lat2"));
+                var link_lon2 = parseFloat(links[i].getAttribute("lon2"));
                 var l_inbound_1 = bounds.contains(new GLatLng(link_lat1,link_lon1));
 		var l_inbound_2 = bounds.contains(new GLatLng(link_lat2,link_lon2));
 
