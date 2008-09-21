@@ -91,7 +91,7 @@ $config = array(
                         
                         'default' => 'hybrid'
                         ),
-		'api' => '2.66',
+		'api' => '2.128e',
 		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
 			'server.example.org/path' => 'example_key'
 			),
