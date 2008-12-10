@@ -32,7 +32,7 @@ class center {
 	
 	function security_check() {
 		global $main, $db;
-		if ($main->userdata->privileges['admin'] === TRUE) return TRUE;
+		if (isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE) return TRUE;
 		switch (get('page')) {
 			case 'admin':
 				return ($main->userdata->privileges['admin'] === TRUE);

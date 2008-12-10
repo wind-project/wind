@@ -31,8 +31,8 @@ class table {
 	function db_data($select, $from, $where="", $group_by="", $order_by="", $limit="") {
 		global $db, $vars;
 		if ($limit == '' && $limit !== FALSE) {
-			if ($this->info['CURRENT_PAGE'] == '' && $_SERVER['REQUEST_METHOD'] == 'GET') $this->info['CURRENT_PAGE'] = get($this->info['TABLE_NAME']."_showpage");
-			if ($this->info['CURRENT_PAGE'] == '') $this->info['CURRENT_PAGE'] = 1;
+			if ((!isset($this->info['CURRENT_PAGE']) || $this->info['CURRENT_PAGE'] == '') && $_SERVER['REQUEST_METHOD'] == 'GET') $this->info['CURRENT_PAGE'] = get($this->info['TABLE_NAME']."_showpage");
+			if ( !isset($this->info['CURRENT_PAGE']) || $this->info['CURRENT_PAGE'] == '') $this->info['CURRENT_PAGE'] = 1;
 			$page = $this->info['CURRENT_PAGE'];
 			$limit = (($page-1)*$vars['constructor']['max_rows']).', '.$vars['constructor']['max_rows'];
 			$want_pages = true;
@@ -48,6 +48,7 @@ class table {
 				}
 			}
 		}
+		$isset = FALSE;
 		if (isset($data[0])) {
 			$isset = TRUE;
 			array_unshift($data, $data[0]);
@@ -75,6 +76,9 @@ class table {
 			}
 			if (isset($data[0][$fkey]) || ($isset !== TRUE && !isset($data[0][$fkey]))) $data[0][$fkey] = $f;
 		}
+		if (!isset($this->data[0])) {
+			$this->data[0] = array();		
+		} 
 		$this->data[0] = array_merge($this->data[0], $data[0]);
 		unset($data[0]);
 		$this->data = array_merge($this->data, $data);
@@ -84,16 +88,19 @@ class table {
 		$sc = unserialize(stripslashes(get($form->info['FORM_NAME'].'_search')));
 		for ($i=0;$i<count($form->data);$i++) {
 			if (isset($form->data[$i])) {
-				$sf=$sc[$form->data[$i]['fullField']];
+				$sf = isset($sc[$form->data[$i]['fullField']])?$sc[$form->data[$i]['fullField']]:'';
 				$search[$form->data[$i]['fullField']] = (isset($_POST[$form->data[$i]['fullField']])?$_POST[$form->data[$i]['fullField']]:$sf);
 				if (isset($form->data[$i]['Compare'])) {
-					$search[$form->data[$i]['fullField'].'_compare'] = (isset($_POST[$form->data[$i]['fullField'].'_compare']) ? $_POST[$form->data[$i]['fullField'].'_compare'] : $sc[$form->data[$i]['fullField'].'_compare']);
+					$sf_cmp = isset($sc[$form->data[$i]['fullField'].'_compare'])?$sc[$form->data[$i]['fullField'].'_compare']:'';
+					$search[$form->data[$i]['fullField'].'_compare'] = (isset($_POST[$form->data[$i]['fullField'].'_compare']) ? $_POST[$form->data[$i]['fullField'].'_compare'] : $sf_cmp);
 				}
 			}
 		}
 		$search = serialize($search);
-		for ($i=1;$i<=$this->info['TOTAL_PAGES'];$i++) {
-			$this->info['PAGES'][$i] = makelink(array($form->info['FORM_NAME']."_search" => $search, $this->info['TABLE_NAME']."_showpage" => $i), TRUE);
+		if (isset($this->info['TOTAL_PAGES'])) {
+			for ($i=1;$i<=$this->info['TOTAL_PAGES'];$i++) {
+			        $this->info['PAGES'][$i] = makelink(array($form->info['FORM_NAME']."_search" => $search, $this->info['TABLE_NAME']."_showpage" => $i), TRUE);
+			}
 		}
 	}
 	

@@ -71,6 +71,7 @@ class mysql {
 			return TRUE;
 		}
 		$i = 0;
+		$res = array();
 		while ($ret = mysql_fetch_assoc($result)) {
 			while (list ($key, $value) = each ($ret)) {
 				$res[$i][$key] = $value;
@@ -102,6 +103,8 @@ class mysql {
 				}
 			}
 		}
+		$keys = "";
+		$values = "";
 		while (list ($key, $value) = each ($data)) {
 			$key_t = explode(".", $key);
 			$key_t = $key_t[count($key_t)-1];
@@ -137,6 +140,7 @@ class mysql {
 			$nulls[$db_fields[$i]['Field']] = $db_fields[$i]['Null'];
 			$nulls['`'.$db_fields[$i]['Field'].'`'] = $db_fields[$i]['Null'];
 		}
+		$sets="";
 		while (list ($key, $value) = each ($data)) {
 			$key_t = explode(".", $key);
 			$key_t = $key_t[count($key_t)-1];
@@ -152,7 +156,7 @@ class mysql {
 		$query = "UPDATE $table SET $sets".($where!=''?" WHERE $where":'');
 		if (isset($not_null_keys)) {
 			$this->output_error_fields_required($not_null_keys);
-			if ($addlog) {
+			if ($addlog && isset($aff)) {
 				for ($i=0;$i<count($aff);$i++) {
 					$this->add_log('EDIT', $table_start, $aff[$i]['id'], serialize($data), $query, $this->get_error());
 				}
@@ -160,7 +164,7 @@ class mysql {
 			return FALSE;
 		}
 		$res = $this->query_data($query);
-		if ($addlog) {
+		if ($addlog && isset($aff)) {
 			for ($i=0;$i<count($aff);$i++) {
 				$this->add_log('EDIT', $table_start, $aff[$i]['id'], serialize($data), $query, (!$res?$this->get_error():''));
 			}
@@ -174,7 +178,7 @@ class mysql {
 		if ($addlog && $this->log) $aff = $this->query_data("SELECT ".$table_start.".id FROM $table".($where==""?"":" WHERE $where"));
 		$query = "DELETE FROM $table".($where==""?"":" WHERE $where");
 		$res = $this->query_data($query);
-		if ($addlog) {
+		if ($addlog && isset($aff)) {
 			for ($i=0;$i<count($aff);$i++) {
 				$this->add_log('DELETE', $table_start, $aff[$i]['id'], '', $query, (!$res?$this->get_error():''));
 			}
@@ -208,6 +212,7 @@ class mysql {
 
 	function output_error_fields_required($fields_required) {
 		global $main, $lang;
+		$fields_required_text = '';
 		foreach ($fields_required as $key => $value) {
 			if ($fields_required_text != '') $fields_required_text .= ", "; 
 			$fields_required_text .= $lang['db'][str_replace(".", "__", $value)];

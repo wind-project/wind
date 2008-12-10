@@ -22,7 +22,8 @@
 class header {
 	
 	var $hide=FALSE;
-	
+	var $tpl;
+		
 	function header() {
 	}
 	

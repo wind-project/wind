@@ -35,6 +35,8 @@ class hostmaster_range {
 		$form_range->data[0]['value'] = long2ip($form_range->data[0]['value']);
 		$form_range->data[1]['value'] = long2ip($form_range->data[1]['value']);
 		$tmp = $db->get('users.email, users_nodes.owner', 'users, users_nodes, ip_ranges', "users_nodes.user_id = users.id AND users_nodes.node_id = ip_ranges.node_id AND ip_ranges.id = '".get("iprange")."'");
+		if (!isset($form_range->info['email_all'])) $form_range->info['email_all']= '';
+		if (!isset($form_range->info['email_owner'])) $form_range->info['email_owner'] = '';
 		foreach( (array) $tmp as $key => $value) {
 			$form_range->info['email_all'] .= $value['email'].', ';
 			if ($value['owner'] == 'Y') $form_range->info['email_owner'] .= $value['email'].', ';

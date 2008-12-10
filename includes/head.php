@@ -24,6 +24,7 @@ class head {
 	var $tpl;
 	
 	function add_extra($extra) {
+		if (!isset($this->tpl['extra'])) $this->tpl['extra'] = "";
 		$this->tpl['extra'] .= $extra;
 	}
 	

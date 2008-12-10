@@ -48,10 +48,16 @@ function get_qs() {
 function get($key) {
 	global $page_admin, $main;
 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-		$ret = $_GET[$key];
+		$ret = "";
+		if (isset($_GET[$key])) {
+		    $ret = $_GET[$key];
+		}		
 	} else {
 		parse_str($_POST['query_string'], $output);
-		$ret = $output[$key];
+		$ret = "";
+		if (isset($output[$key])) {
+		    $ret = $output[$key];
+		}
 	}
 	switch ($key) {
 		case 'page':
@@ -101,9 +107,9 @@ function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars
 		$o = array_merge($o, $qs);
 	}
 	if ($cur_gs_vars == TRUE) {
-		$o = array_merge($o, $qs_vars);
+		$o = array_merge($o, (array)$qs_vars);
 	}
-	$o = array_merge($o, $extra);
+	$o = array_merge($o, (array)$extra);
 	return ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
 }
 
@@ -162,7 +168,7 @@ function template($assign_array, $file) {
 
 function reset_smarty() {
 	global $smarty, $lang;
-	$smarty->clear_all_assign;
+	$smarty->clear_all_assign();
 	$smarty->assign_by_ref('lang', $lang);
 	$smarty->assign('tpl_dir', $smarty->template_dir);
 	$smarty->assign('img_dir', $smarty->template_dir."images/");
@@ -288,6 +294,7 @@ function correct_ip_max($ip, $ret_null=TRUE, $pad=3) {
 }
 
 function generate_account_code() {
+	$ret = 0;
 	for ($i=1;$i<=20;$i++) {
 		$ret .= rand(0, 9);
 	}
@@ -309,12 +316,14 @@ function validate_name_ns($name, $node) {
 	$name = str_replace("_", "-", $name);
 	$name = strtolower($name);
 	$allowchars = 'abcdefghijklmnopqrstuvwxyz0123456789-';
+	$ret = '';
 	for ($i=0; $i<strlen($name); $i++) {
 		$char = substr($name, $i, 1);
 		if (strstr($allowchars, $char) !== FALSE) $ret .= $char;
 	}
 	if ($ret == '') $ret = 'noname';
 	$i=2;
+	$extension = '';
 	do {
 		$cnt = $db->cnt('', 'nodes', "name_ns = '".$ret.$extension."' AND id != '".$node."'");
 		if ($cnt > 0) {
@@ -338,12 +347,21 @@ function is_ip($ip, $full_ip=TRUE) {
 function include_gmap($javascript) {
 	global $main, $vars, $lang;
 	$dirname = dirname($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
-	$gmap_key = $vars['gmap']['keys'][$dirname];
-	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys'][$dirname."/"];
-	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys']["http://".$dirname];
-	if ($gmap_key == '') $gmap_key = $vars['gmap']['keys']["http://".$dirname."/"];
+	$gmap_key = '' ;
+	if (isset($vars['gmap']['keys'][$dirname])) {
+		$gmap_key = $vars['gmap']['keys'][$dirname];
+	}
+	if (isset($vars['gmap']['keys'][$dirname."/"]) && $gmap_key == '') {
+		$gmap_key = $vars['gmap']['keys'][$dirname."/"];
+	}
+	if (isset($vars['gmap']['keys']["http://".$dirname]) && $gmap_key == '') {
+		$gmap_key = $vars['gmap']['keys']["http://".$dirname];
+	}
+	if (isset($vars['gmap']['keys']["http://".$dirname."/"]) && $gmap_key == '') {
+		$gmap_key = $vars['gmap']['keys']["http://".$dirname."/"];
+	}
 	if ($gmap_key == '') return FALSE;
-
+	
 	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=".$vars['gmap']['api']."&key=".$gmap_key."&hl=".$lang["iso639"]);
 	$main->html->head->add_script("text/javascript", $javascript);
 	$main->html->head->add_extra(
@@ -354,7 +372,7 @@ function include_gmap($javascript) {
 		</style>');
 	
 	$main->html->body->tags['onload'] = "gmap_onload()";	
-    $main->html->body->tags['onunload'] = "GUnload()"; //added to reduce IE memory leaks
+	$main->html->body->tags['onunload'] = "GUnload()"; //added to reduce IE memory leaks
 	return TRUE;
 }
 
@@ -385,7 +403,7 @@ function language_set($language='', $force=FALSE) {
 		$tl = $language;
 	} elseif (get('lang') != '') {
 		$tl = get('lang');
-	} elseif ($_SESSION['lang'] != '') {
+	} elseif (isset($_SESSION['lang']) && $_SESSION['lang'] != '') {
 		$tl = $_SESSION['lang'];
 	} elseif ($language != '') {
 		$tl = $language;

@@ -50,7 +50,7 @@ class users {
 			if ($value) array_push($form_user->data[8]['Type_Enums'], array("value" => $key, "output" => ($lang['languages'][$key]==''?$key:$lang['languages'][$key])));
 		}
 		
-		if ($main->userdata->privileges['admin'] === TRUE) {
+		if (isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE) {
 			$form_user->db_data('rights.type, users.status');
 			$form_user->data[9]['Type'] = 'enum_multi';
 			$form_user->db_data_values_multi("rights", "user_id", get('user'), 'type');	
@@ -129,12 +129,12 @@ class users {
 		$ret = TRUE;
 		$form_user = $this->form_user();
 		array_splice($form_user->data, 2, 1);
-		if ($_POST['users__password'] == '') array_splice($form_user->data, 1, 1);
+		if (!isset($_POST['users__password'])) array_splice($form_user->data, 1, 1);
 		if (get('user') == 'add') {
 			$a['status'] = 'pending';	
 			$a['account_code'] = generate_account_code();
 		}
-		$ret = $form_user->db_set($a, "users", "id", get('user'));
+		$ret = $form_user->db_set((isset($a)?$a:""), "users", "id", get('user'));
 		if (get('user') == 'add') {
 			$ins_id = $db->insert_id;
 		} else {
@@ -145,9 +145,11 @@ class users {
 			$ret = $form_user->db_set_multi(array(), "rights", "user_id", get('user'));
 			$ret = $ret && $form_user->db_set_multi(array('owner' => 'N'), "users_nodes", "user_id", $ins_id);
 			$ret = $ret && $db->del('users_nodes', "user_id = '".$ins_id."' AND owner = 'Y'");
-			foreach((array)$_POST['node_id_owner'] as $value) {
-				$ret = $ret && $db->del('users_nodes', "node_id = '".$value."' AND owner = 'Y'");
-				$ret = $ret && $db->add('users_nodes', array("user_id" => $ins_id, "node_id" => $value, 'owner' => 'Y'));
+			if (isset($_POST['node_id_owner'])) {
+				foreach((array)$_POST['node_id_owner'] as $value) {
+					$ret = $ret && $db->del('users_nodes', "node_id = '".$value."' AND owner = 'Y'");
+					$ret = $ret && $db->add('users_nodes', array("user_id" => $ins_id, "node_id" => $value, 'owner' => 'Y'));
+				}
 			}
 		}
 		if ($ret && (get('user') == 'add' || $v_old[0]['email'] != $_POST['users__email'])) {

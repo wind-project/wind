@@ -72,7 +72,7 @@ class form {
 				$this->data[$i]['Type'] = 'pickup'.($multi==FALSE?'':"_multi");
 				$this->data[$i]['Pickup_url'] = makelink(array("page" => "pickup", "subpage" => $subpage, "object" => $this->info['FORM_NAME'].".elements['".str_replace(".", "__", $data_field).($multi==FALSE?'':"[]")."']"));
 				if ($multi == FALSE) {
-					$this->data[$i]['Type_Pickup'] = $values[0];
+					$this->data[$i]['Type_Pickup'] = (isset($values[0])?$values[0]:'');
 				} else {
 					$this->data[$i]['Type_Pickup'] = $values;
 				}
@@ -90,9 +90,9 @@ class form {
 			$db_data = $db->get("*", $args[$carg], $args[$carg+1]."='".$args[$carg+2]."'");
 			for($i=0;$i<count($this->data);$i++) {
 				$key = explode("__", $this->data[$i]['fullField']);
-				if ($key[1] != '') {
+				if (isset($key[1])) {
 					if ($ckey == $key[0]) {
-						$this->data[$i]['value'] = $db_data[0][$key[1]];
+						$this->data[$i]['value'] = (isset($db_data[0][$key[1]])?$db_data[0][$key[1]]:"");
 					}
 				}
 			}
@@ -124,9 +124,21 @@ class form {
 		$sc = unserialize(stripslashes(get($this->info['FORM_NAME'].'_search')));
 		for ($i=0;$i<count($this->data);$i++) {
 			if (isset($this->data[$i])) {
-				$this->data[$i]['value'] = (isset($_POST[$this->data[$i]['fullField']]) ? $_POST[$this->data[$i]['fullField']] : $sc[$this->data[$i]['fullField']]);
+				if (isset($sc[$this->data[$i]['fullField']])) {
+					$sc_dati_ff = $sc[$this->data[$i]['fullField']];
+				}
+				else { 
+					$sc_dati_ff = ''; 
+				}
+				$this->data[$i]['value'] = (isset($_POST[$this->data[$i]['fullField']]) ? $_POST[$this->data[$i]['fullField']] : $sc_dati_ff);
 				if (isset($this->data[$i]['Compare'])) {
-					$this->data[$i]['Compare_value'] = (isset($_POST[$this->data[$i]['fullField'].'_compare']) ? $_POST[$this->data[$i]['fullField'].'_compare'] : $sc[$this->data[$i]['fullField'].'_compare']);
+					if (isset($sc[$this->data[$i]['fullField'].'_compare'])) {
+					    $sc_dati_ff_cmp = $sc[$this->data[$i]['fullField'].'_compare'];
+					}
+					else {
+					    $sc_dati_ff_cmp = '';
+					}
+					$this->data[$i]['Compare_value'] = (isset($_POST[$this->data[$i]['fullField'].'_compare']) ? $_POST[$this->data[$i]['fullField'].'_compare'] : $sc_dati_ff_cmp);
 				}
 				$this->data[$i]['Null'] = 'YES';
 			}
@@ -135,6 +147,7 @@ class form {
 	
 	// get the where string for SQL. $extra[_fieldname_]: '=' | 'starts_with' | 'ends_with' | 'contains' | 'exclude'
 	function db_data_where($extra="") {
+		$where = "";
 		for ($i=0;$i<count($this->data);$i++) {
 			if (isset($this->data[$i])) {
 				$item = $this->data[$i]['fullField'];
@@ -142,7 +155,7 @@ class form {
 					$extra[$item] = $this->data[$i]['Compare_value'];
 				}
 				$value = $this->data[$i]['value'];
-				switch ($extra[$item]) {
+				switch (isset($extra[$item])?$extra[$item]:'') {
 					case '':
 					case '=':
 					case 'equal':
@@ -185,16 +198,18 @@ class form {
 		$ret = TRUE;
 		$args = func_get_args();
 		for ($carg=1;$carg<func_num_args() || $carg==1;$carg=$carg+3) {
-			$ckey = $args[$carg];
+			$ckey = isset($args[$carg])?$args[$carg]:'';
 			unset($data);
 			$cpost = $this->correct_datetime_data($_POST);
 			for($i=0;$i<count($this->data);$i++) {
 				$key = explode("__", $this->data[$i]['fullField']);
-				if ($key[1] != '') {
+				if (isset($key[1])) {
 					if ($ckey == '') $ckey = $key[0];
 					if ($ckey == $key[0]) {
-						if (!is_array($cpost[$this->data[$i]['fullField']])) {
-							$data[$key[1]] = $cpost[$this->data[$i]['fullField']];
+						if (isset($cpost[$this->data[$i]['fullField']])) {
+						    if (!is_array($cpost[$this->data[$i]['fullField']])) {
+								$data[$key[1]] = $cpost[$this->data[$i]['fullField']];
+						    }
 						}
 					}
 				}
@@ -202,12 +217,12 @@ class form {
 			reset($pdata);
 			while (list($key, $value) = each($pdata)) {
 				$key = explode(".", $key);
-				if ($ckey == $key[0] || $key[1] == '') {
-					$data[($key[1]==''?$key[0]:$key[1])] = $value;
+				if ($ckey == $key[0] || !isset($key[1])) {
+					$data[(isset($key[1])?$key[1]:$key[0])] = $value;
 				}
 			}
-			$field = $args[$carg+1];
-			$value = $args[$carg+2];
+			$field = isset($args[$carg+1])?$args[$carg+1]:'';
+			$value = isset($args[$carg+2])?$args[$carg+2]:'';
 			if ($field == '' || $value == '' || $value == 'add') {
 				$ret = $ret && $db->add($ckey, $data);
 			} else {
@@ -228,18 +243,18 @@ class form {
 			$cpost = $this->correct_datetime_data($_POST);
 			for($i=0;$i<count($this->data);$i++) {
 				$key = explode("__", $this->data[$i]['fullField']);
-				if ($key[1] != '') {
+				if (isset($key[1])) {
 					if ($ckey == '') $ckey = $key[0];
 					if ($ckey == $key[0]) {
-						$data[$key[1]] = $cpost[$this->data[$i]['fullField']];
+						$data[$key[1]] = (isset($cpost[$this->data[$i]['fullField']]))?$cpost[$this->data[$i]['fullField']]:NULL;
 					}
 				}
 			}
 			reset($pdata);
 			while (list($key, $value) = each($pdata)) {
 				$key = explode(".", $key);
-				if ($ckey == $key[0] || $key[1] == '') {
-					$data[($key[1]==''?$key[0]:$key[1])] = $value;
+				if ($ckey == $key[0] || !isset($key[1])) {
+					$data[(!isset($key[1])?$key[0]:$key[1])] = $value;
 				}
 			}
 			while (list($key, $value) = each($data)) {
@@ -252,9 +267,11 @@ class form {
 				}
 			}
 			$ret = $ret && $db->del($ckey, $args[$carg+1]." = '".$args[$carg+2]."'");
-			for ($i=0;$i<count($data_f);$i++) {
-				$data_f[$i][$args[$carg+1]] = $args[$carg+2];
-				$ret = $ret && $db->add($ckey, $data_f[$i]);
+			if (isset($data_f)) {
+				for ($i=0;$i<count($data_f);$i++) {
+					$data_f[$i][$args[$carg+1]] = $args[$carg+2];
+					$ret = $ret && $db->add($ckey, $data_f[$i]);
+				}
 			}
 		}
 		return $ret;

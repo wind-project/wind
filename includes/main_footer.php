@@ -32,7 +32,7 @@ class footer {
 		if ($this->hide) return;
 		$this->tpl['php_time'] = getmicrotime() - $php_start;
 		$this->tpl['mysql_time'] = $db->total_time;
-		if ($main->userdata->privileges['admin'] === TRUE && $vars['debug']['enabled'] == TRUE) {
+		if (isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE && $vars['debug']['enabled'] == TRUE) {
 			$this->tpl['debug_mysql'] = ROOT_PATH."debug/mysql.php?".get_qs();
 		}
 		return template($this->tpl, __FILE__);

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // This code was converted to PHP from Visual C++
 // by Steven Brendtro on behalf of imaginerc.com
@@ -58,7 +58,7 @@ class GeoCalc {
     $lon2 *= $this->DE2RA;
 
     if (($ilat1 == $ilat2) && ($ilon1 == $ilon2)) {
-      return result;
+      return $result;
     }
     else if ($ilat1 == $ilat2) {
       if ($ilon1 > $ilon2)

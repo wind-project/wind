@@ -51,7 +51,13 @@ class main {
 		global $lang;
 		
 		if (get('session_lang') != '') $_SESSION['lang'] = get('session_lang');
-		language_set($this->userdata->info['language']);
+		if (isset($this->userdata->info)) {
+		    language_set($this->userdata->info['language']);
+		}
+		else {
+		    language_set();
+		}
+		
 		// Reload user info from database using SET NAMES (workaround)
 		$this->userdata->load_info();
 		

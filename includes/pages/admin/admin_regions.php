@@ -19,7 +19,7 @@
  *
  */
 
-if (get('region') != '') include_once($root_path."includes/pages/admin/admin_regions_region.php");
+if (get('region') != '') include_once(ROOT_PATH."includes/pages/admin/admin_regions_region.php");
 
 class admin_regions {
 

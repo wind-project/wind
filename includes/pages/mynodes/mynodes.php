@@ -306,7 +306,7 @@ class mynodes {
 				if ($table_photosview->data[$key]['view_point'] == $value) {$p = $key; break;}
 				unset($p);
 			}
-			if ($table_photosview->data[$p]['view_point'] == $value) {
+			if (isset($p) && ($table_photosview->data[$p]['view_point'] == $value)) {
 				$table_photosview->data[$p]['photo'] = $vars['folders']['photos'].'photo-'.$table_photosview->data[$p]['id'].'-s.jpg';
 				$t[$i] = $table_photosview->data[$p];
 			} else {
@@ -323,7 +323,7 @@ class mynodes {
 
 	function output() {
 		if (get('subpage') != '') return $this->page->output();
-		if (strstr($_POST['form_name'], 'table_links_ap') !== FALSE) return $this->output_onpost_table_links_ap();
+		if (isset($_POST['form_name']) && (strstr($_POST['form_name'], 'table_links_ap') !== FALSE)) return $this->output_onpost_table_links_ap();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $main, $db;
 		$this->tpl['form_node'] = $construct->form($this->form_node(), __FILE__);
@@ -538,17 +538,19 @@ class mynodes {
 	
 	function output_onpost_table_photosview() {
 		global $vars, $db, $main;
-		foreach( (array) $_POST['id'] as $key => $value) {
-			$db->del("photos", "id = '".$value."'");
-			$uploaddir = $vars['folders']['photos'];
-			$filename = 'photo-'.$value.".*";
-			delfile(ROOT_PATH.$uploaddir.$filename);
-			$filename = 'photo-'.$value."-*.*";
-			delfile(ROOT_PATH.$uploaddir.$filename);
+		if (isset($_POST['id'])) {
+			foreach( (array) $_POST['id'] as $key => $value) {
+				$db->del("photos", "id = '".$value."'");
+				$uploaddir = $vars['folders']['photos'];
+				$filename = 'photo-'.$value.".*";
+				delfile(ROOT_PATH.$uploaddir.$filename);
+				$filename = 'photo-'.$value."-*.*";
+				delfile(ROOT_PATH.$uploaddir.$filename);
+			}
 		}
 		foreach( (array) array('N','NE','E','SE','S','SW','W','NW', 'PANORAMIC') as $value) {
-			if ($_FILES[$value]['tmp_name'] != '') {
-				if (@!imagecreatefromjpeg($_FILES[$value]['tmp_name'])) continue;
+			if (isset($_FILES[$value]['tmp_name'])) {
+				if (!imagecreatefromjpeg($_FILES[$value]['tmp_name'])) continue;
 				$db->add("photos", array('node_id' => intval(get('node')), 'type' => 'view', 'view_point' => $value, 'info' => $_POST['info-'.$value]));
 				$ins_id = $db->insert_id;
 				$uploaddir = $vars['folders']['photos'];

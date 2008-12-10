@@ -29,8 +29,9 @@ class gmap_xml {
 		global $db, $lang;
 		
 		$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
-		$node = $node[0];
-		
+		$node = isset($node[0])?$node[0]:'';
+
+		$having = '';
 		if (get('node') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node'));
 		if (get('show_p2p') == 1) $having .= ($having!=''?' OR ':'').'total_p2p > 0';
 		if (get('show_aps') == 1) $having .= ($having!=''?' OR ':'').'total_aps > 0';
@@ -50,7 +51,7 @@ class gmap_xml {
 			"users.status = 'activated'",
 			'nodes.id' .
 			($having!=''?' HAVING '.$having:''));
-		$xml .= "<?xml version='1.0' encoding='".$lang['charset']."' standalone='yes'?>\r"; 
+		$xml = "<?xml version='1.0' encoding='".$lang['charset']."' standalone='yes'?>\r"; 
 		$xml .= "<wind>\r";
 		$xml .= "<nodes>\r";
 		foreach ((array) $nodes as $key => $value) {
@@ -82,6 +83,7 @@ class gmap_xml {
 		}
 		$xml .= "</nodes>\r";
 		
+		$where = '';
 		if (get('show_links_p2p') == 1) $where .= ($where!=''?' OR ':'')."p2p.type = 'p2p'";
 		if (get('show_links_client') == 1) $where .= ($where!=''?' OR ':'')."clients.type = 'client'";
 		if ($where != '') $links = $db->get(

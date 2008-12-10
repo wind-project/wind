@@ -19,7 +19,7 @@
  *
  */
 
-if (get('area') != '') include_once($root_path."includes/pages/admin/admin_areas_area.php");
+if (get('area') != '') include_once(ROOT_PATH."includes/pages/admin/admin_areas_area.php");
 
 class admin_areas {
 

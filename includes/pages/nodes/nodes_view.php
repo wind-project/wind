@@ -20,7 +20,8 @@
  */
 
 include_once(ROOT_PATH.'globals/classes/geocalc.php');
-$geocalc = new geocalc();
+
+$geocalc = new GeoCalc();
 
 include_once(ROOT_PATH.'globals/classes/srtm.php');
 $srtm = new srtm($vars['srtm']['path']);
@@ -37,11 +38,11 @@ class nodes_view {
 		global $db, $geocalc, $srtm;
 		$a_node_i = $db->get('latitude, longitude, elevation', 'nodes', "id = '".$a_node."'");
 		$b_node_i = $db->get('latitude, longitude, elevation', 'nodes', "id = '".$b_node."'");
-		
-		$lat1 = $a_node_i[0]['latitude'];
-		$lon1 = $a_node_i[0]['longitude'];
-		$lat2 = $b_node_i[0]['latitude'];
-		$lon2 = $b_node_i[0]['longitude'];
+
+		$lat1 = isset($a_node_i[0]['latitude'])?$a_node_i[0]['latitude']:1;   // choose something better than '1' here
+		$lon1 = isset($a_node_i[0]['longitude'])?$a_node_i[0]['longitude']:1; // the same
+		$lat2 = isset($b_node_i[0]['latitude'])?$b_node_i[0]['latitude']:1;   // the same
+		$lon2 = isset($b_node_i[0]['longitude'])?$b_node_i[0]['longitude']:1; // the same
 
 		$a_node_el = str_replace(",", ".", $srtm->get_elevation($lat1, $lon1, FALSE));
 		$b_node_el = str_replace(",", ".", $srtm->get_elevation($lat2, $lon2, FALSE));
@@ -312,7 +313,7 @@ class nodes_view {
 		}
 		
 		$this->tpl['link_plot_link'] = makelink(array("page" => "nodes", "subpage" => "plot_link", "a_node" => $this->tpl['node']['id']));
-		if($main->userdata->privileges['admin'] === TRUE || $db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) $this->tpl['edit_node'] = makelink(array("page" => "mynodes", "node" => get('node')));
+		if((isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE) || $db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) $this->tpl['edit_node'] = makelink(array("page" => "mynodes", "node" => get('node')));
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
 		$this->tpl['link_gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 		if(get('show_map') == "no") $this->tpl['gmap_key_ok'] = "nomap";

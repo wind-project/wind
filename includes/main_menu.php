@@ -37,8 +37,9 @@ class menu {
 		$this->tpl['logged'] = $main->userdata->logged;
 		$this->tpl['form_login'] = $construct->form($this->form_login(), __FILE__);
 		
+		$main->html->body->tpl['logged'] = $this->tpl['logged'];
 		$main->html->body->tpl['form_login'] = $this->tpl['form_login'];
-		$main->html->body->tpl['logged_username'] = $main->userdata->info['username'];
+		$main->html->body->tpl['logged_username'] = isset($main->userdata->info['username'])?$main->userdata->info['username']:"";
 		$main->html->body->tpl['link_logged_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));
 		
 		foreach($vars['language']['enabled'] as $key => $value) {
@@ -96,7 +97,7 @@ class menu {
 		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
 		$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
 		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
-		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), &$this->tpl['query_string']);
+		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), $this->tpl['query_string']);
 		$this->tpl['stats_nodes_active'] =
 				$db->cnt('',
 						'nodes ' .
@@ -162,7 +163,7 @@ class menu {
 
 	function output_onpost_form_login() {
 		global $main;
-		if ($main->userdata->login($_POST['users__username'], $_POST['users__password'], ($_POST['save_login']=='Y'?TRUE:FALSE))) {
+		if ($main->userdata->login($_POST['users__username'], $_POST['users__password'], ((isset($_POST['save_login']) && $_POST['save_login']=='Y')?TRUE:FALSE))) {
 			if ($main->userdata->info['status'] == 'pending') {
 				$main->message->set_fromlang('info', 'activation_required');
 				$main->userdata->logout();

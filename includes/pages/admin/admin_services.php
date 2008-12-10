@@ -19,7 +19,7 @@
  *
  */
 
-if (get('service') != '') include_once($root_path."includes/pages/admin/admin_services_service.php");
+if (get('service') != '') include_once(ROOT_PATH."includes/pages/admin/admin_services_service.php");
 
 class admin_services {
 
