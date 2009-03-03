@@ -294,7 +294,7 @@ function correct_ip_max($ip, $ret_null=TRUE, $pad=3) {
 }
 
 function generate_account_code() {
-	$ret = 0;
+	$ret = '';
 	for ($i=1;$i<=20;$i++) {
 		$ret .= rand(0, 9);
 	}
