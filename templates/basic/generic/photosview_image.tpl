@@ -20,7 +20,7 @@
  *}
 <div align="center">
 {if $image.image != ''}
-<a  href="{$image.image}" target="_blank"><img src="{$image.image_s}" alt="{$image.info|escape}" /></a>
+<a {if $image.view_point == 'PANORAMIC'}rel="nozoom" {/if}href="{$image.image}" target="_blank"><img src="{$image.image_s}" alt="{$image.info|escape}" /></a>
 {else}
 <img src="" alt="" width="200" height="200" />
 {/if}
