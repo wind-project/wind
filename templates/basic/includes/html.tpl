@@ -23,8 +23,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$lang.iso639}" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
 {$head}
-<link href="{$css_dir}styles.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="{$js_dir}overlib/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
+<link href="{$css_dir}styles_packed.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$js_dir}overlib/overlib_packed.js"><!-- overLIB (c) Erik Bosrup --></script>
 </head>
 <body{foreach from=$body_tags item=item key=key} {$key}="{$item}"{/foreach}>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>

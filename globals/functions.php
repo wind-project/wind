@@ -371,7 +371,11 @@ function include_gmap($javascript) {
 			}
 		</style>');
 	
-	$main->html->body->tags['onload'] = "gmap_onload()";	
+	if(!$main->html->body->tags['onload']) {
+		$main->html->body->tags['onload']="gmap_onload();";
+	} else {
+		$main->html->body->tags['onload'].="gmap_onload();";
+	}
 	$main->html->body->tags['onunload'] = "GUnload()"; //added to reduce IE memory leaks
 	return TRUE;
 }

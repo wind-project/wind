@@ -273,6 +273,9 @@ class nodes_view {
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $db, $vars, $main;
+		$main->html->head->add_script("text/javascript", "./templates/basic/scripts/javascripts/fancyzoom/js-global/FancyZoom_packed.js");
+		$main->html->head->add_script("text/javascript", "./templates/basic/scripts/javascripts/fancyzoom/js-global/FancyZoomHTML_packed.js");
+		$main->html->body->tags['onload']="setupZoom();";
 		if ($db->cnt('',
 					'nodes ' .
 					'INNER JOIN users_nodes ON users_nodes.node_id = nodes.id ' .
