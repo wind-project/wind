@@ -261,7 +261,6 @@ function createMarker(point, html, icon) {
 
 
 function makeMarkers(nodes, icon_image, icon_zoom) {
-        var markers_t = Array();
         var bounds = map.getBounds();
         for (var i = 0; i < nodes.length; i++) {
                 var node_id = nodes[i].getAttribute("id");
@@ -305,7 +304,6 @@ function makeMarkers(nodes, icon_image, icon_zoom) {
 				html = html + "</div>";
 			}
                         var marker = createMarker(point, html, icon);
-                        markers_t.push(marker);
                         markers[node_id] = true;
         		map.addOverlay(marker);
                 }

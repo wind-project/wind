@@ -31,6 +31,14 @@ class search_suggest {
 	function output() {
 		global $db, $vars;
 		$q = get('q');
+		$widget = get('widget');
+		if(isset($widget) && $widget =="true") {
+			$this->tpl['widget'] = "1";
+			$this->tpl['url'] = $vars['site']['url'];
+			$this->limit = 5;
+		} else {
+			$this->tpl['widget'] = "0";
+		}
 		$i = 0;
 
 		if (is_numeric($q) && strpos($q, ".") === FALSE) {
