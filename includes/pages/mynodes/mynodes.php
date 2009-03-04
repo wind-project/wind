@@ -404,7 +404,7 @@ class mynodes {
 			$db->set('dns_zones', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('ip_addresses', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('ip_ranges', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
-			$db->set('services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
+			$db->set('nodes_services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
 			$db->set('links', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('links', array('peer_node_id' => $_POST['nodes__id']), "peer_node_id = ".intval(get('node')));
 			$db->set('photos', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
