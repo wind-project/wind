@@ -29,7 +29,86 @@ class menu {
 		$form_login->db_data('users.username, users.password');
 		return $form_login;
 	}
-
+	
+	function calculate_menu_stats() {
+		global $db, $config;
+		$stats_tmp = "/tmp/wind-stats-".md5(__FILE__).".tmp";
+		if (file_exists($stats_tmp)) {
+			$stats = unserialize(file_get_contents($stats_tmp));
+			if ($stats['last_calc'] + 3600 > time()) {
+				unset($stats['last_calc']);
+				$this->tpl = array_merge($this->tpl, $stats);
+				return;
+			}
+		}
+		$stats['stats_nodes_active'] =
+				$db->cnt('',
+						'nodes ' .
+						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
+						'LEFT JOIN links AS p2p ON (l1.type = "p2p" AND p2p.type = "p2p" AND l1.node_id = p2p.peer_node_id AND p2p.node_id = l1.peer_node_id) ' .
+						'LEFT JOIN links AS clients ON (l1.type = "client" AND l1.peer_ap_id = clients.id) ' .
+						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
+						'LEFT JOIN users ON users.id = users_nodes.user_id',
+						'users.status = "activated" AND l1.status = "active" AND (p2p.status = "active" OR clients.status = "active")',
+						'nodes.id'
+						);
+		$stats['stats_nodes_total'] =
+				$db->cnt('',
+						'nodes ' .
+						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
+						'LEFT JOIN users ON users.id = users_nodes.user_id',
+						'users.status = "activated"',
+						'nodes.id'
+						);
+		$stats['stats_backbone'] =
+				$db->cnt('',
+						'nodes ' .
+						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
+						'INNER JOIN links AS l2 ON (l1.type = "p2p" AND l2.type = "p2p" AND l1.node_id = l2.peer_node_id AND l2.node_id = l1.peer_node_id) ' .
+						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
+						'LEFT JOIN users ON users.id = users_nodes.user_id',
+						'users.status = "activated" AND l1.status = "active" AND l2.status = "active"',
+						'nodes.id'
+						);
+		$stats['stats_links'] =
+				$db->cnt('',
+						'nodes ' .
+						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
+						'LEFT JOIN links AS p2p ON (l1.id < p2p.id AND l1.type = "p2p" AND p2p.type = "p2p" AND l1.node_id = p2p.peer_node_id AND p2p.node_id = l1.peer_node_id) ' .
+						'LEFT JOIN links AS clients ON (l1.type = "client" AND l1.peer_ap_id = clients.id) ' .
+						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
+						'LEFT JOIN users ON users.id = users_nodes.user_id',
+						'users.status = "activated" AND l1.status = "active" AND (p2p.status = "active" OR clients.status = "active")',
+						'l1.id'
+						);
+		$stats['stats_aps'] =
+				$db->cnt('',
+						'nodes ' .
+						'INNER JOIN links ON links.node_id = nodes.id AND links.type = "ap" AND links.status = "active" ' .
+						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
+						'LEFT JOIN users ON users.id = users_nodes.user_id',
+						'users.status = "activated"',
+						'links.id'
+						);
+		$stats['stats_services_active'] =
+				$db->cnt('',
+						'nodes_services',
+						'nodes_services.status = "active"'
+						);
+		$stats['stats_services_total'] =
+				$db->cnt('',
+						'nodes_services',
+						''
+						);
+		$this->tpl = array_merge($this->tpl, $stats);
+		$stats['last_calc'] = time();
+		if (is_writable($stats_tmp) || !file_exists($stats_tmp)) {
+			$h = @fopen($stats_tmp, "w");
+			@fwrite($h, serialize($stats));
+			@fclose($h);
+		}
+	}
+	
 	function output() {
 		if ($this->hide) return;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
@@ -98,65 +177,7 @@ class menu {
 		$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
 		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
 		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), $this->tpl['query_string']);
-		$this->tpl['stats_nodes_active'] =
-				$db->cnt('',
-						'nodes ' .
-						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
-						'LEFT JOIN links AS p2p ON (l1.type = "p2p" AND p2p.type = "p2p" AND l1.node_id = p2p.peer_node_id AND p2p.node_id = l1.peer_node_id) ' .
-						'LEFT JOIN links AS clients ON (l1.type = "client" AND l1.peer_ap_id = clients.id) ' .
-						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
-						'LEFT JOIN users ON users.id = users_nodes.user_id',
-						'users.status = "activated" AND l1.status = "active" AND (p2p.status = "active" OR clients.status = "active")',
-						'nodes.id'
-						);
-		$this->tpl['stats_nodes_total'] =
-				$db->cnt('',
-						'nodes ' .
-						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
-						'LEFT JOIN users ON users.id = users_nodes.user_id',
-						'users.status = "activated"',
-						'nodes.id'
-						);
-		$this->tpl['stats_backbone'] =
-				$db->cnt('',
-						'nodes ' .
-						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
-						'INNER JOIN links AS l2 ON (l1.type = "p2p" AND l2.type = "p2p" AND l1.node_id = l2.peer_node_id AND l2.node_id = l1.peer_node_id) ' .
-						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
-						'LEFT JOIN users ON users.id = users_nodes.user_id',
-						'users.status = "activated" AND l1.status = "active" AND l2.status = "active"',
-						'nodes.id'
-						);
-		$this->tpl['stats_links'] =
-				$db->cnt('',
-						'nodes ' .
-						'INNER JOIN links AS l1 ON l1.node_id = nodes.id ' .
-						'LEFT JOIN links AS p2p ON (l1.id < p2p.id AND l1.type = "p2p" AND p2p.type = "p2p" AND l1.node_id = p2p.peer_node_id AND p2p.node_id = l1.peer_node_id) ' .
-						'LEFT JOIN links AS clients ON (l1.type = "client" AND l1.peer_ap_id = clients.id) ' .
-						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
-						'LEFT JOIN users ON users.id = users_nodes.user_id',
-						'users.status = "activated" AND l1.status = "active" AND (p2p.status = "active" OR clients.status = "active")',
-						'l1.id'
-						);
-		$this->tpl['stats_aps'] =
-				$db->cnt('',
-						'nodes ' .
-						'INNER JOIN links ON links.node_id = nodes.id AND links.type = "ap" AND links.status = "active" ' .
-						'INNER JOIN users_nodes ON nodes.id = users_nodes.node_id ' .
-						'LEFT JOIN users ON users.id = users_nodes.user_id',
-						'users.status = "activated"',
-						'links.id'
-						);
-		$this->tpl['stats_services_active'] =
-				$db->cnt('',
-						'nodes_services',
-						'nodes_services.status = "active"'
-						);
-		$this->tpl['stats_services_total'] =
-				$db->cnt('',
-						'nodes_services',
-						''
-						);
+		$this->calculate_menu_stats();
 		$main->html->head->add_script("text/javascript", makelink(array("page" => "search", "subpage" => "suggest_js")));
 		return template($this->tpl, __FILE__);
 	}
