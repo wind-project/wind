@@ -32,5 +32,3 @@ $main = new main;
 echo $main->output();
 
 ob_end_flush();
-
-?>

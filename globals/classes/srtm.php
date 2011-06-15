@@ -19,12 +19,34 @@
  *
  */
 
+/**
+ * Class to handle SRTM Data
+ */
 class srtm {
 	
 	var $data_path;
 	
-	function srtm($data_path='') {
+	function __construct($data_path='') {
 		$this->data_path = $data_path;
+	}
+	
+	public static function get_filename($lat, $lon) {
+		if ($lat < 0) {
+			$lat_dir = 'S';
+			$lat_adj = 1;
+		} else {
+			$lat_dir = 'N';
+			$lat_adj = 0;
+		}
+		if ($lon < 0) {
+			$lon_dir = 'W';
+			$lon_adj = 1;
+		} else {
+			$lon_dir = 'E';
+			$lon_adj = 0;
+		}
+		
+		return $lat_dir . sprintf("%02.0f", (integer)($lat+$lat_adj)).$lon_dir.sprintf("%03.0f", (integer)($lon+$lon_adj)).'.hgt';
 	}
 	
 	function get_elevation($lat, $lon, $round=TRUE) {

@@ -18,7 +18,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
+if (file_exists(ROOT_PATH."/install")) {
+	die("WiND error: Please delete \"install/\" folder if you have completed installation ...");
+}
 if (!file_exists(ROOT_PATH."config/config.php")) {
 	die("WiND error: Please make config/config.php file ...");
 }

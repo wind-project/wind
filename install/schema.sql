@@ -1,5 +1,5 @@
 
-CREATE TABLE `areas` (
+CREATE TABLE IF NOT EXISTS `areas` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `region_id` int(10) unsigned NOT NULL default '0',
   `name` varchar(40) NOT NULL default '',
@@ -13,7 +13,7 @@ CREATE TABLE `areas` (
   KEY `ip_end` (`ip_end`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `dns_nameservers` (
+CREATE TABLE IF NOT EXISTS `dns_nameservers` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
@@ -30,7 +30,7 @@ CREATE TABLE `dns_nameservers` (
   KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `dns_zones` (
+CREATE TABLE IF NOT EXISTS `dns_zones` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `type` enum('forward','reverse') NOT NULL default 'forward',
@@ -48,7 +48,7 @@ CREATE TABLE `dns_zones` (
   KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `dns_zones_nameservers` (
+CREATE TABLE IF NOT EXISTS `dns_zones_nameservers` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `zone_id` int(10) unsigned NOT NULL default '0',
   `nameserver_id` int(10) unsigned NOT NULL default '0',
@@ -57,7 +57,7 @@ CREATE TABLE `dns_zones_nameservers` (
   KEY `nameserver_id` (`nameserver_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `ip_addresses` (
+CREATE TABLE IF NOT EXISTS `ip_addresses` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `hostname` varchar(50) NOT NULL default '',
@@ -74,7 +74,7 @@ CREATE TABLE `ip_addresses` (
   KEY `type` (`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `ip_ranges` (
+CREATE TABLE IF NOT EXISTS `ip_ranges` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
@@ -92,7 +92,7 @@ CREATE TABLE `ip_ranges` (
   KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `links` (
+CREATE TABLE IF NOT EXISTS `links` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
@@ -113,7 +113,7 @@ CREATE TABLE `links` (
   KEY `peer_ap_id` (`peer_ap_id`,`type`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `nodes` (
+CREATE TABLE IF NOT EXISTS `nodes` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `name` varchar(50) NOT NULL default '',
@@ -132,7 +132,7 @@ CREATE TABLE `nodes` (
   KEY `longitude` (`longitude`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
-CREATE TABLE `nodes_services` (
+CREATE TABLE IF NOT EXISTS `nodes_services` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
@@ -149,7 +149,7 @@ CREATE TABLE `nodes_services` (
   KEY `service_id` (`service_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `photos` (
+CREATE TABLE IF NOT EXISTS `photos` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
@@ -163,7 +163,7 @@ CREATE TABLE `photos` (
   KEY `view_point` (`view_point`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `regions` (
+CREATE TABLE IF NOT EXISTS `regions` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(40) NOT NULL default '',
   `ip_start` int(10) NOT NULL default '0',
@@ -175,7 +175,7 @@ CREATE TABLE `regions` (
   KEY `ip_end` (`ip_end`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `rights` (
+CREATE TABLE IF NOT EXISTS `rights` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL default '0',
   `type` enum('blocked','admin','hostmaster') NOT NULL default 'blocked',
@@ -184,7 +184,7 @@ CREATE TABLE `rights` (
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `services` (
+CREATE TABLE IF NOT EXISTS `services` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `title` varchar(255) NOT NULL default '',
   `protocol` enum('tcp','udp') default NULL,
@@ -193,7 +193,7 @@ CREATE TABLE `services` (
   KEY `title` (`title`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `subnets` (
+CREATE TABLE IF NOT EXISTS `subnets` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned default NULL,
@@ -206,7 +206,7 @@ CREATE TABLE `subnets` (
   KEY `node_id` (`node_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `username` varchar(30) NOT NULL default '',
@@ -231,7 +231,7 @@ CREATE TABLE `users` (
   KEY `status` (`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `users_nodes` (
+CREATE TABLE IF NOT EXISTS `users_nodes` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL default '0',
   `node_id` int(10) unsigned NOT NULL default '0',
