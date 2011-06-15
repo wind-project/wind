@@ -24,6 +24,7 @@ if (file_exists(ROOT_PATH."/install")) {
 if (!file_exists(ROOT_PATH."config/config.php")) {
 	die("WiND error: Please make config/config.php file ...");
 }
+
 include_once(ROOT_PATH."globals/vars.php");
 include_once(ROOT_PATH."config/config.php");
 $vars = array_merge($vars, $config);
