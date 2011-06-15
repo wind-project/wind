@@ -84,7 +84,7 @@ if (is_method_post()) {
 			
 		// Additional fields
 		$fields['date_in'] = 'NOW()';
-		$fields['status'] = "'active'";
+		$fields['status'] = "'activated'";
 		
 		$field_names = array_keys($fields);
 		foreach($field_names as $i => $f)
