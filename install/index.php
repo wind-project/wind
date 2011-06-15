@@ -22,8 +22,9 @@
 require_once dirname(__FILE__) . '/tools.php';
 header('Content-Type: text/html;charset=utf-8;');
 
-installation_session();
 
+installation_session();
+ob_start();
 /*
  * Step initialization and calculation
  */
@@ -56,9 +57,7 @@ $step_current_index = array_search($step_current, $step_keys);
 <head>
 	<title>WiND - Installation</title>
 	<link rel="stylesheet" href="<?php echo surl('/../templates/basic/css/styles_packed.css')?>" >
-	<link rel="stylesheet" href="install.css">
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false" ></script>
-	<script src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/keydragzoom/2.0.5/src/keydragzoom_packed.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="install.css">	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>	
 </head>
 <body>
@@ -98,3 +97,7 @@ Powered by: <a href="http://wind.cube.gr/"><b>WiND - Wireless Nodes Database pro
 </div>
 </body>
 </html>
+
+<?php
+ob_end_flush(); 
+?>

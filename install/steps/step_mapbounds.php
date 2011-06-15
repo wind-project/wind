@@ -44,7 +44,6 @@ if (is_method_post()) {
 if ((!is_method_post()) || !$step_result){
 	$step_result = false;
 ?>
-
 <p class="description">Hold down <strong>shift</strong> and select the area of all wireless networks that this installation will handle.
 </p>
 <div id="map_canvas"></div>
@@ -58,57 +57,58 @@ if ((!is_method_post()) || !$step_result){
 	</div>
 </form>
 
-<script>
-
-// Render selection box on map
-function selection_box(bounds) {
-	// Remove previous
-	if (typeof(rect) != 'undefined') {
-		rect.setMap(null);
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false" ></script>
+<script type="text/javascript" src="js/keydragzoom_packed.js" ></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	// Render selection box on map
+	function selection_box(bounds) {
+		// Remove previous
+		if (typeof(rect) != 'undefined') {
+			rect.setMap(null);
+		}
+		rect = new google.maps.Rectangle({
+			bounds : bounds,
+			clickable: false,
+			map: map,
+			strokeColor: 'red'
+		});
 	}
-	rect = new google.maps.Rectangle({
-		bounds : bounds,
-		clickable: false,
-		map: map,
-		strokeColor: 'red'
-	});
-}
-
-var myLatlng = new google.maps.LatLng(-34.397, 150.644);
-var myOptions = {
-  zoom: 8,
-  center: myLatlng,
-  mapTypeId: google.maps.MapTypeId.ROADMAP
-};
-var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-var initial_bounds = new google.maps.LatLngBounds(
-		new google.maps.LatLng(
-			parseInt(document.getElementsByName('min_latitude')[0].value),
-			parseInt(document.getElementsByName('min_longitude')[0].value)
-		),
-		new google.maps.LatLng(
-			parseInt(document.getElementsByName('max_latitude')[0].value),
-			parseInt(document.getElementsByName('max_longitude')[0].value)
-		));
-selection_box(initial_bounds);
-map.fitBounds(initial_bounds);
-
-// simple drag zoom 
-map.enableKeyDragZoom(
-
-	{	key: "shift", 
+	
+	var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+	var myOptions = {
+	  zoom: 8,
+	  center: myLatlng,
+	  mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	var initial_bounds = new google.maps.LatLngBounds(
+			new google.maps.LatLng(
+				parseInt(document.getElementsByName('min_latitude')[0].value),
+				parseInt(document.getElementsByName('min_longitude')[0].value)
+			),
+			new google.maps.LatLng(
+				parseInt(document.getElementsByName('max_latitude')[0].value),
+				parseInt(document.getElementsByName('max_longitude')[0].value)
+			));
+	selection_box(initial_bounds);
+	map.fitBounds(initial_bounds);
+	
+	// simple drag zoom 
+	map.enableKeyDragZoom({
+		key: "shift", 
 		boxStyle: { border: "thin solid black", backgroundColor: "transparent", opacity: 1},
 		paneStyle: { backgroundColor: "gray", opacity: 0.4 }
-	}
-);
+		});
 
-// Handle selection event
-google.maps.event.addListener(map.getDragZoomObject(), 'dragend', function (bnds) {
-	document.getElementsByName('min_latitude')[0].value = bnds.getSouthWest().lat();
-	document.getElementsByName('min_longitude')[0].value = bnds.getSouthWest().lng();
-	document.getElementsByName('max_latitude')[0].value = bnds.getNorthEast().lat();
-	document.getElementsByName('max_longitude')[0].value = bnds.getNorthEast().lng();
-	selection_box(bnds);	
+	// Handle selection event
+	google.maps.event.addListener(map.getDragZoomObject(), 'dragend', function (bnds) {
+		document.getElementsByName('min_latitude')[0].value = bnds.getSouthWest().lat();
+		document.getElementsByName('min_longitude')[0].value = bnds.getSouthWest().lng();
+		document.getElementsByName('max_latitude')[0].value = bnds.getNorthEast().lat();
+		document.getElementsByName('max_longitude')[0].value = bnds.getNorthEast().lng();
+		selection_box(bnds);	
+	});
 });
 
 </script>

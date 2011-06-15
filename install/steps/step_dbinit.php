@@ -37,7 +37,7 @@ $result = mysql_query('SELECT count(*) FROM users;');
 $row = mysql_fetch_array($result, MYSQL_NUM);
 if (!isset($row[0][0])) {
 	show_error('Error getting data from database.' . mysql_error($link));
-	exit;
+	return false;
 }
 if ($row[0][0] > 0) {
 	// There is already a user

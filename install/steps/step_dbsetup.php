@@ -33,11 +33,6 @@ if (is_method_post()) {
 	$step_result = 'auto';
 	$def_values = array_merge($def_values, $_POST);
 	
-	// Validation
-	if (empty($def_values['server'])) {
-		show_error('You need to define a <strong>server</strong> to connect.');
-		$step_result = false;
-	}
 	if (empty($def_values['database'])) {
 		show_error('You need to define a <strong>database</strong> to connect.');
 		$step_result = false;
