@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +20,7 @@
  *
  */
 
-/* el_GR for GNU/Linux - ell for Windows */
+/* el_GR.utf8 for GNU/Linux - ell for Windows */
 setlocale(LC_ALL, 'el_GR', 'ell');
 
 $lang = array(
@@ -494,6 +495,18 @@ $lang = array(
 			'node_not_found' => array(
 				'title' => 'Ο κόμβος δεν βρέθηκε',
 				'body' => 'Ο κόμβος που ζητήσατε δεν υπάρχει. Ελέγξτε τα στοιχεία και προσπαθήστε ξανά. Αν τα στοιχεία είναι σωστά, είναι πιθανό ο κόμβος να έχει διαγραφεί ή ο χρήστης να μην έχει πραγματοποιήσει ενεργοποίηση του λογαριασμού.'
+			),
+			'zone_invalid_name' => array(
+				'title' => 'Μη έγκυρο όνομα ζώνης',
+				'body' => 'Το όνομα ζώνης που δηλώσατε περιέχει μη έγκυρους χαρακτήρες.'
+			),
+			'zone_out_of_range' => array(
+				'title' => 'Όνομα ζώνης εκτός C-Class',
+				'body' => 'Το όνομα ζώνης που δηλώσατε δεν αντιστοιχεί σε κανένα από τα C-Classes που σας έχουν αποδοθεί.'
+			),
+			'zone_reserved_name' => array(
+				'title' => 'Δεσμευμένο όνομα ζώνης',
+				'body' => 'Το όνομα ζώνης που δηλώσατε είναι δεσμευμένο από το σύστημα.'
 			),
 			'generic' => array(
 				'title' => "Γενικό σφάλμα",

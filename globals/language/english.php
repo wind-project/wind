@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -493,6 +494,18 @@ $lang = array(
 			'node_not_found' => array(
 				'title' => 'The node was not found',
 				'body' => 'The node you are looking for does not exist. Check that you supplied the correct data and try again. If you are sure that you submit the correct data, it is likely that the node has been deleted or that the user has not activated his/her account yet.'
+			),
+			'zone_invalid_name' => array(
+				'title' => 'Invalid zone name',
+				'body' => 'The name of the zone contains invalid characters.'
+			),
+			'zone_out_of_range' => array(
+				'title' => 'Zone name not in C-Class',
+				'body' => 'The name of the zone does not match to any of the IP C-Classes that have been assigned to your node.'
+			),
+			'zone_reserved_name' => array(
+				'title' => 'Reserved zone name',
+				'body' => 'The name of the zone is reserved by the system.'
 			),
 			'generic' => array(
 				'title' => "General error",

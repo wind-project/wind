@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -309,6 +310,13 @@ function translate($field, $section='') {
 		$t = $lang[$section][$field];
 	}
 	return ($t == '' ? $field : $t);
+}
+
+function validate_zone($name) {
+	$name = str_replace("_", "-", $name);
+	$name = strtolower($name);
+	if (preg_match('/^((([[:alnum:]]|[[:alnum:]][[:alnum:]-]*[[:alnum:]])\.)*([[:alnum:]]|[[:alnum:]][[:alnum:]-]*[[:alnum:]])|)$/', $name) == 0) return NULL;
+	return $name;
 }
 
 function validate_name_ns($name, $node) {

@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +53,7 @@ class hostmaster_ranges {
 			$where,
 			"",
 			"ip_ranges.date_in DESC, ip_ranges.status ASC");
+		$table_ip_ranges->db_data_search($form_search_ranges);
 		foreach( (array) $table_ip_ranges->data as $key => $value) {
 			if ($key != 0) {
 				$table_ip_ranges->data[$key]['ip_start'] = long2ip($table_ip_ranges->data[$key]['ip_start']);

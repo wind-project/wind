@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `peer_ap_id` int(10) unsigned default NULL,
   `type` enum('p2p','ap','client') NOT NULL default 'p2p',
   `ssid` varchar(50) default NULL,
-  `protocol` enum('IEEE 802.11b','IEEE 802.11g','IEEE 802.11a','other') default NULL,
+  `protocol` enum('IEEE 802.11b','IEEE 802.11g','IEEE 802.11a','IEEE 802.11n','IEEE 802.3i (Ethernet)','IEEE 802.3u (Fast Ethernet)','IEEE 802.3ab (Gigabit Ethernet)','other') default NULL,
   `channel` varchar(50) default NULL,
   `status` enum('active','inactive') NOT NULL default 'active',
   `equipment` text,

@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,6 +51,7 @@ class dnszones {
 			$where,
 			"",
 			"dns_zones.status ASC, dns_zones.type ASC, dns_zones.name ASC");
+		$table_dns->db_data_search($form_search_dns);
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				$table_dns->data[$i]['nodes__name'] .= " (#".$table_dns->data[$i]['nodes__id'].")";
