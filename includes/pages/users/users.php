@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +72,7 @@ class users {
 		global $main, $construct, $db;
 		if(get('action') === "delete" && $main->userdata->privileges['admin'] === TRUE)
 		{
-			$ret = $db->del("users", "id = '".get('user')."'");
+			$ret = $db->del("users", '', "id = '".get('user')."'");
 			if ($ret) {
 				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "admin", "subpage" => "users")));
 			} else {
@@ -144,10 +145,10 @@ class users {
 		if ($ret && $main->userdata->privileges['admin'] === TRUE) {
 			$ret = $form_user->db_set_multi(array(), "rights", "user_id", get('user'));
 			$ret = $ret && $form_user->db_set_multi(array('owner' => 'N'), "users_nodes", "user_id", $ins_id);
-			$ret = $ret && $db->del('users_nodes', "user_id = '".$ins_id."' AND owner = 'Y'");
+			$ret = $ret && $db->del('users_nodes', '', "user_id = '".$ins_id."' AND owner = 'Y'");
 			if (isset($_POST['node_id_owner'])) {
 				foreach((array)$_POST['node_id_owner'] as $value) {
-					$ret = $ret && $db->del('users_nodes', "node_id = '".$value."' AND owner = 'Y'");
+					$ret = $ret && $db->del('users_nodes', '', "node_id = '".$value."' AND owner = 'Y'");
 					$ret = $ret && $db->add('users_nodes', array("user_id" => $ins_id, "node_id" => $value, 'owner' => 'Y'));
 				}
 			}

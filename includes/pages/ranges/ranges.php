@@ -20,6 +20,7 @@
  */
 
 if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/ranges/ranges_".get('subpage').".php");
+else include_once(ROOT_PATH."includes/pages/ranges/ranges_search.php");
 
 class ranges {
 
@@ -31,6 +32,7 @@ class ranges {
 			$p = "ranges_".get('subpage');
 			$this->page = new $p;
 		}
+		else $this->page = new ranges_search;
 	}
 	
 	function output() {

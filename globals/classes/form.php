@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -266,7 +267,7 @@ class form {
 					break;
 				}
 			}
-			$ret = $ret && $db->del($ckey, $args[$carg+1]." = '".$args[$carg+2]."'");
+			$ret = $ret && $db->del($ckey, '', $args[$carg+1]." = '".$args[$carg+2]."'");
 			if (isset($data_f)) {
 				for ($i=0;$i<count($data_f);$i++) {
 					$data_f[$i][$args[$carg+1]] = $args[$carg+2];

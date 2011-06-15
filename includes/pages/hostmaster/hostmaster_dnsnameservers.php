@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,10 +39,10 @@ class hostmaster_dnsnameservers {
 
 	function table_nameservers() {
 		global $construct, $db, $vars;
-		if (isset($_POST['dns_nameservers__ip'])) $_POST['dns_nameservers__ip'] = ip2long($_POST['dns_nameservers__ip']);
-		if ($_GET['form_search_nameservers_search'] != '') {
+		if (isset($_POST['dns_nameservers__ip'])) $_POST['dns_nameservers__ip'] = (is_ip($_POST['dns_nameservers__ip'])?ip2long($_POST['dns_nameservers__ip']):'');
+		if (isset($_GET['form_search_nameservers_search'])) {
 			$t = unserialize(stripslashes($_GET['form_search_nameservers_search']));
-			if (isset($t['dns_nameservers__ip'])) $t['dns_nameservers__ip'] = ip2long($t['dns_nameservers__ip']);
+			if (isset($t['dns_nameservers__ip'])) $t['dns_nameservers__ip'] = (is_ip($t['dns_nameservers__ip'])?ip2long($t['dns_nameservers__ip']):'');
 			$_GET['form_search_nameservers_search'] = addslashes(serialize($t));
 		}
 
@@ -90,7 +91,10 @@ class hostmaster_dnsnameservers {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("dns_nameservers", "id = '".$value."'");
+			$ret = $ret && $db->del("dns_nameservers, dns_zones_nameservers", 
+						'dns_nameservers 
+							LEFT JOIN dns_zones_nameservers ON dns_nameservers.id = dns_zones_nameservers.nameserver_id', 
+						"dns_nameservers.id = '".intval($value)."'");
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));

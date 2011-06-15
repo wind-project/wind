@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -329,7 +330,31 @@ class mynodes {
 		$this->tpl['form_node'] = $construct->form($this->form_node(), __FILE__);
 		$this->tpl['node'] = get('node');
 		if (get('action') == 'delete') {
-			if ($db->del('nodes', "id = ".intval(get('node')))) { 
+			if ($db->del('nodes, 
+					dns_nameservers, 
+					dns_zones, 
+					dns_zones_nameservers, 
+					ip_addresses, 
+					ip_ranges, 
+					links, 
+					nodes_services, 
+					photos, 
+					services, 
+					subnets, 
+					users_nodes', 
+				'nodes 
+					LEFT JOIN dns_nameservers ON nodes.id = dns_nameservers.node_id 
+					LEFT JOIN dns_zones ON nodes.id = dns_zones.node_id 
+					LEFT JOIN dns_zones_nameservers ON  dns_zones.id = dns_zones_nameservers.zone_id OR dns_nameservers.id = dns_zones_nameservers.nameserver_id 
+					LEFT JOIN ip_addresses ON nodes.id = ip_addresses.node_id 
+					LEFT JOIN ip_ranges ON nodes.id = ip_ranges.node_id 
+					LEFT JOIN links ON nodes.id = links.node_id 
+					LEFT JOIN nodes_services ON nodes.id = nodes_services.node_id 
+					LEFT JOIN services ON nodes_services.service_id = services.id 
+					LEFT JOIN photos ON nodes.id = photos.node_id 
+					LEFT JOIN subnets ON nodes.id = subnets.node_id 
+					LEFT JOIN users_nodes ON nodes.id = users_nodes.node_id', 
+				"nodes.id = ".intval(get('node')))) { 
 				$main->message->set_fromlang('info', 'delete_success', makelink());
 			} else {
 				$main->message->set_fromlang('error', 'generic');		
@@ -391,11 +416,6 @@ class mynodes {
 			if ($old_v[0]['name'] != $_POST['nodes__name']) {
 				$name_ns = validate_name_ns($_POST['nodes__name'], get('node'));
 			}
-			if ($old_v[0]['area_id'] != $_POST['nodes__area_id'] && 
-					$db->cnt('', 'ip_ranges', "node_id = ".intval(get('node'))) > 0) {
-				$main->message->set_fromlang('error', 'nodes_field_area_id', makelink("",TRUE));
-				return;
-			}
 		}
 		
 		$ret = $ret && $form_node->db_set(array('name_ns' => $name_ns), "nodes", "id", intval(get('node')));
@@ -418,7 +438,7 @@ class mynodes {
 		if ($ret && ($this->has_owner_access() || get('node')=='add')) {
 			$ret = $ret && $form_node->db_set_multi(array(), "users_nodes", "node_id", $ins_id);
 			if ($_POST['user_id_owner'] != '') {
-				$ret = $ret && $db->del('users_nodes', "user_id = '".$_POST['user_id_owner']."' AND node_id = '".$ins_id."'");
+				$ret = $ret && $db->del('users_nodes', '', "user_id = '".$_POST['user_id_owner']."' AND node_id = '".$ins_id."'");
 				$ret = $ret && $db->add('users_nodes', array("user_id" => $_POST['user_id_owner'], "node_id" => $ins_id, 'owner' => 'Y'));
 			}
 		}
@@ -434,7 +454,7 @@ class mynodes {
 		$ret = TRUE;
 		$ret = $ret && $db->set("ip_ranges", array('delete_req' => 'N'), "node_id = ".intval(get('node')));
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->set("ip_ranges", array('delete_req' => 'Y'), "id = '".$value."'");
+			$ret = $ret && $db->set("ip_ranges", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
@@ -448,7 +468,7 @@ class mynodes {
 		$ret = TRUE;
 		$ret = $ret && $db->set("dns_zones", array('delete_req' => 'N'), "node_id = ".intval(get('node')));
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->set("dns_zones", array('delete_req' => 'Y'), "id = '".$value."'");
+			$ret = $ret && $db->set("dns_zones", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
@@ -460,9 +480,9 @@ class mynodes {
 	function output_onpost_table_nameservers() {
 		global $db, $main;
 		$ret = TRUE;
-		$ret = $ret && $db->set("dns_nameservers, ip_ranges, nodes", array('dns_nameservers.delete_req' => 'N'), "dns_nameservers.ip >= ip_ranges.ip_start AND dns_nameservers.ip <= ip_ranges.ip_end AND ip_ranges.node_id = ".intval(get('node'))." AND ip_ranges.node_id = nodes.id");
+		$ret = $ret && $db->set("dns_nameservers", array('delete_req' => 'N'), "node_id = ".intval(get('node')));
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->set("dns_nameservers", array('delete_req' => 'Y'), "id = '".$value."'");
+			$ret = $ret && $db->set("dns_nameservers", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
@@ -475,7 +495,11 @@ class mynodes {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("links", "id = '".$value."'");
+			$ret = $ret && $db->del("links, links2, subnets", 
+						'links 
+							LEFT JOIN links AS links2 ON links.id = links2.peer_ap_id
+							LEFT JOIN subnets ON links.id = subnets.link_id', 
+						"links.id = '".intval($value)."' AND links.node_id = ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
@@ -488,7 +512,7 @@ class mynodes {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("links", "id = '".$value."'");
+			$ret = $ret && $db->del("links", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
@@ -501,7 +525,7 @@ class mynodes {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("subnets", "id = '".$value."'");
+			$ret = $ret && $db->del("subnets", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
@@ -514,7 +538,7 @@ class mynodes {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("ip_addresses", "id = '".$value."'");
+			$ret = $ret && $db->del("ip_addresses", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
@@ -527,7 +551,7 @@ class mynodes {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("nodes_services", "id = '".$value."'");
+			$ret = $ret && $db->del("nodes_services", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
@@ -540,12 +564,14 @@ class mynodes {
 		global $vars, $db, $main;
 		if (isset($_POST['id'])) {
 			foreach( (array) $_POST['id'] as $key => $value) {
-				$db->del("photos", "id = '".$value."'");
-				$uploaddir = $vars['folders']['photos'];
-				$filename = 'photo-'.$value.".*";
-				delfile(ROOT_PATH.$uploaddir.$filename);
-				$filename = 'photo-'.$value."-*.*";
-				delfile(ROOT_PATH.$uploaddir.$filename);
+				$db->del("photos", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
+				if ($db->affected_rows > 0 ) {
+					$uploaddir = $vars['folders']['photos'];
+					$filename = 'photo-'.$value.".*";
+					delfile(ROOT_PATH.$uploaddir.$filename);
+					$filename = 'photo-'.$value."-*.*";
+					delfile(ROOT_PATH.$uploaddir.$filename);
+				}
 			}
 		}
 		foreach( (array) array('N','NE','E','SE','S','SW','W','NW', 'PANORAMIC') as $value) {
@@ -557,7 +583,7 @@ class mynodes {
 				$filename = 'photo-'.$ins_id.'.jpg';
 				$filename_s = 'photo-'.$ins_id.'-s.jpg';
 				if (@move_uploaded_file($_FILES[$value]['tmp_name'], ROOT_PATH.$uploaddir.$filename) === FALSE) {
-					$db->del("photos", "id = '".$ins_id."'");
+					$db->del("photos", '', "id = '".$ins_id."'");
 					$main->message->set_fromlang("error", "upload_file_failed");
 					return;
 				}

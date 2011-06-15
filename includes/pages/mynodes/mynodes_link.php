@@ -56,20 +56,26 @@ class mynodes_link {
 		$f = array("node_id" => intval(get('node')));
 		switch ($_POST['links__type']) {
 			case 'p2p':
-				if ($_POST['links__peer_node_id'] == '') {
+				$t = $db->get('id', 'nodes', "id = '".intval($_POST['links__peer_node_id'])."'");
+				if (!isset($t[0]['id']) || $t[0]['id'] == intval(get('node'))) {
 					$db->output_error_fields_required(array('links__peer_node_id'));
 					return;
 				}
 				$f['peer_ap_id'] = '';
-				$f['peer_node_id'] = $_POST['links__peer_node_id'];
+				$f['peer_node_id'] = intval($_POST['links__peer_node_id']);
 				break;
 			case 'client':
-				if ($_POST['links__peer_ap_id'] == '') {
+				$t = $db->get('id, node_id', 'links', "id = '".intval($_POST['links__peer_ap_id'])."'");
+				if (!isset($t[0]['id']) || $t[0]['node_id'] == intval(get('node'))) {
 					$db->output_error_fields_required(array('links__peer_ap_id'));
 					return;
 				}
-				$f['peer_ap_id'] = $_POST['links__peer_ap_id'];
+				$f['peer_ap_id'] = intval($_POST['links__peer_ap_id']);
 				$f['peer_node_id'] = '';
+				break;
+			case 'ap':
+				$f['peer_node_id'] = '';
+				$f['peer_ap_id'] = '';
 				break;
 		}
 		$ret = $form_link->db_set($f,

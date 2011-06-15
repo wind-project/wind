@@ -236,62 +236,28 @@ function sendmail($to, $subject, $body, $from_name='', $from_email='', $cc_to_se
 	return @mail($to, $subject, $body, $headers);
 }
 
-function correct_ip($ip, $ret_null=TRUE) {
-	if ($ip == '' && $ret_null === TRUE) return '';
+function ip_to_ranges($ip, $ret_null=TRUE) {
+	if ($ip == '' && $ret_null === TRUE) return array();
 	$t = explode(".", $ip, 4);
-	for ($i=0;$i<4;$i++) {
-		$t[$i] = (integer)($t[$i]);
-	}
-	return implode(".", $t);
-}
-
-function correct_ip_min($ip, $ret_null=TRUE, $pad=3) {
-	if ($ip == '' && $ret_null === TRUE) return '';
-	$t = explode(".", $ip, 4);
-	for ($i=0;$i<4;$i++) {
-		if(!isset($t[$i+1]) && $t[$i] != null) {
-			switch (substr($t[$i], 0, 1)) {
-			case '0':
-				break;
-			case '1':
-			case '2':
-				$t[$i] = intval(str_pad($t[$i], (substr($t[$i], 1, 1) >= 6?2:$pad), "0"));
-				break;
-			default:
-				$t[$i] = intval(str_pad($t[$i], ($pad==3?2:$pad), "0"));
-			}
-		}elseif($t[$i] == null) {
-			$t[$i] = 0;
-		}else{
-			$t[$i] = (integer)($t[$i]);
+	for ($i=0;$i<=3;$i++) {
+		if (isset($t[$i]) && $t[$i] != '' && $i != 3) $t[$i] = $t1[$i] = $t2[$i] = (integer)($t[$i]);
+		else {
+			$t1[$i] = 0;
+			$t2[$i] = 255;
 		}
 	}
-	return implode(".", $t);
-}
-
-function correct_ip_max($ip, $ret_null=TRUE, $pad=3) {
-	if ($ip == '' && $ret_null === TRUE) return '';
-	$t = explode(".", $ip, 4);
-	for ($i=0;$i<4;$i++) {
-		if(!isset($t[$i+1]) && $t[$i] != null) {
-			switch (substr($t[$i], 0, 1)) {
-			case '0':
-				break;
-			case '1':
-			case '2':
-				$t[$i] = intval(str_pad($t[$i], (substr($t[$i], 1, 1) >= 6?2:$pad), "9"));
-				break;
-			default:
-				$t[$i] = intval(str_pad($t[$i], ($pad==3?2:$pad), "9"));
-			}
-			if ($t[$i] > 255) $t[$i] = 255;
-		}elseif($t[$i] == null) {
-			$t[$i] = 255;
-		}else{
-			$t[$i] = (integer)($t[$i]);
+	$ret[] = array("min" => implode(".", $t1), "max" => implode(".", $t2));
+	$p = count($t) - 1;
+	if ($p <= 2 && $t[$p] != 0) {
+		$d = 2 - intval(log10($t[$p]));
+		for ($i=1;$i<=$d;$i++) {
+			$t1[$p] = $t[$p] * pow(10,$i);
+			$t2[$p] = $t1[$p] + pow(10,$i) - 1;
+			if ($t2[$p] > 255) $t2[$p] = 255;
+			$ret[] = array("min" => implode(".", $t1), "max" => implode(".", $t2));
 		}
 	}
-	return implode(".", $t);
+	return $ret;
 }
 
 function generate_account_code() {

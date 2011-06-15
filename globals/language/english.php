@@ -471,10 +471,6 @@ $lang = array(
 				'title' => 'Change node name',
 				'body' => 'Changing the node name is not allowed.'
 			),
-			'nodes_field_area_id' => array(
-				'title' => 'Change node area',
-				'body' => 'Changing the node area is not allowed. Your IP C-Class has been assigned to you according to the area of your node. For more info, contact with the hostmaster team.'
-			),
 			'nodes_no_area_id' => array(
 				'title' => 'Area error',
 				'body' => 'You have not filled in the area of your node. In order to have an IP C-Class assigned to your node, the area of your node must be filled in your node\'s data.'

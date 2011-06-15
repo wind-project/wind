@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -154,7 +155,7 @@ class hostmaster_range {
 		global $construct,$db,$main;
 		if(get('action') === "delete")
 		{
-			$ret = $db->del("ip_ranges", "id = '".get('iprange')."'");
+			$ret = $db->del("ip_ranges", '', "id = '".get('iprange')."'");
 			if ($ret) {
 				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "hostmaster", "subpage" => "ranges")));
 			} else {

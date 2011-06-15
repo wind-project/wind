@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +73,7 @@ class admin_regions {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("regions", "id = '".$value."'");
+			$ret = $ret && $db->del("regions", '', "id = '".$value."'");
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));

@@ -3,6 +3,7 @@
 * WiND - Wireless Nodes Database
 *
 * Copyright (C) 2006 John Kolovos <cirrus@awmn.net>
+* Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -55,9 +56,12 @@ class search_suggest {
 				$this->tpl['nodes_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['nodes_search'][$key]['id']));
 			}
 		} elseif (is_ip($q, FALSE)) {
-			$where = '(ip_ranges.ip_start >= '.ip2long(correct_ip_min($q, TRUE, 1)).' AND ip_ranges.ip_start <= '.ip2long(correct_ip_max($q, TRUE, 1)).") OR ".
-						'(ip_ranges.ip_start >= '.ip2long(correct_ip_min($q, TRUE, 2)).' AND ip_ranges.ip_start <= '.ip2long(correct_ip_max($q, TRUE, 2)).") OR ".
-						'(ip_ranges.ip_start >= '.ip2long(correct_ip_min($q, TRUE, 3)).' AND ip_ranges.ip_start <= '.ip2long(correct_ip_max($q, TRUE, 3)).")";
+			$where = "(";
+			$s_ranges = ip_to_ranges($q,FALSE);
+			foreach ($s_ranges as $s_range) {
+				$where .= "(ip_ranges.ip_start BETWEEN ".ip2long($s_range['min'])." AND ".ip2long($s_range['max']).") OR ";
+			}
+			$where = substr($where, 0, -4).")";
 			$this->tpl['ip_search'] = $db->get(
 										'ip_ranges.ip_start, nodes.id',
 										'ip_ranges

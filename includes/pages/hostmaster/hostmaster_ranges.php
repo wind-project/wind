@@ -42,9 +42,15 @@ class hostmaster_ranges {
 		$form_search_ranges = $this->form_search_ranges();
 		$where = $form_search_ranges->db_data_where(array('ip' => 'exclude', 'nodes__name' => 'starts_with'));
 		$table_ip_ranges = new table(array('TABLE_NAME' => 'table_ip_ranges', 'FORM_NAME' => 'table_ip_ranges'));
-		$s_ip = correct_ip($form_search_ranges->data[0]['value']);
-		$where = ($where !=''?"(".$where.") AND ":"").
-				($s_ip !=''?"ip_ranges.ip_start <= ".ip2long($s_ip)." AND ip_ranges.ip_end >= ".ip2long($s_ip)." AND ":"");
+		$where = ($where !=''?"(".$where.") AND ":"");
+		if ($form_search_ranges->data[0]['value'] != '') {
+			$where .= "(";
+			$s_ranges = ip_to_ranges($form_search_ranges->data[0]['value']);
+			foreach ($s_ranges as $s_range) {
+				$where .= "(ip_ranges.ip_start BETWEEN ".ip2long($s_range['min'])." AND ".ip2long($s_range['max']).") OR ";
+			}
+			$where = substr($where, 0, -4).") AND ";
+		}
 		if ($where!='') $where = substr($where, 0, -5);
 		$table_ip_ranges->db_data(
 			'ip_ranges.id, "" AS ip_range, ip_ranges.ip_start, ip_ranges.ip_end, ip_ranges.date_in, ip_ranges.status, ip_ranges.delete_req',
@@ -86,7 +92,7 @@ class hostmaster_ranges {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("ip_ranges", "id = '".$value."'");
+			$ret = $ret && $db->del("ip_ranges", '', "id = '".$value."'");
 		}
 		if ($ret) {
 			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));

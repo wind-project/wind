@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@ class mynodes_range {
 		
 	}
 	
-	function calculate_next_range() {
+	function new_range() {
 		global $db;
 		$range = 256;
 		$data2 = $db->get("areas.id AS area_id, ip_start, ip_end",
@@ -39,32 +40,23 @@ class mynodes_range {
 		
 		$data = $db->get("ip_ranges.ip_start AS ip_start, ip_ranges.ip_end AS ip_end, areas.ip_start AS area_ip_start, areas.ip_end AS area_ip_end",
 					"ip_ranges
-					INNER JOIN nodes ON nodes.id = ip_ranges.node_id
-					INNER JOIN areas ON nodes.area_id = areas.id",
+					INNER JOIN areas",
 					"areas.ip_start <= ip_ranges.ip_start AND areas.ip_end >= ip_ranges.ip_end AND areas.id = '".$area_id."'", "" , "ip_end ASC");
-		
-		if (count($data) == 0) {
-			$ret['ip_start'] = $area_ip_start;
-			$ret['ip_end'] = $area_ip_start+$range-1;
-		} elseif ($data[count($data)-1]['ip_end']+$range <= $area_ip_end) {
-			$ret['ip_start'] = $data[count($data)-1]['ip_end']+1;
-			$ret['ip_end'] = $data[count($data)-1]['ip_end']+$range;
-		} else {
-			for ($start = $area_ip_start; $start <= $area_ip_end; $start=$start+$range) {
-				$end = $start+$range-1;
-				$flag = TRUE;
-				for($i=count($data)-1;$i>=0;$i--) {
-					if (($start >= $data[$i]['ip_start'] && $start <= $data[$i]['ip_end'])
-						|| ($end >= $data[$i]['ip_start'] && $end <= $data[$i]['ip_end'])) {
-						$flag = FALSE;
-						break;
-					}
-				}
-				if ($flag) {
-					$ret['ip_start'] = $start;
-					$ret['ip_end'] = $end;
+
+		for ($start = $area_ip_start; $start < $area_ip_end; $start=$start+$range) {
+			$end = $start+$range-1;
+			$flag = TRUE;
+			foreach ($data as $t_range) {
+				if (($start >= $t_range['ip_start'] && $start <= $t_range['ip_end'])
+					|| ($end >= $t_range['ip_start'] && $end <= $t_range['ip_end'])) {
+					$flag = FALSE;
 					break;
 				}
+			}
+			if ($flag) {
+				$ret['ip_start'] = $start;
+				$ret['ip_end'] = $end;
+				break;
 			}
 		}
 		return $ret;
@@ -95,7 +87,7 @@ class mynodes_range {
 			return;
 		}
 		$form_getrange = $this->form_getrange();
-		$nextr = $this->calculate_next_range();
+		$nextr = $this->new_range();
 		$status = "waiting";
 		$ret = TRUE;
 		$ret = $form_getrange->db_set(array("node_id" => intval(get('node')), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "status" => $status));
