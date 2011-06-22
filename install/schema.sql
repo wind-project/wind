@@ -20,14 +20,12 @@ CREATE TABLE IF NOT EXISTS `dns_nameservers` (
   `name` enum('ns0','ns1','ns2','ns3') NOT NULL default 'ns0',
   `ip` int(10) NOT NULL default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
-  `delete_req` enum('Y','N') NOT NULL default 'N',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`name`,`node_id`),
   KEY `date_in` (`date_in`),
   KEY `node_id` (`node_id`),
   KEY `ip` (`ip`),
-  KEY `status` (`status`),
-  KEY `delete_req` (`delete_req`)
+  KEY `status` (`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_zones` (
@@ -38,14 +36,12 @@ CREATE TABLE IF NOT EXISTS `dns_zones` (
   `node_id` int(10) unsigned default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   `info` text,
-  `delete_req` enum('Y','N') NOT NULL default 'N',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`name`,`type`),
   KEY `type` (`type`),
   KEY `date_in` (`date_in`),
   KEY `node_id` (`node_id`),
-  KEY `status` (`status`),
-  KEY `delete_req` (`delete_req`)
+  KEY `status` (`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_zones_nameservers` (

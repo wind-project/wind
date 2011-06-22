@@ -443,7 +443,9 @@ sub lookup($) {
 			$found = 1;
 			($date, $nodename, $owner, $id, $area, $region) = @row;
 			$network = formatipr(pop(@row), pop(@row)) if $isip;
-			$webpage = sprintf($website, $id) if defined $website;
+			if (defined $website) {
+				$webpage = sprintf($website, $id);
+			}
 		}
 		# ...except the secondary nameservers
 		unless ($isip) {

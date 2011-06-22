@@ -37,16 +37,16 @@ if [ -z $CUR_ZONE ]; then
 fi
 
 if [ ! -e $ZONES_ROOT$CUR_ZONE ]; then
-   echo "file '$ZONES_ROOT$CUR_ZONE' does not exist"
+   echo "file '$ZONES_ROOT$CUR_ZONE' does not exist" 1>&2
    exit
 fi
 
 # Check the syntax of the current zone file and make sure it includes "; serial" line
 if ! ( named-checkzone -q $CUR_ZONE $ZONES_ROOT$CUR_ZONE && grep -q "; serial" $ZONES_ROOT$CUR_ZONE ) ; then
-   echo "`date` - $ZONES_ROOT$CUR_ZONE has errors (wrong syntax or  missing '; serial' comment)."
-   echo "#### START of named-checkzone output (if OK then '; serial' comment is missing) ####"
-   echo "`named-checkzone $CUR_ZONE $ZONES_ROOT$CUR_ZONE`"
-   echo "#### END of named-checkzone output ####"
+   echo "`date` - $ZONES_ROOT$CUR_ZONE has errors (wrong syntax or  missing '; serial' comment)." 1>&2
+   echo "#### START of named-checkzone output (if OK then '; serial' comment is missing) ####" 1>&2
+   echo "`named-checkzone $CUR_ZONE $ZONES_ROOT$CUR_ZONE`" 1>&2
+   echo "#### END of named-checkzone output ####" 1>&2
    exit
 fi
  
@@ -60,7 +60,7 @@ CUR_ZONE_S="/tmp/cur-zone-s"
 PHP_ZONE_S="/tmp/php-zone-s"
 
 # Make PHP_ZONE
-cd `dirname $PHP_SCRIPT`
+#cd `dirname $PHP_SCRIPT`
 php $PHP_SCRIPT $CUR_ZONE > $PHP_ZONE
 
 # Extract the serial number of the current zone file.
@@ -70,7 +70,7 @@ CUR_SERIAL=`grep "; serial" $ZONES_ROOT$CUR_ZONE | grep -o "2........."`
 # Check the validity of CUR_SERIAL
 CUR_SERIAL_CHARS=`echo -n $CUR_SERIAL | wc -m`
 if [ $CUR_SERIAL_CHARS -ne 10 ] || ! date -d `echo $CUR_SERIAL | cut -c 1-8` > /dev/null 2>&1 ; then
-    echo "`date` - Serial line in $ZONES_ROOT$CUR_ZONE is not valid."
+    echo "`date` - Serial line in $ZONES_ROOT$CUR_ZONE is not valid." 1>&2
     exit
 fi
 
@@ -134,10 +134,10 @@ else
   if named-checkzone -q $CUR_ZONE /tmp/$CUR_ZONE ; then
      mv -f /tmp/$CUR_ZONE $ZONES_ROOT
   else
-     echo "`date` - PHP-generated file has errors (possible database failure)"
-     echo "#### START of named-checkzone output ####"
-     echo "`named-checkzone $CUR_ZONE /tmp/$CUR_ZONE`"
-     echo "#### END of named-checkzone output ####"
+     echo "`date` - PHP-generated file has errors (possible database failure)" 1>&2
+     echo "#### START of named-checkzone output ####" 1>&2
+     echo "`named-checkzone $CUR_ZONE /tmp/$CUR_ZONE`" 1>&2
+     echo "#### END of named-checkzone output ####" 1>&2
      rm -f $PHP_ZONE $CUR_ZONE_S $PHP_ZONE_S /tmp/$CUR_ZONE
      exit
   fi

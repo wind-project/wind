@@ -3,6 +3,7 @@
  * Basic HTML Template
  *
  * Copyright (C) 2005 Konstantinos Papadimitriou <vinilios@cube.gr>
+ * Copyright (C) 2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +25,7 @@
 	{$close2}{$close1}
 	{assign var=close1 value=""}
 	{assign var=close2 value=""}
-	{assign var=close1 value="</table>"}
+	{assign var=close1 value="</table></td></tr>"}
 	{assign var=cur value=$data[row].ip_start}
 	<tr><td>
 	<table class="table-form">

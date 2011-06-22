@@ -32,7 +32,7 @@ class hostmaster_dnsnameservers {
 		global $db;
 		$form_search_nameservers = new form(array('FORM_NAME' => 'form_search_nameservers'));
 		$form_search_nameservers->data = array("0" => array("Field" => "ip", "fullField" => "dns_nameservers__ip"));
-		$form_search_nameservers->db_data('dns_nameservers.status, dns_nameservers.delete_req, nodes.id, nodes.name');
+		$form_search_nameservers->db_data('dns_nameservers.status, nodes.id, nodes.name');
 		$form_search_nameservers->db_data_search();
 		return $form_search_nameservers;
 	}
@@ -51,7 +51,7 @@ class hostmaster_dnsnameservers {
 		$table_nameservers = new table(array('TABLE_NAME' => 'table_nameservers', 'FORM_NAME' => 'table_nameservers'));
 
 		$table_nameservers->db_data(
-			'dns_nameservers.id, dns_nameservers.name, nodes.name_ns, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, dns_nameservers.delete_req',
+			'dns_nameservers.id, dns_nameservers.name, nodes.name_ns, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status',
 			'dns_nameservers
 			LEFT JOIN nodes ON dns_nameservers.node_id = nodes.id',
 			$where,
@@ -75,7 +75,7 @@ class hostmaster_dnsnameservers {
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
 		$table_nameservers->info['MULTICHOICE_LABEL'] = 'delete';
 		$table_nameservers->db_data_remove('id', 'name_ns');
-		$table_nameservers->db_data_translate('dns_nameservers__status', 'dns_nameservers__delete_req');
+		$table_nameservers->db_data_translate('dns_nameservers__status');
 		return $table_nameservers;
 	}
 

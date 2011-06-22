@@ -3,6 +3,7 @@
  * Basic HTML Template
  *
  * Copyright (C) 2005 Konstantinos Papadimitriou <vinilios@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -216,7 +217,7 @@
 					<td colspan="2" class="table-form-title"><img src="templates/basic/images/dns-small.png" alt="{$lang.dns_zones}" />&nbsp;<a href="{$link_dnszones}">{$lang.dns_zones}</a></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnszones_waiting content="$dnszones_waiting `$lang.waiting`"} {include file="generic/link.tpl" link=$link_dnszones_req_del content="$dnszones_req_del `$lang.for_deletion`"}</td>
+					<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnszones_waiting content="$dnszones_waiting `$lang.waiting`"}</td>
 				</tr>
 				{/if}
 				{if $link_dnsnameservers != ''}
@@ -224,7 +225,7 @@
 					<td colspan="2" class="table-form-title"><img src="templates/basic/images/nameserver.gif" alt="{$lang.dns_nameservers}" />&nbsp;<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnsnameservers_waiting content="$dnsnameservers_waiting `$lang.waiting`"} {include file="generic/link.tpl" link=$link_dnsnameservers_req_del content="$dnsnameservers_req_del `$lang.for_deletion`"}</td>
+					<td colspan="2" class="menu-small-links">{include file="generic/link.tpl" link=$link_dnsnameservers_waiting content="$dnsnameservers_waiting `$lang.waiting`"}</td>
 				</tr>
 				{/if}
 				<tr>

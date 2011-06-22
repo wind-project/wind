@@ -116,7 +116,7 @@ class hostmaster_dnsnameserver {
 		global $db, $vars;
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 		$table_dns->db_data(
-			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
+			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.type',
 			'dns_zones ' .
 			'INNER JOIN dns_zones_nameservers ON dns_zones_nameservers.zone_id = dns_zones.id',
 			'dns_zones_nameservers.nameserver_id = '.get('nameserver'),
@@ -130,7 +130,7 @@ class hostmaster_dnsnameserver {
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
 		$table_dns->db_data_remove('id', 'type');
-		$table_dns->db_data_translate('dns_zones__delete_req', 'dns_zones__status');
+		$table_dns->db_data_translate('dns_zones__status');
 		return $table_dns;
 	}
 

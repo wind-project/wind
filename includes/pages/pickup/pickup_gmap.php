@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +34,7 @@ class pickup_gmap {
 		$main->header->hide = TRUE;
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
-		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=pickup_js&object_lat=".stripslashes(get('object_lat'))."&object_lon=".stripslashes(get('object_lon')));
+		$this->tpl['gmap_key_ok'] = include_gmap(htmlspecialchars("?page=gmap&subpage=pickup_js&object_lat=".stripslashes(get('object_lat'))."&object_lon=".stripslashes(get('object_lon'))));
 		return template($this->tpl, __FILE__);
 	}
 

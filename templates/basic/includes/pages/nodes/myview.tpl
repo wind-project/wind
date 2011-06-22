@@ -3,6 +3,7 @@
  * Basic HTML Template
  *
  * Copyright (C) 2005 Konstantinos Papadimitriou <vinilios@cube.gr>
+ * Copyright (C) 2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +31,7 @@
 	</tr>
 	<tr>
 	<td class="node-view-left-mid" >{include file="generic/photosview_image.tpl" image=$photosview.W}</td>
-	<td class="node-view-left-mid" ><img src="{$img_dir}compass.png" /></td>
+	<td class="node-view-left-mid" ><img src="{$img_dir}compass.png" alt="" /></td>
 	<td class="node-view-right-mid" >{include file="generic/photosview_image.tpl" image=$photosview.E}</td>
 	</tr>
 	<tr>

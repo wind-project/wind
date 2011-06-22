@@ -3,6 +3,7 @@
  * Basic HTML Template
  *
  * Copyright (C) 2005 Konstantinos Papadimitriou <vinilios@cube.gr>
+ * Copyright (C) 2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +41,7 @@
 	{/if}
 	<td class="{$cellclass}">
 	{if $key == 'photo' && $smarty.section.row.index>0}
-	{if $cell != ''}<img src="{$cell}" />{else}<input class="fld-form-file" type="file" name="{$data[row].view_point}" value="{$lang.search}" />{/if}
+	{if $cell != ''}<img src="{$cell}" />{else}<input class="fld-form-file" type="file" name="{$data[row].view_point}" value="{$lang.search}" alt="" />{/if}
 	{elseif $key=='info' && $smarty.section.row.index>0}
 	<textarea name="info-{$data[row].view_point}">{$cell|escape}</textarea>
 	{elseif $smarty.section.row.index==0}

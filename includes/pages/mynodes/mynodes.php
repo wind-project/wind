@@ -94,13 +94,12 @@ class mynodes {
 		global $db, $vars;
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 		$table_dns->db_data(
-			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
+			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.type',
 			'dns_zones',
 			'dns_zones.node_id = '.intval(get('node')),
 			"",
 			"dns_zones.type ASC, dns_zones.date_in ASC");
 		$table_dns->db_data_multichoice('dns_zones', 'id');
-		$table_dns->db_data_multichoice_checked('delete_req', 'Y');
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
@@ -108,8 +107,8 @@ class mynodes {
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
-		$table_dns->info['MULTICHOICE_LABEL'] = 'delete_request';
-		$table_dns->db_data_remove('id', 'delete_req', 'type');
+		$table_dns->info['MULTICHOICE_LABEL'] = 'delete';
+		$table_dns->db_data_remove('id', 'type');
 		$table_dns->db_data_translate('dns_zones__status');
 		return $table_dns;
 	}
@@ -118,7 +117,7 @@ class mynodes {
 		global $db, $vars;
 		$table_nameservers = new table(array('TABLE_NAME' => 'table_nameservers', 'FORM_NAME' => 'table_nameservers'));
 		$table_nameservers->db_data(
-			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns, dns_nameservers.delete_req',
+			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns',
 			'dns_nameservers, nodes',
 			"nodes.id = ".intval(get('node'))." AND dns_nameservers.node_id = nodes.id",
 			"",
@@ -130,15 +129,14 @@ class mynodes {
 			}
 		}
 		$table_nameservers->db_data_multichoice('dns_nameservers', 'id');
-		$table_nameservers->db_data_multichoice_checked('delete_req', 'Y');
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
 				$table_nameservers->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnsnameserver", "nameserver" => $table_nameservers->data[$i]['id'], "node" => intval(get('node'))));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
-		$table_nameservers->info['MULTICHOICE_LABEL'] = 'delete_request';
-		$table_nameservers->db_data_remove('id', 'nodes_name_ns', 'delete_req');
+		$table_nameservers->info['MULTICHOICE_LABEL'] = 'delete';
+		$table_nameservers->db_data_remove('id', 'nodes_name_ns');
 		$table_nameservers->db_data_translate('dns_nameservers__status');
 		return $table_nameservers;
 	}
@@ -466,12 +464,14 @@ class mynodes {
 	function output_onpost_table_dns() {
 		global $db, $main;
 		$ret = TRUE;
-		$ret = $ret && $db->set("dns_zones", array('delete_req' => 'N'), "node_id = ".intval(get('node')));
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->set("dns_zones", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
+			$ret = $ret && $db->del("dns_zones, dns_zones_nameservers", 
+						'dns_zones 
+							LEFT JOIN dns_zones_nameservers ON dns_zones.id = dns_zones_nameservers.zone_id', 
+						"dns_zones.id = '".intval($value)."' AND dns_zones.node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -480,12 +480,14 @@ class mynodes {
 	function output_onpost_table_nameservers() {
 		global $db, $main;
 		$ret = TRUE;
-		$ret = $ret && $db->set("dns_nameservers", array('delete_req' => 'N'), "node_id = ".intval(get('node')));
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->set("dns_nameservers", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
+			$ret = $ret && $db->del("dns_nameservers, dns_zones_nameservers", 
+						'dns_nameservers 
+							LEFT JOIN dns_zones_nameservers ON dns_nameservers.id = dns_zones_nameservers.nameserver_id', 
+						"dns_nameservers.id = '".intval($value)."' AND dns_nameservers.node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

@@ -104,6 +104,7 @@ $lang = array(
 	'links' => "Links",
 	'ap' => "Access Point",
 	'aps' => "Access Points",
+	'aps_abbr' => "APs",
 	'aps_search' => "Search for Access Points",
 	'aps_found' => "Access Points found",
 	'subnet_edit' => "Edit subnet",
@@ -163,6 +164,7 @@ $lang = array(
 	'yes' => "Yes",
 	'no' => "No",
 	'backbone' => "Backbone",
+	'backbones_abbr' => "BBs",
 	'unlinked' => "Not linked",
 	'find_coordinates' => "Find coordinates",
 	'select_the_coordinates' => "Select coordinates",
@@ -254,9 +256,6 @@ $lang = array(
 		'dns_zones__status-rejected' => 'Rejected',
 		'dns_zones__status-invalid' => 'Invalid',
 		'dns_zones__info' => 'Info',
-		'dns_zones__delete_req' => 'Delete Request',
-		'dns_zones__delete_req-Y' => 'YES',
-		'dns_zones__delete_req-N' => 'NO',
 
 		'schema' => "Schema",
 
@@ -264,9 +263,6 @@ $lang = array(
 
 		'dns_nameservers__date_in' => 'Date',
 		'dns_nameservers__name' => 'Nameserver name',
-		'dns_nameservers__delete_req' => 'Delete request',
-		'dns_nameservers__delete_req-Y' => 'YES',
-		'dns_nameservers__delete_req-N' => 'NO',
 		'dns_nameservers__ip' => 'IP address',
 		'dns_nameservers__status' => 'Status',
 		'dns_nameservers__status-waiting' => 'Waiting check',
@@ -293,6 +289,8 @@ $lang = array(
 		'links__info' => 'Info',
 		'peer' => 'Peer',
 		'total_active_peers' => 'Active peers',
+		'total_active_p2p' => 'Active backbone links',
+		'total_active_aps' => 'Active access points',
 		'total_active_clients' => 'Active clients',
 		'has_ap' => 'Has Access Point',
 

@@ -144,7 +144,7 @@ class users {
 		}
 		if ($ret && $main->userdata->privileges['admin'] === TRUE) {
 			$ret = $form_user->db_set_multi(array(), "rights", "user_id", get('user'));
-			$ret = $ret && $form_user->db_set_multi(array('owner' => 'N'), "users_nodes", "user_id", $ins_id);
+			$ret = $ret && $form_user->db_set_multi(array(), "users_nodes", "user_id", $ins_id);
 			$ret = $ret && $db->del('users_nodes', '', "user_id = '".$ins_id."' AND owner = 'Y'");
 			if (isset($_POST['node_id_owner'])) {
 				foreach((array)$_POST['node_id_owner'] as $value) {

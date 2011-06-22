@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009-2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,13 +87,12 @@ class nodes_view {
 		global $db, $vars;
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 		$table_dns->db_data(
-			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
+			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.type',
 			'dns_zones',
 			'dns_zones.node_id = '.intval(get('node')),
 			"",
 			"dns_zones.type ASC, dns_zones.date_in ASC");
 		$table_dns->db_data_multichoice('dns_zones', 'id');
-		$table_dns->db_data_multichoice_checked('delete_req', 'Y');
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
@@ -100,8 +100,7 @@ class nodes_view {
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
-		$table_dns->info['MULTICHOICE_LABEL'] = 'delete_request';
-		$table_dns->db_data_remove('id', 'delete_req', 'type');
+		$table_dns->db_data_remove('id', 'type');
 		$table_dns->db_data_translate('dns_zones__status');
 		return $table_dns;
 	}
@@ -110,7 +109,7 @@ class nodes_view {
 		global $db, $vars;
 		$table_nameservers = new table(array('TABLE_NAME' => 'table_nameservers', 'FORM_NAME' => 'table_nameservers'));
 		$table_nameservers->db_data(
-			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns, dns_nameservers.delete_req',
+			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns',
 			'dns_nameservers, nodes',
 			"nodes.id = ".intval(get('node'))." AND dns_nameservers.node_id = nodes.id",
 			"",
@@ -122,15 +121,13 @@ class nodes_view {
 			}
 		}
 		$table_nameservers->db_data_multichoice('dns_nameservers', 'id');
-		$table_nameservers->db_data_multichoice_checked('delete_req', 'Y');
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
 				$table_nameservers->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnsnameserver", "nameserver" => $table_nameservers->data[$i]['id']));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
-		$table_nameservers->info['MULTICHOICE_LABEL'] = 'delete_request';
-		$table_nameservers->db_data_remove('id', 'nodes_name_ns', 'delete_req');
+		$table_nameservers->db_data_remove('id', 'nodes_name_ns');
 		$table_nameservers->db_data_translate('dns_nameservers__status');
 		return $table_nameservers;
 	}
@@ -262,7 +259,7 @@ class nodes_view {
 						$table_services->data[$key]['ip'] .= ' ('.$lang['db']['nodes_services__protocol-'.$table_services->data[$key]['protocol']].'/'.$table_services->data[$key]['port'].')';
 					}
 				}
-				$table_services->info['LINK']['services__title'][$key] = $table_services->data[$key]['url'];
+				$table_services->info['LINK']['services__title'][$key] = htmlspecialchars($table_services->data[$key]['url']);
 			}
 		}
 		$table_services->db_data_remove('id','nodes__id', 'url', 'protocol', 'port');
@@ -320,7 +317,7 @@ class nodes_view {
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
 		$this->tpl['link_gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 		if(get('show_map') == "no") $this->tpl['gmap_key_ok'] = "nomap";
-		else $this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=js&node=".get('node'));
+		else $this->tpl['gmap_key_ok'] = include_gmap(htmlspecialchars("?page=gmap&subpage=js&node=".get('node')));
 		return template($this->tpl, __FILE__);
 	}
 

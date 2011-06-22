@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +31,7 @@ class gmap_fullmap {
 	function output() {
 		global $main, $vars;
 		$main->menu->hide = true;
-		$this->tpl['gmap_key_ok'] = include_gmap("?page=gmap&subpage=js&node=".get('node'));
+		$this->tpl['gmap_key_ok'] = include_gmap(htmlspecialchars("?page=gmap&subpage=js&node=".get('node')));
 		return template($this->tpl, __FILE__);
 	}
 

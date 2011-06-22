@@ -157,7 +157,7 @@ class hostmaster_dnszone {
 		global $db, $vars;
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 		$table_dns->db_data(
-			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.delete_req, dns_zones.type',
+			'dns_zones.id, dns_zones.name, dns_zones.date_in, dns_zones.status, dns_zones.type',
 			'dns_zones ' .
 			'LEFT JOIN dns_zones AS t_dns_zones ON t_dns_zones.node_id = dns_zones.node_id',
 			't_dns_zones.id = '.get('zone'),
@@ -170,7 +170,7 @@ class hostmaster_dnszone {
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
-		$table_dns->db_data_remove('id', 'delete_req', 'type');
+		$table_dns->db_data_remove('id', 'type');
 		$table_dns->db_data_translate('dns_zones__status');
 		return $table_dns;
 	}

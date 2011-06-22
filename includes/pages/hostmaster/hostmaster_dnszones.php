@@ -30,7 +30,7 @@ class hostmaster_dnszones {
 	
 	function form_search_dns() {
 		$form_search_dns = new form(array('FORM_NAME' => 'form_search_dns'));
-		$form_search_dns->db_data('dns_zones.type, dns_zones.name, dns_zones.status, dns_zones.delete_req, nodes.id, nodes.name');
+		$form_search_dns->db_data('dns_zones.type, dns_zones.name, dns_zones.status, nodes.id, nodes.name');
 		$form_search_dns->db_data_search();
 		return $form_search_dns;
 	}
@@ -42,7 +42,7 @@ class hostmaster_dnszones {
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
 
 		$table_dns->db_data(
-			'dns_zones.id, dns_zones.name, dns_zones.type, dns_zones.date_in, dns_zones.status, dns_zones.delete_req',
+			'dns_zones.id, dns_zones.name, dns_zones.type, dns_zones.date_in, dns_zones.status',
 			'dns_zones ' .
 			'LEFT JOIN nodes ON dns_zones.node_id = nodes.id',
 			$where,
@@ -59,7 +59,7 @@ class hostmaster_dnszones {
 		$table_dns->info['EDIT_COLUMN'] = 'name';
 		$table_dns->info['MULTICHOICE_LABEL'] = 'delete';
 		$table_dns->db_data_remove('id', 'type');
-		$table_dns->db_data_translate('dns_zones__status', 'dns_zones__delete_req');
+		$table_dns->db_data_translate('dns_zones__status');
 		return $table_dns;
 	}
 

@@ -3,7 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
- * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
+ * Copyright (C) 2009-2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,12 +38,14 @@ function redirect($url, $sec=0, $exit=TRUE) {
 	}
 }
 
-function get_qs() {
+function get_qs($htmlspecialchars=TRUE) {
+	$ret = "";
 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-		return $_SERVER['QUERY_STRING'];
+		$ret = $_SERVER['QUERY_STRING'];
 	} else {
-		return $_POST['query_string'];
+		$ret = $_POST['query_string'];
 	}
+	return ($htmlspecialchars?htmlspecialchars($ret):$ret);
 }
 
 function get($key) {
@@ -104,7 +106,7 @@ function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars
 	$o = array();
 	if(get('show_map') == "no") $o = array_merge($o,array("show_map" => "no"));
 	if ($cur_qs == TRUE) {
-		parse_str(get_qs(), $qs);
+		parse_str(get_qs(FALSE), $qs);
 		$o = array_merge($o, $qs);
 	}
 	if ($cur_gs_vars == TRUE) {
@@ -252,6 +254,7 @@ function ip_to_ranges($ip, $ret_null=TRUE) {
 		$d = 2 - intval(log10($t[$p]));
 		for ($i=1;$i<=$d;$i++) {
 			$t1[$p] = $t[$p] * pow(10,$i);
+			if ($t1[$p] > 255) continue;
 			$t2[$p] = $t1[$p] + pow(10,$i) - 1;
 			if ($t2[$p] > 255) $t2[$p] = 255;
 			$ret[] = array("min" => implode(".", $t1), "max" => implode(".", $t2));
@@ -336,7 +339,7 @@ function include_gmap($javascript) {
 	}
 	if ($gmap_key == '') return FALSE;
 	
-	$main->html->head->add_script("text/javascript", "http://".$vars['gmap']['server']."/maps?file=api&v=".$vars['gmap']['api']."&key=".$gmap_key."&hl=".$lang["iso639"]);
+	$main->html->head->add_script("text/javascript", htmlspecialchars("http://".$vars['gmap']['server']."/maps?file=api&v=".$vars['gmap']['api']."&key=".$gmap_key."&hl=".$lang["iso639"]));
 	$main->html->head->add_script("text/javascript", $javascript);
 	$main->html->head->add_extra(
 		'<style type="text/css">

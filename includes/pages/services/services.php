@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +62,7 @@ class services {
 				}
 				$table_services->data[$key]['nodes__name'] .= " (#".$table_services->data[$key]['nodes__id'].")";
 				$table_services->info['LINK']['nodes__name'][$key] = makelink(array("page" => "nodes", "node" => $table_services->data[$key]['nodes__id']));
-				$table_services->info['LINK']['services__title'][$key] = $table_services->data[$key]['url'];
+				$table_services->info['LINK']['services__title'][$key] = htmlspecialchars($table_services->data[$key]['url']);
 			}
 		}
 		$table_services->db_data_translate('nodes_services__status');

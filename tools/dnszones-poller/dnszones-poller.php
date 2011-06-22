@@ -30,14 +30,16 @@ if ($conf['zone_type'] == 'forward') {
 	$replace = array('NAMESERVERS' => '', 'ZONES' => '', 'NS-SUBDOMAIN' => '', 'SERIAL' => '');
 	
 	## NAMESERVERS
-	$query = "SELECT dns_nameservers.name AS ns_num, nodes.name_ns AS name_ns
+	$query = "SELECT dns_nameservers.name AS ns_num, dns_nameservers.ip AS ns_ip, nodes.name_ns AS name_ns
 			  FROM dns_nameservers
 			  INNER JOIN nodes ON nodes.id = dns_nameservers.node_id
 			  WHERE dns_nameservers.status = 'active'
 			  ORDER BY nodes.name_ns ASC, dns_nameservers.name ASC";
 	$q = mysql_query($query, $mysql_link);
 	while ($ret = mysql_fetch_assoc($q)) {
-		$replace['NAMESERVERS'] .= " NS ".$ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']."\n";
+		$replace['NAMESERVERS'] .= $conf['notify']?
+			long2ip($ret['ns_ip']).";\n":
+			" NS ".$ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']."\n";
 	}
 	
 	## ZONES
@@ -95,7 +97,7 @@ if ($conf['zone_type'] == 'forward') {
 	$q = mysql_query($query, $mysql_link);
 	echo mysql_error();
 	while ($ret = mysql_fetch_assoc($q)) {
-		$replace['ZONES'] .= $ret['zone_name']." NS ".$ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']."\n";
+		$replace['ZONES'] .= $ret['zone_name'].". NS ".$ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']."\n";
 	}
 
 }

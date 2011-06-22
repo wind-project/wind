@@ -105,6 +105,7 @@ $lang = array(
 	'links' => "Διασυνδέσεις",
 	'ap' => "Access Point",
 	'aps' => "Access Points",
+	'aps_abbr' => "APs",
 	'aps_search' => "Αναζήτηση Access Points",
 	'aps_found' => "Access Points που βρέθηκαν",
 	'subnet_edit' => "Επεξεργασία υποδικτύου",
@@ -164,6 +165,7 @@ $lang = array(
 	'yes' => "Ναι",
 	'no' => "Όχι",
 	'backbone' => "Backbone",
+	'backbones_abbr' => "BBs",
 	'unlinked' => "Ασύνδετοι",
 	'find_coordinates' => "Βρείτε τις συντεταγμένες σας",
 	'select_the_coordinates' => "Επιλογή των συντεταγμένων",
@@ -255,9 +257,6 @@ $lang = array(
 		'dns_zones__status-rejected' => 'Απορριφθέν',
 		'dns_zones__status-invalid' => 'Άκυρο',
 		'dns_zones__info' => 'Πληροφορίες',
-		'dns_zones__delete_req' => 'Αίτηση διαγραφής',
-		'dns_zones__delete_req-Y' => 'ΝΑΙ',
-		'dns_zones__delete_req-N' => 'ΟΧΙ',
 
 		'schema' => "Schema",
 
@@ -265,9 +264,6 @@ $lang = array(
 
 		'dns_nameservers__date_in' => 'Ημερομηνία',
 		'dns_nameservers__name' => 'Όνομα Nameserver',
-		'dns_nameservers__delete_req' => 'Αίτηση διαγραφής',
-		'dns_nameservers__delete_req-Y' => 'ΝΑΙ',
-		'dns_nameservers__delete_req-N' => 'ΟΧΙ',
 		'dns_nameservers__ip' => 'Διεύθυνση IP',
 		'dns_nameservers__status' => 'Κατάσταση',
 		'dns_nameservers__status-waiting' => 'Προς έλεγχο',
@@ -294,6 +290,8 @@ $lang = array(
 		'links__info' => 'Πληροφορίες',
 		'peer' => 'Διασύνδεση',
 		'total_active_peers' => 'Ενεργές διασυνδέσεις',
+		'total_active_p2p' => 'Ενεργές διασυνδέσεις backbone',
+		'total_active_aps' => 'Ενεργά Access Point',
 		'total_active_clients' => 'Ενεργοί πελάτες',
 		'has_ap' => 'Διαθέτει Access Point',
 
