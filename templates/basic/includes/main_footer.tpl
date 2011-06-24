@@ -29,8 +29,8 @@
         	PHP time: {$php_time|round:3} s<br />MySQL time: {$mysql_time|round:3} s{if $debug_mysql}<br />Debug: <a href="{$debug_mysql}" target="debug">MySQL</a>{/if}
         </td>
         <td class="footer" align="right" width="33%">
-			Powered by:<br /><a href="http://wind.cube.gr/"><b>WiND - Wireless Nodes Database project</b></a><br /><br />
-        	&copy; 2005-2011 <a href="http://wind.cube.gr/wiki/Team">WiND development team</a>
+			Powered by: <a target="_blank" href="http://wind.cube.gr/"><b>WiND  v{$wind_version}</b></a><br /><br />
+        	&copy; 2005-2011 <a target="_blank" href="http://wind.cube.gr/wiki/Team">WiND development team</a>
         </td>
       </tr>
 </table>

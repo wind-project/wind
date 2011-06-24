@@ -14,7 +14,10 @@ $config = array(
 		'domain' => 'server.example.org',
 		'url' => 'http://server.example.org/'
 		),
-	
+	'community' => array(
+		'name' => 'Anonymous Wireless Community',
+		'short_name' => 'AWC'
+	),
 	'cookies' => array(
 		'expire' => (60 * 60 * 24 * 30)
 		),

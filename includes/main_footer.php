@@ -23,15 +23,12 @@ class footer {
 	
 	var $hide=FALSE;
 
-	function footer() {
-	
-	}
-	
 	function output() {
 		global $db, $php_start, $main, $vars;
 		if ($this->hide) return;
 		$this->tpl['php_time'] = getmicrotime() - $php_start;
 		$this->tpl['mysql_time'] = $db->total_time;
+		$this->tpl['wind_version'] = format_version($vars['info']['version']);
 		if (isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE && $vars['debug']['enabled'] == TRUE) {
 			$this->tpl['debug_mysql'] = ROOT_PATH."debug/mysql.php?".get_qs();
 		}
@@ -39,5 +36,3 @@ class footer {
 	}
 	
 }
-
-?>

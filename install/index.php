@@ -32,6 +32,7 @@ $steps = array(
 	'welcome' => 'Platform installer',
 	'deps' => 'Dependencies',
 	'file_perms' => 'File permissions',
+	'community' => 'Community Information',
 	'smarty' => 'Smarty configuration',
 	'dbsetup' => 'Setup database',
 	'dbinit' => 'Initialize database',
@@ -57,8 +58,11 @@ $step_current_index = array_search($step_current, $step_keys);
 <head>
 	<title>WiND - Installation</title>
 	<link rel="stylesheet" href="<?php echo surl('/../templates/basic/css/styles_packed.css')?>" >
-	<link rel="stylesheet" href="install.css">	
+	<link rel="icon" type="image/png" href="<?php echo surl('/../templates/basic/images/favicon_32.png')?>" / >
+	<link rel="stylesheet" href="install.css">
+		
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>	
+	
 </head>
 <body>
 <div class="header">

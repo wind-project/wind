@@ -459,4 +459,11 @@ function replace_sql_wildcards($str) {
 	return $str;
 }
 
-?>
+function format_version($version_array) {
+	$str = '';
+	foreach ($version_array as $dig) {
+		$glue =  is_numeric($dig)? '.' : '-';
+		$str .= empty($str)?$dig:$glue . $dig;
+	}
+	return $str;	
+}

@@ -28,10 +28,13 @@ class startup {
 	}
 	
 	function output() {
-		if (file_exists(ROOT_PATH."config/startup.html")) $this->tpl['startup_html'] = file_get_contents(ROOT_PATH."config/startup.html");
+		global $vars;
+		if (file_exists(ROOT_PATH."config/startup.html"))
+			$this->tpl['startup_html'] = file_get_contents(ROOT_PATH."config/startup.html");
+		$this->tpl['wind_version'] = format_version($vars['info']['version']);
+		$this->tpl['community_name'] = $vars['community']['name'];
+		$this->tpl['community_short_name'] = $vars['community']['short_name'];
 		return template($this->tpl, __FILE__);
 	}
 
 }
-
-?>

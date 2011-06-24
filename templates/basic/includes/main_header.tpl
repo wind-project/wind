@@ -21,6 +21,6 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-header">
       <tr>
         <td class="table-header-td-left"><img src="{$img_dir}main_logo.png" alt="WiND Logo" /></td>
-{if $mylogo}        <td class="table-header-td-right"><img src="{$mylogo_dir}mylogo.png" alt="{$lang.site_title}" /></td>{/if}
+{if $mylogo}<td class="table-header-td-right"><img src="{$mylogo_dir}mylogo.png" alt="{$lang.site_title}" /></td>{/if}
       </tr>
 </table>

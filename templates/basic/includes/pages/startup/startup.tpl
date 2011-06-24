@@ -22,14 +22,49 @@
 {if $startup_html != ''}
 {$startup_html}
 {else}
-<center>
-<p>
-<font size="5"><strong>WiND - Wireless Nodes Database</strong></font>
-<br />
-<br />
-<strong>Warning</strong>: this is an SVN snapshot.<br />
-As such, it's still under heavy development and you
-should expect it to break and/or lose data.<br />
+<div style="padding: 30px; font-size: 12px;">
+<h1>{$community_name}</h1>
+<p>Welcome at {$community_name}. Here you can find information about <a href="?page=nodes">registered nodes</a>
+of {$community_short_name} and <a href="?page=services">services</a> running on the network.
+If you want want to participate you can always try to <a href="?page=users&user=add">register</a>. For registered
+users, there is support for private messages.
 </p>
-</center>
+
+<h3>Registration</h3>
+
+<p>
+To create a new account, visit <a href="?page=users&user=add">registration page</a>. To complete the registration you have
+to confirm your email. If, for any reason you didn't get any email, you can request to
+<a href="?page=users&action=restore">resend the email</a>. 
+</p>
+
+<h3>Add Your Node</h3>
+<p>
+To create a new node you must be a registered user. After you have logged on on the system you
+can request to <a href="?page=mynodes&action=add">add a node</a>.
+</p>
+
+<h3>Declare links</h3>
+<p>
+For each node you can declare its links with other <strong>existing</strong> nodes.
+<ul>
+<li>If you are a <strong>client</strong> node, declare only one 
+	link with the access point that you have been connected at.</li>
+<li>If you have created a <strong>backbone link</strong>, declare it with as many information as possible.
+	For complete link, the other node must add also link information.</li>
+<li>If you own an access point, declare it so that clients can declare their links at you.</li>
+</ul>  
+</p>
+
+<h3>Managing your Nodes</h3>
+<p>
+For any node you can update its information by visiting its page. Through your node page you can also interract
+with the Hostmaster team, to request IP Ranges, DNS zones and nameservers.
+</p>
+<br />
+<hr/>
+<em>Try to update your nodes, with as much as possible <strong>valid</strong> information.
+If you see invalid data on foreign nodes don't hesitate to contact them and request to update/change their public information.</em>
+
+</div>
 {/if}
