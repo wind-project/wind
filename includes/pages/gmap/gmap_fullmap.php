@@ -24,10 +24,6 @@ class gmap_fullmap {
 
 	var $tpl;
 	
-	function gmap() {
-
-	}
-	
 	function output() {
 		global $main, $vars;
 		$main->menu->hide = true;
@@ -36,5 +32,3 @@ class gmap_fullmap {
 	}
 
 }
-
-?>

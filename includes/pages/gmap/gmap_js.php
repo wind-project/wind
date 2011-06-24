@@ -23,10 +23,6 @@ class gmap_js {
 	
 	var $tpl;
 
-	function gmap_js() {
-		
-	}
-	
 	function output() {
 		global $db, $lang, $vars;
 		
@@ -79,4 +75,3 @@ class gmap_js {
 
 }
 
-?>

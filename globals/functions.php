@@ -4,6 +4,7 @@
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
  * Copyright (C) 2009-2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
+ * Copyright (C) 2011 K. Paliouras <squarious@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -323,23 +324,44 @@ function is_ip($ip, $full_ip=TRUE) {
 
 function include_gmap($javascript) {
 	global $main, $vars, $lang;
-	$dirname = dirname($_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
-	$gmap_key = '' ;
-	if (isset($vars['gmap']['keys'][$dirname])) {
-		$gmap_key = $vars['gmap']['keys'][$dirname];
-	}
-	if (isset($vars['gmap']['keys'][$dirname."/"]) && $gmap_key == '') {
-		$gmap_key = $vars['gmap']['keys'][$dirname."/"];
-	}
-	if (isset($vars['gmap']['keys']["http://".$dirname]) && $gmap_key == '') {
-		$gmap_key = $vars['gmap']['keys']["http://".$dirname];
-	}
-	if (isset($vars['gmap']['keys']["http://".$dirname."/"]) && $gmap_key == '') {
-		$gmap_key = $vars['gmap']['keys']["http://".$dirname."/"];
-	}
-	if ($gmap_key == '') return FALSE;
 	
-	$main->html->head->add_script("text/javascript", htmlspecialchars("http://".$vars['gmap']['server']."/maps?file=api&v=".$vars['gmap']['api']."&key=".$gmap_key."&hl=".$lang["iso639"]));
+	
+	$serve_host = strtolower($_SERVER['SERVER_NAME']);
+	$serve_path = $serve_host.$_SERVER['PHP_SELF'];
+	$gmap_key = false;
+	
+	// Loop around all keys to find the most appropriate	
+	foreach($vars['gmap']['keys'] as $key_path => $key) {
+		$key_path = strtolower($key_path);
+		
+		// remove prefixed http://
+		if (substr($key_path, 0, 7) == 'http://') {
+			$path = substr($key_path, 7);
+		} else if (substr($key_path, 0, 8) == 'https://') {
+			$path = substr($key_path, 8);
+		}
+		
+		
+		// If host name is not the same then false
+		if (substr($key_path, 0, strlen($serve_host)) != $serve_host)
+			continue;
+
+		// Compare if server_path includes $key_path 
+		if (substr($serve_path, 0, strlen($key_path)) != $key_path)
+			continue;
+		
+		$gmap_key = $key;
+	}	
+	$main->html->head->add_script("text/javascript",
+		htmlspecialchars("http://{$vars['gmap']['server']}/maps?" .
+			http_build_query(array(
+				'file' => 'api',
+				'v' => $vars['gmap']['api'],
+				'key' => $gmap_key,
+				'hl=' => $lang["iso639"])
+			)
+		)
+	);
 	$main->html->head->add_script("text/javascript", $javascript);
 	$main->html->head->add_extra(
 		'<style type="text/css">

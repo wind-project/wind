@@ -56,4 +56,3 @@ class gmap_pickup_js {
 
 }
 
-?>
