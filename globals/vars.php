@@ -22,7 +22,7 @@
 $vars = array(
 	
 	'info' => array(
-		'version' => array(1, 0, 'rc1'),
+		'version' => array(1, 0, 'rc2-pre'),
 		'min_template_version' => 0
 		)
 );
