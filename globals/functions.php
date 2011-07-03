@@ -351,15 +351,17 @@ function include_gmap($javascript) {
 			continue;
 		
 		$gmap_key = $key;
-	}	
+	}
+	$script_params = array(
+		'file' => 'api',
+		'v' => $vars['gmap']['api'],
+		'hl=' => $lang["iso639"]
+	);
+	if ($gmap_key !== false)
+		$script_params['key'] = $gmap_key;
 	$main->html->head->add_script("text/javascript",
 		htmlspecialchars("http://{$vars['gmap']['server']}/maps?" .
-			http_build_query(array(
-				'file' => 'api',
-				'v' => $vars['gmap']['api'],
-				'key' => $gmap_key,
-				'hl=' => $lang["iso639"])
-			)
+			http_build_query($script_params)
 		)
 	);
 	$main->html->head->add_script("text/javascript", $javascript);
