@@ -3,6 +3,7 @@
 * WiND - Wireless Nodes Database
 *
 * Copyright (C) 2006 John Kolovos <cirrus@awmn.net>
+* Copyright (C) 2011 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -112,7 +113,7 @@ class gearth_download {
 					$selected2_node['latitude'] = $value['latitude'];
 					$selected2_node['name'] = $value['nodes__name'];
 					$selected2_node['id'] = $value['id'];
-					$selected2 .= $xml2;
+					$selected2 = $xml2;
 				} elseif ($value['total_aps'] != 0 ) {
 					$xml2 .= "<scale>0.6</scale>\n";
 					$xml2 .= "<Icon>\n";
@@ -120,7 +121,7 @@ class gearth_download {
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
-					if($selected2 != "")
+					if(isset($selected2))
 						$xml2 .= "<visibility>0</visibility>\n";
 					else
 						$xml2 .= "<visibility>1</visibility>\n";
@@ -133,7 +134,7 @@ class gearth_download {
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
-					if($selected2 != "")
+					if(isset($selected2))
 						$xml2 .= "<visibility>0</visibility>\n";
 					else
 						$xml2 .= "<visibility>1</visibility>\n";
@@ -146,7 +147,7 @@ class gearth_download {
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
-					if($selected2 != "")
+					if(isset($selected2))
 						$xml2 .= "<visibility>0</visibility>\n";
 					else
 						$xml2 .= "<visibility>1</visibility>\n";
@@ -184,7 +185,7 @@ class gearth_download {
 					$xml2 = "<Placemark>\n";
 					$xml2 .= "<name>".htmlspecialchars($value['node1_name'])." (#".$value['node1_id'].") - ".htmlspecialchars($value['node2_name'])." (#".$value['node2_id'].")</name>\n";
 					
-					if($selected2 != "")
+					if(isset($selected2))
 						$xml2 .= "<visibility>0</visibility>\n";
 					else
 						$xml2 .= "<visibility>1</visibility>\n";
@@ -220,7 +221,7 @@ class gearth_download {
 
 			unset($links);
 
-			$xml .= "<?xml version='1.0' encoding='".$lang['charset']."'?>\n";
+			$xml = "<?xml version='1.0' encoding='".$lang['charset']."'?>\n";
 			$xml .= "<kml xmlns='http://earth.google.com/kml/2.0'>\n";
 			$xml .= "<Folder>\n";
 			$xml .= "<name>".$lang['title_small']."</name>\n";
@@ -241,7 +242,7 @@ class gearth_download {
 			$xml .= "</LookAt>\n";
 			if($selected != "") {
 				$xml .= $selected;
-				if($selected2 != "") {
+				if(isset($selected2)) {
 					$xml .= $selected2;
 					$xml .= "<Placemark>\n";
 					$xml .= "<name>".htmlspecialchars($selected_node['name'])." (#".$selected_node['id'].") - ".htmlspecialchars($selected2_node['name'])." (#".$selected2_node['id'].")</name>\n";
@@ -271,7 +272,7 @@ class gearth_download {
 			$xml .= "<Folder>\n";
 			$xml .= "<name>".$lang['backbone']."</name>\n";
 			$xml .= "<open>0</open>\n";
-			if($selected2 != "")
+			if(isset($selected2))
 				$xml .= "<visibility>0</visibility>\n";
 			else
 				$xml .= "<visibility>1</visibility>\n";
@@ -281,7 +282,7 @@ class gearth_download {
 			$xml .= "<Folder>\n";
 			$xml .= "<name>".$lang['aps']."</name>\n";
 			$xml .= "<open>0</open>\n";
-			if($selected2 != "")
+			if(isset($selected2))
 				$xml .= "<visibility>0</visibility>\n";
 			else
 				$xml .= "<visibility>1</visibility>\n";
@@ -313,7 +314,7 @@ class gearth_download {
 				$xml .= "<Folder>\n";
 				$xml .= "<name>".$lang['backbone']."</name>\n";
 				$xml .= "<open>0</open>\n";
-				if($selected2 != "")
+				if(isset($selected2))
 					$xml .= "<visibility>0</visibility>\n";
 				else
 					$xml .= "<visibility>1</visibility>\n";
@@ -324,7 +325,7 @@ class gearth_download {
 					$xml .= "<Folder>\n";
 					$xml .= "<name>".$lang['clients']."</name>\n";
 					$xml .= "<open>0</open>\n";
-					if($selected2 != "")
+					if(isset($selected2))
 						$xml .= "<visibility>0</visibility>\n";
 					else
 						$xml .= "<visibility>1</visibility>\n";
