@@ -20,7 +20,7 @@
  *
  */
 
-setlocale(LC_ALL, 'en', 'english');
+setlocale(LC_ALL, 'en_US.utf8', 'english');
 
 $lang = array(
 
