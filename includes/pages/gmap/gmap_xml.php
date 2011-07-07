@@ -3,6 +3,7 @@
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2011 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +52,7 @@ class gmap_xml {
 			"users.status = 'activated'",
 			'nodes.id' .
 			($having!=''?' HAVING '.$having:''));
-		$xml = "<?xml version='1.0' encoding='".$lang['charset']."' standalone='yes'?>\r"; 
+		$xml = "<?xml version=\"1.0\" encoding=\"".$lang['charset']."\" standalone=\"yes\"?>\r"; 
 		$xml .= "<wind>\r";
 		$xml .= "<nodes>\r";
 		foreach ((array) $nodes as $key => $value) {
@@ -117,5 +118,3 @@ class gmap_xml {
 	}
 
 }
-
-?>
