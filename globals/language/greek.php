@@ -684,7 +684,8 @@ $lang = array(
 	
 	'languages' => array(
 		'greek' => 'Ελληνικά',
-		'english' => 'Αγγλικά'
+		'english' => 'Αγγλικά',
+		'dutch' => 'Ολλανδικά'
 	)
 
 );

@@ -36,7 +36,8 @@ $config = array(
 		'default' => 'greek',
 		'enabled' => array(
 			'greek' => TRUE,
-			'english' => TRUE)
+			'english' => TRUE,
+			'dutch' => TRUE)
 		),
 		
 	'smarty' => array(

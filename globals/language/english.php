@@ -687,7 +687,8 @@ $lang = array(
 	
 	'languages' => array(
 		'greek' => 'Greek',
-		'english' => 'English'
+		'english' => 'English',
+		'dutch' => 'Dutch'
 	)
 
 );
