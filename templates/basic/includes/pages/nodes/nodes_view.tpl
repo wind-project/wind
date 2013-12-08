@@ -19,7 +19,7 @@
  *
  *}
 {include file=generic/page-title.tpl title="`$lang.node` `$node.name` (#`$node.id`)"|escape right="$help"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
+<table class="table-page">
 <tr>
 	<td class="table-page-split">
 		{include assign=t1 file="includes/pages/nodes/node_info.tpl"}

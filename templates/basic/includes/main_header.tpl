@@ -18,9 +18,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-header">
+<table class="header">
       <tr>
-        <td class="table-header-td-left"><img src="{$img_dir}main_logo.png" alt="WiND Logo" /></td>
-{if $mylogo}<td class="table-header-td-right"><img src="{$mylogo_dir}mylogo.png" alt="{$lang.site_title}" /></td>{/if}
+        <td class="left"><img src="{$img_dir}main_logo.png" alt="WiND Logo" /></td>
+{if $mylogo}<td class="right"><img src="{$mylogo_dir}mylogo.png" alt="{$lang.site_title}" /></td>{/if}
       </tr>
 </table>

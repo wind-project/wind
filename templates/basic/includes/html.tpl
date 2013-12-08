@@ -18,14 +18,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<?xml version="1.0" encoding="{$lang.charset}"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$lang.iso639}" xmlns:v="urn:schemas-microsoft-com:vml">
+<!doctype html>
+<html lang="{$lang.iso639}">
 <head>
-{$head}
-<link href="{$css_dir}styles_packed.css" rel="stylesheet" type="text/css" />
-<link rel="icon" type="image/png" href="templates/basic/images/favicon_32.png" / >
-<script type="text/javascript" src="{$js_dir}overlib/overlib_packed.js"><!-- overLIB (c) Erik Bosrup --></script>
+	<meta charset="{$lang.charset}"/>
+	{$head}
+	<link href="{$css_dir}styles.css" rel="stylesheet" type="text/css" />
+	<link rel="icon" type="image/png" href="templates/basic/images/favicon_32.png" / >
+	<script type="text/javascript" src="{$js_dir}overlib/overlib_packed.js"><!-- overLIB (c) Erik Bosrup --></script>
 </head>
 <body{foreach from=$body_tags item=item key=key} {$key}="{$item}"{/foreach}>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>

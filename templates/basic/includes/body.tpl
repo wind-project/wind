@@ -18,24 +18,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-main">
+<table class="main">
   {if $header != ''}
   <tr>
-    <td {if $menu != ''}colspan="2" {/if}class="table-main-td-header">{$header}</td>
+    <td {if $menu != ''}colspan="2" {/if}class="header">{$header}</td>
   </tr>
   {/if}
   
   <tr>
   {if $menu != ''}
-    <td class="table-main-td-middle">{$menu}</td>
+    <td class="middle">{$menu}</td>
   {/if}
     
     
     <td class="table-middle-right-td">
-	<table border="0" cellpadding="0" cellspacing="0" class="table-middle-right">
+	<table class="middle-right">
   	{if $menu != ''}
 		<tr>
-			<td class="quick-login" width="100%">
+			<td class="quick-login">
 			{if $logged}
 				{include file="includes/main_menu_logged.tpl"}
 			{else}
