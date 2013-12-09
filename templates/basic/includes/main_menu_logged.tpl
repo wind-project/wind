@@ -18,10 +18,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-quick-login">
+<table class="quick-login">
 <tr>
-<td nowrap="nowrap" class="quick-login-title">{$lang.logged} |</td>
-<td nowrap="nowrap" class="quick-login-field" width="100%"><a href="{$link_logged_profile}" class="menu-link">{$logged_username}</a></td>
+	<td class="title">{$lang.logged} |</td>
+	<td class="field"><a href="{$link_logged_profile}" class="menu-link">{$logged_username}</a></td>
 </tr>
 </table>
-</form>

@@ -19,4 +19,4 @@
  *
  *}
 {if $confirm == TRUE}{assign var=link value="javascript: if (confirm('$content?') == true) window.open('$link','_parent');"}{/if}
-<span style="font-weight:bold; font-size: 9px; color: orange;">|<a href="{$link}"{if $onclick != ''} onclick="{$onclick}"{/if}{if $target != ''} target="{$target}"{/if}>{$content}</a>|</span>
+<span class="hint-link">|<a href="{$link}"{if $onclick != ''} onclick="{$onclick}"{/if}{if $target != ''} target="{$target}"{/if}>{$content}</a>|</span>

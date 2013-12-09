@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table cellpadding="5" cellspacing="0" class="table-main">
+<table class="footer">
       <tr>
         <td class="footer" align="left" width="33%">
         	<a href="http://www.php.net/"><img src="{$img_dir}logo-php.gif" alt="PHP Hypertext Preprocessor" /></a>
@@ -29,8 +29,8 @@
         	PHP time: {$php_time|round:3} s<br />MySQL time: {$mysql_time|round:3} s{if $debug_mysql}<br />Debug: <a href="{$debug_mysql}" target="debug">MySQL</a>{/if}
         </td>
         <td class="footer" align="right" width="33%">
-			Powered by: <a target="_blank" href="http://wind.cube.gr/"><b>WiND  v{$wind_version}</b></a><br /><br />
-        	&copy; 2005-2011 <a target="_blank" href="http://wind.cube.gr/wiki/Team">WiND development team</a>
+			Powered by: <a target="_blank" href="http://wind.cube.gr/"><b>WiND  v{$wind_version}</b></a><br />
+        	&copy; 2005-2013 <a target="_blank" href="http://wind.cube.gr/wiki/Team">WiND development team</a>
         </td>
       </tr>
 </table>

@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table class="main">
+<table class="layout">
   {if $header != ''}
   <tr>
     <td {if $menu != ''}colspan="2" {/if}class="header">{$header}</td>
@@ -27,30 +27,26 @@
   
   <tr>
   {if $menu != ''}
-    <td class="middle">{$menu}</td>
+    <td class="navigation">{$menu}</td>
   {/if}
     
     
-    <td class="table-middle-right-td">
-	<table class="middle-right">
+    <td class="main">
+	<table class="main-content">
   	{if $menu != ''}
 		<tr>
-			<td class="quick-login">
+			<td class="notification">
 			{if $logged}
 				{include file="includes/main_menu_logged.tpl"}
 			{else}
 				{$form_login}
 			{/if}
-			</td>
-			<td nowrap="nowrap" class="quick-login-field">
-				{foreach key=key item=item from=$languages}
-				<a href="{$item.link}"><img alt="{$item.name}" src="{$img_dir}flags/{$key}.gif" /></a> 
-				{/foreach}
+				{include file="generic/language_selection.tpl" languages=$languages}
 			</td>
 		</tr>
 	  {/if}
 		<tr>
-			<td class="main-page" colspan="2">
+			<td class="main-page">
     			{if $message==''}
 					{$center}
     			{else}
@@ -71,7 +67,7 @@
     
   {if $footer != ''}
   <tr>
-    <td {if $menu != ''}colspan="2" {/if}class="table-main-td-footer">{$footer}</td>
+    <td {if $menu != ''}colspan="2" {/if}class="footer">{$footer}</td>
   </tr>
   {/if}
 </table>

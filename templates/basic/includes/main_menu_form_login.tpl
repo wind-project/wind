@@ -19,21 +19,21 @@
  *
  *}
 <form name="{$extra_data.FORM_NAME}" method="post" action="?">
-<input type="hidden" name="query_string" value="{$hidden_qs}" />
-<input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-quick-login">
-<tr>
-<td nowrap="nowrap" class="quick-login-title">{$lang.login} |</td>
-{assign var=fullField value=$data[0].fullField}
-<td nowrap="nowrap" class="quick-login-field">{$lang.db.$fullField}:
-<input name="{$fullField}" type="text" class="fld-quick-login" /></td>
-{assign var=fullField value=$data[1].fullField}
-<td nowrap="nowrap" class="quick-login-field">{$lang.db.$fullField}:
-<input name="{$fullField}" type="password" class="fld-quick-login" />
-</td>
-<td nowrap="nowrap" class="quick-login-field"><input type="checkbox" name="save_login" value="Y" /></td>
-<td width="373" class="quick-login-submit">
-<input type="image" src="templates/basic/images/submit1.png" /></td>
-</tr>
+	<input type="hidden" name="query_string" value="{$hidden_qs}" />
+	<input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
+	<table class="quick-login">
+	<tr>
+		<td class="title">{$lang.login} |</td>
+		{assign var=fullField value=$data[0].fullField}
+		<td class="field">{$lang.db.$fullField}:
+		<input name="{$fullField}" type="text" class="fld" /></td>
+		{assign var=fullField value=$data[1].fullField}
+		<td class="field">{$lang.db.$fullField}:
+			<input name="{$fullField}" type="password" class="fld" />
+		</td>
+		<td class="field"><input type="checkbox" name="save_login" value="Y" /></td>
+		<td class="submit">
+			<input type="image" src="templates/basic/images/submit1.png" alt="submit" /></td>
+	</tr>
 </table>
 </form>

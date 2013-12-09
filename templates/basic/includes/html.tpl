@@ -24,8 +24,8 @@
 	<meta charset="{$lang.charset}"/>
 	{$head}
 	<link href="{$css_dir}styles.css" rel="stylesheet" type="text/css" />
-	<link rel="icon" type="image/png" href="templates/basic/images/favicon_32.png" / >
-	<script type="text/javascript" src="{$js_dir}overlib/overlib_packed.js"><!-- overLIB (c) Erik Bosrup --></script>
+	<link rel="icon" type="image/png" href="templates/basic/images/favicon_32.png" />
+	<script type="text/javascript" src="{$js_dir}overlib/overlib_packed.js">/* overLIB (c) Erik Bosrup */</script>
 </head>
 <body{foreach from=$body_tags item=item key=key} {$key}="{$item}"{/foreach}>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>

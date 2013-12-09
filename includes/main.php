@@ -62,7 +62,6 @@ class main {
 		$this->userdata->load_info();
 		
 		$this->html->head->add_title($lang['site_title']);
-		$this->html->head->add_meta("text/html; charset=".$lang['charset'], "", "Content-Type");
 		header("Content-Type: text/html; charset=".$lang['charset']);
 		
 		$this->html->body->tpl['center'] = $this->center->output();
