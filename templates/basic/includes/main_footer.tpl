@@ -18,19 +18,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table class="footer">
-      <tr>
-        <td class="footer" align="left" width="33%">
-        	<a href="http://www.php.net/"><img src="{$img_dir}logo-php.gif" alt="PHP Hypertext Preprocessor" /></a>
-        	<a href="http://www.mysql.com/"><img src="{$img_dir}logo-mysql.gif" alt="MySQL database server" /></a>
-        	<a href="http://smarty.php.net/"><img src="{$img_dir}logo-smarty.gif" alt="smarty template engine" /></a>
-        </td>
-        <td class="footer" align="center" width="33%">
-        	PHP time: {$php_time|round:3} s<br />MySQL time: {$mysql_time|round:3} s{if $debug_mysql}<br />Debug: <a href="{$debug_mysql}" target="debug">MySQL</a>{/if}
-        </td>
-        <td class="footer" align="right" width="33%">
-			Powered by: <a target="_blank" href="http://wind.cube.gr/"><b>WiND  v{$wind_version}</b></a><br />
-        	&copy; 2005-2013 <a target="_blank" href="http://wind.cube.gr/wiki/Team">WiND development team</a>
-        </td>
-      </tr>
-</table>
+<div class="footer">
+	<div class="technologies">
+		<a href="http://www.php.net/"><img src="{$img_dir}logo-php.gif" alt="PHP Hypertext Preprocessor" /></a>
+		<a href="http://www.mysql.com/"><img src="{$img_dir}logo-mysql.gif" alt="MySQL database server" /></a>
+		<a href="http://smarty.php.net/"><img src="{$img_dir}logo-smarty.gif" alt="smarty template engine" /></a>
+	</div>
+	<div class="info">
+		PHP time: {$php_time|round:3} s<br />MySQL time: {$mysql_time|round:3} s{if $debug_mysql}<br />Debug: <a href="{$debug_mysql}" target="debug">MySQL</a>{/if}
+	</div>
+	<div class="credits">
+		Powered by: <a target="_blank" href="http://wind.cube.gr/"><b>WiND  v{$wind_version}</b></a><br />
+		&copy; 2005-2013 <a target="_blank" href="http://wind.cube.gr/wiki/Team">WiND development team</a>
+	</div>
+</div>

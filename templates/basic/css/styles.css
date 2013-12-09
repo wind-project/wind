@@ -137,21 +137,32 @@ table.main-content td.main-page {
 	text-align: left;
 }
 
-/** Footer table **/
-table.footer {
+/** Footer **/
+div.footer {
 	width: 100%;
-}
-table.footer td{
-	padding: 8px 8px 2px 8px;
 	font-size: 10px;
 	background-color: #FFFFFF;
 	background-image: url(../images/page-bg.gif);
 	background-position: top;
 	background-repeat: repeat-x;
 	border-top: 1px solid #000000;
+}
+div.footer > *{
+	margin: 0px;
+	padding: 8px 8px 2px 8px;
 	vertical-align: middle;
+	text-align: center;
+	display: inline-block;
+	width: 31.5%;
 }
 
+div.footer > .credits{
+	text-align: right;
+}
+
+div.footer > .technologies{
+	text-align: left;
+}
 /** Quick Login **/
 
 table.quick-login {
@@ -231,6 +242,9 @@ ul.language-selection li a{
 
 /** Navigation **/
 
+table.layout td.navigation > *{
+	border-bottom: 2px solid rgb(9, 54, 104);
+}
 ul.menu {
 	padding: 0px;
 	margin: 0px;
@@ -349,48 +363,32 @@ div.toolbox ul.menu li {
 	font-weight: bold;
 }
 
-/* TITLE TABLE */
-.table-main-title {
-	height: 100%;
+/* Page Title */
+div.page-title {
+	height: 73px;
 	width: 100%;
-}
-
-td.table-main-title-left {
 	background-image: url(../images/title-back.png);
 	background-repeat: repeat-x;
-	width: 10px;
 	border-bottom: 1px solid #093668;
+	position: relative;
 }
 
-td.table-main-title-bullet {
-	background-image: url(../images/title-bullet.png);
-	background-repeat: no-repeat;
-	width: 25px;
-	border-bottom: 1px solid #093668;
-}
-
-td.table-main-title-text {
-	background-image: url(../images/title-back.png);
-	background-repeat: repeat-x;
-	width: auto;
+div.page-title h1 {
+	margin: 0px;
 	font-size: 20px;
-	text-align: left;
-	vertical-align: bottom;
-	padding: 0px 0px 9px 10px;
-	border-bottom: 1px solid #093668;
+	font-weight: normal;
+	background: url(../images/title-bullet.png)	no-repeat 24px center;
+	padding-left: 50px;
+	position: absolute;
+	bottom: 10px;
+	left: 0px;
 }
 
-td.table-main-title-right {
-	background-image: url(../images/title-back.png);
-	background-repeat: repeat-x;
-	width: auto;
-	font-size: 20px;
-	text-align: right;
-	vertical-align: bottom;
-	padding: 0px 20px 9px 10px;
-	border-bottom: 1px solid #093668;
+div.page-title .extra {
+	position: absolute;
+	bottom: 10px;
+	right: 25px;
 }
-
 
 .table-d1 {
 	width: 100%

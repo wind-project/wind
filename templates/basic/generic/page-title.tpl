@@ -18,11 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table width="100%" style="height:73px;"  border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="table-main-title-left">&nbsp;</td>
-<td class="table-main-title-bullet">&nbsp;</td>
-<td class="table-main-title-text">{$title}</td>
-{if $right != ''}<td class="table-main-title-right">{$right}</td>{/if}
-</tr>
-</table>
+<div class="page-title">
+	<h1>{$title}</h1>
+	{if $right != ''}<span class="extra">{$right}</span>{/if}
+</div>
