@@ -34,6 +34,7 @@ class header {
 			$this->tpl['mylogo'] = TRUE;
 			$this->tpl['mylogo_dir'] = ROOT_PATH.'config/';
 		}
+		$this->tpl['link_home'] = makelink(array());
 		return template($this->tpl, __FILE__);
 	}
 	

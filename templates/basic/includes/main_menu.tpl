@@ -20,7 +20,6 @@
  *
  *}
 <ul class="small-menu menu">
-	<li><a href="{$link_home}" class="menu-link">{$lang.home}</a></li>
 {if $logged==TRUE}
 	<li><a href="{$link_edit_profile}" class="menu-link">{$lang.edit_profile}</a></li>
 	<li><a href="{$link_logout}" class="menu-link">{$lang.log_out}</a></li>
