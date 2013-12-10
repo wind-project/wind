@@ -401,6 +401,13 @@ div.page-title .extra {
 	right: 25px;
 }
 
+/** Help **/
+#help-dialog {
+	display: none;
+}
+
+/** Unknown **/
+
 .table-d1 {
 	width: 100%
 }

@@ -18,4 +18,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<a href="javascript:;"><img src="{$img_dir}help.png" alt="" onclick="return overlib('{$lang.help.$help.body}'{if $lang.help.$help.title != ''}, CAPTION, '{$lang.help.$help.title}'{/if});" onmouseout="nd();" /></a>
+<div id="help-dialog">
+{if $lang.help.$help.title != ''}
+	<span class="title">{$lang.help.$help.title}</span>
+{/if}
+{$lang.help.$help.body}
+</div>
+
+<img src="{$img_dir}help.png" alt="help" id="help-dialog-icon" />
+
+{literal}	
+<script>
+$(function() {
+	$("#help-dialog-icon").click(function(){
+		$( "#help-dialog" ).dialog({
+			modal: true,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
+});
+</script>
+{/literal}
