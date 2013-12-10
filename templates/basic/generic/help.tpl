@@ -18,10 +18,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<div id="help-dialog">
+<div id="help-dialog"
 {if $lang.help.$help.title != ''}
-	<span class="title">{$lang.help.$help.title}</span>
+	title="{$lang.help.$help.title}"
 {/if}
+ >
 {$lang.help.$help.body}
 </div>
 
@@ -32,12 +33,7 @@
 $(function() {
 	$("#help-dialog-icon").click(function(){
 		$( "#help-dialog" ).dialog({
-			modal: true,
-			buttons: {
-				Ok: function() {
-					$( this ).dialog( "close" );
-				}
-			}
+			position: {my : 'right top', at : 'right bottom', of : '#help-dialog-icon' }
 		});
 	});
 });

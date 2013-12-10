@@ -62,6 +62,9 @@ table td {
 	color: rgb(51, 21, 193);
 }
 
+.ui-widget{
+	font-size:11px;
+}
 
 /** Layout Table **/
 table.layout {
@@ -192,7 +195,6 @@ table.main-content td.notification form table.quick-login {
 	/* hack: make table inline incase of wrapped by a form */
 	display: inline;
 }
-
 
 table.quick-login td.text {
 
@@ -402,6 +404,10 @@ div.page-title .extra {
 }
 
 /** Help **/
+#help-dialog-icon:hover {
+	cursor: pointer;
+}
+
 #help-dialog {
 	display: none;
 }
