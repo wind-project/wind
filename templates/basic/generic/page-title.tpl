@@ -20,5 +20,5 @@
  *}
 <div class="page-title">
 	<h1>{$title}</h1>
-	{if $right != ''}<span class="extra">{$right}</span>{/if}
+	{if $right != ''}<div class="extra">{$right}</div>{/if}
 </div>
