@@ -25,12 +25,7 @@ class menu {
 	var $tpl;
 	var $hide=FALSE;
 	
-	function form_login() {
-		$form_login = new form(array('FORM_NAME' => 'form_login'));
-		$form_login->db_data('users.username, users.password');
-		return $form_login;
-	}
-	
+
 	function calculate_menu_stats() {
 		global $db, $config;
 		$stats_tmp = "/tmp/wind-stats-".md5(__FILE__).".tmp";
@@ -114,20 +109,6 @@ class menu {
 		if ($this->hide) return;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $main, $db, $vars, $lang;
-		$this->tpl['logged'] = $main->userdata->logged;
-		$this->tpl['form_login'] = $construct->form($this->form_login(), __FILE__);
-		
-		$main->html->body->tpl['logged'] = $this->tpl['logged'];
-		$main->html->body->tpl['form_login'] = $this->tpl['form_login'];
-		$main->html->body->tpl['logged_username'] = isset($main->userdata->info['username'])?$main->userdata->info['username']:"";
-		$main->html->body->tpl['link_logged_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));
-		
-		foreach($vars['language']['enabled'] as $key => $value) {
-			if ($value) {
-				$main->html->body->tpl['languages'][$key]['name'] = ($lang['languages'][$key]==''?$key:$lang['languages'][$key]);
-				$main->html->body->tpl['languages'][$key]['link'] = makelink(array("session_lang" => $key), TRUE);
-			}
-		}
 		
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
@@ -170,9 +151,6 @@ class menu {
 		$this->tpl['link_allranges'] = makelink(array("page" => "ranges", "subpage" => "search"));
 		$this->tpl['link_allservices'] = makelink(array("page" => "services"));
 		$this->tpl['link_alldnszones'] = makelink(array("page" => "dnszones"));
-		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
-		$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
-		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
 		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), $this->tpl['query_string']);
 		$this->calculate_menu_stats();
 		$main->html->head->add_script("text/javascript", makelink(array("page" => "search", "subpage" => "suggest_js")));

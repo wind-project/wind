@@ -104,20 +104,82 @@ div.header {
 	background-image: -ms-linear-gradient(bottom, #161E49 0%, #394C86 100%);
 	background-image: linear-gradient(to bottom, #161E49 0%, #394C86 100%);
 	border-bottom: 2px solid #c3c3c3;
+	position: relative;
 }
 
-table.header td {
-	height: 90px;
-	text-align: left;
-}
-
-table.header td img{
+div.header img.logo {
 	display: block;
 }
 
-table.header td.right {
-	text-align: right;
+
+div.user-panel {
+	font-size: 11px;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	background-color: #c3c3c3;
+	border-color: #ffffff;
+	border-style: solid;
+	border-width: 1px 0px 0px 1px;
+	border-radius: 5px 0px 0px 0px;
+	padding: 5px 10px;
+	
 }
+
+div#login-dialog {
+	display: none;
+}
+
+.login-dialog {
+	padding: 10px;
+	border-radius: 15px;
+	font-size: 15px;
+}
+.login-dialog .ui-dialog-titlebar {
+	display:none
+}
+
+
+div.user-panel .user{
+	font-size: 14px;
+	color: black;
+	font-weight: bold;
+}
+
+.language-selection {
+	display: inline-block;
+	margin-left: 10px;
+}
+.language-selection a img{
+	border: 0px;
+	margin: 0px;
+	vertical-align: bottom;
+}
+
+ul.languages{
+	list-style-type: none;
+	margin: 0px;
+	display: block;
+	float: right;
+	position: absolute;
+	z-index: 1000;
+	right: 2px;
+	background: white;
+	border: 1px solid #d1d1d1;
+	border-radius: 5px;
+	padding: 5px 15px;
+	display: none;
+}
+
+ul.languages li{
+	margin: 5px 0px;
+	padding: 0px
+	
+}
+.languages li a{
+	white-space: pre;
+}
+
 
 /** Main content table **/
 
@@ -177,81 +239,6 @@ div.footer > .credits{
 div.footer > .technologies{
 	text-align: left;
 }
-/** Quick Login **/
-
-table.quick-login {
-	width: 80%;
-	height: 100%;
-	display: inline-block;
-}
-
-table.main-content td.notification  form {
-	padding: 0px;
-	margin: 0px;
-	display: inline-block;
-}
-
-table.main-content td.notification form table.quick-login {
-	/* hack: make table inline incase of wrapped by a form */
-	display: inline;
-}
-
-table.quick-login td.text {
-
-	color: white;
-	font-size: 9px;
-	font-style: italic;
-	padding: 1px 1px 1px 4px;
-	white-space: nowrap;
-	font-weight: bold;
-}
-
-table.quick-login td.title {
-	color: orange;
-	font-size: 10px;
-	font-weight: bold;
-	padding: 6px 4px 6px 4px;
-	white-space: nowrap;
-}
-
-table.quick-login td.field {
-	font-size: 10px;
-	font-weight: bold;
-	color: #FFFFFF;
-	white-space: nowrap;
-	text-align: left;
-	padding: 6px 3px 6px 3px;
-}
-
-table.quick-login td.submit {
-	width: 100%;
-	text-align: left;
-	padding-left: 5px;
-}
-
-table.quick-login .fld {
-	border: 1px solid #000000;
-	font-size: 10px;
-	width: 100px;
-}
-
-ul.language-selection {
-	list-style-type: none;
-	padding: 0px;
-	margin: 0px;
-	display: block;
-	float: right;
-	display: inline-block;
-}
-
-ul.language-selection li{
-	display: inline-block;
-	margin: 0px;
-	padding: 0px
-}
-ul.language-selection li a{
-	line-height: 25px;
-}
 
 /** Navigation **/
 
@@ -269,14 +256,6 @@ ul.menu li.even {
 
 ul.menu li.odd {
 	background-color: rgb(240, 240, 240);
-}
-
-ul.small-menu li{
-	background: black url(../images/menu-top-bullet.png) no-repeat 5px 50%;
-	padding: 2px 0px 2px 20px;
-	font-weight: bold;
-	font-size: 10px;
-	border-bottom: 1px solid #555555;
 }
 
 ul.main-menu li {

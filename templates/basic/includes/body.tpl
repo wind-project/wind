@@ -33,18 +33,6 @@
     
     <td class="main">
 	<table class="main-content">
-  	{if $menu != ''}
-		<tr>
-			<td class="notification">
-			{if $logged}
-				{include file="includes/main_menu_logged.tpl"}
-			{else}
-				{$form_login}
-			{/if}
-				{include file="generic/language_selection.tpl" languages=$languages}
-			</td>
-		</tr>
-	  {/if}
 		<tr>
 			<td class="main-page">
     			{if $message==''}

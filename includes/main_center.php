@@ -76,6 +76,7 @@ class center {
 				}
 				if (get('action') == 'activate') return TRUE;
 				if (get('action') == 'restore') return TRUE;
+				if (get('subpage') == 'loginform') return TRUE;
 				break;
 		}
 		return FALSE;

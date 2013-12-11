@@ -72,6 +72,7 @@ function get($key) {
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/".get('page').'/', FALSE, TRUE);
 			for ($key=0;$key<count($valid_array);$key++) {
 				$valid_array[$key] = basename($valid_array[$key], '.php');
+				
 				if (substr($valid_array[$key], 0, strlen(get('page'))+1) != get('page').'_') {
 					array_splice($valid_array, $key, 1);
 					$key--;
@@ -415,6 +416,7 @@ function language_set($language='', $force=FALSE) {
 	} else {
 		$tl = $vars['language']['default'];
 	}
+	$vars['info']['current_language'] = $tl;
 	
 	if ($vars['language']['enabled'][$tl] === TRUE && 
 			file_exists(ROOT_PATH."globals/language/".$tl.".php")) {
@@ -433,7 +435,8 @@ function language_set($language='', $force=FALSE) {
 
 	} else {
 
-		if ($tl == $_SESSION['lang']) unset($_SESSION['lang']);
+		if ($tl == $_SESSION['lang'])
+			unset($_SESSION['lang']);
 		die("WiND error: Selected language not found.");
 
 	}

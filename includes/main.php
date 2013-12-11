@@ -50,7 +50,8 @@ class main {
 	function output() {
 		global $lang;
 		
-		if (get('session_lang') != '') $_SESSION['lang'] = get('session_lang');
+		if (get('session_lang') != '')
+			$_SESSION['lang'] = get('session_lang');
 		if (isset($this->userdata->info)) {
 		    language_set($this->userdata->info['language']);
 		}

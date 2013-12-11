@@ -20,7 +20,8 @@
  *
  */
 
-if (get('action') == 'restore') include_once(ROOT_PATH."includes/pages/users/users_restore.php");
+include_once(ROOT_PATH."includes/pages/users/users_restore.php");
+include_once(ROOT_PATH."includes/pages/users/users_loginform.php");
 
 class users {
 
@@ -79,8 +80,7 @@ class users {
 				$main->message->set_fromlang('error', 'generic');		
 			}
 			return ;
-		}
-		if (get('action') == 'activate') {
+		} else if (get('action') == 'activate') {
 			$t = $db->get('account_code', 'users', "id = '".get('user')."'");
 			if ($t[0]['account_code'] != '' && $t[0]['account_code'] == get('account_code')) {
 				$db->set('users', array('status' => 'activated'), "id = '".get('user')."'");
@@ -89,16 +89,18 @@ class users {
 				$main->message->set_fromlang('info', 'activation_failed');
 			}
 			return;
-		}
-		if (get('action') == 'logout') {
+		} else if (get('action') == 'logout') {
 			$main->userdata->logout();
 			$redirect = get('redirect');
 			$redirect = ($redirect == ""?makelink():$redirect);
 			$main->message->set_fromlang('info', 'logout_success', $redirect);
 			return;
-		}
-		if (get('action') == 'restore') {
+		} else if (get('action') == 'restore') {
 			return $this->restore->output();
+		}
+		if (get('subpage') == 'loginform') {
+			$sp = new loginform();
+			return $sp->output();
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		if (get('user') != '') {

@@ -18,12 +18,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-{include file=generic/page-title.tpl title="`$lang.welcome`"}
+{include file=generic/page-title.tpl title="`$community_name`"}
 {if $startup_html != ''}
 {$startup_html}
 {else}
 <div style="padding: 30px; font-size: 12px;">
-<h1>{$community_name}</h1>
+<h2>{$lang.welcome}</h2>
 <p>Welcome at {$community_name}. Here you can find information about <a href="?page=nodes">registered nodes</a>
 of {$community_short_name} and <a href="?page=services">services</a> running on the network.
 If you want want to participate you can always try to <a href="?page=users&amp;user=add">register</a>. For registered

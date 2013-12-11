@@ -19,16 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<ul class="small-menu menu">
-{if $logged==TRUE}
-	<li><a href="{$link_edit_profile}" class="menu-link">{$lang.edit_profile}</a></li>
-	<li><a href="{$link_logout}" class="menu-link">{$lang.log_out}</a></li>
-{else}
-	<li><a href="{$link_register}" class="menu-link">{$lang.register}</a></li>
-	<li><a href="{$link_restore_password}" class="menu-link">{$lang.password_recover}</a></li>
- {/if}
-</ul>
-
 <ul class="main-menu menu">
 	<li>
 		<img src="templates/basic/images/search_nodes.gif" alt="{$lang.all_nodes}" />

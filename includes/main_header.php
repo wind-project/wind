@@ -23,18 +23,42 @@ class header {
 	
 	var $hide=FALSE;
 	var $tpl;
-		
-	function header() {
+	
+	function form_login() {
+		$form_login = new form(array('FORM_NAME' => 'form_login'));
+		$form_login->db_data('users.username, users.password');
+		return $form_login;
 	}
 	
-	
 	function output() {
+		global $main, $construct, $vars, $lang;
+		
 		if ($this->hide) return;
 		if (file_exists(ROOT_PATH.'config/mylogo.png')) {
 			$this->tpl['mylogo'] = TRUE;
 			$this->tpl['mylogo_dir'] = ROOT_PATH.'config/';
 		}
 		$this->tpl['link_home'] = makelink(array());
+		
+		$this->tpl['current_language'] = $vars['info']['current_language'];
+		foreach($vars['language']['enabled'] as $key => $value) {
+			if ($value) {
+				$this->tpl['languages'][$key]['name'] = ($lang['languages'][$key]==''?$key:$lang['languages'][$key]);
+				$this->tpl['languages'][$key]['link'] = makelink(array("session_lang" => $key), TRUE);
+			}
+		}
+		
+		if ($main->userdata->logged) {
+			$this->tpl['logged'] = $main->userdata->logged;
+			$this->tpl['logged_username'] = isset($main->userdata->info['username'])?$main->userdata->info['username']:"";
+			$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
+			$this->tpl['link_user_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));;
+		} else {
+			$this->tpl['form_login'] = $construct->form($this->form_login(), __FILE__);
+			$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
+			$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
+			$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
+		}
 		return template($this->tpl, __FILE__);
 	}
 	

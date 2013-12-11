@@ -1,8 +1,9 @@
-{*
+<?php
+/*
  * WiND - Wireless Nodes Database
- * Basic HTML Template
  *
- * Copyright (C) 2005 Konstantinos Papadimitriou <vinilios@cube.gr>
+ * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +18,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- *}
-<table class="quick-login">
-<tr>
-	<td class="title">{$lang.logged} |</td>
-	<td class="field"><a href="{$link_logged_profile}" class="menu-link">{$logged_username}</a></td>
-</tr>
-</table>
+ */
+
+
+
+class loginform{
+	var $tpl;
+	
+	function output() {
+		global $lang;
+		
+		$this->tpl['lang'] = $lang;
+		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
+		$this->tpl['form_submit_url'] = makelink(array("page" => "users", "subpage" => "loginform"));
+		return template($this->tpl, __FILE__);
+		exit;
+	}
+	
+
+}
+
+?>
