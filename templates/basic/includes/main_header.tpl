@@ -30,12 +30,12 @@
 
 	<div class="user-panel">
 	{if $logged==TRUE}
-		<a href="{$link_user_profile}" class="user">{$logged_username}</a> | <a href="{$link_logout}" class="logout">{$lang.logout}</a>
+		<a href="{$link_user_profile}" class="user">{$logged_username}</a> | <a id="logout" href="{$link_logout}" class="logout">{$lang.logout}</a>
 	{else}
-		<a id="login" href="#">{$lang.login}</a> / <a href="{$link_register}">{$lang.register}</a> 
-		<div id="login-dialog">
-			{$form_login}
-		</div>
+		<a id="login" href="{$link_login_form}">{$lang.login}</a> / <a href="{$link_register}">{$lang.register}</a> 
+		<!-- <div id="login-dialog">
+			<div class="inner"> </div>
+		</div> -->
 	{/if}
 		{include file="generic/language_selection.tpl" languages=$languages current_language=$current_language}
 	</div>
@@ -43,11 +43,17 @@
 	{literal}
 	<script>
 	$(function(){
+		var login_form = new LoginForm({/literal} '{$link_login_form}' {literal});
 		$('#login').click(function() {
-			$('#login-dialog').dialog( {
-				modal: true,
-				dialogClass: 'login-dialog'
+			login_form.show();
+			return false;
+		});
+		
+		$('#logout').click(function() {
+			$.get({/literal} '{$link_logout}' {literal}, function(){
+				reload();
 			});
+			return false;
 		});
 	});
 	</script>

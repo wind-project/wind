@@ -32,7 +32,10 @@ class construct {
 				$template='constructors/form.tpl';
 			}
 		}
-		return template(array("data" => $form->data, "extra_data" => $form->info, "hidden_qs" => get_qs()), $template);
+		return template(array("data" => $form->data,
+				"extra_data" => $form->info,
+				"action_url" => htmlspecialchars('.'.get_qs())),
+				$template);
 	}
 	
 	function table($table, $template='constructors/table.tpl') {

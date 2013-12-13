@@ -39,7 +39,8 @@ class header {
 			$this->tpl['mylogo_dir'] = ROOT_PATH.'config/';
 		}
 		$this->tpl['link_home'] = makelink(array());
-		
+		$this->tpl['link_login_form'] = makelink(array("page" => "users", "subpage" => "loginform"), false, true, false);
+		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"), false, true, false);
 		$this->tpl['current_language'] = $vars['info']['current_language'];
 		foreach($vars['language']['enabled'] as $key => $value) {
 			if ($value) {
@@ -51,10 +52,8 @@ class header {
 		if ($main->userdata->logged) {
 			$this->tpl['logged'] = $main->userdata->logged;
 			$this->tpl['logged_username'] = isset($main->userdata->info['username'])?$main->userdata->info['username']:"";
-			$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
 			$this->tpl['link_user_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));;
 		} else {
-			$this->tpl['form_login'] = $construct->form($this->form_login(), __FILE__);
 			$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
 			$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
 			$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));

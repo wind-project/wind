@@ -51,6 +51,7 @@ $lang = array(
 	'users_info' => "Users info",
 	'username' => "Username",
 	'password' => "Password",
+	'rememberme' => "Keep me logged in",
 	'registered_since' => "Registered",
 	'name' => "First Name",
 	'surname' => "Last Name",

@@ -39,30 +39,29 @@ function redirect($url, $sec=0, $exit=TRUE) {
 	}
 }
 
-function get_qs($htmlspecialchars=TRUE) {
-	$ret = "";
-	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-		$ret = $_SERVER['QUERY_STRING'];
+/**
+ * @brief Check if the current request is made by an ajax script
+ */
+function is_ajax_request() {
+	if(!empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+			&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+	{
+		return true;
 	} else {
-		$ret = $_POST['query_string'];
+		return false;
 	}
+}
+
+function get_qs($htmlspecialchars=TRUE) {
+	$ret = $_SERVER['QUERY_STRING'];
 	return ($htmlspecialchars?htmlspecialchars($ret):$ret);
 }
 
 function get($key) {
 	global $page_admin, $main;
-	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-		$ret = "";
-		if (isset($_GET[$key])) {
-		    $ret = $_GET[$key];
-		}		
-	} else {
-		parse_str($_POST['query_string'], $output);
-		$ret = "";
-		if (isset($output[$key])) {
-		    $ret = $output[$key];
-		}
-	}
+	
+	$ret = isset($_GET[$key])?$_GET[$key]:"";
+	
 	switch ($key) {
 		case 'page':
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/");

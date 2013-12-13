@@ -18,8 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<form name="{$extra_data.FORM_NAME}" method="post" action="?">
-<input type="hidden" name="query_string" value="{$hidden_qs}" />
+<form name="{$extra_data.FORM_NAME}" method="post" action="{$hidden_qs}">
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 <table class="table-form">
 {section loop=$data name=d}

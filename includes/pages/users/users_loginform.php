@@ -28,13 +28,39 @@ class loginform{
 	function output() {
 		global $lang;
 		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		$this->tpl['lang'] = $lang;
 		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
 		$this->tpl['form_submit_url'] = makelink(array("page" => "users", "subpage" => "loginform"));
-		return template($this->tpl, __FILE__);
-		exit;
+		
+		$output = template($this->tpl, __FILE__);
+		if (is_ajax_request()) {
+			print $output;
+			exit;
+		} else {
+			return $output;
+		}
 	}
 	
+	function output_onpost_login() {
+		global $main, $lang;
+		$result = array();
+		if ($main->userdata->login($_POST['username'], $_POST['password'], ((isset($_POST['rememberme']) && $_POST['rememberme']=='Y')?TRUE:FALSE))) {
+			if ($main->userdata->info['status'] == 'pending') {
+				$result['error'] = $lang['message']['infp']['activation_required'];
+				$main->userdata->logout();
+			} else {
+				$result['success'] = $lang['message']['info']['login_success'];
+				$main->message->set_fromlang('info', 'login_success', makelink());
+			}
+		} else {
+			$result['error'] = $lang['message']['error']['login_failed'];
+		}
+		
+		header('Content-Type: application/json; '.$lang['charset']);
+		print json_encode($result);
+		exit;
+	}
 
 }
 

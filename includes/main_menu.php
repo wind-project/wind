@@ -110,6 +110,7 @@ class menu {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $main, $db, $vars, $lang;
 		
+		$this->tpl['logged'] = $main->userdata->logged;
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
 			$this->tpl['mynodes'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");
@@ -156,21 +157,6 @@ class menu {
 		$main->html->head->add_script("text/javascript", makelink(array("page" => "search", "subpage" => "suggest_js")));
 		return template($this->tpl, __FILE__);
 	}
-
-	function output_onpost_form_login() {
-		global $main;
-		if ($main->userdata->login($_POST['users__username'], $_POST['users__password'], ((isset($_POST['save_login']) && $_POST['save_login']=='Y')?TRUE:FALSE))) {
-			if ($main->userdata->info['status'] == 'pending') {
-				$main->message->set_fromlang('info', 'activation_required');
-				$main->userdata->logout();
-			} else {
-				$main->message->set_fromlang('info', 'login_success', makelink());
-			}
-		} else {
-			$main->message->set_fromlang('error', 'login_failed', makelink("", TRUE));
-		}
-	}
-	
 }
 
 ?>
