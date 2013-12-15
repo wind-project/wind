@@ -43,6 +43,7 @@ LoginForm.prototype.error = function(msg){
 	if (! this._loaded)
 		return;
 	
+	this._dialog_el.addClass('info');
 	this._dialog_el.addClass('error');
 	this._notification_el.text(msg);
 	this._dialog_el.parent().effect("shake");
@@ -55,9 +56,20 @@ LoginForm.prototype.info = function(msg){
 	if (! this._loaded)
 		return;
 	
+	this._dialog_el.addClass('info');
 	this._dialog_el.removeClass('error');
+	this._dialog_el.addClass('notification');
 	this._notification_el.text(msg);
 };
+
+/**
+ * @brief Reset form to initial state
+ */
+LoginForm.prototype.reset = function(){
+	this._dialog_el.removeClass('error');
+	this._dialog_el.removeClass('info');
+	this._dialog_el.find('input[type=text], input[type=password]').val('');
+}
 
 /**
  * @brief Load form from the remote url
@@ -77,7 +89,6 @@ LoginForm.prototype.load = function(success){
 			// Hook form submition
 			console.log(object._dialog_el.find('form'));
 			object._dialog_el.find('form').submit(function() {
-				console.log('submiting');
 				object.info('Logging to the system');
 				async_form($(this), function(result){
 					if (result['success']) {
@@ -105,6 +116,8 @@ LoginForm.prototype.load = function(success){
 LoginForm.prototype.show = function(){
 	var object = this;
 	object.load(function(){
+		object.reset();
+		
 		object._dialog_el.dialog({
 			modal: true,
 			resizable: false,

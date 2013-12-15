@@ -175,19 +175,38 @@ ul.languages li{
 .login-dialog {
 	padding: 10px;
 	border-radius: 15px;
-	border: 1px solid black;
-	font-size: 15px;
-	font: 12px Verdana;
+	border-width: 0px;
+	font-size: 12px;
+	font-family: Verdana !important;
 	color: white !important;
-	background-color: #d1d1d1 !important;
+	background-color: #9ba8c2 !important;
 	background-image: none;
+	box-shadow: 0px 0px 10px #343434;
+	width: 250px !important;
 }
+
+.login-dialog a {
+	color: #474ca0;
+}
+.login-dialog a:hover {
+	text-decoration: none;
+}
+
 .login-dialog .notification{
-	font-style: italic;
+	display: none;
+}
+
+.login-dialog .info .notification{
+	display: block;
+	background-color: #D6D6D6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 212px;
 }
 
 .login-dialog .error .notification{
-	color: red;
+	color: #CF0D0D !important;
 }
 .login-dialog .ui-dialog-titlebar {
 	display: none
@@ -195,14 +214,32 @@ ul.languages li{
 
 .login-dialog label{
 	display: block;
+	margin: 15px 0px;
 }
 
 .login-dialog fieldset {
 	border: 0px;
+	padding: 0px;;
 }
 
 .login-dialog input[type=password], .login-dialog input[type=text]{
 	display: block;
+	font-size: 15px;
+	width: 212px;
+	border: none;
+	border-radius: 4px;
+	padding: 5px;
+	color: #424242;
+}
+
+.login-dialog input[type=submit] {
+	background: #627295;
+	color: #d1d1d1;
+	font-size: 13px;
+	font-weight: bold;
+	border: 0px;
+	padding: 3px 8px;
+	margin-right: 10px;
 }
 
 /** Main content table **/
@@ -212,17 +249,7 @@ table.main-content {
 	height: 100%;
 }
 
-table.main-content td.quick-login {
-	height: auto;
-	width: 100%;
-}
-
-table.main-content td.notification {
-	background-image: url("../images/title-login-back.png");
-	background-repeat: repeat-x;
-}
-
-table.main-content td.main-title {
+able.main-content td.main-title {
 	height: 71px;
 	border-bottom: 1px solid #093668;
 }
