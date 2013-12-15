@@ -27,7 +27,7 @@ class gmap_json {
 	}
 	
 	function output() {
-		global $db, $lang;
+		global $db, $lang, $vars;
 		
 		$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
 		$node = isset($node[0])?$node[0]:'';
@@ -54,7 +54,15 @@ class gmap_json {
 			'nodes.id' .
 			($having!=''?' HAVING '.$having:''));
 		
-		$json = array('nodes' => array(), 'links' => array());
+		// Create json object
+		$json = array(
+				'meta' => array(
+						'bounds' => $vars['gmap']['bounds']),
+				'nodes' => array(),
+				'links' => array()
+		);
+		
+		// Push node information
 		foreach ((array) $nodes as $key => $value) {
 			$node = array();
 			if (get('node') == $value['id']) {
@@ -83,7 +91,7 @@ class gmap_json {
 			
 			$node['lat'] = floatval($value['latitude']);
 			$node['lon'] = floatval($value['longitude']);
-			$node['url'] = makelink(array("page" => "nodes", "node" => $value['id']), false, true, false);
+			$node['url'] = absolute_link(array("page" => "nodes", "node" => $value['id']), false, true, false);
 			$json['nodes'][$value['id']] = $node;
 		}
 		
@@ -102,6 +110,7 @@ class gmap_json {
 			($where!=''?'('.$where.')':'')." HAVING n1_lat IS NOT NULL AND n1_lon IS NOT NULL AND n2_lat IS NOT NULL AND n2_lon IS NOT NULL"
 			);
 		
+		// Push link information
 		foreach ((array) $links as $key => $value) {
 			$link = array();
 			$link['type'] = $value['type'];

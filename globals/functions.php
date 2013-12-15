@@ -89,6 +89,13 @@ function get_qs($htmlspecialchars=TRUE) {
 	return ($htmlspecialchars?htmlspecialchars($ret):$ret);
 }
 
+/**
+ * @brief Get a request parameter from query string.
+ * Depending the type of the key it will try to do sanitization and security
+ * checking. Specifically for 'page' and 'subpage' it will check first that it exists.
+ * @param string $key The key of the entry to fethch
+ * @return Ambigous <string, unknown>
+ */
 function get($key) {
 	global $page_admin, $main;
 	
@@ -134,6 +141,14 @@ function getdirlist($dirName, $dirs=TRUE, $files=FALSE) {
 	return $a;
 } 
 
+/**
+ * @brief Create a relative url for a specific action
+ * @param string $extra
+ * @param string $cur_qs
+ * @param string $cur_gs_vars
+ * @param string $htmlspecialchars
+ * @return string
+ */
 function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
 	global $qs_vars;
 	$o = array();
@@ -147,6 +162,28 @@ function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars
 	}
 	$o = array_merge($o, (array)$extra);
 	return ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
+}
+
+/**
+ * @brief Create an absolute url for a specific resource
+ * @return string The absolute url of the resource
+ */
+function absolute_link($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
+
+	// Format absolute path
+	$relative = makelink($extra, $cur_qs, $cur_gs_vars, $htmlspecialchars);
+	if (! strstr($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'])) {
+		$absolute_path = (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'') . $relative;
+	} else {
+		$absolute_path = $_SERVER['SCRIPT_NAME'] . $relative;
+	}
+	
+	// Detect connection scheme
+	$scheme = empty($_SERVER['HTTPS'])?'http':'https';
+
+	// Craft absolute url
+	$url = "${scheme}://${_SERVER['HTTP_HOST']}${absolute_path}";
+	return $url;
 }
 
 function query_str($params) {
