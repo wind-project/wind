@@ -52,6 +52,38 @@ function is_ajax_request() {
 	}
 }
 
+/**
+ * @brief Get a title for the current user based on username, name and surname.
+ * If it is possible it will prefer "name surname" otherwise it will fallback
+ * to username
+ */
+function get_user_title() {
+	global $main;
+	
+	if (!$main->userdata->logged)
+		return "Anonymous";
+	
+	$title_tokens = array();
+	
+	// Try to get tokens from name surname
+	if (! empty($main->userdata->info['name']))
+		$title_tokens[] = $main->userdata->info['name'];
+	if (! empty($main->userdata->info['surname']))
+		$title_tokens[] = $main->userdata->info['surname'];
+	
+	// If we didn't find any token we add username
+	if (empty($title_tokens)){
+		$title_tokens[] = $main->userdata->info['username'];
+	}
+	
+	return implode(" ", $title_tokens); 
+}
+
+/**
+ * @brief Get query string of the request
+ * @param string $htmlspecialchars
+ * @return Ambigous <string, unknown>
+ */
 function get_qs($htmlspecialchars=TRUE) {
 	$ret = $_SERVER['QUERY_STRING'];
 	return ($htmlspecialchars?htmlspecialchars($ret):$ret);

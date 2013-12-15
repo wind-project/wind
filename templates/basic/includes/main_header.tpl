@@ -30,12 +30,9 @@
 
 	<div class="user-panel">
 	{if $logged==TRUE}
-		<a href="{$link_user_profile}" class="user">{$logged_username}</a> | <a id="logout" href="{$link_logout}" class="logout">{$lang.logout}</a>
+		<a href="{$link_user_profile}" class="user">{$logged_title}</a> | <a id="logout" href="{$link_logout}" class="logout">{$lang.logout}</a>
 	{else}
 		<a id="login" href="{$link_login_form}">{$lang.login}</a> / <a href="{$link_register}">{$lang.register}</a> 
-		<!-- <div id="login-dialog">
-			<div class="inner"> </div>
-		</div> -->
 	{/if}
 		{include file="generic/language_selection.tpl" languages=$languages current_language=$current_language}
 	</div>

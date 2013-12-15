@@ -50,8 +50,9 @@ class header {
 		}
 		
 		if ($main->userdata->logged) {
-			$this->tpl['logged'] = $main->userdata->logged;
+			$this->tpl['logged'] = $main->userdata->logged; 
 			$this->tpl['logged_username'] = isset($main->userdata->info['username'])?$main->userdata->info['username']:"";
+			$this->tpl['logged_title'] = get_user_title();
 			$this->tpl['link_user_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));;
 		} else {
 			$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
