@@ -234,7 +234,7 @@ ul.languages li{
 
 .login-dialog input[type=submit] {
 	background: #627295;
-	color: #d1d1d1;
+	color: #f1f1f1;
 	font-size: 13px;
 	font-weight: bold;
 	border: 0px;
@@ -869,3 +869,34 @@ td.node-view-right-bottom {
 textarea {
 	height: 200px;
 }
+
+/** Map Style **/
+.olPopup {
+	box-shadow: 2px 2px 8px #343434;
+	border-radius: 5px;
+}
+
+.olPopupContent {
+	color: #464646;
+	font: 12px Verdana;
+	padding: 5px 10px !important;
+}
+
+.olPopupContent .title{
+	font-weight: bold;
+	font-size: 13px;
+	display: block;
+	margin: 4px 0px;
+	border-bottom: 1px solid #464646;
+}
+
+.olPopupContent ul.attributes{
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+.olPopupContent ul.attributes .key {
+	font-weight: bold;
+	margin-right: 5px;
+}]

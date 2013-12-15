@@ -27,7 +27,7 @@ class gmap_fullmap {
 	function output() {
 		global $main, $vars;
 		$main->menu->hide = true;
-		$this->tpl['gmap_key_ok'] = include_gmap(htmlspecialchars("?page=gmap&subpage=js&node=".get('node')));
+		$this->tpl['link_nodesjson_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), FALSE, TRUE, FALSE);
 		return template($this->tpl, __FILE__);
 	}
 

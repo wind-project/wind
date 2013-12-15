@@ -18,16 +18,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
-<table class="table-main" cellpadding="0" cellspacing="0"><tr><td style="font-size:12px; text-align:center; width: 100%; height: 100%">
-{if $gmap_key_ok}
-<div id="map" style="width: 100%; height: 100%"></div>
-{else}
-{$lang.message.error.gmap_key_failed.body|wordwrap:40|nl2br}
-{/if}
-</td></tr><tr><td style="font-size:12px;" align="center">
-<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_orange.png" alt=$lang.backbone}{$lang.backbone}
-<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_green.png" alt=$lang.aps}{$lang.aps}
-<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_blue.png" alt=$lang.clients}{$lang.clients}
-<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_red.png" alt=$lang.unlinked}{$lang.unlinked}
-</td></tr>
-</table>
+<div id="map" style="width: 100%; height: 80vh;"></div>
+<script type="text/javascript" src="{$js_dir}map.js" > </script>
+{literal}
+<script type="text/javascript">
+$(function(){
+	// Make map fullscreen
+	var fixHeight = function(){
+		console.log($('.main-page').height());
+		$('#map').height($('.main-page').height());
+	}
+	fixHeight();	// First Call;
+	$(window).resize(fixHeight);
+	load_map('map', {/literal} '{$link_nodesjson_url}' {literal});
+});
+{/literal}
+ </script>

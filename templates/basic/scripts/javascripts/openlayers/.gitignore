@@ -1,0 +1,7 @@
+# Ignore all files of openlayers
+*
+# Except the production ones
+!.gitignore
+!/themes/
+!/img/
+!/OpenLayers.js
