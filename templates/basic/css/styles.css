@@ -154,6 +154,7 @@ ul.languages{
 	position: absolute;
 	z-index: 1000;
 	right: 2px;
+	top: 22px;
 	background: white;
 	border: 1px solid #d1d1d1;
 	border-radius: 5px;
@@ -871,23 +872,91 @@ textarea {
 }
 
 /** Map Style **/
+#map {
+	position: relative;
+}
+
+.map-hud {
+	position: absolute;
+	right: 0px;
+	top: 30px;
+	z-index: 1000;
+	background-color: #000000;
+	opacity: 0.6;
+	border-radius: 5px 0px 0px 5px;
+}
+
+.map-filter ul{
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+	color: white;
+	font: 10px Verdana;
+}
+
+.map-filter li {
+	color: #d1d1d1;
+	padding: 2px 5px;
+}
+.map-filter li:hover{
+	cursor: pointer;
+	background-color: #454545;
+}
+
+.map-filter li.active{
+	font-weight: bold;
+	color: white;
+}
+
 .olPopup {
 	box-shadow: 2px 2px 8px #343434;
-	border-radius: 5px;
+	border-radius: 0px 12px 12px 12px;
+	background: white url(../images/popup-arrow.png) no-repeat 4px 4px;
 }
 
 .olPopupContent {
 	color: #464646;
-	font: 12px Verdana;
-	padding: 5px 10px !important;
+	font: 11px Verdana;
+	padding: 8px 14px 4px 14px !important;
 }
 
+.olPopupContent a{
+	margin-top: 8px;
+	margin-bottom: -5px;
+	display: block;
+	font-weight: bold;
+	color: #475B7A;
+}
+	
+.olPopupContent a:hover{
+	text-decoration: none;
+	color: #7989E0;
+}
+	
 .olPopupContent .title{
 	font-weight: bold;
 	font-size: 13px;
 	display: block;
 	margin: 4px 0px;
-	border-bottom: 1px solid #464646;
+	
+	//background: transparent url('../images/gmap/mm_20_green.png') no-repeat 0px 0px;
+		/*border-bottom: 1px solid #464646;*/ 
+}
+
+.olPopupContent .id{
+	color: #909090;
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	top: 4px;
+}
+	
+.olPopup .client .title{
+	//background-image:url('../images/gmap/mm_20_blue.png');
+}
+
+.olPopup .unlinked .title{
+	//background-image:url('../images/gmap/mm_20_red.png');
 }
 
 .olPopupContent ul.attributes{
@@ -895,8 +964,11 @@ textarea {
 	padding: 0px;
 	list-style-type: none;
 }
+.olPopupContent ul.attributes li{
+	margin: 1px 0px;
+}
+	
 
 .olPopupContent ul.attributes .key {
-	font-weight: bold;
-	margin-right: 5px;
+
 }]

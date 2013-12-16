@@ -19,6 +19,7 @@ var NetworkMap = function(el_id, topology_url, options) {
 		unlinked : false
 	};
 	this._filter = $.extend({}, this._default_filter);
+	this._node_popup = null;
 	
 	// Process options
 	this._default_options = {
@@ -33,7 +34,50 @@ var NetworkMap = function(el_id, topology_url, options) {
 	
 	// Download topology
 	this._downloadTopology();
+	
 };
+
+/**
+ * @brief Construct and return DOM Element for a node popup
+ */
+NetworkMap.prototype._constructNodePopup = function(feature) {
+	var popup_body = $(
+		'<div><div class="nodePopup" ><span class="title"/><span class="id"/>'
+			+ '<ul class="attributes" />'
+			+ '<a>Node info</a>'
+			+ '</div></div>'
+			);
+	
+	popup_body.find('.nodePopup').addClass(feature.attributes['type']);
+	popup_body.find('.title').text(feature.attributes['name']);
+	popup_body.find('.id').text('#'+String(feature.attributes['id']));
+	popup_body.find('a').attr('href', feature.attributes['url']);
+	var ul = popup_body.find('ul');
+	var displayAttribute = function(key, value) {
+		var li = $('<li><span class="key"></span>: <span class="value"></span></li>');
+		li.find('.key').text(key);
+		li.find('.value').text(value);
+		ul.append(li);
+	}
+	ul.append($('<li class="area"/>').text(feature.attributes['area']));
+	
+	// Generate links description
+	var total_links = String(feature.attributes['total_p2p']
+		+ feature.attributes['total_ap_subscriptions']
+		+ feature.attributes['total_clients']);
+	var extra_info = [];
+	if (feature.attributes['total_p2p'] > 0)
+		extra_info.push("PtP: " + feature.attributes['total_p2p']);
+	if (feature.attributes['total_clients'] > 0)
+		extra_info.push("Clients: " + feature.attributes['total_clients']);
+	if (feature.attributes['total_ap_subscriptions'] > 0)
+		extra_info.push("AP client: " + feature.attributes['total_ap_subscriptions']);
+	if (extra_info.length)
+		total_links += ' (' + extra_info.join(", ") + ')';
+	displayAttribute("Links", total_links);
+
+	return popup_body;
+}
 
 /**
  * @brief Construct the map
@@ -73,7 +117,6 @@ NetworkMap.prototype._constructMap = function() {
 				labelOutlineWidth : 4
 			}),
 			'select' : new OpenLayers.Style({
-				'strokeWidth' : 2,
 				'pointRadius' : 7,
 			})
 		})
@@ -88,38 +131,25 @@ NetworkMap.prototype._constructMap = function() {
 	// Selection
 	var nodesLayerSelectControl = new OpenLayers.Control.SelectFeature(this._layer_nodes, {
 			onSelect : function(feature) {
-				var popup_body = $('<div class="nodePopup" ><span class="title"></span>'
-						+ '<ul class="attributes" ></ul>'
-						+ '<a>More info</a></div>');
-				popup_body.find('.title').text(
-						feature.attributes['name'] + ' (#'
-								+ String(feature.attributes['id']) + ')');
-				popup_body.find('a')
-						.attr('href', feature.attributes['url']);
-				var ul = popup_body.find('ul');
-				$
-						.each(
-								feature.attributes,
-								function(key, value) {
-									var li = $('<li><span class="key"></span>: <span class="value"></span></li>');
-									li.find('.key').text(key);
-									li.find('.value').text(value);
-									ul.append(li);
-								});
+				var popup_body = networkMap._constructNodePopup(feature) 
 
-				var popup = new OpenLayers.Popup("chicken",
-						new OpenLayers.LonLat(feature.geometry.x,
-								feature.geometry.y), new OpenLayers.Size(
-								100, 100), popup_body.html(), false);
+				var popup = new OpenLayers.Popup("node",
+						new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y),
+						new OpenLayers.Size(100, 100),
+						popup_body.html(),
+						false
+				);
 
 				popup.autoSize = true;
 				popup.panMapIfOutOfView = true;
-				feature.attributes['popup'] = popup;
+				networkMap._node_popup = popup;
 				networkMap._map.addPopup(popup);
 
 			},
 			onUnselect : function(feature) {
-				networkMap._map.removePopup(feature.attributes['popup']);
+				if (networkMap._node_popup)
+					networkMap._map.removePopup(networkMap._node_popup);
+				networkMap._node_popup = null;
 			}
 		}
 	);
@@ -129,11 +159,12 @@ NetworkMap.prototype._constructMap = function() {
 	this._layer_links = new OpenLayers.Layer.Vector("Links", {
 		styleMap : new OpenLayers.StyleMap({
 			'default' : new OpenLayers.Style({
-				'strokeWidth' : 1.5,
+				'strokeWidth' : 1,
 				'strokeColor' : '#000000',
-			})
+			}),
 		})
 	});
+	
 	
 	// LAYER : map
 	//-------------------------------------------------------
@@ -156,43 +187,18 @@ NetworkMap.prototype._constructMap = function() {
 };
 
 /**
- * @brief Construct the topology url based on filter
- */
-NetworkMap.prototype._topologyUrl = function() {
-	var topology_url = this._topology_url;
-	filter = [];
-	$.each(this._filter, function(key, value){
-		if (value)
-			filter.push(key);
-	});
-	topology_url += '&filter=' + filter.join(',');
-	return topology_url;
-};
-
-/**
- * @brief Set the node filtering
- */
-NetworkMap.prototype.setFilter = function(visible_filter) {
-	this._filter = $.extend({}, this._default_filter, visible_filter);
-};
-
-/**
- * @brief Get node filtering
- */
-NetworkMap.prototype.getFilter = function() {
-	return this._filter;
-};
-
-/**
  * @brief Download network topology
  */
-
 NetworkMap.prototype._downloadTopology = function() {
 	var networkMap = this;
 	
 	// Clear map
 	this._layer_nodes.removeAllFeatures();
 	this._layer_links.removeAllFeatures();
+	if (networkMap._node_popup){
+		networkMap._map.removePopup(this._node_popup);
+		networkMap._node_popup = null;
+	}
 	
 	// Try to load nodes
 	$.get(this._topologyUrl(), function(topology) {
@@ -239,7 +245,8 @@ NetworkMap.prototype._downloadTopology = function() {
 				'id' : link['id'],
 				'geometry' : {
 					'type' : 'LineString',
-					'coordinates' : [ [ link['lon1'], link['lat1'] ],
+					'coordinates' : [
+					        [ link['lon1'], link['lat1'] ],
 							[ link['lon2'], link['lat2'] ] ]
 				},
 				'properties' : {
@@ -259,3 +266,99 @@ NetworkMap.prototype._downloadTopology = function() {
 
 	});
 };
+
+/**
+ * @brief Construct the topology url based on filter
+ */
+NetworkMap.prototype._topologyUrl = function() {
+	var topology_url = this._topology_url;
+	filter = [];
+	$.each(this._filter, function(key, value){
+		if (value)
+			filter.push(key);
+	});
+	topology_url += '&filter=' + filter.join(',');
+	return topology_url;
+};
+
+/**
+ * @brief Set the node filtering
+ */
+NetworkMap.prototype.setFilter = function(visible_filter) {
+	this._filter = $.extend({}, this._default_filter, visible_filter);
+	
+	this._downloadTopology();	// Redownload map
+};
+
+/**
+ * @brief Get node filtering
+ */
+NetworkMap.prototype.getFilter = function() {
+	return this._filter;
+};
+
+
+/**
+ * @brief HUD implementation to control map filter.
+ * @param map The NetworkMap object to render and control filter.
+ * @param options The NetworkMap options object.
+ */
+var NetworkMapUiNodeFilter = function(map, options) {
+	var nodeFilterObject = this;
+	
+	this._map = map;
+	this._valid_filters = ['p2p','ap', 'client', 'unlinked'];
+
+	// Construct hud
+	this._element = $('<div class="map-hud map-filter"><ul/></ul></div>');
+	$.each(this._valid_filters, function(key, value){
+		nodeFilterObject._element.find('ul').append($('<li />').addClass(value).text(value));
+		console.log(value);
+	})
+	$('#' + this._map._el_id).append(this._element);
+	
+	// Load current state
+	this._loadState();
+	
+	// Add hooks
+	this._element.find('li').click(function(){
+		$(this).toggleClass('active');
+		nodeFilterObject._saveState();
+	});
+}
+
+/**
+ * @brief Load state of filters from map
+ */
+NetworkMapUiNodeFilter.prototype._loadState = function() {
+	var nodeFilterObject = this;
+	
+	$.each(this._map.getFilter(), function(filter, state){
+		var li = nodeFilterObject._element.find('li.' + filter);
+		if (!state) {
+			li.removeClass('active');
+		} else {
+			li.addClass('active');
+		}
+	});
+}
+
+/**
+ * @brief Save state of filters to the map
+ */
+NetworkMapUiNodeFilter.prototype._saveState = function() {
+	var nodeFilterObject = this;
+	var filters = this._map.getFilter();
+	
+	// Loop around filters
+	$.each(this._map.getFilter(), function(filter, state){
+		var li = nodeFilterObject._element.find('li.' + filter);
+		
+		filters[filter] = false;
+		if (li.hasClass('active')) {
+			filters[filter] = true;
+		}
+	});
+	
+	nodeFilterObject._map.setFilter(filters);
+}

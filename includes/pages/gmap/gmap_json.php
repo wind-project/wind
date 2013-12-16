@@ -83,10 +83,7 @@ class gmap_json {
 				$node['selected'] =  true;
 			}
 			
-			$node['total_ap'] = $value['total_aps'];
-			$node['total_p2p'] = $value['total_p2p'];
-			$node['total_ap_subscriptions'] = $value['total_client_on_ap'];
-
+			// Calculate type
 			if ($value['total_aps'] != 0 && $value['total_p2p'] != 0) {
 				$node['type'] = 'p2p-ap';
 			} elseif ($value['total_aps'] != 0) {
@@ -102,14 +99,17 @@ class gmap_json {
 			
 			$node['name'] = $value['nodes__name'];
 			$node['area'] = $value['areas__name'];
-			if ($value['total_p2p'] != 0) $node['p2p'] = $value['total_p2p'];
-			if ($value['total_aps'] != 0) $node['aps'] = $value['total_aps'];
-			if ($value['total_client_on_ap'] != 0) $node['client_on_ap'] = $value['total_client_on_ap'];
-			if ($value['total_clients'] != 0) $node['total_clients'] = $value['total_clients'];
 			
 			$node['lat'] = floatval($value['latitude']);
 			$node['lon'] = floatval($value['longitude']);
 			$node['url'] = absolute_link(array("page" => "nodes", "node" => $value['id']), false, true, false);
+			
+			$node['total_ap'] = intval($value['total_aps']);
+			$node['total_p2p'] = intval($value['total_p2p']);
+			$node['total_ap_subscriptions'] = intval($value['total_client_on_ap']);
+			$node['total_clients'] = intval($value['total_clients']);
+				
+			// Append node
 			$json['nodes'][$value['id']] = $node;
 		}
 		

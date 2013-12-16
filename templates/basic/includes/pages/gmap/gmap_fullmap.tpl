@@ -31,12 +31,13 @@ $(function(){
 	$(window).resize(fixHeight);
 	
 	// Load map
-	var map = new NetworkMap('map', {/literal} '{$link_nodesjson_url}' {literal},{
+	map = new NetworkMap('map', {/literal} '{$link_nodesjson_url}' {literal},{
 		{/literal}
 		'bound_sw' : [ {$bounds.min_latitude}, {$bounds.min_longitude}],
 		'bound_ne' : [ {$bounds.max_latitude}, {$bounds.max_longitude}]
 		{literal}
 	});
+	nodeFilter = new NetworkMapUiNodeFilter(map);
 });
 {/literal}
  </script>
