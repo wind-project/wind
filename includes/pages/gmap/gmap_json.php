@@ -32,13 +32,27 @@ class gmap_json {
 		$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
 		$node = isset($node[0])?$node[0]:'';
 
+		// Preprocess filter
+		$filters = array(
+				'p2p' => false,
+				'ap' => false,
+				'client' => false,
+				'unlinked' => false
+		);
+		$request_filters = get('filter')?explode(",",get('filter')):array();
+		foreach($request_filters as $filter) {
+			if (in_array($filter, array_keys($filters))) {
+				$filters[$filter] = true;
+			}
+		}
+		
 		// Prepare SQL query.
 		$having = '';
 		if (get('node') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node'));
-		if (get('show_p2p') == 1) $having .= ($having!=''?' OR ':'').'total_p2p > 0';
-		if (get('show_aps') == 1) $having .= ($having!=''?' OR ':'').'total_aps > 0';
-		if (get('show_clients') == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap > 0)';
-		if (get('show_unlinked') == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap = 0)';
+		if ($filters['p2p'] == 1) $having .= ($having!=''?' OR ':'').'total_p2p > 0';
+		if ($filters['ap'] == 1) $having .= ($having!=''?' OR ':'').'total_aps > 0';
+		if ($filters['client'] == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap > 0)';
+		if ($filters['unlinked'] == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap = 0)';
 		if ($having != '') $nodes = $db->get(
 			'nodes.id, nodes.latitude, nodes.longitude, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(DISTINCT p2p.id) AS total_p2p, COUNT(DISTINCT aps.id) AS total_aps, COUNT(DISTINCT clients.id) AS total_clients, COUNT(DISTINCT client_ap.id) AS total_client_on_ap',
 			'nodes
@@ -69,6 +83,10 @@ class gmap_json {
 				$node['selected'] =  true;
 			}
 			
+			$node['total_ap'] = $value['total_aps'];
+			$node['total_p2p'] = $value['total_p2p'];
+			$node['total_ap_subscriptions'] = $value['total_client_on_ap'];
+
 			if ($value['total_aps'] != 0 && $value['total_p2p'] != 0) {
 				$node['type'] = 'p2p-ap';
 			} elseif ($value['total_aps'] != 0) {
@@ -97,8 +115,8 @@ class gmap_json {
 		
 		// Craft sql query
 		$where = '';
-		if (get('show_links_p2p') == 1) $where .= ($where!=''?' OR ':'')."p2p.type = 'p2p'";
-		if (get('show_links_client') == 1) $where .= ($where!=''?' OR ':'')."clients.type = 'client'";
+		if ($filters['p2p'] == 1) $where .= ($where!=''?' OR ':'')."p2p.type = 'p2p'";
+		if ($filters['client'] == 1) $where .= ($where!=''?' OR ':'')."clients.type = 'client'";
 		if ($where != '') $links = $db->get(
 			'IFNULL(p2p.id, clients.id) AS id, IFNULL(p2p.type, clients.type) AS type, n1.latitude AS n1_lat, n1.longitude AS n1_lon, IFNULL(n_p2p.latitude, n_clients.latitude) AS n2_lat, IFNULL(n_p2p.longitude, n_clients.longitude) AS n2_lon, l1.status AS l1_status, IFNULL(p2p.status, clients.status) AS l2_status',
 			'links AS l1 ' .

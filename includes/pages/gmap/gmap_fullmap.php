@@ -28,6 +28,7 @@ class gmap_fullmap {
 		global $main, $vars;
 		$main->menu->hide = true;
 		$this->tpl['link_nodesjson_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), FALSE, TRUE, FALSE);
+		$this->tpl['bounds'] = $vars['gmap']['bounds'];
 		return template($this->tpl, __FILE__);
 	}
 

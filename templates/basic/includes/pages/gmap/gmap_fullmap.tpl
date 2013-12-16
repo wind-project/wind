@@ -25,12 +25,18 @@
 $(function(){
 	// Make map fullscreen
 	var fixHeight = function(){
-		console.log($('.main-page').height());
 		$('#map').height($('.main-page').height());
 	}
 	fixHeight();	// First Call;
 	$(window).resize(fixHeight);
-	load_map('map', {/literal} '{$link_nodesjson_url}' {literal});
+	
+	// Load map
+	var map = new NetworkMap('map', {/literal} '{$link_nodesjson_url}' {literal},{
+		{/literal}
+		'bound_sw' : [ {$bounds.min_latitude}, {$bounds.min_longitude}],
+		'bound_ne' : [ {$bounds.max_latitude}, {$bounds.max_longitude}]
+		{literal}
+	});
 });
 {/literal}
  </script>
