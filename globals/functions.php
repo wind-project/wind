@@ -391,6 +391,9 @@ function is_ip($ip, $full_ip=TRUE) {
 	return ($full_ip?(count($ip_ex)==4):TRUE);
 }
 
+/*
+ * @todo Remove this
+ */
 function include_gmap($javascript) {
 	global $main, $vars, $lang;
 	
@@ -539,4 +542,16 @@ function format_version($version_array) {
 		$str .= empty($str)?$dig:$glue . $dig;
 	}
 	return $str;	
+}
+
+/**
+ * Include language tokens in javascript
+ */
+function include_js_language_tokens() {
+	global $lang, $main;
+	$language_json = json_encode($lang);
+	$main->html->head->add_extra(
+			"<script type=\"text/javascript\">
+			lang = {$language_json};
+			</script>");
 }

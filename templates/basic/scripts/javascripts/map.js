@@ -162,8 +162,8 @@ NetworkMap.prototype._constructMap = function() {
 	this._layer_links = new OpenLayers.Layer.Vector("Links", {
 		styleMap : new OpenLayers.StyleMap({
 			'default' : new OpenLayers.Style({
-				'strokeWidth' : 1,
-				'strokeColor' : '#000000',
+				'strokeWidth' : 1.2,
+				'strokeColor' : '${color}',
 			}),
 		})
 	});
@@ -171,7 +171,7 @@ NetworkMap.prototype._constructMap = function() {
 	// LAYER : map
 	//-------------------------------------------------------
 	this._layer_osm = new OpenLayers.Layer.OSM("OpenStreetMaps");
-	this._layer_gmap = new OpenLayers.Layer.Google("Google Terain", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
+	this._layer_gmap = new OpenLayers.Layer.Google("Google Satelite", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
 	
 	// Finally connect all components under a map object
 	this._map = new OpenLayers.Map({
@@ -180,7 +180,8 @@ NetworkMap.prototype._constructMap = function() {
 		layers : [ this._layer_osm, this._layer_gmap, this._layer_links, this._layer_nodes],
 		center : center,
 		zoom : 10,
-		zoomDuration: 10
+		zoomDuration: 10,
+		numZoomLevels: 20
 	});
 	this._map.zoomToExtent(bounds);
 	
@@ -211,17 +212,17 @@ NetworkMap.prototype._downloadTopology = function() {
 			'internalProjection' : "EPSG:900913",
 			'externalProjection' : "EPSG:4326"
 		});
-
+		console.log(topology.links);
 		// Convert nodes to GeoJSON
 		var nodeFeatures = $.map(topology.nodes, function(node, node_id) {
 
 			// Color mapping for nodes
 			var colors_per_type = {
-				'client' : '#0000ff',
-				'p2p' : '#00ff00',
-				'ap' : '#00ff00',
-				'p2p-ap' : '#00ff00',
-				'unlinked' : '#ff0000',
+				'p2p' : '#f5c70c',
+				'p2p-ap' : '#f5c70c',
+				'ap' : '#61d961',
+				'client' : '#5858ff',
+				'unlinked' : '#ff3f4f',
 			};
 
 			// GeoJSON inherits all properties + extra
@@ -245,6 +246,13 @@ NetworkMap.prototype._downloadTopology = function() {
 
 		// Convert links to GeoJSON
 		var linkFeatures = $.map(topology.links, function(link, link_id) {
+			
+			// GeoJSON inherits all properties + extra
+			var properties = jQuery.extend({}, link);
+			properties['color'] = (link['status'] == 'active')
+				?'#00ff00'
+				:'#ff0000';
+			
 			return {
 				'type' : "Feature",
 				'id' : link['id'],
@@ -254,10 +262,7 @@ NetworkMap.prototype._downloadTopology = function() {
 					        [ link['lon1'], link['lat1'] ],
 							[ link['lon2'], link['lat2'] ] ]
 				},
-				'properties' : {
-					'status' : link['status'],
-					'type' : link['type']
-				}
+				'properties' : properties
 			};
 		});
 		var linksGeoJSON = {
@@ -312,12 +317,17 @@ var NetworkMapUiNodeFilter = function(map, options) {
 	var nodeFilterObject = this;
 	
 	this._map = map;
-	this._valid_filters = ['p2p','ap', 'client', 'unlinked'];
+	this._valid_filters = {
+		'p2p' : 'backbone',
+		'ap' : 'ap',
+		'client' : 'clients',
+		'unlinked' : 'unlinked'
+	};
 
 	// Construct hud
 	this._element = $('<div class="map-hud map-filter"><ul/></ul></div>');
-	$.each(this._valid_filters, function(key, value){
-		nodeFilterObject._element.find('ul').append($('<li />').addClass(value).text(value));
+	$.each(this._valid_filters, function(filter, lang_token){
+		nodeFilterObject._element.find('ul').append($('<li />').addClass(filter).text(lang[lang_token]));
 	});
 	$('#' + this._map._el_id).append(this._element);
 	

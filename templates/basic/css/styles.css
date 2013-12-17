@@ -871,7 +871,9 @@ textarea {
 	height: 200px;
 }
 
-/** Map Style **/
+/***************************************
+   Map Style **/
+
 #map {
 	position: relative;
 }
@@ -882,72 +884,24 @@ textarea {
 	top: 8px;
 	z-index: 1000;
 	background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
-	padding: 3px;
+	padding: 3px 3px 1px 3px;
 	border-radius: 4px;
 }
 
-.map-filter ul{
-	padding: 0px;
-	margin: 0px;
-	list-style-type: none;
-	font: 10px Verdana;
-}
-
-.map-filter li {
-	color: #d1d1d1;
-	padding: 8px 0px 8px 20px;
-	background: rgba(0, 60, 136, 0.5) url('../images/map/mm_20_grey.png') no-repeat 4px 4px;
-	color: rgba(0, 60, 136, 0.5);
-	width: 0px;
-	height: 12px;
-	display: inline-block;
-}
-
-.map-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}
-.map-filter li.p2p.active {	background-image: url('../images/map/mm_20_orange.png');	}
-
-.map-filter li.ap {	background-image: url('../images/map/mm_20_green_inactive.png');	}
-.map-filter li.ap.active {	background-image: url('../images/map/mm_20_green.png');	}
-
-.map-filter li.client {	background-image: url('../images/map/mm_20_blue_inactive.png');	}
-.map-filter li.client.active {	background-image: url('../images/map/mm_20_blue.png');	}
-
-.map-filter li.unlinked {	background-image: url('../images/map/mm_20_red_inactive.png');	}
-.map-filter li.unlinked.active {	background-image: url('../images/map/mm_20_red.png');	}
-
-
-.map-filter li:hover{
-	cursor: pointer;
-	background-color: rgba(0, 60, 136, 0.698);
-	color: white;
-}
-
-.map-filter ul:hover li{
-	width: auto;
-	padding-right: 8px;
-}
-
-.map-filter li:first-child {
-	border-radius: 4px 0px 0px 4px;
-}
-.map-filter li:last-child {
-	border-radius: 0px 4px 4px 0px;
-}
-
-.map-filter li.active{
-	font-weight: bold;
-	color: white;
-}
-
+/** NodePopup **/
 .olPopup {
 	box-shadow: 2px 2px 8px #343434;
 	border-radius: 0px 12px 12px 12px;
 	background: white url(../images/popup-arrow.png) no-repeat 4px 4px;
 }
 
+.olPopup div.olPopupContent *{
+	font-family:  Verdana;	/* google api tries to overide this... */
+	font-size: 11px;
+}
+
 .olPopupContent {
 	color: #464646;
-	font: 11px Verdana;
 	padding: 8px 14px 4px 14px !important;
 }
 
@@ -989,6 +943,63 @@ textarea {
 	margin: 1px 0px;
 }
 
+/** Map Filter **/
+.map-filter ul{
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+	font: 10px Verdana;
+}
+
+.map-filter li {
+	color: #d1d1d1;
+	padding: 8px 0px 8px 20px;
+	background: rgba(0, 60, 136, 0.5) url('../images/map/mm_20_grey.png') no-repeat 4px 4px;
+	color: rgba(0, 60, 136, 0.5);
+	width: 0px;
+	height: 12px;
+	display: inline-block;
+	white-space: pre;
+	overflow: hidden;
+}
+
+.map-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}
+.map-filter li.p2p.active {	background-image: url('../images/map/mm_20_orange.png');	}
+
+.map-filter li.ap {	background-image: url('../images/map/mm_20_green_inactive.png');	}
+.map-filter li.ap.active {	background-image: url('../images/map/mm_20_green.png');	}
+
+.map-filter li.client {	background-image: url('../images/map/mm_20_blue_inactive.png');	}
+.map-filter li.client.active {	background-image: url('../images/map/mm_20_blue.png');	}
+
+.map-filter li.unlinked {	background-image: url('../images/map/mm_20_red_inactive.png');	}
+.map-filter li.unlinked.active {	background-image: url('../images/map/mm_20_red.png');	}
+
+
+.map-filter li:hover{
+	cursor: pointer;
+	background-color: rgba(0, 60, 136, 0.698);
+	color: white;
+}
+
+.map-filter ul:hover li{
+	width: auto;
+	padding-right: 8px;
+}
+
+.map-filter li:first-child {
+	border-radius: 4px 0px 0px 4px;
+}
+.map-filter li:last-child {
+	border-radius: 0px 4px 4px 0px;
+}
+
+.map-filter li.active{
+	font-weight: bold;
+	color: white;
+}
+
+
 /** Layers switcher Control **/ 
 
 .olMap .olControlLayerSwitcher{
@@ -1006,6 +1017,7 @@ textarea {
 	font-family: Verdana !important;
 	font-weight: normal;
 }
+
 .olMap .olControlLayerSwitcher .layersDiv {
 	
 	border-radius: 4px 0px 0px 4px;
@@ -1016,4 +1028,18 @@ textarea {
 
 .olControlLayerSwitcher .maximizeDiv, .olControlLayerSwitcher .minimizeDiv {
 	top: 8px !important;
+}
+
+/* fix maximize button */
+.olControlLayerSwitcher .maximizeDiv img {
+	display: none;
+}
+
+.olControlLayerSwitcher div.maximizeDiv {
+	background: rgba(0, 60, 136, 0.5) url('../images/map/layers_maximize.png') no-repeat ;
+	border-radius: 4px 0px 0px 4px;
+}
+
+.olControlLayerSwitcher div.maximizeDiv:hover {
+	background-color: rgba(0, 60, 136, 0.698) !important;
 }
