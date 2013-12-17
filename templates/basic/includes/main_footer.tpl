@@ -28,7 +28,7 @@
 		PHP time: {$php_time|round:3} s<br />MySQL time: {$mysql_time|round:3} s{if $debug_mysql}<br />Debug: <a href="{$debug_mysql}" target="debug">MySQL</a>{/if}
 	</div>
 	<div class="credits">
-		Powered by: <a target="_blank" href="http://wind.cube.gr/"><b>WiND  v{$wind_version}</b></a><br />
-		&copy; 2005-2013 <a target="_blank" href="http://wind.cube.gr/wiki/Team">WiND development team</a>
+		Powered by: <a target="_blank" href="https://github.com/wind-project/wind"><b>WiND  v{$wind_version}</b></a><br />
+		&copy; 2005-2013 <a target="_blank" href="https://github.com/wind-project/wind/wiki/Team">WiND development team</a>
 	</div>
 </div>
