@@ -874,7 +874,7 @@ textarea {
 /***************************************
    Map Style **/
 
-#map {
+.map {
 	position: relative;
 }
 
@@ -985,6 +985,7 @@ textarea {
 .map-filter ul:hover li{
 	width: auto;
 	padding-right: 8px;
+	color: #d1d1d1;
 }
 
 .map-filter li:first-child {
@@ -994,8 +995,8 @@ textarea {
 	border-radius: 0px 4px 4px 0px;
 }
 
-.map-filter li.active{
-	font-weight: bold;
+.map-filter ul li.active{
+	text-shadow: 1px 1px 2px #565656;
 	color: white;
 }
 

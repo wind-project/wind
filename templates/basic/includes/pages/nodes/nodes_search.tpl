@@ -18,37 +18,33 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *}
+
+
 {include assign=help file=generic/help.tpl help=nodes_search}
 {include file=generic/page-title.tpl title="`$lang.all_nodes`" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
+{if $skip_map!='yes'}
 	<tr>
 		<td class="table-page-split">
-		{if $gmap_key_ok!=="nomap"}
-			<table align="center" bgcolor="#DBE0D7" cellpadding="0" cellspacing="2">
-				<tr>
-					<td align="left">{include file=generic/link.tpl link=$link_gearth content="`$lang.google_earth`"}</td><td align="right">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td>
-				</tr>
-				<tr>
-					<td style="font-size:12px; text-align:center;" colspan="2">
-					{if $gmap_key_ok}
-						<div id="map" style="width: 500px; height: 500px;"></div>
-					{else}
-						{$lang.message.error.gmap_key_failed.body|wordwrap:40|nl2br}
-					{/if}
-					</td>
-				</tr>
-				<tr>
-					<td style="font-size:12px;">
-						<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_orange.png" alt=$lang.backbone}{$lang.backbone}
-						<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_green.png" alt=$lang.aps}{$lang.aps}
-						<input type="checkbox" name="clients" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_blue.png" alt=$lang.clients}{$lang.clients}
-						<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_red.png" alt=$lang.unlinked}{$lang.unlinked}
-					</td>
-				</tr>
-			</table>
-		{/if}
+
+		<div id="map" class="map" style="width: 1000px; height: 350px;" > </div>
+		<script type="text/javascript" src="{$js_dir}/map.js" > </script>
+		<script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+		{literal}
+		<script type="text/javascript">
+			// Load map
+			map = new NetworkMap('map', {/literal} '{$link_nodesjson_url}' {literal},{
+				{/literal}
+				'bound_sw' : [ {$bounds.min_latitude}, {$bounds.min_longitude}],
+				'bound_ne' : [ {$bounds.max_latitude}, {$bounds.max_longitude}]
+				{literal}
+			});
+			nodeFilter = new NetworkMapUiNodeFilter(map);
+		</script>
+		{/literal}
 		</td>
 	</tr>
+{/if}
 	<tr>
 		<td class="table-page-split">
 			{include file=generic/title1.tpl title="`$lang.nodes_search`" content=$form_search_nodes}

@@ -105,9 +105,15 @@ class nodes_search {
 
 		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
 		$this->tpl['link_gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
-		if(get('show_map') == "no") $this->tpl['gmap_key_ok'] = "nomap";
-		else $this->tpl['gmap_key_ok'] = include_gmap(htmlspecialchars("?page=gmap&subpage=js&node=".get('node')));
-
+		$this->tpl['skip_map'] = 'no';
+		if(get('show_map') != "no") {
+			
+			$this->tpl['link_nodesjson_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), FALSE, TRUE, FALSE);
+			$this->tpl['bounds'] = $vars['gmap']['bounds'];
+			include_js_language_tokens();
+		} else {
+			$this->tpl['skip_map'] = 'yes';
+		}
 		return template($this->tpl, __FILE__);
 	}
 
