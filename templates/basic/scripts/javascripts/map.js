@@ -41,6 +41,7 @@ var NetworkMap = function(el_id, topology_url, options) {
  * @brief Construct and return DOM Element for a node popup
  */
 NetworkMap.prototype._constructNodePopup = function(feature) {
+	
 	var popup_body = $(
 		'<div><div class="nodePopup" ><span class="title"/><span class="id"/>'
 			+ '<ul class="attributes" />'
@@ -58,8 +59,10 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 		li.find('.key').text(key);
 		li.find('.value').text(value);
 		ul.append(li);
+	};
+	if (feature.attributes['area']) {
+		ul.append($('<li class="area"/>').text(feature.attributes['area']));
 	}
-	ul.append($('<li class="area"/>').text(feature.attributes['area']));
 	
 	// Generate links description
 	var total_links = String(feature.attributes['total_p2p']
@@ -77,7 +80,7 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 	displayAttribute("Links", total_links);
 
 	return popup_body;
-}
+};
 
 /**
  * @brief Construct the map
@@ -131,7 +134,7 @@ NetworkMap.prototype._constructMap = function() {
 	// Selection
 	var nodesLayerSelectControl = new OpenLayers.Control.SelectFeature(this._layer_nodes, {
 			onSelect : function(feature) {
-				var popup_body = networkMap._constructNodePopup(feature) 
+				var popup_body = networkMap._constructNodePopup(feature);
 
 				var popup = new OpenLayers.Popup("node",
 						new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y),
@@ -165,23 +168,25 @@ NetworkMap.prototype._constructMap = function() {
 		})
 	});
 	
-	
 	// LAYER : map
 	//-------------------------------------------------------
-	this._layer_map = new OpenLayers.Layer.OSM();
+	this._layer_osm = new OpenLayers.Layer.OSM("OpenStreetMaps");
+	this._layer_gmap = new OpenLayers.Layer.Google("Google Terain", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
 	
 	// Finally connect all components under a map object
 	this._map = new OpenLayers.Map({
 		div : this._el_id,
 		projection : 'EPSG:3857',
-		layers : [ this._layer_map, this._layer_links, this._layer_nodes],
+		layers : [ this._layer_osm, this._layer_gmap, this._layer_links, this._layer_nodes],
 		center : center,
-		zoom : 10
+		zoom : 10,
+		zoomDuration: 10
 	});
 	this._map.zoomToExtent(bounds);
 	
 	this._map.addControl(nodesLayerHighlightControl);
 	this._map.addControl(nodesLayerSelectControl);
+	this._map.addControl(new OpenLayers.Control.LayerSwitcher());
 	nodesLayerHighlightControl.activate();
 	nodesLayerSelectControl.activate();
 };
@@ -313,8 +318,7 @@ var NetworkMapUiNodeFilter = function(map, options) {
 	this._element = $('<div class="map-hud map-filter"><ul/></ul></div>');
 	$.each(this._valid_filters, function(key, value){
 		nodeFilterObject._element.find('ul').append($('<li />').addClass(value).text(value));
-		console.log(value);
-	})
+	});
 	$('#' + this._map._el_id).append(this._element);
 	
 	// Load current state
@@ -325,7 +329,7 @@ var NetworkMapUiNodeFilter = function(map, options) {
 		$(this).toggleClass('active');
 		nodeFilterObject._saveState();
 	});
-}
+};
 
 /**
  * @brief Load state of filters from map
@@ -341,7 +345,7 @@ NetworkMapUiNodeFilter.prototype._loadState = function() {
 			li.addClass('active');
 		}
 	});
-}
+};
 
 /**
  * @brief Save state of filters to the map
@@ -361,4 +365,4 @@ NetworkMapUiNodeFilter.prototype._saveState = function() {
 	});
 	
 	nodeFilterObject._map.setFilter(filters);
-}
+};

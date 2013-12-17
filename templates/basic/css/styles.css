@@ -878,29 +878,60 @@ textarea {
 
 .map-hud {
 	position: absolute;
-	right: 0px;
-	top: 30px;
+	right: 8px;
+	top: 8px;
 	z-index: 1000;
-	background-color: #000000;
-	opacity: 0.6;
-	border-radius: 5px 0px 0px 5px;
+	background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
+	padding: 3px;
+	border-radius: 4px;
 }
 
 .map-filter ul{
 	padding: 0px;
 	margin: 0px;
 	list-style-type: none;
-	color: white;
 	font: 10px Verdana;
 }
 
 .map-filter li {
 	color: #d1d1d1;
-	padding: 2px 5px;
+	padding: 8px 0px 8px 20px;
+	background: rgba(0, 60, 136, 0.5) url('../images/map/mm_20_grey.png') no-repeat 4px 4px;
+	color: rgba(0, 60, 136, 0.5);
+	width: 0px;
+	height: 12px;
+	display: inline-block;
 }
+
+.map-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}
+.map-filter li.p2p.active {	background-image: url('../images/map/mm_20_orange.png');	}
+
+.map-filter li.ap {	background-image: url('../images/map/mm_20_green_inactive.png');	}
+.map-filter li.ap.active {	background-image: url('../images/map/mm_20_green.png');	}
+
+.map-filter li.client {	background-image: url('../images/map/mm_20_blue_inactive.png');	}
+.map-filter li.client.active {	background-image: url('../images/map/mm_20_blue.png');	}
+
+.map-filter li.unlinked {	background-image: url('../images/map/mm_20_red_inactive.png');	}
+.map-filter li.unlinked.active {	background-image: url('../images/map/mm_20_red.png');	}
+
+
 .map-filter li:hover{
 	cursor: pointer;
-	background-color: #454545;
+	background-color: rgba(0, 60, 136, 0.698);
+	color: white;
+}
+
+.map-filter ul:hover li{
+	width: auto;
+	padding-right: 8px;
+}
+
+.map-filter li:first-child {
+	border-radius: 4px 0px 0px 4px;
+}
+.map-filter li:last-child {
+	border-radius: 0px 4px 4px 0px;
 }
 
 .map-filter li.active{
@@ -937,10 +968,7 @@ textarea {
 	font-weight: bold;
 	font-size: 13px;
 	display: block;
-	margin: 4px 0px;
-	
-	//background: transparent url('../images/gmap/mm_20_green.png') no-repeat 0px 0px;
-		/*border-bottom: 1px solid #464646;*/ 
+	margin: 4px 0px; 
 }
 
 .olPopupContent .id{
@@ -950,14 +978,7 @@ textarea {
 	right: 10px;
 	top: 4px;
 }
-	
-.olPopup .client .title{
-	//background-image:url('../images/gmap/mm_20_blue.png');
-}
 
-.olPopup .unlinked .title{
-	//background-image:url('../images/gmap/mm_20_red.png');
-}
 
 .olPopupContent ul.attributes{
 	margin: 0px;
@@ -967,8 +988,32 @@ textarea {
 .olPopupContent ul.attributes li{
 	margin: 1px 0px;
 }
+
+/** Layers switcher Control **/ 
+
+.olMap .olControlLayerSwitcher{
+	top: 50px !important;
+	padding: 3px 0px 3px 3px;
+	border-radius: 4px 0px 0px 4px;
+	background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
+	width: auto;
+}
+
+.olMap .olControlLayerSwitcher div,
+.olMap .olControlLayerSwitcher label,
+.olMap .olControlLayerSwitcher a {
+	font-size: 10px;
+	font-family: Verdana !important;
+	font-weight: normal;
+}
+.olMap .olControlLayerSwitcher .layersDiv {
 	
+	border-radius: 4px 0px 0px 4px;
+	background-color: rgba(0, 60, 136, 0.698) !important;
+	padding-bottom: 10px;
+	padding-right: 50px;
+}
 
-.olPopupContent ul.attributes .key {
-
-}]
+.olControlLayerSwitcher .maximizeDiv, .olControlLayerSwitcher .minimizeDiv {
+	top: 8px !important;
+}
