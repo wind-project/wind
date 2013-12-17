@@ -107,10 +107,7 @@ class nodes_search {
 		$this->tpl['link_gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 		$this->tpl['skip_map'] = 'no';
 		if(get('show_map') != "no") {
-			
-			$this->tpl['link_nodesjson_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), FALSE, TRUE, FALSE);
-			$this->tpl['bounds'] = $vars['gmap']['bounds'];
-			include_js_language_tokens();
+			include_map('map');
 		} else {
 			$this->tpl['skip_map'] = 'yes';
 		}

@@ -83,7 +83,7 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 };
 
 /**
- * @brief Construct the map
+ * @brief Construct the complete map without topology
  */
 NetworkMap.prototype._constructMap = function() {
 	var networkMap = this;
@@ -193,10 +193,17 @@ NetworkMap.prototype._constructMap = function() {
 };
 
 /**
- * @brief Download network topology
+ * @brief Download network topology and update map
+ * @param focusSelected It will focus to selected node
+ * 	if it is found. (default True)
  */
-NetworkMap.prototype._downloadTopology = function() {
+NetworkMap.prototype._downloadTopology = function(focusSelected) {
 	var networkMap = this;
+	
+	// Process parameters
+	if (typeof(focusSelected) == 'undefined') {
+		focusSelected = true;
+	}
 	
 	// Clear map
 	this._layer_nodes.removeAllFeatures();
@@ -208,11 +215,13 @@ NetworkMap.prototype._downloadTopology = function() {
 	
 	// Try to load nodes
 	$.get(this._topologyUrl(), function(topology) {
+		networkMap._topology = topology;
+		
 		var GeoJSONParser = new OpenLayers.Format.GeoJSON({
 			'internalProjection' : "EPSG:900913",
 			'externalProjection' : "EPSG:4326"
 		});
-		console.log(topology.links);
+
 		// Convert nodes to GeoJSON
 		var nodeFeatures = $.map(topology.nodes, function(node, node_id) {
 
@@ -227,7 +236,10 @@ NetworkMap.prototype._downloadTopology = function() {
 
 			// GeoJSON inherits all properties + extra
 			var properties = jQuery.extend({}, node);
+			
 			properties['color'] = colors_per_type[properties['type']];
+			if ('selected' in properties)
+				properties['color'] = '#000000';
 
 			return {
 				'type' : "Feature",
@@ -273,6 +285,11 @@ NetworkMap.prototype._downloadTopology = function() {
 		// Load features on map
 		networkMap._layer_nodes.addFeatures(GeoJSONParser.read(nodesGeoJSON));
 		networkMap._layer_links.addFeatures(GeoJSONParser.read(linksGeoJSON));
+		
+		// Check if there is selected
+		if (focusSelected && ('selected' in topology['meta'])) {
+			networkMap.focusAtNode(topology['meta']['selected']);
+		}
 
 	});
 };
@@ -305,6 +322,24 @@ NetworkMap.prototype.setFilter = function(visible_filter) {
  */
 NetworkMap.prototype.getFilter = function() {
 	return this._filter;
+};
+
+/**
+ * @brief Focus on specific node (if exists)
+ */
+NetworkMap.prototype.focusAtNode = function(node_id) {
+	if (!node_id in this._topology.nodes)
+		return false;	// Cannot find node
+	
+	var node = this._topology.nodes[node_id];
+	var point = new OpenLayers.LonLat(node['lon'], node['lat'])
+		.transform('EPSG:4326', 'EPSG:3857');
+	
+	this._map.setCenter(point, 17, true);
+	
+	// Hack because setCenter does not call callbacks
+	this._layer_nodes.redraw();
+	this._layer_links.redraw();
 };
 
 

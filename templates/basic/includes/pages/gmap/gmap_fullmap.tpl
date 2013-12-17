@@ -19,8 +19,6 @@
  *
  *}
 <div id="map" class="map" style="width: 100%; height: 80vh;"></div>
-<script type="text/javascript" src="{$js_dir}/map.js" > </script>
-<script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
 {literal}
 <script type="text/javascript">
 $(function(){
@@ -30,15 +28,6 @@ $(function(){
 	}
 	fixHeight();	// First Call;
 	$(window).resize(fixHeight);
-	
-	// Load map
-	map = new NetworkMap('map', {/literal} '{$link_nodesjson_url}' {literal},{
-		{/literal}
-		'bound_sw' : [ {$bounds.min_latitude}, {$bounds.min_longitude}],
-		'bound_ne' : [ {$bounds.max_latitude}, {$bounds.max_longitude}]
-		{literal}
-	});
-	nodeFilter = new NetworkMapUiNodeFilter(map);
 });
 {/literal}
  </script>

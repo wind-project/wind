@@ -75,6 +75,9 @@ class gmap_json {
 				'nodes' => array(),
 				'links' => array()
 		);
+		if (get('node') != '') {
+			$json['meta']['selected'] = intval(get('node'));
+		}
 		
 		// Push node information
 		foreach ((array) $nodes as $key => $value) {

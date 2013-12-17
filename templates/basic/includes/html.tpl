@@ -22,14 +22,15 @@
 <html lang="{$lang.iso639}">
 <head>
 	<meta charset="{$lang.charset}"/>
+	<script type="text/javascript" src="{$js_dir}/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="{$js_dir}/jquery-ui-1.10.3.custom.min.js"></script>
+	<script type="text/javascript" src="{$js_dir}/ui.js"></script>
 	{$head}
 	<link href="{$css_dir}jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 	<link href="{$css_dir}styles.css" rel="stylesheet" type="text/css" />
 	<link rel="icon" type="image/png" href="templates/basic/images/favicon_32.png" />
-	<script type="text/javascript" src="{$js_dir}/jquery-1.9.1.js"></script>
-	<script type="text/javascript" src="{$js_dir}/jquery-ui-1.10.3.custom.min.js"></script>
-	<script type="text/javascript" src="{$js_dir}/ui.js"></script>
-	<script type="text/javascript" src="{$js_dir}/openlayers/OpenLayers.js"></script>
+
+	
 </head>
 <body{foreach from=$body_tags item=item key=key} {$key}="{$item}"{/foreach}>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>

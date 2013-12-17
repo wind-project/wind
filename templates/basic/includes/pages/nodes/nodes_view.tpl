@@ -33,31 +33,7 @@
 		<div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 	</td>
 	<td class="table-page-split">
-	{if $gmap_key_ok!=="nomap"}
-		<table bgcolor="#DBE0D7" cellpadding="0" cellspacing="2">
-			<tr>
-				<td align="left" nowrap="nowrap">{include file=generic/link.tpl link=$link_gearth content="Google earth"}</td>
-				<td align="right" nowrap="nowrap">{include file=generic/link.tpl link=$link_fullmap content="`$lang.new_window`" target="_blank"}</td>
-			</tr>
-			<tr>
-				<td style="font-size:12px; text-align:center; width: 500px; height: 500px" colspan="2">
-					{if $gmap_key_ok}
-					<div id="map" style="width: 500px; height: 500px"></div>
-					{else}
-					{$lang.message.error.gmap_key_failed.body|wordwrap:40|nl2br}
-					{/if}
-				</td>
-			</tr>
-			<tr>
-				<td style="font-size:12px;" colspan="2" nowrap="nowrap">
-					<input type="checkbox" name="p2p" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_orange.png" alt=$lang.backbone}{$lang.backbone}
-					<input type="checkbox" name="aps" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_green.png" alt=$lang.aps}{$lang.aps}
-					<input type="checkbox" name="clients" checked="checked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_blue.png" alt=$lang.clients}{$lang.clients}
-					<input type="checkbox" name="unlinked" onclick="gmap_refresh();" />{html_image file="`$img_dir`/gmap/mm_20_red.png" alt=$lang.unlinked}{$lang.unlinked}
-				</td>
-			</tr>
-		</table>
-	{/if}
+		<div id="map" class="map" style="width: 600px; height: 500px;" > </div>
 	</td>
 	
 </tr>

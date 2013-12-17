@@ -555,3 +555,35 @@ function include_js_language_tokens() {
 			lang = {$language_json};
 			</script>");
 }
+
+/**
+ * Include map to the output
+ * @param element_id The id of the element to render map on.
+ */
+function include_map($element_id) {
+	global $main, $smarty, $vars;
+
+	// Include needed javascript
+	include_js_language_tokens();
+	$js_dir = $smarty->template_dir."scripts/javascripts/";
+	$main->html->head->add_script('text/javascript', 'http://maps.google.com/maps/api/js?v=3&sensor=false');
+	$main->html->head->add_script('text/javascript', "${js_dir}/map.js");
+	$main->html->head->add_script('text/javascript', "${js_dir}/openlayers/OpenLayers.js");
+	
+	$nodesjson_url = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), FALSE, TRUE, FALSE);
+	$bounds = $vars['gmap']['bounds'];
+	
+	$main->html->head->add_extra(
+			"<script type=\"text/javascript\">
+			$(function() {
+				// Load map
+				map = new NetworkMap('${element_id}', '${nodesjson_url}', {
+					'bound_sw' : [ ${bounds['min_latitude']}, ${bounds['min_longitude']}],
+					'bound_ne' : [ ${bounds['max_latitude']}, ${bounds['max_longitude']}]
+				});
+				nodeFilter = new NetworkMapUiNodeFilter(map);
+			});
+			
+			
+			</script>");
+}
