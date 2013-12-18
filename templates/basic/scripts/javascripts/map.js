@@ -432,9 +432,14 @@ var NetworkMapControlFullScreen= function(map, options) {
 	// Construct hud
 	this._element = $('<div class="map-hud map-fullscreen"><span></span></div>')
 	$('#' + this._map._map_el_id).append(this._element);
+	
+	// Add hooks
 	this._element.find('span').click(function(){
 		fullScreenObject.toggleFullscreen();
 		return false;
+	});
+	$(document).keyup(function(e) {
+	  if (e.keyCode == 27) { fullScreenObject.restore(); }   // esc
 	});
 };
 
