@@ -37,7 +37,6 @@ $steps = array(
 	'dbsetup' => 'Setup database',
 	'dbinit' => 'Initialize database',
 	'mapbounds' => 'Setup map boundaries',
-	'gmap' => 'Google Maps API key',
 	'srtm' => 'Nasa SRTM data files',
 	'final' => 'Finish');
 $step_keys = array_keys($steps);
