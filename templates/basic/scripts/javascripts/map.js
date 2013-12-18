@@ -10,7 +10,8 @@
  */
 var NetworkMap = function(el_id, topology_url, options) {
 	// Private variables
-	this._el_id = el_id;
+	
+	this._map_el_id = el_id;
 	this._topology_url = topology_url;
 	this._default_filter = {
 		p2p : true,
@@ -102,7 +103,7 @@ NetworkMap.prototype._constructMap = function() {
 	} else {
 		center = bounds.getCenterLonLat();
 	}
-
+	
 	// LAYER : Nodes
 	//-------------------------------------------------------
 	this._layer_nodes = new OpenLayers.Layer.Vector("Nodes", {
@@ -146,12 +147,12 @@ NetworkMap.prototype._constructMap = function() {
 				popup.autoSize = true;
 				popup.panMapIfOutOfView = true;
 				networkMap._node_popup = popup;
-				networkMap._map.addPopup(popup);
+				networkMap._olMap.addPopup(popup);
 
 			},
 			onUnselect : function(feature) {
 				if (networkMap._node_popup)
-					networkMap._map.removePopup(networkMap._node_popup);
+					networkMap._olMap.removePopup(networkMap._node_popup);
 				networkMap._node_popup = null;
 			}
 		}
@@ -174,20 +175,24 @@ NetworkMap.prototype._constructMap = function() {
 	this._layer_gmap = new OpenLayers.Layer.Google("Google Satelite", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
 	
 	// Finally connect all components under a map object
-	this._map = new OpenLayers.Map({
-		div : this._el_id,
+	this._olMap = new OpenLayers.Map({
+		div : this._map_el_id,
 		projection : 'EPSG:3857',
-		layers : [ this._layer_osm, this._layer_gmap, this._layer_links, this._layer_nodes],
+		layers : [
+		          this._layer_osm,
+		          this._layer_gmap,
+		          this._layer_links,
+		          this._layer_nodes],
 		center : center,
 		zoom : 10,
 		zoomDuration: 10,
 		numZoomLevels: 20
 	});
-	this._map.zoomToExtent(bounds);
+	this._olMap.zoomToExtent(bounds);
 	
-	this._map.addControl(nodesLayerHighlightControl);
-	this._map.addControl(nodesLayerSelectControl);
-	this._map.addControl(new OpenLayers.Control.LayerSwitcher());
+	this._olMap.addControl(nodesLayerHighlightControl);
+	this._olMap.addControl(nodesLayerSelectControl);
+	this._olMap.addControl(new OpenLayers.Control.LayerSwitcher());
 	nodesLayerHighlightControl.activate();
 	nodesLayerSelectControl.activate();
 };
@@ -209,7 +214,7 @@ NetworkMap.prototype._downloadTopology = function(focusSelected) {
 	this._layer_nodes.removeAllFeatures();
 	this._layer_links.removeAllFeatures();
 	if (networkMap._node_popup){
-		networkMap._map.removePopup(this._node_popup);
+		networkMap._olMap.removePopup(this._node_popup);
 		networkMap._node_popup = null;
 	}
 	
@@ -314,7 +319,7 @@ NetworkMap.prototype._topologyUrl = function() {
 NetworkMap.prototype.setFilter = function(visible_filter) {
 	this._filter = $.extend({}, this._default_filter, visible_filter);
 	
-	this._downloadTopology();	// Redownload map
+	this._downloadTopology(false);	// Redownload map
 };
 
 /**
@@ -335,7 +340,7 @@ NetworkMap.prototype.focusAtNode = function(node_id) {
 	var point = new OpenLayers.LonLat(node['lon'], node['lat'])
 		.transform('EPSG:4326', 'EPSG:3857');
 	
-	this._map.setCenter(point, 17, true);
+	this._olMap.setCenter(point, 15, true);
 	
 	// Hack because setCenter does not call callbacks
 	this._layer_nodes.redraw();
@@ -348,7 +353,7 @@ NetworkMap.prototype.focusAtNode = function(node_id) {
  * @param map The NetworkMap object to render and control filter.
  * @param options The NetworkMap options object.
  */
-var NetworkMapUiNodeFilter = function(map, options) {
+var NetworkMapControlNodeFilter = function(map, options) {
 	var nodeFilterObject = this;
 	
 	this._map = map;
@@ -364,7 +369,7 @@ var NetworkMapUiNodeFilter = function(map, options) {
 	$.each(this._valid_filters, function(filter, lang_token){
 		nodeFilterObject._element.find('ul').append($('<li />').addClass(filter).text(lang[lang_token]));
 	});
-	$('#' + this._map._el_id).append(this._element);
+	$('#' + this._map._map_el_id).append(this._element);
 	
 	// Load current state
 	this._loadState();
@@ -379,7 +384,7 @@ var NetworkMapUiNodeFilter = function(map, options) {
 /**
  * @brief Load state of filters from map
  */
-NetworkMapUiNodeFilter.prototype._loadState = function() {
+NetworkMapControlNodeFilter.prototype._loadState = function() {
 	var nodeFilterObject = this;
 	
 	$.each(this._map.getFilter(), function(filter, state){
@@ -395,7 +400,7 @@ NetworkMapUiNodeFilter.prototype._loadState = function() {
 /**
  * @brief Save state of filters to the map
  */
-NetworkMapUiNodeFilter.prototype._saveState = function() {
+NetworkMapControlNodeFilter.prototype._saveState = function() {
 	var nodeFilterObject = this;
 	var filters = this._map.getFilter();
 	
@@ -410,4 +415,66 @@ NetworkMapUiNodeFilter.prototype._saveState = function() {
 	});
 	
 	nodeFilterObject._map.setFilter(filters);
+};
+
+
+/**
+ * @brief HUD implementation to control fullscreen mode
+ * @param map The NetworkMap object to render and control filter.
+ * @param options The NetworkMap options object.
+ */
+var NetworkMapControlFullScreen= function(map, options) {
+	var fullScreenObject = this;
+	
+	this._map = map;
+	this._map_element = $('#' + this._map._map_el_id);
+
+	// Construct hud
+	this._element = $('<div class="map-hud map-fullscreen"><span></span></div>')
+	$('#' + this._map._map_el_id).append(this._element);
+	this._element.find('span').click(function(){
+		fullScreenObject.toggleFullscreen();
+		return false;
+	});
+};
+
+/**
+ * @brief Check if map is fullscreen
+ */
+NetworkMapControlFullScreen.prototype.isFullscreen = function() {
+	return this._map_element.hasClass('fullscreen');
+};
+
+/**
+ * @brief Set fullscreen mode of the map
+ */
+NetworkMapControlFullScreen.prototype.setFullscreen = function() {
+	if (this.isFullscreen())
+		return;	// Already fullscreen
+	
+	var olMap = this._map._olMap;
+	this._map_element.addClass('fullscreen');
+	olMap.updateSize();
+};
+
+/**
+ * @brief Restore map to default size
+ */
+NetworkMapControlFullScreen.prototype.restore = function() {
+	if (!this.isFullscreen())
+		return;	// It is already restored
+	
+	var olMap = this._map._olMap;
+	this._map_element.removeClass('fullscreen');
+	olMap.updateSize();
+};
+
+/**
+ * @brief Toggle fullscreen mode
+ */
+NetworkMapControlFullScreen.prototype.toggleFullscreen = function() {
+	if (this.isFullscreen())
+		this.restore();
+	else
+		this.setFullscreen();
 };

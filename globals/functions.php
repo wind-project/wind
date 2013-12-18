@@ -391,68 +391,6 @@ function is_ip($ip, $full_ip=TRUE) {
 	return ($full_ip?(count($ip_ex)==4):TRUE);
 }
 
-/*
- * @todo Remove this
- */
-function include_gmap($javascript) {
-	global $main, $vars, $lang;
-	
-	
-	$serve_host = strtolower($_SERVER['SERVER_NAME']);
-	$serve_path = $serve_host.$_SERVER['PHP_SELF'];
-	$gmap_key = false;
-	
-	// Loop around all keys to find the most appropriate	
-	foreach($vars['gmap']['keys'] as $key_path => $key) {
-		$key_path = strtolower($key_path);
-		
-		// remove prefixed http://
-		if (substr($key_path, 0, 7) == 'http://') {
-			$path = substr($key_path, 7);
-		} else if (substr($key_path, 0, 8) == 'https://') {
-			$path = substr($key_path, 8);
-		}
-		
-		
-		// If host name is not the same then false
-		if (substr($key_path, 0, strlen($serve_host)) != $serve_host)
-			continue;
-
-		// Compare if server_path includes $key_path 
-		if (substr($serve_path, 0, strlen($key_path)) != $key_path)
-			continue;
-		
-		$gmap_key = $key;
-	}
-	$script_params = array(
-		'file' => 'api',
-		'v' => $vars['gmap']['api'],
-		'hl=' => $lang["iso639"]
-	);
-	if ($gmap_key !== false)
-		$script_params['key'] = $gmap_key;
-	$main->html->head->add_script("text/javascript",
-		htmlspecialchars("http://{$vars['gmap']['server']}/maps?" .
-			http_build_query($script_params)
-		)
-	);
-	$main->html->head->add_script("text/javascript", $javascript);
-	$main->html->head->add_extra(
-		'<style type="text/css">
-			v\:* {
-  			behavior:url(#default#VML);
-			}
-		</style>');
-	
-	if(!$main->html->body->tags['onload']) {
-		$main->html->body->tags['onload']="gmap_onload();";
-	} else {
-		$main->html->body->tags['onload'].="gmap_onload();";
-	}
-	$main->html->body->tags['onunload'] = "GUnload()"; //added to reduce IE memory leaks
-	return TRUE;
-}
-
 function getmicrotime(){ 
 	list($usec, $sec) = explode(" ",microtime()); 
 	return ((float)$usec + (float)$sec); 
@@ -581,7 +519,8 @@ function include_map($element_id) {
 					'bound_sw' : [ ${bounds['min_latitude']}, ${bounds['min_longitude']}],
 					'bound_ne' : [ ${bounds['max_latitude']}, ${bounds['max_longitude']}]
 				});
-				nodeFilter = new NetworkMapUiNodeFilter(map);
+				controlNodeFilter = new NetworkMapControlNodeFilter(map);
+				controlFullScreen = new NetworkMapControlFullScreen(map);
 			});
 			
 			
