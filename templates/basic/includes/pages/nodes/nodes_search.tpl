@@ -26,7 +26,7 @@
 {if $skip_map!='yes'}
 	<tr>
 		<td class="table-page-split">
-		<div id="map" class="map" style="width: 996px; height: 350px;" > </div>
+		<div id="map" class="map" style="height: 350px;" > </div>
 		</td>
 	</tr>
 {/if}

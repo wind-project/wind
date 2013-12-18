@@ -1,5 +1,6 @@
 
 <div class="login">
+<div class="close button"></div>
 <form name="login-form" action="{$form_submit_url}" method="POST">
 	<input type="hidden" name="form_name" value="login"/> 
   <fieldset>

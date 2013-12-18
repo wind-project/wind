@@ -184,8 +184,19 @@ ul.languages li{
 	background-image: none;
 	box-shadow: 0px 0px 10px #343434;
 	width: 250px !important;
+	position: relative;
 }
 
+.login-dialog .close.button{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	background: transparent url('../images/login_close.png') no-repeat center center;
+}
+	
 .login-dialog a {
 	color: #474ca0;
 }

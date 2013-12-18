@@ -86,6 +86,11 @@ LoginForm.prototype.load = function(success){
 			object._notification_el = object._dialog_el.find('.notification');
 			object._loaded = true;
 			
+			// Hook close button
+			object._dialog_el.find('.close').click(function() {
+				object._dialog_el.dialog("close");
+			});
+			
 			// Hook form submition
 			console.log(object._dialog_el.find('form'));
 			object._dialog_el.find('form').submit(function() {
