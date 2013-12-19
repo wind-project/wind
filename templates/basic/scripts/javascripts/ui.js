@@ -130,3 +130,11 @@ LoginForm.prototype.show = function(){
 		});
 	});
 };
+
+
+/**
+ * @brief Map picker
+ */
+MapPicker = function() {
+	
+};

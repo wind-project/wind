@@ -20,21 +20,16 @@
  *
  */
 
-class pickup_gmap {
+class pickup_map {
 
 	var $tpl;
 	
-	function pickup_gmap() {
-		
-	}
-	
 	function output() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $main, $vars;
 		$main->header->hide = TRUE;
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
-		$this->tpl['gmap_key_ok'] = include_gmap(htmlspecialchars("?page=gmap&subpage=pickup_js&object_lat=".stripslashes(get('object_lat'))."&object_lon=".stripslashes(get('object_lon'))));
+		include_map('map', true);
 		return template($this->tpl, __FILE__);
 	}
 

@@ -33,7 +33,7 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include assign="t2" file="generic/link.tpl" content="`$lang.find_coordinates`" onclick="javascript: t = window.open('$link_gmap_pickup', 'popup_gmap_pickup', 'width=500,height=500,toolbar=0,resizable=0,scrollbars=0'); t.focus(); return false;"}
+{include assign="t2" file="generic/link.tpl" content="`$lang.find_coordinates`" onclick="javascript: t = window.open('$link_map_pickup', 'popup_map_pickup', 'width=500,height=500,toolbar=0,resizable=0,scrollbars=0'); t.focus(); return false;"}
 {include file=generic/title1.tpl title="`$lang.node_info` $t2" right="$view $t1" content=$form_node}
 </td>
 </tr>

@@ -912,21 +912,46 @@ textarea {
 	border-radius: 4px;
 }
 
+.map-hud .button{
+	font: 12px Verdana;
+	padding: 8px 8px 8px 8px;
+	height: 12px;
+	border-radius: 4px;
+	background-color: rgba(0, 60, 136, 0.5);
+	color: #d1d1d1;
+	display: inline-block;
+	white-space: pre;
+}
+
+.map-hud .button:hover{
+	cursor: pointer;
+	background-color: rgba(0, 60, 136, 0.698);
+	color: white;
+}
+
+/** Position picker button **/
+.map-position .coordinates {
+	background-color: rgba(0, 60, 136, 0.698);
+	color: white;
+	display: inline-block;
+	height: 12px;
+	padding: 8px 8px 8px 8px;
+}
+
+.map-position .button.ok {
+	margin: 0px 4px;
+}
+
 /** Fullscreen button **/
 .map-fullscreen{
 	right: 8px; 
 }
 .map-fullscreen span {
 	display: block;
-	width: 28px;
-	height: 28px;
-	border-radius: 4px;
-	background: rgba(0, 60, 136, 0.5) url('../images/fullscreen.png') no-repeat center center;
-}
-
-.map-fullscreen span:hover {
-	cursor: pointer;
-	background-color: rgba(0, 60, 136, 0.698);
+	width: 12px;
+	background-image: url('../images/fullscreen.png');
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 /** NodePopup **/
@@ -995,16 +1020,12 @@ textarea {
 	font: 10px Verdana;
 }
 
-.map-filter li {
-	color: #d1d1d1;
+.map-filter li.button {
 	padding: 8px 0px 8px 20px;
 	background: rgba(0, 60, 136, 0.5) url('../images/map/mm_20_grey.png') no-repeat 4px 4px;
-	color: rgba(0, 60, 136, 0.5);
 	width: 0px;
-	height: 12px;
-	display: inline-block;
-	white-space: pre;
 	overflow: hidden;
+	border-radius: 0px;
 }
 
 .map-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}
@@ -1019,12 +1040,6 @@ textarea {
 .map-filter li.unlinked {	background-image: url('../images/map/mm_20_red_inactive.png');	}
 .map-filter li.unlinked.active {	background-image: url('../images/map/mm_20_red.png');	}
 
-
-.map-filter li:hover{
-	cursor: pointer;
-	background-color: rgba(0, 60, 136, 0.698);
-	color: white;
-}
 
 .map-filter ul:hover li{
 	width: auto;

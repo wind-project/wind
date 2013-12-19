@@ -388,7 +388,7 @@ class mynodes {
 				$this->tpl['link_services_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'services', 'node' => get('node'), 'service' => 'add'));
 
 			}
-			$this->tpl['link_gmap_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'gmap', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
+			$this->tpl['link_map_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'map', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
 			return template($this->tpl, __FILE__);
 		}
 	}
