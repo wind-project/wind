@@ -126,7 +126,7 @@ LoginForm.prototype.show = function(){
 		object._dialog_el.dialog({
 			modal: true,
 			resizable: false,
-			dialogClass: 'login-dialog'
+			dialogClass: 'login-dialog no-title-dialog'
 		});
 	});
 };
@@ -145,15 +145,30 @@ LocationPicker = function(lat_element, lng_element) {
 	this._lng_element = lng_element
 	
 	// Extract initial values
-	var position
+	var position = null;
+	if (this._lat_element.val() && this._lng_element.val()) {
+		position = [
+	                parseFloat(this._lat_element.val()),
+	                parseFloat(this._lng_element.val())];
+	}
 	
 	// Construct map
-	this.map_element = $('<div id="location-picker" class="map picker"/>');
+	this.map_element = $('<div class="map-picker-dialog">'
+			+'<div id="location-picker" class="map picker"/></div>');
 	$('body').append(this.map_element);
 	
-	this.map = new NetworkMap('location-picker');
-	
+	this.map = new NetworkMap('location-picker', {
+		'bound_ne' : map_options['bound_ne'],
+		'bound_sw' : map_options['bound_sw'],
+	});
 	this.controlPicker = new NetworkMapControlPicker(this.map, {
+		position: position,
+		ok: function(picker) {
+			var pos = picker.getPosition();
+			locationPickerObject._lat_element.val(pos.lat);
+			locationPickerObject._lng_element.val(pos.lon);
+			locationPickerObject.destroy();
+		},
 		cancel: function() {
 			console.log('canceled');
 			locationPickerObject.destroy();
@@ -164,7 +179,12 @@ LocationPicker = function(lat_element, lng_element) {
 	// Show dialog
 	this.map_element.dialog({
 		modal: true,
-		movable: false
+		movable: false,
+		resizable: false,
+		width: 'auto',
+		height: 'auto',
+		closeOnEscape: false,
+		dialogClass: 'picker-dialog no-title-dialog'
 	})
 };
 

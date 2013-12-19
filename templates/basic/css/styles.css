@@ -220,7 +220,7 @@ ul.languages li{
 .login-dialog .error .notification{
 	color: #CF0D0D !important;
 }
-.login-dialog .ui-dialog-titlebar {
+.no-title-dialog .ui-dialog-titlebar {
 	display: none
 }
 
@@ -892,9 +892,16 @@ textarea {
 	border-radius: 4px;
 }
 
+.map-picker-dialog {
+	padding: 0px !important;
+	width: 800px;
+	height: 400px;
+}
 .map.picker{
 	width: 800px;
 	height: 400px;
+	border-width: 0px;
+	border-radius: 0px;
 }
 
 .map.fullscreen {
@@ -925,7 +932,8 @@ textarea {
 	height: 12px;
 	border-radius: 4px;
 	background-color: rgba(0, 60, 136, 0.5);
-	color: #d1d1d1;
+	color: #dedede;
+	text-shadow: 1px 1px 2px #565656;
 	display: inline-block;
 	white-space: pre;
 }
@@ -936,21 +944,30 @@ textarea {
 	color: white;
 }
 
-/** Position picker button **/
+/** Location picker control **/
 .map-control.map-control-picker {
-	right: 48px;
+	top: auto;
+	bottom: 8px;
 }
 
 .map-control-picker .coordinates {
-	background-color: rgba(0, 60, 136, 0.698);
+	background-color: rgba(47, 55, 66, 0.698);
 	color: white;
 	display: inline-block;
 	height: 12px;
 	padding: 8px 8px 8px 8px;
+	border-radius: 4px;
 }
 
 .map-control-picker .button.ok {
-	margin: 0px 4px;
+	margin-left: 4px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px; 
+}
+
+.map-control-picker .button.cancel {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px; 
 }
 
 /** Fullscreen button **/
@@ -984,6 +1001,7 @@ textarea {
 	width: 0px;
 	overflow: hidden;
 	border-radius: 0px;
+	text-shadow: none;
 }
 
 .map-control-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}

@@ -534,7 +534,8 @@ NetworkMapControlFullScreen.prototype.toggleFullscreen = function() {
  * @brief Map control for location picking
  * @param map The NetworkMap object to render and control filter.
  * @param options
- *  - position: Starting position of the marker (default view center)
+ *  - zoom: Initial zoom level (default 17); 
+ *  - position: Starting position of the marker [Lat, Lon] (default view center)
  *  - ok: Callback if user pressed ok
  *  - cancel: Callback if user pressed cancel.
  */
@@ -543,18 +544,25 @@ var NetworkMapControlPicker = function(map, options) {
 	
 	// Private variables
 	this._map = map;
-	this._default_options = { position: null, ok: null, cancel: null };
+	this._default_options = { 
+			position: null,
+			zoom: null,
+			ok: null,
+			cancel: null
+	};
 	this.options = $.extend({}, this._default_options, options);
 	
-	// Process options
+	// Process options and estimate best view
 	if (this.options['position']) {
 		// Convert to LonLat object
 		var pos = new OpenLayers.LonLat(this.options['position'][1], this.options['position'][0])
 			.transform('EPSG:4326', 'EPSG:3857');
 		this.options['position'] = pos;
+		console.log(this.options['zoom']);
+		if (!this.options['zoom'])
+			this.options['zoom'] = 17;	// Auto zoom
 	} else {
 		this.options['position'] = this._map._olMap.getCenter();
-		console.log("Center");
 	}
 	
 	
@@ -582,9 +590,7 @@ var NetworkMapControlPicker = function(map, options) {
 	
 	this._drag_control = new OpenLayers.Control.DragFeature(this._layer_selection, {
 		onComplete : function(feature){
-			var pos = controlObject.getPosition();
-			controlObject._element.find('.lat').text(pos.lat.toFixed(4));
-			controlObject._element.find('.lon').text(pos.lon.toFixed(4));
+			controlObject.updateInfo();
 		}
 	});
 	this._map._olMap.addControl(this._drag_control);
@@ -593,7 +599,7 @@ var NetworkMapControlPicker = function(map, options) {
 	// Construct hud
 	this._element = $(
 			'<div class="map-control map-control-picker">'
-			+ '<span class="coordinates"><span class="lat"/>, <span class="lon"/></span>'
+			+ '<span class="coordinates"/>'
 			+ '<span class="ok button">OK</span>'
 			+ '<span class="cancel button">Cancel</span></div>');
 	$('#' + this._map._map_el_id).append(this._element);
@@ -608,6 +614,12 @@ var NetworkMapControlPicker = function(map, options) {
 			controlObject.options['cancel'](controlObject);
 	});
 	
+	// Focus map on point
+	this._map._olMap.panTo(this.options['position']);
+	if (this.options['zoom'])
+		this._map._olMap.zoomTo(this.options['zoom'])
+	this.updateInfo();
+	
 	// Register control
 	this._map._controls.push(this);
 };
@@ -618,6 +630,16 @@ var NetworkMapControlPicker = function(map, options) {
 NetworkMapControlPicker.prototype.destroy = function() {
 	this._element.remove();
 };
+
+/**
+ * @brief Updates control info 
+ */
+NetworkMapControlPicker.prototype.updateInfo = function() {
+	var pos = this.getPosition();
+	this._element.find('.coordinates').text(pos.lat.toFixed(4) + ', ' + pos.lon.toFixed(4));
+};
+
+
 
 /**
  * @brief Get the position that picker is currently showing
