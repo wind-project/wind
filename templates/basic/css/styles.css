@@ -959,6 +959,13 @@ textarea {
 	border-radius: 4px;
 }
 
+.map-control-picker .button {
+	background-color: rgba(0, 60, 136, 0.75);
+}
+.map-control-picker .button:hover{
+	background-color: rgba(0, 60, 136, 0.85);
+}
+	
 .map-control-picker .button.ok {
 	margin-left: 4px;
 	border-top-right-radius: 0px;

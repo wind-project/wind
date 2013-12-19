@@ -527,36 +527,22 @@ function include_map_dependencies() {
  * @param element_id The id of the element to render map on.
  * @param picker A flag to show that this is a place picker.
  */
-function include_map($element_id, $place_picker = false) {
+function include_map($element_id) {
 	global $main, $smarty, $vars;
+
+	include_map_dependencies();;
 
 	// Include needed javascript
 	include_js_language_tokens();
-	$js_dir = $smarty->template_dir."scripts/javascripts/";
-	$main->html->head->add_script('text/javascript', 'http://maps.google.com/maps/api/js?v=3&sensor=false');
-	$main->html->head->add_script('text/javascript', "${js_dir}/map.js");
-	$main->html->head->add_script('text/javascript', "${js_dir}/openlayers/lib/OpenLayers.js");
-	
-	
-	$map_options = array();
-	$map_options['bound_sw'] = array($vars['gmap']['bounds']['min_latitude'], $vars['gmap']['bounds']['min_longitude']);
-	$map_options['bound_ne'] = array($vars['gmap']['bounds']['max_latitude'], $vars['gmap']['bounds']['max_longitude']);
-	$map_options['topology_url'] = null;
-	if (!$place_picker)
-		$map_options['topology_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), FALSE, TRUE, FALSE);
-	$map_options_string = json_encode($map_options);
 	
 	$main->html->head->add_extra(
 			"<script type=\"text/javascript\">
 			$(function() {
 				// Load map
-				map = new NetworkMap('${element_id}', ${map_options_string});
-				if ('${place_picker}') {
-					controlSelectSpot = new NetworkMapControlSelectSpot(map);
-				} else {
-					controlNodeFilter = new NetworkMapControlNodeFilter(map);
-					controlFullScreen = new NetworkMapControlFullScreen(map);
-				}
+				map = new NetworkMap('${element_id}', map_options);
+
+				controlNodeFilter = new NetworkMapControlNodeFilter(map);
+				controlFullScreen = new NetworkMapControlFullScreen(map);
 				
 			});
 			
