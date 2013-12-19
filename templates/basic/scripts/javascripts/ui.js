@@ -133,8 +133,45 @@ LoginForm.prototype.show = function(){
 
 
 /**
- * @brief Map picker
+ * @brief Location Picker using NetworkMap
+ * @param lat_element DOM element of latitude input
+ * @param lng_element DOM element of longitude input
  */
-MapPicker = function() {
+LocationPicker = function(lat_element, lng_element) {
+	var locationPickerObject = this;
 	
+	// Private variables
+	this._lat_element = lat_element;
+	this._lng_element = lng_element
+	
+	// Extract initial values
+	var position
+	
+	// Construct map
+	this.map_element = $('<div id="location-picker" class="map picker"/>');
+	$('body').append(this.map_element);
+	
+	this.map = new NetworkMap('location-picker');
+	
+	this.controlPicker = new NetworkMapControlPicker(this.map, {
+		cancel: function() {
+			console.log('canceled');
+			locationPickerObject.destroy();
+		}
+	});
+	this.controlFullScreen = new NetworkMapControlFullScreen(this.map);
+	
+	// Show dialog
+	this.map_element.dialog({
+		modal: true,
+		movable: false
+	})
+};
+
+LocationPicker.prototype.destroy = function() {
+	this.map.destroy();
+	this.map_element.remove();
+	
+	delete this._lat_element;
+	delete this._lng_element;
 };

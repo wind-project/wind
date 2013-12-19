@@ -321,10 +321,15 @@ class mynodes {
 	}
 
 	function output() {
-		if (get('subpage') != '') return $this->page->output();
-		if (isset($_POST['form_name']) && (strstr($_POST['form_name'], 'table_links_ap') !== FALSE)) return $this->output_onpost_table_links_ap();
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		if (get('subpage') != '')
+			return $this->page->output();
+		if (isset($_POST['form_name']) && (strstr($_POST['form_name'], 'table_links_ap') !== FALSE))
+			return $this->output_onpost_table_links_ap();
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		
 		global $construct, $main, $db;
+		include_map_dependencies();
 		$this->tpl['form_node'] = $construct->form($this->form_node(), __FILE__);
 		$this->tpl['node'] = get('node');
 		if (get('action') == 'delete') {

@@ -2,35 +2,35 @@
 /**
  * @brief Map with all the information of the network topology
  * @param el_id The id of the element to render map on
- * @param topology_url The url with network topology information.
  * @param options
  *  - topology_url: The url to download network topology
  * 	- bound_sw : The southwest point of the boundaries (lat,lng)
  *  - bound_ne	: The northeast point of the boundaries (lat,lng)
  *  - center : Center of the map (lat,lng)
  */
-var NetworkMap = function(el_id, options) {
+NetworkMap = function(el_id, options) {
 	// Private variables
-	
-	this._map_el_id = el_id;
-	this._topology_url = 'topology_url' in options?options['topology_url']:null;
+	this._map_el_id = el_id;	// The id of the element to render map on.
 	this._default_filter = {
 		p2p : true,
 		ap: true,
 		client : true,
 		unlinked : false
-	};
+	};							// Default filter
+	
 	this._filter = $.extend({}, this._default_filter);
-	this._node_popup = null;
-	this._olControls = {};
-	this._olLayers = {};
+	this._node_popup = null	// The current Node popup
+	this._olControls = {};	// All used OL controls
+	this._olLayers = {};	// All used OL layers
+	this._controls = [];	// All active NetworkMap controls
 	
 	// Process options
 	this._default_options = {
+		topology_url : null,
 		bound_sw : [37.97152, 23.72664],
 		bound_ne : [37.97152, 23.72664],
 		center: null
-	};
+	};						// Default options
 	this.options = $.extend({}, this._default_options, options);
 	
 	// Construct map
@@ -44,7 +44,7 @@ var NetworkMap = function(el_id, options) {
  * @brief Construct the complete map without topology
  */
 NetworkMap.prototype._constructMap = function() {
-	var networkMap = this;
+	var networkMapObject = this;
 	
 	// Calculate boundaries
 	var bounds = new OpenLayers.Bounds();
@@ -93,7 +93,7 @@ NetworkMap.prototype._constructMap = function() {
 	// Selection
 	this._olControls['node_select']  = new OpenLayers.Control.SelectFeature(this._olLayers['nodes'], {
 			onSelect : function(feature) {
-				var popup_body = networkMap._constructNodePopup(feature);
+				var popup_body = networkMapObject._constructNodePopup(feature);
 
 				var popup = new OpenLayers.Popup("node",
 						new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y),
@@ -104,14 +104,14 @@ NetworkMap.prototype._constructMap = function() {
 
 				popup.autoSize = true;
 				popup.panMapIfOutOfView = true;
-				networkMap._node_popup = popup;
-				networkMap._olMap.addPopup(popup);
+				networkMapObject._node_popup = popup;
+				networkMapObject._olMap.addPopup(popup);
 
 			},
 			onUnselect : function(feature) {
-				if (networkMap._node_popup)
-					networkMap._olMap.removePopup(networkMap._node_popup);
-				networkMap._node_popup = null;
+				if (networkMapObject._node_popup)
+					networkMapObject._olMap.removePopup(networkMapObject._node_popup);
+				networkMapObject._node_popup = null;
 			}
 		}
 	);
@@ -210,7 +210,7 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 NetworkMap.prototype._downloadTopology = function(focus_selected) {
 	var networkMap = this;
 	
-	if (!this._topology_url)
+	if (!this.options['topology_url'])
 		return false;	// There is no known resource to download topology
 	
 	// Process parameters
@@ -311,7 +311,7 @@ NetworkMap.prototype._downloadTopology = function(focus_selected) {
  * @brief Construct the topology url based on filter
  */
 NetworkMap.prototype._topologyUrl = function() {
-	var topology_url = this._topology_url;
+	var topology_url = this.options['topology_url'];
 	filter = [];
 	$.each(this._filter, function(key, value){
 		if (value)
@@ -355,6 +355,18 @@ NetworkMap.prototype.focusAtNode = function(node_id) {
 	this._olLayers['links'].redraw();
 };
 
+/**
+ * @brief Destroy network map
+ */
+NetworkMap.prototype.destroy = function() {
+	$.each(this._controls, function(index, control) {
+		if ('destroy' in control) {
+			control.destroy();
+		}
+	});
+	this._olMap.destroy();
+}
+
 
 /**
  * @brief Map control for selecting node filtering.
@@ -372,7 +384,7 @@ var NetworkMapControlNodeFilter = function(map, options) {
 	};
 
 	// Construct hud
-	this._element = $('<div class="map-hud map-filter"><ul/></ul></div>');
+	this._element = $('<div class="map-control map-control-filter"><ul/></ul></div>');
 	$.each(this._valid_filters, function(filter, lang_token){
 		nodeFilterObject._element.find('ul').append($('<li class="button" />').addClass(filter).text(lang[lang_token]));
 	});
@@ -386,6 +398,16 @@ var NetworkMapControlNodeFilter = function(map, options) {
 		$(this).toggleClass('active');
 		nodeFilterObject._saveState();
 	});
+	
+	// Register control
+	this._map._controls.push(this);
+};
+
+/**
+ * @brief Called to destroy the control 
+ */
+NetworkMapControlNodeFilter.prototype.destroy = function() {
+	this._element.remove();
 };
 
 /**
@@ -429,14 +451,14 @@ NetworkMapControlNodeFilter.prototype._saveState = function() {
  * @brief Map control for enabling fullscreen mode
  * @param map The NetworkMap object to render and control filter.
  */
-var NetworkMapControlFullScreen = function(map, options) {
+NetworkMapControlFullScreen = function(map, options) {
 	var fullScreenObject = this;
 	
 	this._map = map;
 	this._map_element = $('#' + this._map._map_el_id);
 
 	// Construct hud
-	this._element = $('<div class="map-hud map-fullscreen"><span class="button"></span></div>');
+	this._element = $('<div class="map-control map-control-fullscreen"><span class="button"></span></div>');
 	$('#' + this._map._map_el_id).append(this._element);
 	
 	// Add hooks
@@ -444,9 +466,25 @@ var NetworkMapControlFullScreen = function(map, options) {
 		fullScreenObject.toggleFullscreen();
 		return false;
 	});
-	$(document).keyup(function(e) {
-	  if (e.keyCode == 27) { fullScreenObject.restore(); }   // esc
-	});
+	
+	this._escape_handler = function(e) {
+		if (e.keyCode == 27) {	// esc
+			fullScreenObject.restore(); 
+		}
+	};
+	
+	$(document).keyup(this._escape_handler);
+	
+	// Register control
+	this._map._controls.push(this);
+};
+
+/**
+ * @brief Called to destroy the control 
+ */
+NetworkMapControlFullScreen.prototype.destroy = function() {
+	$(document).unbind('keyup', this._escape_handler);
+	this._element.remove();
 };
 
 /**
@@ -493,29 +531,29 @@ NetworkMapControlFullScreen.prototype.toggleFullscreen = function() {
 
 
 /**
- * @brief Map control for selecting a place
+ * @brief Map control for location picking
  * @param map The NetworkMap object to render and control filter.
  * @param options
  *  - position: Starting position of the marker (default view center)
  *  - ok: Callback if user pressed ok
  *  - cancel: Callback if user pressed cancel.
  */
-var NetworkMapControlSelectSpot = function(map, options) {
-	var controlSelectObject = this;
+var NetworkMapControlPicker = function(map, options) {
+	var controlObject = this;
 	
 	// Private variables
 	this._map = map;
 	this._default_options = { position: null, ok: null, cancel: null };
-	this._options = $.extend({}, this._default_options, options);
+	this.options = $.extend({}, this._default_options, options);
 	
 	// Process options
-	if (this._options['position']) {
+	if (this.options['position']) {
 		// Convert to LonLat object
-		var pos = new OpenLayers.LonLat(this._options['position'][1], this._options['position'][0])
+		var pos = new OpenLayers.LonLat(this.options['position'][1], this.options['position'][0])
 			.transform('EPSG:4326', 'EPSG:3857');
-		this._options['position'] = pos;
+		this.options['position'] = pos;
 	} else {
-		this._options['position'] = this._map._olMap.getCenter();
+		this.options['position'] = this._map._olMap.getCenter();
 		console.log("Center");
 	}
 	
@@ -535,7 +573,7 @@ var NetworkMapControlSelectSpot = function(map, options) {
 	
 	// Add movable marker
 	this._marker = new OpenLayers.Feature.Vector(
-			 new OpenLayers.Geometry.Point(this._options['position'].lon, this._options['position'].lat),
+			 new OpenLayers.Geometry.Point(this.options['position'].lon, this.options['position'].lat),
 			 {some:'data'});
 	this._layer_selection.addFeatures(this._marker);
 	
@@ -544,16 +582,17 @@ var NetworkMapControlSelectSpot = function(map, options) {
 	
 	this._drag_control = new OpenLayers.Control.DragFeature(this._layer_selection, {
 		onComplete : function(feature){
-			var pos = controlSelectObject.getPosition();
-			controlSelectObject._element.find('.lat').text(pos.lat.toFixed(4));
-			controlSelectObject._element.find('.lon').text(pos.lon.toFixed(4));
+			var pos = controlObject.getPosition();
+			controlObject._element.find('.lat').text(pos.lat.toFixed(4));
+			controlObject._element.find('.lon').text(pos.lon.toFixed(4));
 		}
 	});
 	this._map._olMap.addControl(this._drag_control);
 	this._drag_control.activate();
 	
 	// Construct hud
-	this._element = $('<div class="map-hud map-position">'
+	this._element = $(
+			'<div class="map-control map-control-picker">'
 			+ '<span class="coordinates"><span class="lat"/>, <span class="lon"/></span>'
 			+ '<span class="ok button">OK</span>'
 			+ '<span class="cancel button">Cancel</span></div>');
@@ -561,16 +600,29 @@ var NetworkMapControlSelectSpot = function(map, options) {
 	
 	// Add hooks
 	this._element.find('span.ok').click(function(){
-		if (controlSelectObject._options['ok'])
-			controlSelectObject._options['ok'](controlSelectObject);
+		if (controlObject.options['ok'])
+			controlObject.options['ok'](controlObject);
 	});
 	this._element.find('span.cancel').click(function(){
-		if (controlSelectObject._options['cancel'])
-			controlSelectObject._options['cancel'](controlSelectObject);
+		if (controlObject.options['cancel'])
+			controlObject.options['cancel'](controlObject);
 	});
+	
+	// Register control
+	this._map._controls.push(this);
 };
 
-NetworkMapControlSelectSpot.prototype.getPosition = function() {
+/**
+ * @brief Called to destroy the control 
+ */
+NetworkMapControlPicker.prototype.destroy = function() {
+	this._element.remove();
+};
+
+/**
+ * @brief Get the position that picker is currently showing
+ */
+NetworkMapControlPicker.prototype.getPosition = function() {
 	var pos = new OpenLayers.LonLat(this._marker.geometry.x, this._marker.geometry.y)
 		.transform('EPSG:3857', 'EPSG:4326');
 	return pos;
