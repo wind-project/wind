@@ -4,7 +4,7 @@ Wind
 WiND is a Web application targeting at [Wireless Community Networks](http://en.wikipedia.org/wiki/Wireless_community_network).
 It was created as a replacement for [NodeDB](http://www.nodedb.com/) by the members of [Athens Wireless Metropolitan Network](http://www.awmn.net/) located in Athens, Greece. It has evolved into much more as you can see below in the feature list.
 
-WiND is distributed under [Affero GNU Public Licence v3](http://www.gnu.org/licenses/agpl-3.0.html) where each piece of code remains under the copyright of their respective author. Everyone can see the source code and everyone can contribute to it.
+WiND is distributed under [GNU Affero General Public License v3](http://www.gnu.org/licenses/agpl-3.0.html) where each piece of code remains under the copyright of their respective author. Everyone can see the source code and everyone can contribute to it.
 
 ## Features
  * Supports multiple users and multiple nodes per user
