@@ -15,13 +15,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-list">
-	<tr>
-		<td width="100%" class="table-list-title">{$title}</td>
-	</tr>
-	<tr>
-		<td width="100%" colspan="2">
+<div class="section section-level-2">
+	<h3>{$title}</h3>
+	<div class="content">
 			{$content}
-		</td>
-	</tr>
-</table>
+	</div>
+</div>

@@ -38,7 +38,7 @@ class header {
 		}
 		$this->tpl['link_home'] = makelink(array());
 		$this->tpl['link_login_form'] = makelink(array("page" => "users", "subpage" => "loginform"), false, true, false);
-		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"), false, true, false);
+		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
 		$this->tpl['current_language'] = $vars['info']['current_language'];
 		foreach($vars['language']['enabled'] as $key => $value) {
 			if ($value) {

@@ -17,20 +17,23 @@
  *}
 <ul class="main-menu menu">
 	<li>
+		<a href="{$link_allnodes}">
 		<img src="templates/basic/images/search_nodes.gif" alt="{$lang.all_nodes}" />
-		<a href="{$link_allnodes}">{$lang.all_nodes}</a>
+		{$lang.all_nodes}</a>
 	</li>
 	<li>
+		<a href="{$link_alldnszones}">
 		<img src="templates/basic/images/search_dns.gif" alt="{$lang.all_zones}" />
-		<a href="{$link_alldnszones}">{$lang.all_zones}</a>
+		{$lang.all_zones}</a>
   	</li>
-  	<li>
+  	<li><a href="{$link_allranges}">
 		<img src="templates/basic/images/search_ip.gif" alt="{$lang.all_ranges}" />
-		<a href="{$link_allranges}">{$lang.all_ranges}</a>
+		{$lang.all_ranges}</a>
 	</li>
 	<li>
+		<a href="{$link_allservices}">
 		<img src="templates/basic/images/services.gif" alt="{$lang.all_services}" />
-		<a href="{$link_allservices}">{$lang.all_services}</a>
+		{$lang.all_services}</a>
 	</li>
 	<li>
 		<table>
@@ -41,7 +44,7 @@
 					{include file="generic/qs.tpl" qs=$query_string}
 					<table class="table-main">
 						<tr>
-							<td style="font-size: 12px; width=100%;">&nbsp;{$lang.quick_search} <a href="javascript:document.search.submit()"><img src="templates/basic/images/submit1.png" alt="{$lang.submit}" /></a></td>
+							<td style="font-size: 12px; width=100%;">&nbsp;{$lang.quick_search} </td>
 						</tr>
 						<tr>
 							<td>
@@ -92,19 +95,18 @@
 		<span class="title">
 			<img src="templates/basic/images/node.gif" alt="{$lang.mynodes}" />
 			<span class="text">{$lang.mynodes}</span>
+			<span class="hint-link">|<a href="{$link_addnode}">{$lang.node_add}</a>|</span>
 		</span>
-		<span class="hint-link">|<a href="{$link_addnode}">{$lang.node_add}</a>|</span>
+		
 	
-		<ul class="menu">
+		<ul class="menu nodes-list">
 		{section name=row loop=$mynodes}
 		{if $smarty.section.row.index is not even}
 			<li class="odd">
 		{else}
 			<li class="even">
 		{/if}
-				<img src="templates/basic/images/node-small.png" alt="{$lang.mynodes}" />
-				<a href="{$mynodes[row].url}">{$mynodes[row].name|escape} (#{$mynodes[row].id})</a>
-				<a href="{$mynodes[row].url_view}"><img src="templates/basic/images/submit1.png" alt="{$lang.node}" /></a>
+				<a href="{$mynodes[row].url_view}">{$mynodes[row].name|escape} (#{$mynodes[row].id})</a>
 			</li>
 		{/section}
 		</ul>

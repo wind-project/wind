@@ -499,7 +499,7 @@ function include_map_dependencies() {
 	// Include needed javascript
 	include_js_language_tokens();
 	$js_dir = $smarty->template_dir."scripts/javascripts/";
-	$main->html->head->add_script('text/javascript', 'http://maps.google.com/maps/api/js?v=3&sensor=false');
+	$main->html->head->add_script('text/javascript', 'http://maps.google.com/maps/api/js?v=3&amp;sensor=false');
 	$main->html->head->add_script('text/javascript', "${js_dir}/map.js");
 	$main->html->head->add_script('text/javascript', "${js_dir}/openlayers/OpenLayers.js");
 
