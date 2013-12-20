@@ -26,12 +26,20 @@
 	alt="Logo" class="{$lang.site_title}"/></a>
 
 	<div class="user-panel">
+		{include file="generic/language_selection.tpl" languages=$languages current_language=$current_language}
 	{if $logged==TRUE}
 		<a href="{$link_user_profile}" class="user">{$logged_title}</a> | <a id="logout" href="{$link_logout}" class="logout">{$lang.logout}</a>
 	{else}
 		<a id="login" href="{$link_login_form}">{$lang.login}</a> / <a href="{$link_register}">{$lang.register}</a> 
 	{/if}
-		{include file="generic/language_selection.tpl" languages=$languages current_language=$current_language}
+		<div class="quicksearch">
+			<form name="search" method="get" action="?">
+				{include file="generic/qs.tpl" qs=$query_string}
+				<input placeholder="{$lang.search}" type="text" id="q" name="q" autocomplete="off" onkeydown="" onfocus="hover('',this.value);" onkeyup="hover(event.keyCode,this.value);"  onblur="setTimeout('hideSearch()',500); hov=0;" />
+				<div id="searchResult" ></div>
+			</form>
+		</div>
+		
 	</div>
 
 	{literal}

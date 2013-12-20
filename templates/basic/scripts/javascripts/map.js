@@ -588,10 +588,11 @@ var NetworkMapControlPicker = function(map, options) {
 	this._layer_selection = new OpenLayers.Layer.Vector("Selection", {
 		styleMap : new OpenLayers.StyleMap({
 			'default' : new OpenLayers.Style({
-				'pointRadius' : 5,
+				'pointRadius' : 10,
 				'strokeWidth' : 2,
 				'strokeColor' : '#000000',
-				'fillColor' : '#35df69',
+				'fillColor' : 'rgb(234,58,128)',
+				'fillOpacity': '0.3'
 			}),
 		})
 	});

@@ -36,29 +36,6 @@
 		{$lang.all_services}</a>
 	</li>
 	<li>
-		<table>
-			<tr>
-				<td><img src="templates/basic/images/search.gif" width="32" height="32" alt="{$lang.quick_search}" /></td>
-				<td style="font-size: 12px;">
-					<form name="search" method="get" action="?">
-					{include file="generic/qs.tpl" qs=$query_string}
-					<table class="table-main">
-						<tr>
-							<td style="font-size: 12px; width=100%;">&nbsp;{$lang.quick_search} </td>
-						</tr>
-						<tr>
-							<td>
-								<div>
-								<input type="text" id="q" name="q" autocomplete="off" onkeydown="" onfocus="hover('',this.value);" onkeyup="hover(event.keyCode,this.value);"  onblur="setTimeout('hideSearch()',500); hov=0;" />
-								</div>
-								<div id="searchResult" ></div>
-							</td>
-						</tr>
-					</table>
-					</form>
-				</td>
-			</tr>
-		</table>
 	</li>
 </ul>
 

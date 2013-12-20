@@ -32,7 +32,7 @@
 <li><a href="#tab-info">{$lang.node_info}</a></li>
 {if $node != 'add'}
 <li><a href="#tab-links">{$lang.links}</a></li>
-<li><a href="#tab-network">Diktio</a></li>
+<li><a href="#tab-network">{$lang.network}</a></li>
 <li><a href="#tab-services">{$lang.services}</a></li>
 <li><a href="#tab-myview">{$lang.myview}</a></li>
 {/if}

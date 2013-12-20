@@ -43,7 +43,7 @@
 	{section name=node loop=$nodes_search}
 	<tr {if $widget=="0"}onclick="window.location.href='{$nodes_search[node].href}'" onmouseover="hover('mouse',this)"{else}onclick="open_url('{$url}{$nodes_search[node].href}');" onmouseover="this.style.background='orange';" onmouseout="this.style.background='transparent';" style="cursor: pointer;"{/if} style="width: 100%">
 		<td>{$nodes_search[node].name}</td>
-		<td align="right">(#{$nodes_search[node].id})</td>
+		<td align="right" class="node_id">#{$nodes_search[node].id}</td>
 	</tr>
 	{sectionelse}
 		<tr style="width: 100%">

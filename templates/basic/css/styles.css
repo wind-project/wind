@@ -149,6 +149,41 @@ div.user-panel {
 	z-index: 1;
 }
 
+div.user-panel .quicksearch{
+	display: inline-block;
+	margin-left: 10px;
+}
+
+div.user-panel .quicksearch input{
+	border: 0px;
+	padding: 2px 4px;
+	border-radius: 2px;
+	font-style: italic;
+	width: 150px;
+}
+
+
+#searchResult {
+	font-family: Arial;
+	font-size: 12px;
+	background-color: white;
+	padding: 5px;
+	display: none;
+	position: absolute;
+	width: 150px;
+	vertical-align: left;
+	border: 1px solid #d1d1d1;
+	border-top-width: 0px;
+}
+
+#searchResult td{
+	padding: 2px 0px;
+}
+
+#searchResult td.node_id{
+	color: #878787;
+}
+	
 div#login-dialog {
 	display: none;
 }
@@ -169,7 +204,7 @@ div.user-panel > a:hover {
 
 .language-selection {
 	display: inline-block;
-	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .language-selection a img{
@@ -365,10 +400,10 @@ ul.main-menu li {
 
 ul.main-menu li a{
 	display: block;
-	padding: 4px;
-	padding-top: 8px;
+	padding: 8px;
 	color: #FFFFFF;
-	line-height: 28px;
+	line-height: 32px;
+	height: 32px;
 	vertical-align: top;
 	padding-left: 10px;
 	border-bottom: 1px solid #545454;
@@ -380,18 +415,6 @@ ul.main-menu li img {
 
 ul.main-menu li a:hover{
 	background-color: #3f6ca2;
-}
-
-#searchResult {
-	font-family: Arial;
-	font-size: 12px;
-	background-color: white;
-	border: #000000 dashed 1px;
-	padding: 0px;
-	display: none;
-	position: absolute;
-	width: 150px;
-	vertical-align: left;"
 }
 
 div.statistics {

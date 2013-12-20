@@ -48,6 +48,7 @@ $lang = array(
 	'users_info' => "Users info",
 	'username' => "Username",
 	'password' => "Password",
+	'network' => 'Network',
 	'rememberme' => "Keep me logged in",
 	'registered_since' => "Registered",
 	'name' => "First Name",

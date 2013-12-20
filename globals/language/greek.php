@@ -49,6 +49,7 @@ $lang = array(
 	'users_info' => "Στοιχεία χρηστών",
 	'username' => "Όνομα χρήστη",
 	'password' => "Κωδικός πρόσβασης",
+	'network' => 'Δίκτυο',
 	'rememberme' => "Διατηρήστε με σε σύνδεση ",
 	'registered_since' => "Εγγραφή",
 	'name' => "Όνομα",
