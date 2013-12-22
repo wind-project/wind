@@ -145,21 +145,22 @@ NetworkMap.prototype._constructMap = function() {
 		})
 	});
 	
-	// LAYER : map
+	// LAYER : maps
 	//-------------------------------------------------------
 	this._olLayers['osm'] = new OpenLayers.Layer.OSM("OpenStreetMaps");
-	this._olLayers['google'] = new OpenLayers.Layer.Google("Google Satelite", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
+	if (typeof(google) != 'undefined') 
+		this._olLayers['google'] = new OpenLayers.Layer.Google("Google Satelite", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
+	
+	var olLayers = [];
+	$.each(this._olLayers, function(name, layer){
+		olLayers.push(layer);
+	});
 	
 	// Finally connect all components under a map object
 	this._olMap = new OpenLayers.Map({
 		div : this._map_el_id,
 		projection : 'EPSG:3857',
-		layers : [
-		          this._olLayers['osm'],
-		          this._olLayers['google'],
-		          this._olLayers['links'],
-		          this._olLayers['nodes']
-		         ],
+		layers : olLayers,
 		center : center,
 		zoom : 10,
 		zoomDuration: 10,
