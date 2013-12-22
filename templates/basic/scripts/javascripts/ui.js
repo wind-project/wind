@@ -108,7 +108,6 @@ LoginForm.prototype.load = function(success){
 			});
 			
 			// Hook form submition
-			console.log(object._dialog_el.find('form'));
 			object._dialog_el.find('form').submit(function() {
 				object.info('Logging to the system');
 				async_form($(this), function(result){

@@ -31,6 +31,7 @@
 $(function(){
 	$('#select-language').click(function() {
 		$('#languages').toggle();
+		$('#languages').offset({'left': $('#select-language').offset().left -15});
 	});
 
 });

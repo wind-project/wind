@@ -34,6 +34,7 @@
 	{/if}
 		<div class="quicksearch">
 			<form name="search" method="get" action="?">
+				<input type="hidden" name="page" value="search" />
 				{include file="generic/qs.tpl" qs=$query_string}
 				<input placeholder="{$lang.search}" type="text" id="q" name="q" autocomplete="off" onkeydown="" onfocus="hover('',this.value);" onkeyup="hover(event.keyCode,this.value);"  onblur="setTimeout('hideSearch()',500); hov=0;" />
 				<div id="searchResult" ></div>
