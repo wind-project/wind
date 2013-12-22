@@ -163,8 +163,12 @@ print ("North East boundary at " . $bound_ne['lat'] . ",  ". $bound_ne['lon'] . 
 
 //-------------------------------------------------------------------------
 // STEP 3: Download files
-foreach(srtm_files($bound_sw, $bound_ne) as $fname => $info) {
-	print $fname . " ";
+$files = srtm_files($bound_sw, $bound_ne);
+printf("%d total SRTM maps are needed for your area.\n", count($files));
+
+$count = 1;
+foreach($files as $fname => $info) {
+	printf("%d. %s ", $count++, $fname);
 	
 	// Skip existing
 	if ($info['exists']) {
@@ -177,4 +181,4 @@ foreach(srtm_files($bound_sw, $bound_ne) as $fname => $info) {
 		print "OK\n";
 	}
 }
-print "Download of all needed srtm files, finshed succesfully!\n";
+print "Download finshed succesfully!\n";
