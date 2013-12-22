@@ -44,7 +44,7 @@
 		});
 		
 		$('#logout').click(function() {
-			$.get({/literal} '{$link_logout}' {literal}, function(){
+			$.get($(this).attr('href'), function(){
 				reload();
 			});
 			return false;

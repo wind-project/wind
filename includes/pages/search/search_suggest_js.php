@@ -28,7 +28,8 @@ class search_suggest_js {
 	function output() {
 
 		$this->tpl['suggest_url'] = makelink(array("page" => "search", "subpage" => "suggest"),FALSE, TRUE, FALSE);
-
+		header('Content-Type: text/javascript');
+		
 		echo template($this->tpl, __FILE__);
 		exit;
 	}
