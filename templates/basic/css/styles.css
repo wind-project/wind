@@ -339,7 +339,7 @@ ul.menu li.odd {
 	background-color: rgb(240, 240, 240);
 }
 
-ul.main-menu li {
+ul.main-menu li, td.table-search-menu-text { /** hack: table-search-menu must be removed **/
 	padding: 4px;
 	padding-top: 8px;
 	text-align: left;
