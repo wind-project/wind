@@ -32,7 +32,7 @@ class construct {
 		}
 		return template(array("data" => $form->data,
 				"extra_data" => $form->info,
-				"action_url" => htmlspecialchars('.'.get_qs())),
+				"action_url" => '.?'.get_qs()),
 				$template);
 	}
 	

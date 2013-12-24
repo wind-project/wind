@@ -39,7 +39,8 @@ class mynodes_link {
 	}
 	
 	function output() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
 		$this->tpl['link_method'] = (get('link') == 'add' ? 'add' : 'edit' );
 		$this->tpl['form_link'] = $construct->form($this->form_link(), __FILE__);
