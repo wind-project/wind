@@ -976,6 +976,10 @@ textarea {
 	border-radius: 4px;
 }
 
+.map-node-action-popup iframe {
+	width: 580px;
+	height: 430px;
+}
 .map-picker-dialog {
 	padding: 0px !important;
 	width: 800px;

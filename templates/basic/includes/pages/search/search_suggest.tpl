@@ -21,7 +21,7 @@
 	{section name=ip loop=$ip_search}
 	<tr {if $widget=="0"}onclick="window.location.href='{$ip_search[ip].href}'" onmouseover="hover('mouse',this)"{else}onclick="open_url('{$url}{$ip_search[ip].href}');" onmouseover="this.style.background='orange';" onmouseout="this.style.background='transparent';" style="cursor: pointer;"{/if} style="width: 100%">
 		<td>{$ip_search[ip].ip_start}</td>
-		<td align="right">(#{$ip_search[ip].id})</td>
+		<td align="right" class="node_id">#{$ip_search[ip].id}</td>
 	</tr>
 	{sectionelse}
 		<tr style="width: 100%">
@@ -32,7 +32,7 @@
 	{section name=zone loop=$dns_search}
 	<tr {if $widget=="0"}onclick="window.location.href='{$dns_search[zone].href}'" onmouseover="hover('mouse',this)"{else}onclick="open_url('{$url}{$dns_search[zone].href}');" onmouseover="this.style.background='orange';" onmouseout="this.style.background='transparent';" style="cursor: pointer;"{/if} style="width: 100%">
 		<td>{$dns_search[zone].name}</td>
-		<td align="right">(#{$dns_search[zone].id})</td>
+		<td align="right" class="node_id">#{$dns_search[zone].id}</td>
 	</tr>
 	{sectionelse}
 		<tr style="width: 100%">

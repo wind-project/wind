@@ -203,9 +203,8 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 		var ref_anchor = $('<a class="link extra-ref" />').text(ref['title']).attr('href', ref['href']);
 		
 		if (ref['popup']) {
-			var js_href = "javascript: t = window.open('" +	ref['href']
-				+"', 'popup_plot_link', 'width=600,height=450,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;";
-			console.log(js_href);
+			var js_href = "javascript: $('<div class=\"map-node-action-popup\"/>').append($('<iframe/>').attr('src', '" + ref['href'] + "'))"
+			 + ".dialog({modal:true, width: 'auto', height: 'auto',}); return false;";
 			ref_anchor.attr('href', js_href);
 			
 		}
