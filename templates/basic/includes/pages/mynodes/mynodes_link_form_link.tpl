@@ -88,8 +88,7 @@ function type_changed() {
 </script>
 {/literal}
 <script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
-<form name="{$extra_data.FORM_NAME}" method="post" action="?">
-<input type="hidden" name="query_string" value="{$hidden_qs}" />
+<form name="{$extra_data.FORM_NAME}" method="post" action="{$action_url}">
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 <table class="table-form" id="{$extra_data.FORM_NAME}_t">
 		<tr class="table-form-row1">
