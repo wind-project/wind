@@ -61,7 +61,7 @@
 	{foreach key=key item=cell from=$data[0]}
 	<td></td>
 	{/foreach}
-	<td><input class="fld-form-submit" type="submit" name="submit" value="{$lang.update}" /></td>
+	<td><button type="submit">{$lang.update}</button></td>
 </tr>
 </table>
 </form>

@@ -25,6 +25,6 @@
 	<label>{$lang.rememberme}: <input type="checkbox" name="rememberme"></label>
   </fieldset>
   	<div class="notification"></div>
-    <input type="submit" value="Login"> <a href="{$link_restore_password}">{$lang.password_recover}</a>
+    <button type="submit">{$lang.login}</button> <a href="{$link_restore_password}">{$lang.password_recover}</a>
 </form>
 </div>

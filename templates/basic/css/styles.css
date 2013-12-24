@@ -310,7 +310,7 @@ ul.languages li{
 	color: #424242;
 }
 
-.login-dialog input[type=submit] {
+.login-dialog button {
 	background: #627295;
 	color: #f1f1f1;
 	font-size: 13px;

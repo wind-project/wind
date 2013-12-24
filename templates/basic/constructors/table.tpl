@@ -107,7 +107,7 @@
 			{/if}
 		{/foreach}</td>
 	{/if}
-	{if $extra_data.MULTICHOICE[1] != ''}<td class="table-form-submit"><input class="fld-form-submit" type="submit" name="submit" value="{$lang[$extra_data.MULTICHOICE_LABEL]|escape}" /></td>{/if}
+	{if $extra_data.MULTICHOICE[1] != ''}<td class="table-form-submit"><button type="submit">{$lang[$extra_data.MULTICHOICE_LABEL]|escape}</button></td>{/if}
 </tr>
 {/if}
 </table>

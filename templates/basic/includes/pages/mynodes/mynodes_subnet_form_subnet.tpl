@@ -106,7 +106,7 @@ function type_changed() {
 		</tr>	
 
 		<tr>
-			<td class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td>
+			<td class="table-form-submit" colspan="2"><button type="submit">{$lang.submit}</button></td>
 		</tr>
 </table>
 </form>

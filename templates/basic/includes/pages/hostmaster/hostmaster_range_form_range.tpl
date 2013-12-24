@@ -91,6 +91,6 @@ function sendmail_changed() {{/literal}
 <input class="fld-form-input" type="text" name="email_to" value="{$extra_data.email_all}" disabled="disabled" /></td></tr>
 <tr class="table-form-row1"><td class="table-form-title">{$lang.subject}:</td><td class="table-form-field"><input class="fld-form-input" type="text" name="email_subject" disabled="disabled" /></td></tr>
 <tr class="table-form-row2"><td class="table-form-title"s>{$lang.body}:</td><td class="table-form-field"><textarea class="fld-form-input" name ="email_body" disabled="disabled"></textarea></td></tr>
-<tr><td  class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td></tr>
+<tr><td  class="table-form-submit" colspan="2"><button type="submit">{$lang.submit}</button></td></tr>
 </table>
 </form>

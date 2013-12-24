@@ -147,7 +147,7 @@ function type_changed() {
 		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.7.fullField]}{if $data[7].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[7].fullField}">{$data[7].value|escape}</textarea></td></tr>
 		<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.8.fullField]}{if $data[8].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[8].fullField}">{$data[8].value|escape}</textarea></td></tr>
 
-<tr><td class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td></tr>
+<tr><td class="table-form-submit" colspan="2"><button>{$lang.submit}</button></td></tr>
 </table>
 </form>
 <script type="text/javascript" language="javascript">

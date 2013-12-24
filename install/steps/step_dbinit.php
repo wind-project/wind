@@ -121,7 +121,7 @@ if ((!is_method_post()) || !$step_result){
 	
 	</ul>
 	<div class="buttons">
-		<input type="submit" value="Continue" class="continue"/>
+		<button type="submit" class="continue">Continue</button>
 	</div>
 </form>
 </div>

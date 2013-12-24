@@ -89,7 +89,7 @@ if ((!is_method_post()) || !$step_result){
 		<li><label><span>Schema:</span><input type="text" name="database" value="<?php echo $def_values['database']; ?>"/></label>
 	</ul>
 	<div class="buttons">
-		<input type="submit" value="Continue" class="continue"/>
+		<button type="submit" class="continue">Continue</button>
 	</div>
 </form>
 </div>
