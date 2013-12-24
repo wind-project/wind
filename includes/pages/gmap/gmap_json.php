@@ -108,7 +108,16 @@ class gmap_json {
 			$node['total_p2p'] = intval($value['total_p2p']);
 			$node['total_ap_subscriptions'] = intval($value['total_client_on_ap']);
 			$node['total_clients'] = intval($value['total_clients']);
-				
+			$node['extra_refs'] = array();
+			
+			// if we have a selected one
+			if(get('node') && (get('node') != $value['id'])) {
+				$node['extra_refs'][] = array(
+					'title' => $lang['plot'],
+					'href' => makelink(array('page'=>'nodes', 'subpage' => 'plot_link', 'a_node' => get('node'), 'b_node' => $node['id']), false, true, false),
+					'popup' => true,
+				);
+			}
 			// Append node
 			$json['nodes'][$value['id']] = $node;
 		}

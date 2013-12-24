@@ -24,8 +24,9 @@
 	<tr>
 		<td height="100%">
 			<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
-			<form style="height:100%;" name="form_nodes_plot_link" method="post" action="?">
-			<input type="hidden" name="query_string" value="{$hidden_qs}" />
+			<form style="height:100%;" name="form_nodes_plot_link" method="get" action="?">
+			<input type="hidden" name="page" value="nodes" />
+			<input type="hidden" name="subpage" value="plot_link" />
 			<table cellpadding="4" cellspacing="0" class="plot-link-table">
 				<tr>
 					<td width="25%" align="left">

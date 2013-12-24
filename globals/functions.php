@@ -116,8 +116,12 @@ function get($key) {
 			}
 			array_unshift($valid_array, '');
 			break;
+		case 'node':
+			$ret = intval($ret);
+			break;
 	}
-	if (isset($valid_array) && !in_array($ret, $valid_array)) $ret = $valid_array[0];
+	if (isset($valid_array) && !in_array($ret, $valid_array))
+		$ret = $valid_array[0];
 	return $ret;
 }
 

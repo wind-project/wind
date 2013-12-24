@@ -145,21 +145,22 @@ NetworkMap.prototype._constructMap = function() {
 		})
 	});
 	
-	// LAYER : map
+	// LAYER : maps
 	//-------------------------------------------------------
 	this._olLayers['osm'] = new OpenLayers.Layer.OSM("OpenStreetMaps");
-	this._olLayers['google'] = new OpenLayers.Layer.Google("Google Satelite", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
+	if (typeof(google) != 'undefined') 
+		this._olLayers['google'] = new OpenLayers.Layer.Google("Google Satelite", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
+	
+	var olLayers = [];
+	$.each(this._olLayers, function(name, layer){
+		olLayers.push(layer);
+	});
 	
 	// Finally connect all components under a map object
 	this._olMap = new OpenLayers.Map({
 		div : this._map_el_id,
 		projection : 'EPSG:3857',
-		layers : [
-		          this._olLayers['osm'],
-		          this._olLayers['google'],
-		          this._olLayers['links'],
-		          this._olLayers['nodes']
-		         ],
+		layers : olLayers,
 		center : center,
 		zoom : 10,
 		zoomDuration: 10,
@@ -183,14 +184,34 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 	var popup_body = $(
 		'<div><div class="nodePopup" ><span class="title"/><span class="id"/>'
 			+ '<ul class="attributes" />'
-			+ '<a>Node info</a>'
+			+ '<a class="node-info"></a>'
 			+ '</div></div>'
 			);
 	
 	popup_body.find('.nodePopup').addClass(feature.attributes['type']);
 	popup_body.find('.title').text(feature.attributes['name']);
 	popup_body.find('.id').text('#'+String(feature.attributes['id']));
-	popup_body.find('a').attr('href', feature.attributes['url']);
+	popup_body.find('a.node-info').text(lang['node_info']).attr('href', feature.attributes['url']);
+	
+	$('body').delegate('.olPopupContent .extra-ref', 'click', function(e){
+		e.preventDefault();
+		console.log('clicked');
+	});
+	
+	// Add extra references
+	$.each(feature.attributes['extra_refs'], function(index, ref) {
+		var ref_anchor = $('<a class="link extra-ref" />').text(ref['title']).attr('href', ref['href']);
+		
+		if (ref['popup']) {
+			var js_href = "javascript: t = window.open('" +	ref['href']
+				+"', 'popup_plot_link', 'width=600,height=450,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;";
+			console.log(js_href);
+			ref_anchor.attr('href', js_href);
+			
+		}
+		popup_body.append(ref_anchor);
+	});
+	
 	var ul = popup_body.find('ul');
 	var displayAttribute = function(key, value) {
 		var li = $('<li><span class="key"></span>: <span class="value"></span></li>');

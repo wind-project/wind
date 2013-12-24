@@ -17,11 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (get('subpage') != '') {
-	include_once(ROOT_PATH."includes/pages/gmap/gmap_".get('subpage').".php");
-} else {
-	include_once(ROOT_PATH."includes/pages/gmap/gmap_fullmap.php");
-}
+require_once(ROOT_PATH."includes/pages/gmap/gmap_".get('subpage').".php");
 
 class gmap {
 
@@ -29,12 +25,8 @@ class gmap {
 	var $page;
 	
 	function gmap() {
-		if (get('subpage') != '') {
-			$p = "gmap_".get('subpage');
-			$this->page = new $p;
-		} else {
-			$this->page = new gmap_fullmap;
-		}
+		$p = "gmap_".get('subpage');
+		$this->page = new $p;
 	}
 	
 	function output() {
