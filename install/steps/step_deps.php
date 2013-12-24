@@ -27,7 +27,7 @@ function check_wind_dependencies() {
 	
 	// PHP Version
 	$phpversion = explode('.', phpversion());
-	$dependancies['PHP Version >= 5.0'] = $phpversion[0] >= 5;
+	$dependancies['PHP Version >= 5.3'] = ($phpversion[0] >= 5 && $phpversion[1] >=3);
 	
 	// MySQL Support
 	$dependancies['PHP-MySQL extension'] = (extension_loaded('mysql') && function_exists('mysql_connect'));
