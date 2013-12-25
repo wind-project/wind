@@ -6,11 +6,14 @@ CREATE TABLE IF NOT EXISTS `areas` (
   `ip_start` int(10) NOT NULL default '0',
   `ip_end` int(10) NOT NULL default '0',
   `info` text,
+  `v6net` varbinary(16) default '0',
+  `v6prefix` smallint(6) default '0',
   PRIMARY KEY  (`id`),
   KEY `region_id` (`region_id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
-  KEY `ip_end` (`ip_end`)
+  KEY `ip_end` (`ip_end`),
+  KEY `v6net` (`v6net`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ipv6_node_repos` (
@@ -202,11 +205,14 @@ CREATE TABLE IF NOT EXISTS `regions` (
   `name` varchar(40) NOT NULL default '',
   `ip_start` int(10) NOT NULL default '0',
   `ip_end` int(10) NOT NULL default '0',
+  `v6net` varbinary(16) default '0',
+  `v6prefix` smallint(6) default '0',
   `info` text,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
-  KEY `ip_end` (`ip_end`)
+  KEY `ip_end` (`ip_end`),
+  KEY `v6net` (`v6net`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `rights` (
