@@ -94,7 +94,7 @@ class nodes_view {
 				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
 			}
 		}
-                $table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');
+		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');
 		$table_ip_ranges_v6->db_data_multichoice_checked('delete_req', 'Y');
 		$table_ip_ranges_v6->info['MULTICHOICE_LABEL'] = 'delete_request';
 		$table_ip_ranges_v6->db_data_remove('id', 'ip_range_v6', 'delete_req');

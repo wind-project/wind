@@ -388,7 +388,6 @@ class mynodes {
 				$t = $db->get('id, name', 'nodes', "id = ".intval(get('node')));
 				$this->tpl['node_name'] = $t[0]['name'];
 				$this->tpl['node_id'] = $t[0]['id'];
-				
 				$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
                                 $this->tpl['table_ip_ranges_v6'] = $construct->table($this->table_ip_ranges_v6(), __FILE__);
 				$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
@@ -405,8 +404,8 @@ class mynodes {
 				if ($this->has_owner_access()) $this->tpl['link_node_delete'] = makelink(array('action' => 'delete'), TRUE);
 				$this->tpl['link_node_view'] = makelink(array('page' => 'nodes', 'node' => get('node')));
 				$this->tpl['link_req_cclass'] = makelink(array('page' => 'mynodes', 'subpage' => 'range', 'node' => get('node')));
-                                $this->tpl['link_req_v6_cclass'] = makelink(array('page' => 'mynodes', 'subpage' => 'range_v6', 'node' => get('node')));
-				$this->tpl['link_req_dns_for'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
+				$this->tpl['link_req_v6_cclass'] = makelink(array('page' => 'mynodes', 'subpage' => 'range_v6', 'node' => get('node')));
+                                $this->tpl['link_req_dns_for'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_req_dns_rev'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_nameserver_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnsnameserver', 'node' => get('node'), 'nameserver' => 'add'));
 				$this->tpl['link_link_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'link', 'node' => get('node'), 'link' => 'add'));
@@ -415,7 +414,7 @@ class mynodes {
 				$this->tpl['link_services_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'services', 'node' => get('node'), 'service' => 'add'));
 
 			}
-			$this->tpl['link_map_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'map', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
+			$this->tpl['link_gmap_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'gmap', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
 			return template($this->tpl, __FILE__);
 		}
 	}
@@ -447,10 +446,10 @@ class mynodes {
 		if ($ret && $main->userdata->privileges['admin'] === TRUE && get('node') != 'add' && get('node') != $_POST['nodes__id']) {
 			$db->set('dns_nameservers', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('dns_zones', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
-			$db->set('ip_addresses', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
+			$db->set('ip_addresses', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));                      
 			$db->set('ip_ranges', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
                         $db->set('ip_ranges_v6', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
-			$db->set('nodes_services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
+                        $db->set('nodes_services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
 			$db->set('links', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('links', array('peer_node_id' => $_POST['nodes__id']), "peer_node_id = ".intval(get('node')));
 			$db->set('photos', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));

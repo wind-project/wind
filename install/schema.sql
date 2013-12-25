@@ -151,23 +151,29 @@ CREATE TABLE IF NOT EXISTS `links` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `nodes` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
-  `name` varchar(50) NOT NULL default '',
-  `name_ns` varchar(50) NOT NULL default '',
-  `area_id` int(10) unsigned default '0',
-  `latitude` float default NULL,
-  `longitude` float default NULL,
-  `elevation` int(10) unsigned default NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date_in` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `due_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `last_change` datetime DEFAULT '0000-00-00 00:00:00',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `name_ns` varchar(50) NOT NULL DEFAULT '',
+  `area_id` int(10) unsigned DEFAULT '0',
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  `elevation` int(10) unsigned DEFAULT NULL,
   `info` text,
-  PRIMARY KEY  (`id`),
+  `status` enum('active','inactive','pending','deleted') NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `unique_keys` (`name_ns`),
   KEY `date_in` (`date_in`),
+  KEY `due_date` (`due_date`),
+  KEY `last_change` (`last_change`),  
   KEY `name` (`name`),
   KEY `area_id` (`area_id`),
+  KEY `status` (`status`),
   KEY `latitude` (`latitude`),
   KEY `longitude` (`longitude`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 CREATE TABLE IF NOT EXISTS `nodes_services` (
   `id` int(10) unsigned NOT NULL auto_increment,

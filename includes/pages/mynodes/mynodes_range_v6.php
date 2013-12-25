@@ -26,29 +26,17 @@ class mynodes_range_v6 {
 	}
 	
 	function new_range_v6() {
-		global $db;
-//		$range = 256;
+		global $db, $main;
 		$data2 = $db->get("nodes.area_id AS area_id",
 					"nodes",
 					"nodes.id = ".intval(get('node')));
 		$area_id = $data2[0]['area_id'];
 		
-                $data = $db->get("ipv6_node_repos_.v6net AS v6net",
+                $data3 = $db->get("ipv6_node_repos.v6net AS v6net, ipv6_node_repos.id AS id",
                                         "ipv6_node_repos",
-                                        "ipv6_node_repos.areas_id = '".$area_id."' and ipv6_node_repos.node_id = '0'", "" , "v6net ASC LIMIT 1");
+                                        "ipv6_node_repos.area_id = '".$area_id."' and ipv6_node_repos.node_id = '0'", "" , "id ASC LIMIT 1");
 
-                $area_v6net = $data[0]['v6net']; 
-                $ipv6net = inet_ntop($area_v6net);
-                printf($ipv6net."<br>");
-//                $ipv6net = explode(':',$ipv6net,4);
-//                $res = '';
-//                if ($ipv6net{2} == '') { 
-//                    $ipv6net{2} = '0000';
-//                };
-//                $ipv6net{3} = '0400';
-//                $ipv6net{4} = ':';
-//                $ipv6net2 = implode(':',$ipv6net);
-                $ret['v6net'] = $data[0]('v6net');
+		$ret['id'] = $data3[0]['id'];
 		return $ret;
 	}
         
@@ -79,8 +67,9 @@ class mynodes_range_v6 {
 		$nextr = $this->new_range_v6();
 		$status = "waiting";
 		$ret = TRUE;
-		$ret = $form_getrange_v6->db_set(array("node_id" => intval(get('node')), "v6net" => $nextr['v6net'], "status" => $status));
-		if ($ret) {
+		$ret = $form_getrange_v6->db_set(array("node_id" => intval(get('node')), "v6net_id" => $nextr['id'], "status" => $status));
+		$ret2 = $db->set("ipv6_node_repos", array('node_id' => intval(get('node'))), 'id = '.$nextr['id']);
+		if ($ret && $ret2) {
 			$main->message->set_fromlang('info', 'request_range_success', makelink(array("page" => "mynodes", "node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
