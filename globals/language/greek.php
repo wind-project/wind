@@ -61,6 +61,7 @@ $lang = array(
 	'users' => "Χρήστες",
 	'hostmaster_panel' => "Hostmaster",
 	'ip_ranges' => "IP C-Classes",
+        'ip_ranges_v6' => "IPv6 Networks",
 	'dns_zones' => "Ζώνες DNS",
 	'dns_nameservers' => "Nameservers (NS)",
 	'waiting' => "προς έλεγχο",
@@ -94,6 +95,8 @@ $lang = array(
 	'node_delete' => "Διαγραφή κόμβου",
 	'ip_range_request' => "Αίτηση απόδοσης IP C-Class",
 	'ip_range_request_for_node' => "Αίτηση απόδοσης IP C-Class για τον κόμβο",
+        'ip_range_v6_request' => "Αίτηση απόδοσης IPv6 Δικτύου",
+	'ip_range_v6_request_for_node' => "Αίτηση απόδοσης IPv6 Δικτύου για τον κόμβο",
 	'dnszone_request_forward' => "Αίτηση απόδοσης ζώνης DNS (forward)",
 	'dnszone_request_reverse' => "Αίτηση απόδοσης ζώνης DNS (reverse)",
 	'dnszone_edit' => "Επεξεργασία ζώνης DNS",
@@ -220,6 +223,8 @@ $lang = array(
 		'areas__name' => 'Δήμος / Κοινότητα',
 		'areas__ip_start' => 'IP από',
 		'areas__ip_end' => 'IP μέχρι',
+                'areas__v6net' => 'Δίκτυο IPv6',
+                'areas__v6prefix' => 'IPv6 Prefix',
 		'areas__info' => 'Πληροφορίες',
 
 		'regions__id' => 'Νομαρχία',
@@ -244,6 +249,23 @@ $lang = array(
 		'ip_range' => 'C Class',
 		'ip' => 'Διεύθυνση IP',
 
+                'ip_ranges_v6__date_in' => 'Ημερομηνία',
+		'ip_ranges_v6__v6net' => 'IPv6 Net',
+		'ip_ranges_v6__ip_end' => 'Μέχρι',
+		'ip_ranges_v6__status' => 'Κατάσταση',
+		'ip_ranges_v6__status-waiting' => 'Προς έλεγχο',
+		'ip_ranges_v6__status-pending' => 'Σε αναμονή',
+		'ip_ranges_v6__status-active' => 'Ενεργό',
+		'ip_ranges_v6__status-rejected' => 'Απορριφθέν',
+		'ip_ranges_v6__status-invalid' => 'Άκυρο',
+		'ip_ranges_v6__info' => 'Πληροφορίες IPv6',
+		'ip_ranges_v6__delete_req' => 'Αίτηση διαγραφής',
+		'ip_ranges_v6__delete_req-Y' => 'ΝΑΙ',
+		'ip_ranges_v6__delete_req-N' => 'ΟΧΙ',
+		'ip_range_v6' => 'IPv6 ID',
+		'ipv6' => 'Διεύθυνση IPv6',            
+                'v6net' => 'Δίκτυο IPv6',
+            
 		'dns_zones__date_in' => 'Ημερομηνία',
 		'dns_zones__name' => 'Όνομα ζώνης',
 		'dns_zones__type' => 'Τύπος ζώνης',
@@ -591,6 +613,10 @@ $lang = array(
 		),
 		'mynodes_range' => array(
 			'title' => 'Αίτηση απόδοσης IP C-Class',
+			'body' => 'Περιγράψτε με σαφήνεια, στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
+		),
+                'mynodes_range_v6' => array(
+			'title' => 'Αίτηση απόδοσης IPv6 Net',
 			'body' => 'Περιγράψτε με σαφήνεια, στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
 		),
 		'mynodes_dnszone_request_reverse' => array(
