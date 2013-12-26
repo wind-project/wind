@@ -86,7 +86,7 @@ class nodes_view {
 		$table_ip_ranges_v6->db_data(
 			'ip_ranges_v6.id, "" AS ip_range_v6, ipv6_node_repos.v6net AS v6net, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
 			'ip_ranges_v6, ipv6_node_repos',
-			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.node_id = ipv6_node_repos.node_id',
+			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.v6net_id = ipv6_node_repos.id',
 			"",
 			"ip_ranges_v6.date_in ASC");
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
