@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
   `info` text,
   `delete_req` enum('Y','N') NOT NULL default 'N',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `unique_keys` (`node_id`),
+  KEY `unique_keys` (`node_id`),
   KEY `date_in` (`date_in`),
   KEY `v6net_id` (`v6net_id`),
   KEY `status` (`status`),
