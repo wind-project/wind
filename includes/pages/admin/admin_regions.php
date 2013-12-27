@@ -35,7 +35,7 @@ class admin_regions {
 		global $construct, $db, $main;
 		$table_regions = new table(array('FORM_NAME' => 'table_regions', 'TABLE_NAME' => 'table_regions'));
 		$table_regions->db_data(
-			'regions.id, regions.name, regions.ip_start, regions.ip_end, regions.info',
+			'regions.id, regions.name, regions.ip_start, regions.ip_end, regions.v6net, regions.v6prefix, regions.info',
 			'regions',
 			"",
 			"",
@@ -44,6 +44,7 @@ class admin_regions {
 			if (isset($table_regions->data[$i])) {
 				$table_regions->data[$i]['ip_start'] = long2ip($table_regions->data[$i]['ip_start']);
 				$table_regions->data[$i]['ip_end'] = long2ip($table_regions->data[$i]['ip_end']);
+                                $table_regions->data[$i]['v6net'] = inet_ntop($table_regions->data[$i]['v6net']); 
 				$table_regions->info['EDIT'][$i] = makelink(array("page" => "admin", "subpage" => "regions", "region" => $table_regions->data[$i]['id']));
 			}
 		}

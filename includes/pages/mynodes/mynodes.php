@@ -87,7 +87,29 @@ class mynodes {
 		$table_ip_ranges->db_data_translate('ip_ranges__status');
 		return $table_ip_ranges;
 	}
-
+        
+        function table_ip_ranges_v6() {
+		global $db;
+		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
+		$table_ip_ranges_v6->db_data(
+			'ip_ranges_v6.id, "" AS ip_range_v6, ipv6_node_repos.v6net AS v6net, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
+			'ip_ranges_v6, ipv6_node_repos',
+			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.v6net_id = ipv6_node_repos.id',
+			"",
+			"ip_ranges_v6.date_in ASC");
+		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
+			if ($key != 0) {
+				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+			}
+		}
+		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');
+		$table_ip_ranges_v6->db_data_multichoice_checked('delete_req', 'Y');
+		$table_ip_ranges_v6->info['MULTICHOICE_LABEL'] = 'delete_request';
+		$table_ip_ranges_v6->db_data_remove('id', 'ip_range_v6', 'delete_req');
+		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status');
+		return $table_ip_ranges_v6;
+	}
+        
 	function table_dns() {
 		global $db, $vars;
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
@@ -366,8 +388,8 @@ class mynodes {
 				$t = $db->get('id, name', 'nodes', "id = ".intval(get('node')));
 				$this->tpl['node_name'] = $t[0]['name'];
 				$this->tpl['node_id'] = $t[0]['id'];
-				
 				$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
+                                $this->tpl['table_ip_ranges_v6'] = $construct->table($this->table_ip_ranges_v6(), __FILE__);
 				$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 				$this->tpl['table_nameservers'] = $construct->table($this->table_nameservers(), __FILE__);
 				$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
@@ -382,7 +404,8 @@ class mynodes {
 				if ($this->has_owner_access()) $this->tpl['link_node_delete'] = makelink(array('action' => 'delete'), TRUE);
 				$this->tpl['link_node_view'] = makelink(array('page' => 'nodes', 'node' => get('node')));
 				$this->tpl['link_req_cclass'] = makelink(array('page' => 'mynodes', 'subpage' => 'range', 'node' => get('node')));
-				$this->tpl['link_req_dns_for'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
+				$this->tpl['link_req_v6_cclass'] = makelink(array('page' => 'mynodes', 'subpage' => 'range_v6', 'node' => get('node')));
+                                $this->tpl['link_req_dns_for'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_req_dns_rev'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_nameserver_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnsnameserver', 'node' => get('node'), 'nameserver' => 'add'));
 				$this->tpl['link_link_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'link', 'node' => get('node'), 'link' => 'add'));
@@ -423,9 +446,10 @@ class mynodes {
 		if ($ret && $main->userdata->privileges['admin'] === TRUE && get('node') != 'add' && get('node') != $_POST['nodes__id']) {
 			$db->set('dns_nameservers', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('dns_zones', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
-			$db->set('ip_addresses', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
+			$db->set('ip_addresses', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));                      
 			$db->set('ip_ranges', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
-			$db->set('nodes_services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
+                        $db->set('ip_ranges_v6', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
+                        $db->set('nodes_services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
 			$db->set('links', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('links', array('peer_node_id' => $_POST['nodes__id']), "peer_node_id = ".intval(get('node')));
 			$db->set('photos', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
@@ -463,7 +487,21 @@ class mynodes {
 			$main->message->set_fromlang('error', 'generic');		
 		}
 	}
-
+        
+        function output_onpost_table_ip_ranges_v6() {
+		global $db, $main;
+		$ret = TRUE;
+		$ret = $ret && $db->set("ip_ranges_v6", array('delete_req' => 'N'), "node_id = ".intval(get('node')));
+		foreach( (array) $_POST['id'] as $key => $value) {
+			$ret = $ret && $db->set("ip_ranges_v6", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
+		}
+		if ($ret) {
+			$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
+		} else {
+			$main->message->set_fromlang('error', 'generic');		
+		}
+	}
+        
 	function output_onpost_table_dns() {
 		global $db, $main;
 		$ret = TRUE;

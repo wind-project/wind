@@ -17,10 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$vars = array(
+if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/ranges/ranges_".get('subpage').".php");
+else include_once(ROOT_PATH."includes/pages/ranges/ranges_search.php");
+
+class ranges {
+
+	var $tpl;
+	var $page;
 	
-	'info' => array(
-		'version' => array(1, 0, '1a'),
-		'min_template_version' => 0
-		)
-);
+	function ranges() {
+		if (get('subpage') != '') {
+			$p = "ranges_".get('subpage');
+			$this->page = new $p;
+		}
+		else $this->page = new ranges_search;
+	}
+	
+	function output() {
+		return $this->page->output();
+	}
+
+}
+
+?>

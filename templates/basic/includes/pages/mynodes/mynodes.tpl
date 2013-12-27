@@ -44,6 +44,12 @@
 </tr>
 <tr>
 <td class="table-page-pad">
+{include assign="t1" file="generic/link.tpl" link=$link_req_v6_cclass content="`$lang.ip_range_v6_request`"}
+{include file=generic/title2.tpl title="`$lang.ip_ranges_v6` $t1" content=$table_ip_ranges_v6}
+</td>
+</tr>
+<tr>
+<td class="table-page-pad">
 {include assign="t1" file="generic/link.tpl" link=$link_req_dns_for content="`$lang.dnszone_request_forward`"}
 {include assign="t2" file="generic/link.tpl" link=$link_req_dns_rev content="`$lang.dnszone_request_reverse`"}
 {include file=generic/title2.tpl title="`$lang.dns_zones` $t1 $t2" content=$table_dns}

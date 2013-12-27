@@ -165,6 +165,16 @@
 				{include file="generic/link.tpl" link=$link_ranges_req_del content="$ranges_req_del `$lang.for_deletion`"}
 			</li>
 		{/if}
+                {if $link_ranges != ''}
+			<li class="odd">
+                                <img src="templates/basic/images/node-small.png" alt="{$lang.ip_ranges_v6}" />
+                                <a href="{$link_ranges_v6}">{$lang.ip_ranges_v6}</a>
+                        </li>
+                        <li class="even">
+                                {include file="generic/link.tpl" link=$link_ranges_v6_waiting content="$ranges_v6_waiting `$lang.waiting`"}
+                                {include file="generic/link.tpl" link=$link_ranges_v6_req_del content="$ranges_v6_req_del `$lang.for_deletion`"}
+                        </li>		
+		{/if}
 		{if $link_dnszones != ''}
 			<li class="odd">
 				<img src="templates/basic/images/dns-small.png" alt="{$lang.dns_zones}" />
