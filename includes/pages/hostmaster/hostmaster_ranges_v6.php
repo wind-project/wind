@@ -77,10 +77,14 @@ class hostmaster_ranges_v6 {
 		global $db, $main;
 		$ret = TRUE;
 		foreach( (array) $_POST['id'] as $key => $value) {
-			$ret = $ret && $db->del("ip_ranges_v6", '', "id = '".$value."'");
-		}
-		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+                        $ret1 = TRUE;
+                        $ret1 = $db->get('v6net_id','ip_ranges_v6',"ip_ranges_v6.id = '".$value."'");
+                        $ret = $ret && $db->del("ip_ranges_v6", '', "id = '".$value."'");
+                        $ret2 = TRUE;
+                        $ret2 = $ret2 && $db->set("ipv6_node_repos", array('node_id' => '0'), "id = '".$ret1[0]['v6net_id']."'");
+                }
+                if ($ret && $ret2) {
+                        $main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
