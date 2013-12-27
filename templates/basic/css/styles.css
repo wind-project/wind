@@ -22,10 +22,11 @@ html,body {
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
-	background-color: #F3F3F3;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
 	height: 100%;
 	color: #323232;
+	background-color: #232323;
 }
 
 form {
@@ -68,6 +69,50 @@ table td {
 
 /** Generic classes **/
 
+.button, button {
+	
+	
+	display: inline-block;
+	padding: 5px 10px;
+	
+	background-image: -moz-linear-gradient( bottom, #dedede, #f1f1f1);
+	background-image: -webkit-linear-gradient( bottom, #dedede, #f1f1f1);
+	background-image: -o-linear-gradient( bottom, #dedede, #f1f1f1);
+	background-image: linear-gradient( bottom, #dedede, #f1f1f1);
+	
+	box-shadow: 1px 1px 4px #d1d1d1;
+	border-radius: 4px;
+	border: 1px solid #454545;
+	
+	color: #343434;
+	text-shadow: 0px 0px 1px white;
+	font-weight: normal;
+	
+	border-radius: 4px;
+	border: 1px solid #a1a1a1;
+	cursor: pointer;	
+}
+
+.button:hover, button:hover {
+		background-image: -moz-linear-gradient( top, #dedede, #f1f1f1);
+	background-image: -webkit-linear-gradient( top, #dedede, #f1f1f1);
+	background-image: -o-linear-gradient( top, #dedede, #f1f1f1);
+	background-image: linear-gradient( top, #dedede, #f1f1f1);	
+}
+
+.button.primary, button.primary {
+	background: blue;
+}
+
+.button.delete, button.delete {
+	background: red;
+}
+
+.button em, button em{
+	font-weight: bold;
+	font-style: normal;
+}
+
 .hint-link {
 	color: orange;
 	text-align: right;
@@ -90,25 +135,37 @@ table td {
 }
 
 /** Layout Table **/
-table.layout {
+.layout {
 	width: 100%;
-	height: 100%;
+	position: relative;
+	background-color: #FFFFFF;
 }
 
-table.layout td.header {
+.layout .header {
 	height: 90px;
 }
 
-table.layout td.navigation {
-	width: 200px;
-	vertical-align: top;
-	border-right: 1px solid #FFFFFF;
+.layout .main {
+	padding-left: 210px;
+	min-height: 500px;
 }
 
-table.main td.footer {
-	height: 20px;
-	background-color: #000000;
+.layout .navigation {
+	width: 210px;
+	position: absolute;
+	left: 0px;
+	top: 145px;
 }
+
+.layout .footer {
+	width: 100%;
+	color: #c1c1c1;
+	font-size: 10px;
+	background-color: #232323;
+	border-top: 5px solid #A8A8A8;
+	padding: 20px 0px;
+}
+
 
 /** Header table **/
 div.header {
@@ -126,7 +183,6 @@ div.header {
 	background-image: -webkit-linear-gradient(bottom, #161E49 0%, #394C86 100%);
 	background-image: -ms-linear-gradient(bottom, #161E49 0%, #394C86 100%);
 	background-image: linear-gradient(to bottom, #161E49 0%, #394C86 100%);
-	//background-color: #313131;
 	position: relative;
 	border-bottom: 1px solid #FFFFFF;
 }
@@ -254,6 +310,9 @@ ul.languages li{
 }
 
 .login-dialog .close.button{
+	border: none;
+	box-shadow: none;
+	padding: 0px;
 	position: absolute;
 	right: 0px;
 	top: 0px;
@@ -343,41 +402,61 @@ table.main-content td.main-page {
 }
 
 /** Footer **/
-div.footer {
-	width: 100%;
-	font-size: 10px;
-	background-color: #FFFFFF;
-	background-image: url(../images/page-bg.gif);
-	background-position: top;
-	background-repeat: repeat-x;
-	border-top: 1px solid #000000;
-}
-div.footer > *{
+
+.footer > *{
 	margin: 0px;
-	padding: 8px 8px 2px 8px;
 	vertical-align: middle;
 	text-align: center;
-	display: inline-block;
-	width: 31.5%;
 }
 
-div.footer > .credits{
+.footer > .credits{
 	text-align: right;
+	width: 250px;
+	margin: 0px auto;
+	text-align: center;
+	font-size: 1.1em;
+	line-height: 18px;
 }
 
-div.footer > .technologies{
+.footer > .technologies{
 	text-align: left;
+	float: right;
+	margin-right: 35px;
 }
+
+.footer > .technologies a img{
+	margin: 0px 5px;
+	display: inline-block;
+	opacity: 0.4;
+	border: 1px solid #656565;
+}
+
+.footer > .technologies a img:hover{
+	opacity: 1;
+	box-shadow: 0px 0px 3px 0px #d1d1d1;
+}
+
 
 /** Navigation **/
 
-table.layout td.navigation > *{
-	background-color: #313131;
-	border-bottom: 2px solid #093668;
+.navigation .gadget{
+	background-color: #f1f1f1;
+	margin-bottom: 5px;
+	border-radius: 10px;
+	margin: 15px 5px 15px 5px;
+	padding: 5px;
 }
+
+.navigation .gadget .title{
+	padding: 5px 10px;
+	font-weight: bold;
+	font-size: 14px;
+	border-bottom: 1px solid #d1d1d1;
+	display: block;
+}
+
 ul.menu {
 	padding: 0px;
-	margin: 0px;
 	list-style-type: none;
 }
 ul.menu li.even {
@@ -388,6 +467,11 @@ ul.menu li.odd {
 	background-color: rgb(240, 240, 240);
 }
 
+.gadget.main-menu {
+	background-color: #313131;
+	padding: 0px;
+}
+
 ul.main-menu li {
 	border-bottom: 1px solid black;
 	font-size: 12px;
@@ -395,6 +479,11 @@ ul.main-menu li {
 	text-align: left;
 	vertical-align: text-bottom;
 	color: #FFFFFF;
+}
+
+ /* remove border from last line */
+ul.main-menu li:last-child, ul.main-menu li:last-child a {
+	border-bottom: none;
 }
 
 ul.main-menu li a{
@@ -416,83 +505,40 @@ ul.main-menu li a:hover{
 	background-color: #3f6ca2;
 }
 
-div.statistics {
-	font-size: 9px;
-	font-style: italic;
-	padding: 0px;
-	font-weight: bold;
-
-}
-
-div.statistics .title{
-	color: orange;
-	display: block;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 10px;
-	background-image: url("../images/title-login-back.png");
-	background-repeat: repeat-x;
-	padding: 6px 4px;
-}
-
 div.statistics ul {
 	list-style-type: none;
-	padding: 2px 0px;
+	padding: 2px 5px;
 	margin: 0px;
-	background: rgb(130, 150, 181) url(../images/stats.png) no-repeat 5px center;
-}
-
-div.statistics li {
-	margin: 2px 0px 2px 65px;
 }
 
 div.statistics li .quantity{
-	color: #f1f1f1;
-}
-
-div.toolbox .title{
-	display:block;
-	
-	background-image: url(../images/menu2-back2.png);
-	background-repeat: repeat-x;
-
-	text-align: left;
-	vertical-align: middle;
-	font-family: Arial;
-	font-size: 14px;
 	font-weight: bold;
-	color: #000000;
-	
-	border-bottom: 1px solid #000000;
-	position: relative;
-}
-
-div.toolbox .title .hint-link{
-	position: absolute;
-	bottom: 1px;
-	right: 5px;
-}
-
-div.toolbox .title img {
-	padding-top: 10px;
-	padding-left: 5px;
-	padding-bottom: 5px;
-	text-align: left;
-	vertical-align: middle;
-}
-
-div.toolbox .title span {
-	
-	padding-top: 10px;
-	padding-left: 15px;
 }
 
 div.toolbox ul.menu li {
-	padding: 5px;
+	padding: 3px 0px;
 	white-space: nowrap;
 	color: rgb(0, 0, 0);
-	font-size: 11px;
-	font-weight: bold;
+	font-weight: normal;
+}
+
+.navigation div.toolbox .title {
+	background: url('../images/node.gif') no-repeat 2px center;
+	padding-left: 40px;
+	height: 20px;
+	line-height: 20px
+}
+
+.navigation div.toolbox.administration .title {
+	background-image: url('../images/admin.gif');
+}
+.navigation div.toolbox.hostmaster .title {
+	background-image: url('../images/admin.gif');
+}
+
+.navigation div.toolbox.hostmaster .button {
+	display: block;
+	
 }
 
 /* Page Title */
@@ -501,7 +547,7 @@ div.page-title {
 	height: 56px;
 	margin-bottom: 10px;
 	position: relative;
-	width: 100%;
+	margin-left: -210px;
 }
 
 div.page-title h1 {
@@ -1020,6 +1066,8 @@ textarea {
 	padding: 8px 8px 8px 8px;
 	height: 12px;
 	border-radius: 4px;
+	border: none;
+	box-shadow: none;
 	background-color: rgba(0, 60, 136, 0.5);
 	color: #dedede;
 	text-shadow: 1px 1px 2px #565656;
@@ -1049,10 +1097,10 @@ textarea {
 }
 
 .map-control-picker .button {
-	background-color: rgba(0, 60, 136, 0.75);
+	background: rgba(0, 60, 136, 0.75);
 }
 .map-control-picker .button:hover{
-	background-color: rgba(0, 60, 136, 0.85);
+	background: rgba(0, 60, 136, 0.85);
 }
 	
 .map-control-picker .button.ok {
@@ -1070,13 +1118,12 @@ textarea {
 .map-control-fullscreen{
 	right: 8px; 
 }
-.map-control-fullscreen span {
+.map-control-fullscreen span.button {
 	display: block;
 	width: 12px;
 	background-image: url('../images/fullscreen.png');
 	background-repeat: no-repeat;
 	background-position: center center;
-	margin-bottom: -2px; /** nasty hack for the extra 2px pad when overflow is hidden!!?*/
 }
 
 /** Map Filter **/

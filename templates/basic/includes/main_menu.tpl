@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<ul class="main-menu menu">
+<ul class="main-menu menu gadget">
 	<li>
 		<a href="{$link_allnodes}">
 		<img src="templates/basic/images/search_nodes.gif" alt="{$lang.all_nodes}" />
@@ -35,11 +35,9 @@
 		<img src="templates/basic/images/services.gif" alt="{$lang.all_services}" />
 		{$lang.all_services}</a>
 	</li>
-	<li>
-	</li>
 </ul>
 
-<div class="statistics">
+<div class="statistics gadget">
 	<span class="title">{$lang.statistics}</span>
 	
   	<ul class="statistics">
@@ -68,56 +66,55 @@
 
 {if $logged==TRUE}
 
-	<div class="mynodes toolbox">
-		<span class="title">
-			<img src="templates/basic/images/node.gif" alt="{$lang.mynodes}" />
+	<div class="mynodes toolbox gadget">
+		<span class="title">			
 			<span class="text">{$lang.mynodes}</span>
-			<span class="hint-link">|<a href="{$link_addnode}">{$lang.node_add}</a>|</span>
 		</span>
 		
-	
 		<ul class="menu nodes-list">
 		{section name=row loop=$mynodes}
 		{if $smarty.section.row.index is not even}
-			<li class="odd">
+			<li>
 		{else}
-			<li class="even">
+			<li>
 		{/if}
 				<a href="{$mynodes[row].url_view}">{$mynodes[row].name|escape} (#{$mynodes[row].id})</a>
 			</li>
 		{/section}
+		<li class="add">
+			<a class="button" href="{$link_addnode}">{$lang.node_add}</a>
+		</li>
 		</ul>
 	</div>
 
 					
 	{if $is_admin === TRUE}
-		<div class="administration toolbox">
+		<div class="administration toolbox gadget">
 			<span class="title">
-				<img src="templates/basic/images/admin.gif" alt="{$lang.admin_panel}" />
 				<span class="text">{$lang.admin_panel}</span>
 			</span>
 			<ul class="menu">
-				<li class="odd">
+				<li>
 					<img src="templates/basic/images/node-small.png" alt="{$lang.nodes}" />
 					<a href="{$link_admin_nodes}">{$lang.nodes}</a>
 				</li>
-				<li class="odd">
+				<li>
 					<img src="templates/basic/images/user-small.png" alt="{$lang.users}" />
 					<a href="{$link_admin_users}">{$lang.users}</a>
 				</li>
-				<li class="even">
+				<li>
 					<img src="templates/basic/images/services-small.png" alt="{$lang.services}" />
 					<a href="{$link_admin_nodes_services}">{$lang.services}</a>
 				</li>
-				<li class="odd">
+				<li>
 					<img src="templates/basic/images/services-small.png" alt="{$lang.services_categories}" />
 					<a href="{$link_admin_services}">{$lang.services_categories}</a>
 				</li>
-				<li class="even">
+				<li>
 					<img src="templates/basic/images/regions-small.png" alt="{$lang.regions}" />
 					<a href="{$link_admin_regions}">{$lang.regions}</a>
 				</li>
-				<li class="even">
+				<li>
 					<img src="templates/basic/images/areas-small.png" alt="{$lang.areas}" />
 					<a href="{$link_admin_areas}">{$lang.areas}</a>
 				</li>
@@ -128,39 +125,46 @@
 					
 	{if $is_admin === TRUE || $is_hostmaster === TRUE}
 					
-	<div class="hostmaster toolbox">
+	<div class="hostmaster toolbox gadget">
 		<span class="title">
-			<img src="templates/basic/images/admin.gif" alt="{$lang.hostmaster_panel}" />
 			<span class="text">{$lang.hostmaster_panel}</span>
 		</span>
 		<ul class="menu">
 		{if $link_ranges != ''}
-			<li class="odd">
+			<li>
 				<img src="templates/basic/images/node-small.png" alt="{$lang.ip_ranges}" />
 				<a href="{$link_ranges}">{$lang.ip_ranges}</a>
 			</li>
-			<li class="even">
-				{include file="generic/link.tpl" link=$link_ranges_waiting content="$ranges_waiting `$lang.waiting`"}
-				{include file="generic/link.tpl" link=$link_ranges_req_del content="$ranges_req_del `$lang.for_deletion`"}
+			<li>
+			{if $ranges_waiting != 0}
+			<a class="button" href="{$link_ranges_waiting}"><em>{$ranges_waiting}</em> {$lang.waiting}</a>
+			{/if}
+			{if $ranges_req_del != 0}
+				<a class="button" href="{$link_ranges_req_del}"><em>{$ranges_req_del}</em> {$lang.for_deletion}</a>
+			{/if}
 			</li>
 		{/if}
 		{if $link_dnszones != ''}
-			<li class="odd">
+			<li>
 				<img src="templates/basic/images/dns-small.png" alt="{$lang.dns_zones}" />
 				<a href="{$link_dnszones}">{$lang.dns_zones}</a>
 			</li>
-			<li class="even">
-				{include file="generic/link.tpl" link=$link_dnszones_waiting content="$dnszones_waiting `$lang.waiting`"}
+			<li>
+			{if $dnszones_waiting != 0}
+				<a class="button" href="{$link_dnszones_waiting}"><em>{$dnszones_waiting}</em> {$lang.waiting}</a>
+			{/if}
 			</li>
 		
 		{/if}
 		{if $link_dnsnameservers != ''}
-			<li class="odd">
+			<li>
 				<img src="templates/basic/images/nameserver.gif" alt="{$lang.dns_nameservers}" />
 				<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a>
 			</li>
-			<li class="even">
-				{include file="generic/link.tpl" link=$link_dnsnameservers_waiting content="$dnsnameservers_waiting `$lang.waiting`"}
+			<li>
+				{if $dnsnameservers_waiting != 0}
+					<a class="button" href="{$link_dnsnameservers_waiting}"><em>{$dnsnameservers_waiting}</em> {$lang.waiting}</a>
+				{/if}
 			</li>
 		{/if}
 		</ul>
