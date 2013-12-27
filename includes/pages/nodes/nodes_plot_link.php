@@ -2,21 +2,19 @@
 /*
  * WiND - Wireless Nodes Database
  *
- * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 dated June, 1991.
+ * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
 include_once(ROOT_PATH.'globals/classes/geocalc.php');
@@ -77,7 +75,7 @@ class nodes_plot_link {
 			}
 			$this->tpl['distance'] = sqrt( pow($this->tpl['distance'] * 1000, 2) + pow( abs($a_node_total_elevation - $b_node_total_elevation), 2 ) ) / 1000;
 			$this->tpl['gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('a_node'), "node2" => get('b_node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
-			$this->tpl['frequency'] = (integer)(isset($_POST['frequency'])?$_POST['frequency']:2450);
+			$this->tpl['frequency'] = (integer)(isset($_GET['frequency'])?$_GET['frequency']:2450);
 			if ($this->tpl['frequency'] <= 0) $this->tpl['frequency'] = 2450;
 			$frequency = $this->tpl['frequency'] * 1000000;
 			$c = 299792.458; // light speed in km

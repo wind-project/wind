@@ -1,4 +1,20 @@
-
+/*
+ * WiND - Wireless Nodes Database
+ *
+ * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /**
  * Function to submit a form using ajax and collect results.
@@ -126,7 +142,72 @@ LoginForm.prototype.show = function(){
 		object._dialog_el.dialog({
 			modal: true,
 			resizable: false,
-			dialogClass: 'login-dialog'
+			dialogClass: 'login-dialog no-title-dialog'
 		});
 	});
+};
+
+
+/**
+ * @brief Location Picker using NetworkMap
+ * @param lat_element DOM element of latitude input
+ * @param lng_element DOM element of longitude input
+ */
+LocationPicker = function(lat_element, lng_element) {
+	var locationPickerObject = this;
+	
+	// Private variables
+	this._lat_element = lat_element;
+	this._lng_element = lng_element
+	
+	// Extract initial values
+	var position = null;
+	if (this._lat_element.val() && this._lng_element.val()) {
+		position = [
+	                parseFloat(this._lat_element.val()),
+	                parseFloat(this._lng_element.val())];
+	}
+	
+	// Construct map
+	this.map_element = $('<div class="map-picker-dialog">'
+			+'<div id="location-picker" class="map picker"/></div>');
+	$('body').append(this.map_element);
+	
+	this.map = new NetworkMap('location-picker', {
+		'bound_ne' : map_options['bound_ne'],
+		'bound_sw' : map_options['bound_sw'],
+	});
+	this.controlPicker = new NetworkMapControlPicker(this.map, {
+		position: position,
+		ok: function(picker) {
+			var pos = picker.getPosition();
+			locationPickerObject._lat_element.val(pos.lat);
+			locationPickerObject._lng_element.val(pos.lon);
+			locationPickerObject.destroy();
+		},
+		cancel: function() {
+			console.log('canceled');
+			locationPickerObject.destroy();
+		}
+	});
+	this.controlFullScreen = new NetworkMapControlFullScreen(this.map);
+	
+	// Show dialog
+	this.map_element.dialog({
+		modal: true,
+		movable: false,
+		resizable: false,
+		width: 'auto',
+		height: 'auto',
+		closeOnEscape: false,
+		dialogClass: 'picker-dialog no-title-dialog'
+	})
+};
+
+LocationPicker.prototype.destroy = function() {
+	this.map.destroy();
+	this.map_element.remove();
+	
+	delete this._lat_element;
+	delete this._lng_element;
 };

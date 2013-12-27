@@ -2,23 +2,19 @@
 /*
  * WiND - Wireless Nodes Database
  *
- * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
- * Copyright (C) 2009-2010 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
- * Copyright (C) 2011 K. Paliouras <squarious@gmail.com>
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 dated June, 1991.
+ * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 function redirect($url, $sec=0, $exit=TRUE) {
@@ -120,8 +116,12 @@ function get($key) {
 			}
 			array_unshift($valid_array, '');
 			break;
+		case 'node':
+			$ret = intval($ret);
+			break;
 	}
-	if (isset($valid_array) && !in_array($ret, $valid_array)) $ret = $valid_array[0];
+	if (isset($valid_array) && !in_array($ret, $valid_array))
+		$ret = $valid_array[0];
 	return $ret;
 }
 
@@ -495,32 +495,53 @@ function include_js_language_tokens() {
 }
 
 /**
- * Include map to the output
- * @param element_id The id of the element to render map on.
+ * Include map backend dependencies
  */
-function include_map($element_id) {
+function include_map_dependencies() {
 	global $main, $smarty, $vars;
 
 	// Include needed javascript
 	include_js_language_tokens();
 	$js_dir = $smarty->template_dir."scripts/javascripts/";
-	$main->html->head->add_script('text/javascript', 'http://maps.google.com/maps/api/js?v=3&sensor=false');
+	$main->html->head->add_script('text/javascript', 'http://maps.google.com/maps/api/js?v=3&amp;sensor=false');
 	$main->html->head->add_script('text/javascript', "${js_dir}/map.js");
 	$main->html->head->add_script('text/javascript', "${js_dir}/openlayers/OpenLayers.js");
-	
-	$nodesjson_url = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), FALSE, TRUE, FALSE);
-	$bounds = $vars['gmap']['bounds'];
+
+
+	$map_options = array();
+	$map_options['bound_sw'] = array($vars['gmap']['bounds']['min_latitude'], $vars['gmap']['bounds']['min_longitude']);
+	$map_options['bound_ne'] = array($vars['gmap']['bounds']['max_latitude'], $vars['gmap']['bounds']['max_longitude']);
+	$map_options['topology_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), false, true, false);
+	$map_options_string = json_encode($map_options);
+
+	$main->html->head->add_extra(
+			"<script type=\"text/javascript\">
+			map_options = ${map_options_string};
+			</script>");
+}
+
+/**
+ * Include map to the output
+ * @param element_id The id of the element to render map on.
+ * @param picker A flag to show that this is a place picker.
+ */
+function include_map($element_id) {
+	global $main, $smarty, $vars;
+
+	include_map_dependencies();;
+
+	// Include needed javascript
+	include_js_language_tokens();
 	
 	$main->html->head->add_extra(
 			"<script type=\"text/javascript\">
 			$(function() {
 				// Load map
-				map = new NetworkMap('${element_id}', '${nodesjson_url}', {
-					'bound_sw' : [ ${bounds['min_latitude']}, ${bounds['min_longitude']}],
-					'bound_ne' : [ ${bounds['max_latitude']}, ${bounds['max_longitude']}]
-				});
+				map = new NetworkMap('${element_id}', map_options);
+
 				controlNodeFilter = new NetworkMapControlNodeFilter(map);
 				controlFullScreen = new NetworkMapControlFullScreen(map);
+				
 			});
 			
 			

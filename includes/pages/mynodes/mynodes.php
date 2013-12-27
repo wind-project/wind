@@ -2,22 +2,19 @@
 /*
  * WiND - Wireless Nodes Database
  *
- * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
- * Copyright (C) 2009 Vasilis Tsiligiannis <b_tsiligiannis@silverton.gr>
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 dated June, 1991.
+ * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/mynodes/mynodes_".get('subpage').".php");
@@ -60,7 +57,8 @@ class mynodes {
 			$form_node->data[7]['Null'] = 'YES';
 		}
 		
-		if ($main->userdata->privileges['admin'] === TRUE) $form_node->db_data('nodes.id, nodes.name_ns');
+		if ($main->userdata->privileges['admin'] === TRUE)
+			$form_node->db_data('nodes.id, nodes.name_ns');
 		$form_node->db_data_enum('nodes.area_id', $db->get("id AS value, name AS output", "areas"));
 		$form_node->db_data_values("nodes", "id", intval(get('node')));
 		return $form_node;
@@ -321,10 +319,15 @@ class mynodes {
 	}
 
 	function output() {
-		if (get('subpage') != '') return $this->page->output();
-		if (isset($_POST['form_name']) && (strstr($_POST['form_name'], 'table_links_ap') !== FALSE)) return $this->output_onpost_table_links_ap();
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		if (get('subpage') != '')
+			return $this->page->output();
+		if (isset($_POST['form_name']) && (strstr($_POST['form_name'], 'table_links_ap') !== FALSE))
+			return $this->output_onpost_table_links_ap();
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		
 		global $construct, $main, $db;
+		include_map_dependencies();
 		$this->tpl['form_node'] = $construct->form($this->form_node(), __FILE__);
 		$this->tpl['node'] = get('node');
 		if (get('action') == 'delete') {
@@ -388,7 +391,7 @@ class mynodes {
 				$this->tpl['link_services_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'services', 'node' => get('node'), 'service' => 'add'));
 
 			}
-			$this->tpl['link_gmap_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'gmap', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
+			$this->tpl['link_map_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'map', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
 			return template($this->tpl, __FILE__);
 		}
 	}
@@ -604,4 +607,3 @@ class mynodes {
 
 }
 
-?>

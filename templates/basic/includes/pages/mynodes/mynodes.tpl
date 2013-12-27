@@ -1,22 +1,19 @@
 {*
  * WiND - Wireless Nodes Database
- * Basic HTML Template
  *
- * Copyright (C) 2005 Konstantinos Papadimitriou <vinilios@cube.gr>
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 dated June, 1991.
+ * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {if $node_method == 'add'}
 {include assign=help file=generic/help.tpl help=mynodes_add}
@@ -33,7 +30,8 @@
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 <tr>
 <td class="table-page-pad">
-{include assign="t2" file="generic/link.tpl" content="`$lang.find_coordinates`" onclick="javascript: t = window.open('$link_gmap_pickup', 'popup_gmap_pickup', 'width=500,height=500,toolbar=0,resizable=0,scrollbars=0'); t.focus(); return false;"}
+{include assign="t2" file="generic/link.tpl" content="`$lang.find_coordinates`" 
+	onclick="javascript: picker = new LocationPicker($('input[name=nodes__latitude]'), $('input[name=nodes__longitude]')); return false; "}
 {include file=generic/title1.tpl title="`$lang.node_info` $t2" right="$view $t1" content=$form_node}
 </td>
 </tr>

@@ -1,0 +1,10 @@
+Authors ordered by first contribution.
+
+Nikolaos Nikalexis <winner [@] cube.gr>
+Faidon Liambotis <faidon@cube.gr>
+Konstantinos Papadimitriou <vinilios [@] cube.gr>
+Petros Moisiadis <pmoisiadis [@] modulus.gr>
+Konstantinos Paliouras <sque [@] tolabaki.gr>
+John Kolovos <cirrus [@] awmn.net>
+Eddy Kikkert <ed [@] kikkert-online.nl>
+Vasilis Tsiligiannis <acinonyx [@] openwrt.gr>

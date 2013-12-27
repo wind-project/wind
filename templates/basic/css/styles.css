@@ -1,3 +1,21 @@
+/*
+ * WiND - Wireless Nodes Database
+ *
+ * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
 /* Default configuration */
 html,body {
 	margin-left: 0px;
@@ -220,7 +238,7 @@ ul.languages li{
 .login-dialog .error .notification{
 	color: #CF0D0D !important;
 }
-.login-dialog .ui-dialog-titlebar {
+.no-title-dialog .ui-dialog-titlebar {
 	display: none
 }
 
@@ -321,7 +339,7 @@ ul.menu li.odd {
 	background-color: rgb(240, 240, 240);
 }
 
-ul.main-menu li {
+ul.main-menu li, td.table-search-menu-text { /** hack: table-search-menu must be removed **/
 	padding: 4px;
 	padding-top: 8px;
 	text-align: left;
@@ -892,6 +910,18 @@ textarea {
 	border-radius: 4px;
 }
 
+.map-picker-dialog {
+	padding: 0px !important;
+	width: 800px;
+	height: 400px;
+}
+.map.picker{
+	width: 800px;
+	height: 400px;
+	border-width: 0px;
+	border-radius: 0px;
+}
+
 .map.fullscreen {
 	position: fixed;
 	top: 0px;
@@ -900,33 +930,134 @@ textarea {
 	left: 0px;
 	width: auto !important;
 	height: auto !important;
+	border-radius: 0px;
+	border-width: 0px;
 }
 
-.map-hud {
+.map-control {
 	position: absolute;
 	right: 8px;
 	top: 8px;
 	z-index: 1000;
 	background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
-	padding: 3px 3px 3px 3px;
+	padding: 3px;
 	border-radius: 4px;
+}
+
+.map-control .button{
+	font: 12px Verdana;
+	padding: 8px 8px 8px 8px;
+	height: 12px;
+	border-radius: 4px;
+	background-color: rgba(0, 60, 136, 0.5);
+	color: #dedede;
+	text-shadow: 1px 1px 2px #565656;
+	display: inline-block;
+	white-space: pre;
+}
+
+.map-control .button:hover{
+	cursor: pointer;
+	background-color: rgba(0, 60, 136, 0.698);
+	color: white;
+}
+
+/** Location picker control **/
+.map-control.map-control-picker {
+	top: auto;
+	bottom: 8px;
+}
+
+.map-control-picker .coordinates {
+	background-color: rgba(47, 55, 66, 0.698);
+	color: white;
+	display: inline-block;
+	height: 12px;
+	padding: 8px 8px 8px 8px;
+	border-radius: 4px;
+}
+
+.map-control-picker .button {
+	background-color: rgba(0, 60, 136, 0.75);
+}
+.map-control-picker .button:hover{
+	background-color: rgba(0, 60, 136, 0.85);
+}
+	
+.map-control-picker .button.ok {
+	margin-left: 4px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px; 
+}
+
+.map-control-picker .button.cancel {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px; 
 }
 
 /** Fullscreen button **/
-.map-fullscreen{
+.map-control-fullscreen{
 	right: 8px; 
 }
-.map-fullscreen span {
+.map-control-fullscreen span {
 	display: block;
-	width: 28px;
-	height: 28px;
-	border-radius: 4px;
-	background: rgba(0, 60, 136, 0.5) url('../images/fullscreen.png') no-repeat center center;
+	width: 12px;
+	background-image: url('../images/fullscreen.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin-bottom: -2px; /** nasty hack for the extra 2px pad when overflow is hidden!!?*/
 }
 
-.map-fullscreen span:hover {
-	cursor: pointer;
-	background-color: rgba(0, 60, 136, 0.698);
+/** Map Filter **/
+.map-control-filter {
+	right: 45px;
+}
+.map-control-filter ul{
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+	font: 10px Verdana;
+	margin-bottom: -2px; /** nasty hack for the extra 2px pad when overflow is hidden!!?*/
+}
+
+.map-control-filter li.button {
+	padding: 8px 0px 8px 20px;
+	background: rgba(0, 60, 136, 0.5) url('../images/map/mm_20_grey.png') no-repeat 4px 4px;
+	width: 0px;
+	overflow: hidden;
+	border-radius: 0px;
+	text-shadow: none;
+}
+
+.map-control-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}
+.map-control-filter li.p2p.active {	background-image: url('../images/map/mm_20_orange.png');	}
+
+.map-control-filter li.ap {	background-image: url('../images/map/mm_20_green_inactive.png');	}
+.map-control-filter li.ap.active {	background-image: url('../images/map/mm_20_green.png');	}
+
+.map-control-filter li.client {	background-image: url('../images/map/mm_20_blue_inactive.png');	}
+.map-control-filter li.client.active {	background-image: url('../images/map/mm_20_blue.png');	}
+
+.map-control-filter li.unlinked {	background-image: url('../images/map/mm_20_red_inactive.png');	}
+.map-control-filter li.unlinked.active {	background-image: url('../images/map/mm_20_red.png');	}
+
+
+.map-control-filter ul:hover li{
+	width: auto;
+	padding-right: 8px;
+	color: #d1d1d1;
+}
+
+.map-control-filter li:first-child {
+	border-radius: 4px 0px 0px 4px;
+}
+.map-control-filter li:last-child {
+	border-radius: 0px 4px 4px 0px;
+}
+
+.map-control-filter ul li.active{
+	text-shadow: 1px 1px 2px #565656;
+	color: white;
 }
 
 /** NodePopup **/
@@ -984,65 +1115,6 @@ textarea {
 	margin: 1px 0px;
 }
 
-/** Map Filter **/
-.map-filter {
-	right: 45px;
-}
-.map-filter ul{
-	padding: 0px;
-	margin: 0px;
-	list-style-type: none;
-	font: 10px Verdana;
-}
-
-.map-filter li {
-	color: #d1d1d1;
-	padding: 8px 0px 8px 20px;
-	background: rgba(0, 60, 136, 0.5) url('../images/map/mm_20_grey.png') no-repeat 4px 4px;
-	color: rgba(0, 60, 136, 0.5);
-	width: 0px;
-	height: 12px;
-	display: inline-block;
-	white-space: pre;
-	overflow: hidden;
-}
-
-.map-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}
-.map-filter li.p2p.active {	background-image: url('../images/map/mm_20_orange.png');	}
-
-.map-filter li.ap {	background-image: url('../images/map/mm_20_green_inactive.png');	}
-.map-filter li.ap.active {	background-image: url('../images/map/mm_20_green.png');	}
-
-.map-filter li.client {	background-image: url('../images/map/mm_20_blue_inactive.png');	}
-.map-filter li.client.active {	background-image: url('../images/map/mm_20_blue.png');	}
-
-.map-filter li.unlinked {	background-image: url('../images/map/mm_20_red_inactive.png');	}
-.map-filter li.unlinked.active {	background-image: url('../images/map/mm_20_red.png');	}
-
-
-.map-filter li:hover{
-	cursor: pointer;
-	background-color: rgba(0, 60, 136, 0.698);
-	color: white;
-}
-
-.map-filter ul:hover li{
-	width: auto;
-	padding-right: 8px;
-	color: #d1d1d1;
-}
-
-.map-filter li:first-child {
-	border-radius: 4px 0px 0px 4px;
-}
-.map-filter li:last-child {
-	border-radius: 0px 4px 4px 0px;
-}
-
-.map-filter ul li.active{
-	text-shadow: 1px 1px 2px #565656;
-	color: white;
-}
 
 
 /** Layers switcher Control **/ 
