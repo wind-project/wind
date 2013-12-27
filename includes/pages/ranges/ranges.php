@@ -34,6 +34,9 @@ class ranges {
 	}
 	
 	function output() {
+		global $main;
+		$main->menu->main_menu->select('addresses');
+		
 		return $this->page->output();
 	}
 

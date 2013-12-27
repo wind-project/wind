@@ -146,18 +146,18 @@ table td {
 }
 
 .layout .main {
-	padding-left: 210px;
 	min-height: 500px;
+	width: auto;
+	overflow: hidden;
 }
 
 .layout .navigation {
 	width: 210px;
-	position: absolute;
-	left: 0px;
-	top: 145px;
+	float: left;
 }
 
 .layout .footer {
+	clear: both;
 	width: 100%;
 	color: #c1c1c1;
 	font-size: 10px;
@@ -447,6 +447,7 @@ table.main-content td.main-page {
 	padding: 5px;
 }
 
+
 .navigation .gadget .title{
 	padding: 5px 10px;
 	font-weight: bold;
@@ -495,6 +496,10 @@ ul.main-menu li a{
 	vertical-align: top;
 	padding-left: 10px;
 	border-bottom: 1px solid #545454;
+}
+
+ul.main-menu li.selected a{
+	background-color: #3f6ca2;
 }
 
 ul.main-menu li img {
@@ -547,7 +552,7 @@ div.page-title {
 	height: 56px;
 	margin-bottom: 10px;
 	position: relative;
-	margin-left: -210px;
+	//margin-left: -210px;
 }
 
 div.page-title h1 {

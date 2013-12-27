@@ -68,8 +68,12 @@ class services {
 	}
 
 	function output() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		global $construct;
+		global $main, $construct;
+		$main->menu->main_menu->select('services');
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+
 		$this->tpl['form_search_services'] = $construct->form($this->form_search_services(), __FILE__);
 		$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 		return template($this->tpl, __FILE__);

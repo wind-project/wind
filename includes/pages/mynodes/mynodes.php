@@ -319,6 +319,9 @@ class mynodes {
 	}
 
 	function output() {
+		global $construct, $main, $db;
+		$main->menu->main_menu->select('nodes');
+		
 		if (get('subpage') != '')
 			return $this->page->output();
 		if (isset($_POST['form_name']) && (strstr($_POST['form_name'], 'table_links_ap') !== FALSE))
@@ -326,7 +329,8 @@ class mynodes {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
 			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		
-		global $construct, $main, $db;
+		
+		
 		include_map_dependencies();
 		$this->tpl['form_node'] = $construct->form($this->form_node(), __FILE__);
 		$this->tpl['node'] = get('node');

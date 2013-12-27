@@ -17,12 +17,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once (ROOT_PATH . '/globals/classes/menu.php');
+
 class menu {
 	
 	var $tpl;
-	var $hide=FALSE;
+	var $hide = false;
+	
+	/**
+	 * @brief Main menu object
+	 * @var MenuRenderer
+	 */
+	public $main_menu = null;
 	
 
+	function __construct() {
+		$this->main_menu = new MenuRenderer(array('main-menu', 'menu', 'gadget'));
+		$this->main_menu->addEntry('nodes', '', makelink(array("page" => "nodes")));
+		$this->main_menu->addEntry('addresses', '', makelink(array("page" => "ranges", "subpage" => "search")));
+		$this->main_menu->addEntry('services', '', makelink(array("page" => "services")));
+		$this->main_menu->addEntry('dnszones', '', makelink(array("page" => "dnszones")));
+	}
+	
 	function calculate_menu_stats() {
 		global $db, $config;
 		$stats_tmp = "/tmp/wind-stats-".md5(__FILE__).".tmp";
@@ -144,11 +160,15 @@ class menu {
 				$this->tpl['ranges_req_del'] = $db->cnt('', "ip_ranges", "delete_req = 'Y'");
 			}
 		}
-		$this->tpl['link_home'] = makelink(array());
-		$this->tpl['link_allnodes'] = makelink(array("page" => "nodes"));
-		$this->tpl['link_allranges'] = makelink(array("page" => "ranges", "subpage" => "search"));
-		$this->tpl['link_allservices'] = makelink(array("page" => "services"));
-		$this->tpl['link_alldnszones'] = makelink(array("page" => "dnszones"));
+		
+		// Main menu
+		$this->main_menu->getEntry('nodes')['title'] = $lang['all_nodes'];
+		$this->main_menu->getEntry('addresses')['title'] = $lang['all_ranges'];
+		$this->main_menu->getEntry('dnszones')['title'] = $lang['all_zones'];
+		$this->main_menu->getEntry('services')['title'] = $lang['all_services'];
+		$this->tpl['main_menu_content'] = $this->main_menu->outputHtml();
+		
+		
 		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), $this->tpl['query_string']);
 		$this->calculate_menu_stats();
 		$main->html->head->add_script("text/javascript", makelink(array("page" => "search", "subpage" => "suggest_js")));

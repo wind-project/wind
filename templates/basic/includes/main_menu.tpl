@@ -15,27 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<ul class="main-menu menu gadget">
-	<li>
-		<a href="{$link_allnodes}">
-		<img src="templates/basic/images/search_nodes.gif" alt="{$lang.all_nodes}" />
-		{$lang.all_nodes}</a>
-	</li>
-	<li>
-		<a href="{$link_alldnszones}">
-		<img src="templates/basic/images/search_dns.gif" alt="{$lang.all_zones}" />
-		{$lang.all_zones}</a>
-  	</li>
-  	<li><a href="{$link_allranges}">
-		<img src="templates/basic/images/search_ip.gif" alt="{$lang.all_ranges}" />
-		{$lang.all_ranges}</a>
-	</li>
-	<li>
-		<a href="{$link_allservices}">
-		<img src="templates/basic/images/services.gif" alt="{$lang.all_services}" />
-		{$lang.all_services}</a>
-	</li>
-</ul>
+{$main_menu_content}
 
 <div class="statistics gadget">
 	<span class="title">{$lang.statistics}</span>

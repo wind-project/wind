@@ -63,8 +63,12 @@ class dnszones {
 	}
 
 	function output() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		global $construct;
+		global $main, $construct;
+		$main->menu->main_menu->select('dnszones');
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+
 		$this->tpl['form_search_dns'] = $construct->form($this->form_search_dns(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 		return template($this->tpl, __FILE__);
