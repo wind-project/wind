@@ -1,1 +1,8 @@
-config/
+/config/
+.*.swp
+*.orig
+*.rej
+*~
+.#*
+*#
+.emacs.desktop*
