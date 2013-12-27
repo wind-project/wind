@@ -279,7 +279,7 @@ table.main-content {
 	height: 100%;
 }
 
-able.main-content td.main-title {
+table.main-content td.main-title {
 	height: 71px;
 	border-bottom: 1px solid #093668;
 }
@@ -292,6 +292,11 @@ table.main-content td.main-page {
 	background-repeat: repeat-x;
 	vertical-align: top;
 	text-align: left;
+}
+
+table.table-main {
+    height: 100%;
+    width: 100%;
 }
 
 /** Footer **/
