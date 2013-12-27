@@ -20,7 +20,8 @@ There have been changes in the Database. Please review the DB Schema before you 
  * Can be used to manage the distribution of IP Ranges and forward/reverse DNS assigned to each node (_Hostmaster_)
  * Fully themeable interface (using simple (X)HTML templates)
  * Support for localication; Unicode/UTF-8 support
- * Integrates with BIND Nameserver for serving the DNS zones.
+ * Supports provisioning of IPv4 and initial IPv6 addresses. 
+ * Integrates with BIND Nameserver for serving the IPv4 DNS zones.
  * A WHOIS server is provided that serves the data using the [WHOIS protocol](http://www.faqs.org/rfcs/rfc3912.html)
 
 ## Documentation
