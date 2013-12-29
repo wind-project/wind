@@ -147,30 +147,30 @@ class menu {
 				$this->tpl['is_admin'] = TRUE;
 				
 				// Create administration submenu
-				$this->main_menu->createLink($lang['admin_panel'], makelink(array('page' => 'admin', 'subpage' => 'nodes'), false, true, false), 'admin');
+				$this->main_menu->createLink($lang['admin_panel'], makelink2('/admin/nodes'), 'admin');
 				$admin_entry = $this->main_menu->getRootEntry()->getChild('admin');
-				$admin_entry->createLink($lang['nodes'], makelink(array("page" => "admin", "subpage" => "nodes"), false, true, false));
-				$admin_entry->createLink($lang['users'], makelink(array("page" => "admin", "subpage" => "users"), false, true, false));
-				$admin_entry->createLink($lang['services'], makelink(array("page" => "admin", "subpage" => "nodes_services"), false, true, false));
-				$admin_entry->createLink($lang['services_categories'], makelink(array("page" => "admin", "subpage" => "services"), false, true, false));
-				$admin_entry->createLink($lang['regions'], makelink(array("page" => "admin", "subpage" => "regions"), false, true, false));
-				$admin_entry->createLink($lang['areas'], makelink(array("page" => "admin", "subpage" => "areas"), false, true, false));
+				$admin_entry->createLink($lang['nodes'], makelink2('/admin/nodes'));
+				$admin_entry->createLink($lang['users'], makelink2('/admin/users'));
+				$admin_entry->createLink($lang['services'], makelink2('/admin/nodes_services'));
+				$admin_entry->createLink($lang['services_categories'], makelink2('/admin/services'));
+				$admin_entry->createLink($lang['regions'], makelink2('/admin/regions'));
+				$admin_entry->createLink($lang['areas'], makelink2('/admin/areas'));
 			}
 			if ($main->userdata->privileges['admin'] === TRUE || $main->userdata->privileges['hostmaster'] === TRUE) {
 				$this->tpl['is_hostmaster'] = TRUE;
 
-				$this->tpl['link_dnsnameservers'] = makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers"));
-				$this->tpl['link_dnsnameservers_waiting'] = makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers", "form_search_nameservers_search" => serialize(array("dns_nameservers__status" => "waiting"))));
+				$this->tpl['link_dnsnameservers'] = makelink2('/hostmaster/dnsnameservers');
+				$this->tpl['link_dnsnameservers_waiting'] = makelink2('/hostmaster/dnsnameservers', array("form_search_nameservers_search" => serialize(array("dns_nameservers__status" => "waiting"))));
 				$this->tpl['dnsnameservers_waiting'] = $db->cnt('', "dns_nameservers", "status = 'waiting'");
 
-				$this->tpl['link_dnszones'] = makelink(array("page" => "hostmaster", "subpage" => "dnszones"));
-				$this->tpl['link_dnszones_waiting'] = makelink(array("page" => "hostmaster", "subpage" => "dnszones", "form_search_dns_search" => serialize(array("dns_zones__status" => "waiting"))));
+				$this->tpl['link_dnszones'] = makelink2('/hostmaster/dnszones');
+				$this->tpl['link_dnszones_waiting'] = makelink2('hostmaster/dnszones', array("form_search_dns_search" => serialize(array("dns_zones__status" => "waiting"))));
 				$this->tpl['dnszones_waiting'] = $db->cnt('', "dns_zones", "status = 'waiting'");
 
-				$this->tpl['link_ranges'] = makelink(array("page" => "hostmaster", "subpage" => "ranges"));
-				$this->tpl['link_ranges_waiting'] = makelink(array("page" => "hostmaster", "subpage" => "ranges", "form_search_ranges_search" => serialize(array("ip_ranges__status" => "waiting", "ip_ranges__delete_req" => "N"))));
+				$this->tpl['link_ranges'] = makelink2('/hostmaster/ranges');
+				$this->tpl['link_ranges_waiting'] = makelink2('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__status" => "waiting", "ip_ranges__delete_req" => "N"))));
 				$this->tpl['ranges_waiting'] = $db->cnt('', "ip_ranges", "status = 'waiting' AND delete_req = 'N'");
-				$this->tpl['link_ranges_req_del'] = makelink(array("page" => "hostmaster", "subpage" => "ranges", "form_search_ranges_search" => serialize(array("ip_ranges__delete_req" => "Y"))));
+				$this->tpl['link_ranges_req_del'] = makelink2('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__delete_req" => "Y"))));
 				$this->tpl['ranges_req_del'] = $db->cnt('', "ip_ranges", "delete_req = 'Y'");
 			}
 		}

@@ -193,8 +193,9 @@ function makelink($params = array(), $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspec
 	if ($cur_gs_vars == TRUE) {
 		$o = array_merge($o, (array)$qs_vars);
 	}
-	$o = array_merge($o, (array)$extra);
-	return ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
+	$o = array_merge($o, (array)$params);
+	$ret = ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
+	return url($ret);
 }
 
 function makelink2($path, $params = array()) {
