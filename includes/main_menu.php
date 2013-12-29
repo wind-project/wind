@@ -34,7 +34,7 @@ class menu {
 	function __construct() {
 
 		$this->main_menu = new SmartMenu(array('class' => 'main-menu menu gadget'));
-		$this->main_menu->createLink('', makelink2('/page/nodes'), 'nodes');
+		$this->main_menu->createLink('', makelink2('/nodes'), 'nodes');
 		$this->main_menu->createLink('', makelink2('/ranges/search'), 'addresses');
 		$this->main_menu->createLink('', makelink2('/services'), 'services');
 		$this->main_menu->createLink('', makelink2('/dnszones'), 'dnszones');
@@ -137,10 +137,12 @@ class menu {
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
 			$this->tpl['mynodes'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");
+			
 			foreach( (array) $this->tpl['mynodes'] as $key => $value) {
 				$this->tpl['mynodes'][$key]['url'] = makelink(array("page" => "mynodes", "node" => $this->tpl['mynodes'][$key]['id']));
 				$this->tpl['mynodes'][$key]['url_view'] = makelink(array("page" => "nodes", "node" => $this->tpl['mynodes'][$key]['id']));
 			}
+			
 			$this->tpl['link_addnode'] = makelink(array("page" => "mynodes", "node" => "add"));
 			$this->tpl['link_edit_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));
 			if ($main->userdata->privileges['admin'] === TRUE) {
@@ -156,6 +158,7 @@ class menu {
 				$admin_entry->createLink($lang['regions'], makelink2('/admin/regions'));
 				$admin_entry->createLink($lang['areas'], makelink2('/admin/areas'));
 			}
+			
 			if ($main->userdata->privileges['admin'] === TRUE || $main->userdata->privileges['hostmaster'] === TRUE) {
 				$this->tpl['is_hostmaster'] = TRUE;
 
@@ -178,7 +181,7 @@ class menu {
 		$this->tpl['main_menu_content'] = (string)$this->main_menu->render();
 		
 		$this->calculate_menu_stats();
-		$main->html->head->add_script("text/javascript", makelink(array("page" => "search", "subpage" => "suggest_js")));
+		$main->html->head->add_script("text/javascript", makelink2('/search/suggest_js'));
 		return template($this->tpl, __FILE__);
 	}
 }

@@ -31,9 +31,7 @@
 		<a id="login" href="{$link_login_form}">{$lang.login}</a> / <a href="{$link_register}">{$lang.register}</a> 
 	{/if}
 		<div class="quicksearch">
-			<form name="search" method="get" action="?">
-				<input type="hidden" name="page" value="search" />
-				{include file="generic/qs.tpl" qs=$query_string}
+			<form name="search" method="get" action="{$search_url}">
 				<input placeholder="{$lang.search}" type="text" id="q" name="q" autocomplete="off" onkeydown="" onfocus="hover('',this.value);" onkeyup="hover(event.keyCode,this.value);"  onblur="setTimeout('hideSearch()',500); hov=0;" />
 				<div id="searchResult" ></div>
 			</form>
