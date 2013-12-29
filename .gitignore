@@ -1,0 +1,5 @@
+# Exclude Eclipse build files
+.project
+.settings/
+.buildpath
+.externalToolBuilders/
