@@ -18,7 +18,6 @@
  */
 
 require_once (ROOT_PATH . '/globals/classes/SmartMenu.class.php');
-require_once (ROOT_PATH . '/globals/classes/menu.php');
 
 class menu {
 	
@@ -121,9 +120,18 @@ class menu {
 	}
 	
 	function output() {
-		if ($this->hide) return;
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $main, $db, $vars, $lang;
+		
+		if ($this->hide)
+			return;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+
+		// Main menu
+		$this->main_menu->getRootEntry()->getChild('nodes')->setDisplay($lang['all_nodes']);
+		$this->main_menu->getRootEntry()->getChild('addresses')->setDisplay($lang['all_ranges']);
+		$this->main_menu->getRootEntry()->getChild('dnszones')->setDisplay($lang['all_zones']);
+		$this->main_menu->getRootEntry()->getChild('services')->setDisplay($lang['all_services']);
 		
 		$this->tpl['logged'] = $main->userdata->logged;
 		if ($main->userdata->logged) {
@@ -137,12 +145,16 @@ class menu {
 			$this->tpl['link_edit_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));
 			if ($main->userdata->privileges['admin'] === TRUE) {
 				$this->tpl['is_admin'] = TRUE;
-				$this->tpl['link_admin_nodes'] = makelink(array("page" => "admin", "subpage" => "nodes"));
-				$this->tpl['link_admin_users'] = makelink(array("page" => "admin", "subpage" => "users"));
-				$this->tpl['link_admin_nodes_services'] = makelink(array("page" => "admin", "subpage" => "nodes_services"));
-				$this->tpl['link_admin_services'] = makelink(array('page' => 'admin', 'subpage' => 'services'));
-				$this->tpl['link_admin_regions'] = makelink(array('page' => 'admin', 'subpage' => 'regions'));
-				$this->tpl['link_admin_areas'] = makelink(array('page' => 'admin', 'subpage' => 'areas'));
+				
+				// Create administration submenu
+				$this->main_menu->createLink($lang['admin_panel'], makelink(array('page' => 'admin', 'subpage' => 'nodes'), false, true, false), 'admin');
+				$admin_entry = $this->main_menu->getRootEntry()->getChild('admin');
+				$admin_entry->createLink($lang['nodes'], makelink(array("page" => "admin", "subpage" => "nodes"), false, true, false));
+				$admin_entry->createLink($lang['users'], makelink(array("page" => "admin", "subpage" => "users"), false, true, false));
+				$admin_entry->createLink($lang['services'], makelink(array("page" => "admin", "subpage" => "nodes_services"), false, true, false));
+				$admin_entry->createLink($lang['services_categories'], makelink(array("page" => "admin", "subpage" => "services"), false, true, false));
+				$admin_entry->createLink($lang['regions'], makelink(array("page" => "admin", "subpage" => "regions"), false, true, false));
+				$admin_entry->createLink($lang['areas'], makelink(array("page" => "admin", "subpage" => "areas"), false, true, false));
 			}
 			if ($main->userdata->privileges['admin'] === TRUE || $main->userdata->privileges['hostmaster'] === TRUE) {
 				$this->tpl['is_hostmaster'] = TRUE;
@@ -163,15 +175,8 @@ class menu {
 			}
 		}
 		
-		// Main menu
-		$this->main_menu->getRootEntry()->getChild('nodes')->setDisplay($lang['all_nodes']);
-		$this->main_menu->getRootEntry()->getChild('addresses')->setDisplay($lang['all_ranges']);
-		$this->main_menu->getRootEntry()->getChild('dnszones')->setDisplay($lang['all_zones']);
-		$this->main_menu->getRootEntry()->getChild('services')->setDisplay($lang['all_services']);
 		$this->tpl['main_menu_content'] = (string)$this->main_menu->render();
 		
-		
-		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), $this->tpl['query_string']);
 		$this->calculate_menu_stats();
 		$main->html->head->add_script("text/javascript", makelink(array("page" => "search", "subpage" => "suggest_js")));
 		return template($this->tpl, __FILE__);

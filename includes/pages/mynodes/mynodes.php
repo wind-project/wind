@@ -320,7 +320,6 @@ class mynodes {
 
 	function output() {
 		global $construct, $main, $db;
-		$main->menu->main_menu->select('nodes');
 		
 		if (get('subpage') != '')
 			return $this->page->output();

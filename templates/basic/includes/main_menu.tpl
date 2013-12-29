@@ -66,42 +66,6 @@
 		</li>
 		</ul>
 	</div>
-
-					
-	{if $is_admin === TRUE}
-		<div class="administration toolbox gadget">
-			<span class="title">
-				<span class="text">{$lang.admin_panel}</span>
-			</span>
-			<ul class="menu">
-				<li>
-					<img src="templates/basic/images/node-small.png" alt="{$lang.nodes}" />
-					<a href="{$link_admin_nodes}">{$lang.nodes}</a>
-				</li>
-				<li>
-					<img src="templates/basic/images/user-small.png" alt="{$lang.users}" />
-					<a href="{$link_admin_users}">{$lang.users}</a>
-				</li>
-				<li>
-					<img src="templates/basic/images/services-small.png" alt="{$lang.services}" />
-					<a href="{$link_admin_nodes_services}">{$lang.services}</a>
-				</li>
-				<li>
-					<img src="templates/basic/images/services-small.png" alt="{$lang.services_categories}" />
-					<a href="{$link_admin_services}">{$lang.services_categories}</a>
-				</li>
-				<li>
-					<img src="templates/basic/images/regions-small.png" alt="{$lang.regions}" />
-					<a href="{$link_admin_regions}">{$lang.regions}</a>
-				</li>
-				<li>
-					<img src="templates/basic/images/areas-small.png" alt="{$lang.areas}" />
-					<a href="{$link_admin_areas}">{$lang.areas}</a>
-				</li>
-			</ul>
-		</div>
-
-	{/if}
 					
 	{if $is_admin === TRUE || $is_hostmaster === TRUE}
 					

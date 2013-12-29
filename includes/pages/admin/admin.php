@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/admin/admin_".get('subpage').".php");
+if (get('subpage') != '')
+	include_once(ROOT_PATH."includes/pages/admin/admin_".get('subpage').".php");
 
 class admin {
 
