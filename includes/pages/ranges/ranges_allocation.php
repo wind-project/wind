@@ -58,8 +58,6 @@ class ranges_allocation {
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
-		$this->tpl['link_ranges_search'] = makelink(array("page" => "ranges", "subpage" => "search"));
-		$this->tpl['link_ranges_allocation'] = makelink(array("page" => "ranges", "subpage" => "allocation"));
 		$this->tpl['table_areas'] = $construct->table($this->table_areas(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}

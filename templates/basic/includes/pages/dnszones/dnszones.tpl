@@ -17,15 +17,5 @@
  *}
 {include assign=help file=generic/help.tpl help=dnszones}
 {include file=generic/page-title.tpl title="`$lang.all_zones`" right="$help"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
+{include file=generic/title2.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
 {include file=generic/title2.tpl title="`$lang.dns_zones_found`" content=$table_dns}
-</td>
-</tr>
-</table>

@@ -21,21 +21,15 @@
 	<div class="navigation">{$menu}</div>
 	{/if}
 	<div class="main">
-		<table class="main-content">
-			<tr>
-				<td class="main-page">
-	    			{if $message==''}
-						{$center}
-	    			{else}
-	    				<div class="message">
-	    					{$message}
-						</div>
-	    			{/if}
-				</td>
-			</tr>
-		</table>
+		{if $message==''}
+			{$center}
+		{else}
+			<div class="message">{$message}</div>
+		{/if}
 	</div>
 	{if $footer != ''}
-	<footer class="footer">{$footer}</footer>
+	<footer class="footer">
+		{$footer}
+	</footer>
 	{/if}
 </div>

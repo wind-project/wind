@@ -16,15 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.users`"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.users_search`" content=$form_search_users}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
+{include file=generic/title2.tpl title="`$lang.users_search`" content=$form_search_users}
 {include file=generic/title2.tpl title="`$lang.users_found`" content=$table_users}
-</td>
-</tr>
-</table>

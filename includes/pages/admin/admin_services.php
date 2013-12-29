@@ -72,7 +72,7 @@ class admin_services {
 			$ret = $ret && $db->del("services", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', makelink("", true));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

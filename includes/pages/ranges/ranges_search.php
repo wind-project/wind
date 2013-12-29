@@ -73,10 +73,10 @@ class ranges_search {
 	}
 
 	function output() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
-		$this->tpl['link_ranges_search'] = makelink(array("page" => "ranges", "subpage" => "search"));
-		$this->tpl['link_ranges_allocation'] = makelink(array("page" => "ranges", "subpage" => "allocation"));
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		
 		$this->tpl['form_search_ranges'] = $construct->form($this->form_search_ranges(), __FILE__);
 		$this->tpl['table_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		return template($this->tpl, __FILE__);

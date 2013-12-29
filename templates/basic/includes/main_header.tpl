@@ -15,8 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<div class="header">
-
 	<a href="{$link_home}"><img
 {if $mylogo}
 	src="{$mylogo_dir}mylogo.png"
@@ -61,4 +59,3 @@
 	});
 	</script>
 	{/literal}
-</div>
