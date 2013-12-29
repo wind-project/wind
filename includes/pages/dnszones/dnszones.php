@@ -64,7 +64,6 @@ class dnszones {
 
 	function output() {
 		global $main, $construct;
-		$main->menu->main_menu->select('dnszones');
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
 			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));

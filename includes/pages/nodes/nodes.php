@@ -46,8 +46,7 @@ class nodes {
 	}
 	
 	function output() {
-		global $main;
-		$main->menu->main_menu->select('nodes');
+		global $main;	
 		
 		return $this->page->output();
 	}

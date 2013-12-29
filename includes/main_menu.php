@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once (ROOT_PATH . '/globals/classes/SmartMenu.class.php');
 require_once (ROOT_PATH . '/globals/classes/menu.php');
 
 class menu {
@@ -32,11 +33,12 @@ class menu {
 	
 
 	function __construct() {
-		$this->main_menu = new MenuRenderer(array('main-menu', 'menu', 'gadget'));
-		$this->main_menu->addEntry('nodes', '', makelink(array("page" => "nodes")));
-		$this->main_menu->addEntry('addresses', '', makelink(array("page" => "ranges", "subpage" => "search")));
-		$this->main_menu->addEntry('services', '', makelink(array("page" => "services")));
-		$this->main_menu->addEntry('dnszones', '', makelink(array("page" => "dnszones")));
+
+		$this->main_menu = new SmartMenu(array('class' => 'main-menu menu gadget'));
+		$this->main_menu->createLink('', makelink(array("page" => "nodes")), 'nodes');
+		$this->main_menu->createLink('', makelink(array("page" => "ranges", "subpage" => "search")), 'addresses');
+		$this->main_menu->createLink('', makelink(array("page" => "services")), 'services');
+		$this->main_menu->createLink('', makelink(array("page" => "dnszones")), 'dnszones');
 	}
 	
 	function calculate_menu_stats() {
@@ -162,11 +164,11 @@ class menu {
 		}
 		
 		// Main menu
-		$this->main_menu->getEntry('nodes')['title'] = $lang['all_nodes'];
-		$this->main_menu->getEntry('addresses')['title'] = $lang['all_ranges'];
-		$this->main_menu->getEntry('dnszones')['title'] = $lang['all_zones'];
-		$this->main_menu->getEntry('services')['title'] = $lang['all_services'];
-		$this->tpl['main_menu_content'] = $this->main_menu->outputHtml();
+		$this->main_menu->getRootEntry()->getChild('nodes')->setDisplay($lang['all_nodes']);
+		$this->main_menu->getRootEntry()->getChild('addresses')->setDisplay($lang['all_ranges']);
+		$this->main_menu->getRootEntry()->getChild('dnszones')->setDisplay($lang['all_zones']);
+		$this->main_menu->getRootEntry()->getChild('services')->setDisplay($lang['all_services']);
+		$this->tpl['main_menu_content'] = (string)$this->main_menu->render();
 		
 		
 		parse_str(substr(makelink(array("page" => "search"), FALSE, TRUE, FALSE), 1), $this->tpl['query_string']);
