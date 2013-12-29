@@ -86,6 +86,28 @@ function get_qs($htmlspecialchars=TRUE) {
 }
 
 /**
+ * @brief Get the relative resource path that user requested
+ * @param string $default the string to return if no path is given by the user
+ * @return string the path of the user to return.
+ */
+function get_path($default = ''){
+	return isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:$default;
+}
+
+/**
+ * @brief Get a specific level of the requested resource path.
+ * @param int $level The path level to request. 1 is the leftmost.
+ * @param string $default the string to return if path level not found
+ * @return string the path of the user to return.
+ */
+function get_path_level($level, $default = null){
+	$path = explode('/', get_path());
+	if (empty($path[$level]))
+		return $default;
+	return $path[$level];
+}
+
+/**
  * @brief Get a request parameter from query string.
  * Depending the type of the key it will try to do sanitization and security
  * checking. Specifically for 'page' and 'subpage' it will check first that it exists.
@@ -99,10 +121,21 @@ function get($key) {
 	
 	switch ($key) {
 		case 'page':
+			// Try to get page from path info (higher priority)
+			if (!is_null(get_path_level(1))){
+				$ret= get_path_level(1);
+			}
+			
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/");
 			array_unshift($valid_array, 'startup');
+			
 			break;
 		case 'subpage':
+			// Try to get page from path info (higher priority)
+			if (!is_null(get_path_level(2))){
+				$ret= get_path_level(2);
+			}
+			
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/".get('page').'/', FALSE, TRUE);
 			for ($key=0;$key<count($valid_array);$key++) {
 				$valid_array[$key] = basename($valid_array[$key], '.php');
@@ -143,16 +176,16 @@ function getdirlist($dirName, $dirs=TRUE, $files=FALSE) {
 
 /**
  * @brief Create a relative url for a specific action
- * @param string $extra
+ * @param array $params A list of parameters for 
  * @param string $cur_qs
  * @param string $cur_gs_vars
  * @param string $htmlspecialchars
  * @return string
+ * @todo remove html escaping functionality from here, it should be moved on the output layer
  */
-function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
+function makelink($params = array(), $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
 	global $qs_vars;
 	$o = array();
-	if(get('show_map') == "no") $o = array_merge($o,array("show_map" => "no"));
 	if ($cur_qs == TRUE) {
 		parse_str(get_qs(FALSE), $qs);
 		$o = array_merge($o, $qs);
@@ -162,6 +195,12 @@ function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars
 	}
 	$o = array_merge($o, (array)$extra);
 	return ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
+}
+
+function makelink2($path, $params = array()) {
+	if (!empty($params))
+		$path . '?' .implode('&', $params);
+	return url($path);
 }
 
 /**
@@ -184,6 +223,22 @@ function absolute_link($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecial
 	// Craft absolute url
 	$url = "${scheme}://${_SERVER['HTTP_HOST']}${absolute_path}";
 	return $url;
+}
+
+//! Create an absolute url based on root file
+function url($relative)
+{
+	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
+	if (! strstr($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
+		return (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'')  . $relative;
+	return $_SERVER['SCRIPT_NAME'] . $relative;
+}
+
+//! Create an absolute url for static content
+function surl($relative)
+{
+	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
+	return (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'') . $relative;
 }
 
 function query_str($params) {
@@ -243,10 +298,10 @@ function reset_smarty() {
 	global $smarty, $lang;
 	$smarty->clear_all_assign();
 	$smarty->assign_by_ref('lang', $lang);
-	$smarty->assign('tpl_dir', $smarty->template_dir);
-	$smarty->assign('img_dir', $smarty->template_dir."images/");
-	$smarty->assign('css_dir', $smarty->template_dir."css/");
-	$smarty->assign('js_dir', $smarty->template_dir."scripts/javascripts/");
+	$smarty->assign('tpl_dir', surl($smarty->template_dir));
+	$smarty->assign('img_dir', surl($smarty->template_dir."images/"));
+	$smarty->assign('css_dir', surl($smarty->template_dir."css/"));
+	$smarty->assign('js_dir', surl($smarty->template_dir."scripts/javascripts/"));
 }
 
 function delfile($str) 
@@ -502,7 +557,7 @@ function include_map_dependencies() {
 
 	// Include needed javascript
 	include_js_language_tokens();
-	$js_dir = $smarty->template_dir."scripts/javascripts/";
+	$js_dir = surl($smarty->template_dir . "/scripts/javascripts/");
 	$main->html->head->add_script('text/javascript', 'http://maps.google.com/maps/api/js?v=3&amp;sensor=false');
 	$main->html->head->add_script('text/javascript', "${js_dir}/map.js");
 	$main->html->head->add_script('text/javascript', "${js_dir}/openlayers/OpenLayers.js");

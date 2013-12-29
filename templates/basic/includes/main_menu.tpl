@@ -76,7 +76,7 @@
 		<ul class="menu">
 		{if $link_ranges != ''}
 			<li>
-				<img src="templates/basic/images/node-small.png" alt="{$lang.ip_ranges}" />
+				<img src="{$img_dir}/node-small.png" alt="{$lang.ip_ranges}" />
 				<a href="{$link_ranges}">{$lang.ip_ranges}</a>
 			</li>
 			<li>
@@ -90,7 +90,7 @@
 		{/if}
 		{if $link_dnszones != ''}
 			<li>
-				<img src="templates/basic/images/dns-small.png" alt="{$lang.dns_zones}" />
+				<img src="{$img_dir}/dns-small.png" alt="{$lang.dns_zones}" />
 				<a href="{$link_dnszones}">{$lang.dns_zones}</a>
 			</li>
 			<li>
@@ -102,7 +102,7 @@
 		{/if}
 		{if $link_dnsnameservers != ''}
 			<li>
-				<img src="templates/basic/images/nameserver.gif" alt="{$lang.dns_nameservers}" />
+				<img src="{$img_dir}/nameserver.gif" alt="{$lang.dns_nameservers}" />
 				<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a>
 			</li>
 			<li>

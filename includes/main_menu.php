@@ -34,10 +34,10 @@ class menu {
 	function __construct() {
 
 		$this->main_menu = new SmartMenu(array('class' => 'main-menu menu gadget'));
-		$this->main_menu->createLink('', makelink(array("page" => "nodes")), 'nodes');
-		$this->main_menu->createLink('', makelink(array("page" => "ranges", "subpage" => "search")), 'addresses');
-		$this->main_menu->createLink('', makelink(array("page" => "services")), 'services');
-		$this->main_menu->createLink('', makelink(array("page" => "dnszones")), 'dnszones');
+		$this->main_menu->createLink('', makelink2('/page/nodes'), 'nodes');
+		$this->main_menu->createLink('', makelink2('/ranges/search'), 'addresses');
+		$this->main_menu->createLink('', makelink2('/services'), 'services');
+		$this->main_menu->createLink('', makelink2('/dnszones'), 'dnszones');
 	}
 	
 	function calculate_menu_stats() {
