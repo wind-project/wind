@@ -21,11 +21,11 @@
 	<td class="table-page-split">
 		{include assign=t1 file="includes/pages/nodes/node_info.tpl"}
 		{if $edit_node}{include assign=ed file="generic/link.tpl" content="`$lang.edit_node`" link=$edit_node}{/if}
-		{include file="generic/title3.tpl" title="`$lang.node_info` $ed" content="$t1"}
-		{include file="generic/title4.tpl" title="`$lang.db.nodes__info`" content="`$node.info`"|escape|nl2br}
-		{include file="generic/title5.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
-		{include file="generic/title5.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
-		{include file="generic/title5.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}
+		{include file="generic/section-level4.tpl" title="`$lang.node_info` $ed" content="$t1"}
+		{include file="generic/section-level5.tpl" title="`$lang.db.nodes__info`" content="`$node.info`"|escape|nl2br}
+		{include file="generic/section-level6.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
+		{include file="generic/section-level6.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
+		{include file="generic/section-level6.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}
 		<br />
 		<div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 	</td>
@@ -39,23 +39,23 @@
 {foreach from=$table_links_ap item=ap}
 	{assign var=aps value="`$aps``$ap`"}
 {/foreach}
-{include file=generic/title2.tpl title="`$lang.links`" content="`$table_links_p2p``$aps`"}
+{include file=generic/section-level3.tpl title="`$lang.links`" content="`$table_links_p2p``$aps`"}
 </td>
 </tr>
 <tr>
 <td colspan="2" class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.mynetwork`" content=$table_ipaddr_subnets}
+{include file=generic/section-level3.tpl title="`$lang.mynetwork`" content=$table_ipaddr_subnets}
 </td>
 </tr>
 <tr>
 <td colspan="2" class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.services`" content=$table_services}
+{include file=generic/section-level3.tpl title="`$lang.services`" content=$table_services}
 </td>
 </tr>
 <tr>
 <td colspan="2" class="table-page-pad">
 {include assign=t file=includes/pages/nodes/myview.tpl}
-{include file=generic/title2.tpl title="`$lang.myview`" content=$t}
+{include file=generic/section-level3.tpl title="`$lang.myview`" content=$t}
 </td>
 </tr>
 </table>

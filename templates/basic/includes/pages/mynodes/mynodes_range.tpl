@@ -17,10 +17,4 @@
  *}
 {include assign=help file=generic/help.tpl help=mynodes_range}
 {include file=generic/page-title.tpl title="`$lang.ip_range_request`" right="$help"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.ip_range_request_for_node` $node_name (#$node_id)"|escape content=$form_getrange}
-</td>
-</tr>
-</table>
+{include file=generic/section-level2.tpl title="`$lang.ip_range_request_for_node` $node_name (#$node_id)"|escape content=$form_getrange}

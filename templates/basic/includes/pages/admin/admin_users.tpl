@@ -16,5 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.users`"}
-{include file=generic/title2.tpl title="`$lang.users_search`" content=$form_search_users}
-{include file=generic/title2.tpl title="`$lang.users_found`" content=$table_users}
+{include file=generic/section-level3.tpl title="`$lang.users_search`" content=$form_search_users}
+{include file=generic/section-level3.tpl title="`$lang.users_found`" content=$table_users}

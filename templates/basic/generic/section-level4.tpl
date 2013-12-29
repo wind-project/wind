@@ -15,11 +15,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<table width="100%"  border="0" cellpadding="0" cellspacing="2" class="table-node">
-<tr>
-<td class="table-node-subinfo-title">{$title}</td>
-</tr>
-<tr>
-<td class="table-node-info">{$content}</td>
-</tr>
-</table>
+<div class="section section-level-2">
+	<h4>{$title}</h4>
+	<div class="content">
+			{$content}
+	</div>
+</div>

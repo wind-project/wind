@@ -36,6 +36,6 @@
 	<td class="node-view-right-bottom" >{include file="generic/photosview_image.tpl" image=$photosview.SE}</td>
 	</tr>
 	<tr>
-	<td colspan="3" align="center">{assign var=t value="photos__view_point-PANORAMIC"}{include file=generic/title5.tpl title="`$lang.db.$t`" content=$panoramic}</td>
+	<td colspan="3" align="center">{assign var=t value="photos__view_point-PANORAMIC"}{include file=generic/section-level6.tpl title="`$lang.db.$t`" content=$panoramic}</td>
 	</tr>
 </table>

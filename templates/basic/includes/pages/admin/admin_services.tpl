@@ -17,4 +17,4 @@
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.services_categories`"}
 {include assign="t1" file="generic/link.tpl" link=$link_services_categories_add content="`$lang.services_categories_add`"}
-{include file=generic/title2.tpl title="`$lang.services_categories` $t1" content=$table_services}
+{include file=generic/section-level3.tpl title="`$lang.services_categories` $t1" content=$table_services}

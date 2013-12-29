@@ -17,4 +17,4 @@
  *}
 {include assign=help file=generic/help.tpl help=ranges_allocation}
 {include file=generic/page-title.tpl title="`$lang.all_ranges`" right="$help"}
-{include file=generic/title2.tpl title="`$lang.ip_ranges_allocation`" content=$table_areas}
+{include file=generic/section-level2.tpl title="`$lang.ip_ranges_allocation`" content=$table_areas}

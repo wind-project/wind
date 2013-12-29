@@ -16,36 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.dnszone_edit`"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
 {include assign=dnszone_delete file=generic/link.tpl content="`$lang.delete`" link=$link_dnszone_delete confirm=TRUE}
-{include file=generic/title1.tpl title="`$lang.dnszone_edit`" right="$dnszone_delete" content=$form_zone}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.node_info`" content=$table_node_info}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.users_info`" content=$table_user_info}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.links`" content=$table_links}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.ip_ranges`" content=$table_ip_ranges}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.dns_zones`" content=$table_dns}
-</td>
-</tr>
-</table>
+{include file=generic/section-level2.tpl title="`$lang.dnszone_edit`" right="$dnszone_delete" content=$form_zone}
+{include file=generic/section-level2.tpl title="`$lang.node_info`" content=$table_node_info}
+{include file=generic/section-level2.tpl title="`$lang.users_info`" content=$table_user_info}
+{include file=generic/section-level2.tpl title="`$lang.links`" content=$table_links}
+{include file=generic/section-level2.tpl title="`$lang.ip_ranges`" content=$table_ip_ranges}
+{include file=generic/section-level2.tpl title="`$lang.dns_zones`" content=$table_dns}

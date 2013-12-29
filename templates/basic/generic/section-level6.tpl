@@ -15,11 +15,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<table border="0" cellpadding="0" cellspacing="0" class="table-main">
-<tr>
-<td class="table-comments-title">{$title}</td>
-</tr>
-<tr>
-<td class="table-comments-text">{$content}</td>
-</tr>
-</table>
+<div class="section section-level-2">
+	<h6>{$title}</h6>
+	<div class="content">
+			{$content}
+	</div>
+</div>

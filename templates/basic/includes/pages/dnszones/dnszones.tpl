@@ -17,5 +17,5 @@
  *}
 {include assign=help file=generic/help.tpl help=dnszones}
 {include file=generic/page-title.tpl title="`$lang.all_zones`" right="$help"}
-{include file=generic/title2.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
-{include file=generic/title2.tpl title="`$lang.dns_zones_found`" content=$table_dns}
+{include file=generic/section-level3.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
+{include file=generic/section-level3.tpl title="`$lang.dns_zones_found`" content=$table_dns}

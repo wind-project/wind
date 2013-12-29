@@ -17,6 +17,6 @@
  *}
 {if $image != ''}{html_image file=$image}{/if}
 {if $forward != ''}{assign var=f value="<br /><br /><div align=\"center\"><a href=\"$forward\">$forward_text</a></div>"}{/if}
-<table width="400" align="center">
-<tr><td>{include file=generic/title1.tpl title=$title content="`$message` $f"|nl2br}</td></tr>
-</table>
+<div class="message">
+{include file=generic/section-level2.tpl title=$title content="`$message` $f"|nl2br}
+</div>

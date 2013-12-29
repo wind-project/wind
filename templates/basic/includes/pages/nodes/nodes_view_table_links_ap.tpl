@@ -70,7 +70,7 @@
 		</table>
 		</td>
 		<td class="table-node-link-info" width="33%" height="100%">
-		{include file="generic/title4.tpl" title="`$lang.db.links__info`" content="`$data.1.links__info`"|escape|nl2br}
+		{include file="generic/section-level5.tpl" title="`$lang.db.links__info`" content="`$data.1.links__info`"|escape|nl2br}
 		</td>
 		</tr>
 		</table>

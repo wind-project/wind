@@ -17,4 +17,4 @@
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.areas`"}
 {include assign="t1" file="generic/link.tpl" link=$link_area_add content="`$lang.area_add`"}
-{include file=generic/title2.tpl title="`$lang.areas` $t1" content=$table_areas}
+{include file=generic/section-level3.tpl title="`$lang.areas` $t1" content=$table_areas}
