@@ -25,15 +25,27 @@ class admin {
 	var $tpl;
 	var $page;
 	
-	function admin() {
+	function __construct() {
 		if (get('subpage') != '') {
 			$p = "admin_".get('subpage');
 			$this->page = new $p;
+		} else {
+			redirect(makelink2('/admin/nodes'));
 		}
 	}
 	
 	function output() {
+		global $main, $lang;
+		$admin_entry = $main->menu->main_menu->getRootEntry()->getChild('admin');
+		$admin_entry->createLink($lang['nodes'], makelink2('/admin/nodes'));
+		$admin_entry->createLink($lang['users'], makelink2('/admin/users'));
+		$admin_entry->createLink($lang['services'], makelink2('/admin/nodes_services'));
+		$admin_entry->createLink($lang['services_categories'], makelink2('/admin/services'));
+		$admin_entry->createLink($lang['regions'], makelink2('/admin/regions'));
+		$admin_entry->createLink($lang['areas'], makelink2('/admin/areas'));
+		
 		return $this->page->output();
+		
 	}
 
 }

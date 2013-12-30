@@ -32,12 +32,24 @@ class menu {
 	
 
 	function __construct() {
+		global $lang, $main;
 
 		$this->main_menu = new SmartMenu(array('class' => 'main-menu menu gadget'));
-		$this->main_menu->createLink('', makelink2('/nodes'), 'nodes');
-		$this->main_menu->createLink('', makelink2('/ranges/search'), 'addresses');
-		$this->main_menu->createLink('', makelink2('/services'), 'services');
-		$this->main_menu->createLink('', makelink2('/dnszones'), 'dnszones');
+		$this->main_menu->createLink($lang['all_nodes'], makelink2('/nodes'), 'nodes');
+		$this->main_menu->createLink($lang['all_ranges'], makelink2('/ranges/search'), 'addresses');
+		$this->main_menu->createLink($lang['all_services'], makelink2('/services'), 'services');
+		$this->main_menu->createLink($lang['all_zones'], makelink2('/dnszones'), 'dnszones');
+		
+		if ($main->userdata->logged) {
+			if ($main->userdata->privileges['admin'] === true) {
+				// Create administration submenu
+				$this->main_menu->createLink($lang['admin_panel'], makelink2('/admin'), 'admin');
+			}
+			if ($main->userdata->privileges['admin'] === true || $main->userdata->privileges['hostmaster'] === true) {
+				// Create hostmaster submenu
+				$this->main_menu->createLink($lang['hostmaster_panel'], makelink2('/hostmaster'), 'hostmaster');
+			}
+		}
 	}
 	
 	function calculate_menu_stats() {
@@ -127,12 +139,6 @@ class menu {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
 			call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 
-		// Main menu
-		$this->main_menu->getRootEntry()->getChild('nodes')->setDisplay($lang['all_nodes']);
-		$this->main_menu->getRootEntry()->getChild('addresses')->setDisplay($lang['all_ranges']);
-		$this->main_menu->getRootEntry()->getChild('dnszones')->setDisplay($lang['all_zones']);
-		$this->main_menu->getRootEntry()->getChild('services')->setDisplay($lang['all_services']);
-		
 		$this->tpl['logged'] = $main->userdata->logged;
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
@@ -147,16 +153,6 @@ class menu {
 			$this->tpl['link_edit_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));
 			if ($main->userdata->privileges['admin'] === TRUE) {
 				$this->tpl['is_admin'] = TRUE;
-				
-				// Create administration submenu
-				$this->main_menu->createLink($lang['admin_panel'], makelink2('/admin/nodes'), 'admin');
-				$admin_entry = $this->main_menu->getRootEntry()->getChild('admin');
-				$admin_entry->createLink($lang['nodes'], makelink2('/admin/nodes'));
-				$admin_entry->createLink($lang['users'], makelink2('/admin/users'));
-				$admin_entry->createLink($lang['services'], makelink2('/admin/nodes_services'));
-				$admin_entry->createLink($lang['services_categories'], makelink2('/admin/services'));
-				$admin_entry->createLink($lang['regions'], makelink2('/admin/regions'));
-				$admin_entry->createLink($lang['areas'], makelink2('/admin/areas'));
 			}
 			
 			if ($main->userdata->privileges['admin'] === TRUE || $main->userdata->privileges['hostmaster'] === TRUE) {

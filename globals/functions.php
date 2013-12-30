@@ -175,7 +175,7 @@ function getdirlist($dirName, $dirs=TRUE, $files=FALSE) {
 } 
 
 /**
- * @brief Create a relative url for a specific action
+ * @brief Create an absolute url for a specific action
  * @param array $params A list of parameters for 
  * @param string $cur_qs
  * @param string $cur_gs_vars
@@ -194,18 +194,25 @@ function makelink($params = array(), $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspec
 		$o = array_merge($o, (array)$qs_vars);
 	}
 	$o = array_merge($o, (array)$params);
-	$ret = ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
+	$ret = ($htmlspecialchars?htmlspecialchars('?'.create_query_string($o)):'?'.create_query_string($o));
 	return url($ret);
-}
-
-function makelink2($path, $params = array()) {
-	if (!empty($params))
-		$path . '?' .implode('&', $params);
-	return url($path);
 }
 
 /**
  * @brief Create an absolute url for a specific resource
+ * @param string $path The path to the resource
+ * @param array $params A list of parameters for the resource (query string)
+ * @return string The absolute url for this resource.
+ */
+
+function makelink2($path, $params = array()) {
+	if (!empty($params))
+		$path = $path . '?' . create_query_string($params);
+	return url($path);
+}
+
+/**
+ * @brief Create an fully qualified named url for a specific resource
  * @return string The absolute url of the resource
  */
 function absolute_link($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
@@ -242,7 +249,12 @@ function surl($relative)
 	return (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'') . $relative;
 }
 
-function query_str($params) {
+/**
+ * @brief Create a query string from an associative array
+ * @param array $params All params of query string given as key => values
+ * @return A prefixed list
+ */
+function create_query_string($params) {
    $str = '';
    foreach( (array) $params as $key => $value) {
    		if ($value == '') continue;
