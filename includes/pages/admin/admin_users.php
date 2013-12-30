@@ -48,7 +48,7 @@ class admin_users {
 		for($i=1;$i<count($table_users->data);$i++) {
 			if (isset($table_users->data[$i])) {
 				$table_users->data[$i]['fullname'] = $table_users->data[$i]['surname']." ".$table_users->data[$i]['name'];
-				$table_users->info['EDIT'][$i] = makelink(array("page" => "users", "user" => $table_users->data[$i]['id']));
+				$table_users->info['EDIT'][$i] = make_ref('/users', array("user" => $table_users->data[$i]['id']));
 			}
 		}
 		$table_users->info['EDIT_COLUMN'] = 'username';
@@ -73,7 +73,7 @@ class admin_users {
 			$ret = $ret && $db->del("users", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

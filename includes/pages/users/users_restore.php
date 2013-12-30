@@ -85,7 +85,7 @@ class users_restore {
 				$ret = $db->set('users', array("status" => "activated", "account_code" => generate_account_code(), "password" => md5($_POST['users__password'])), "id = '".get('user')."'");
 				
 				if ($ret) {
-					$main->message->set_fromlang('info', 'password_restored', makelink());
+					$main->message->set_fromlang('info', 'password_restored', self_ref());
 				} else {
 					$main->message->set_fromlang('error', 'generic');		
 				}

@@ -26,8 +26,8 @@ class loginform{
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		$this->tpl['lang'] = $lang;
-		$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
-		$this->tpl['form_submit_url'] = makelink(array("page" => "users", "subpage" => "loginform"));
+		$this->tpl['link_restore_password'] = make_ref('/users', array("action" => "restore"));
+		$this->tpl['form_submit_url'] = make_ref('/users/loginform');
 		
 		$output = template($this->tpl, __FILE__);
 		if (is_ajax_request()) {
@@ -47,7 +47,7 @@ class loginform{
 				$main->userdata->logout();
 			} else {
 				$result['success'] = $lang['message']['info']['login_success'];
-				$main->message->set_fromlang('info', 'login_success', makelink());
+				$main->message->set_fromlang('info', 'login_success', self_ref());
 			}
 		} else {
 			$result['error'] = $lang['message']['error']['login_failed'];

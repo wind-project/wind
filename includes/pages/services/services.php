@@ -58,7 +58,7 @@ class services {
 					}
 				}
 				$table_services->data[$key]['nodes__name'] .= " (#".$table_services->data[$key]['nodes__id'].")";
-				$table_services->info['LINK']['nodes__name'][$key] = makelink(array("page" => "nodes", "node" => $table_services->data[$key]['nodes__id']));
+				$table_services->info['LINK']['nodes__name'][$key] = make_ref('/nodes', array("node" => $table_services->data[$key]['nodes__id']));
 				$table_services->info['LINK']['services__title'][$key] = htmlspecialchars($table_services->data[$key]['url']);
 			}
 		}

@@ -51,7 +51,7 @@ class admin_services_service {
 								"services", "id", get('service'));
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "admin", "subpage" => "services")));
+			$main->message->set_fromlang('info', 'insert_success', make_ref('/admin/services'));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

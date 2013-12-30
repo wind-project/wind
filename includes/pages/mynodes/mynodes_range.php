@@ -89,7 +89,7 @@ class mynodes_range {
 		$ret = TRUE;
 		$ret = $form_getrange->db_set(array("node_id" => intval(get('node')), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "status" => $status));
 		if ($ret) {
-			$main->message->set_fromlang('info', 'request_range_success', makelink(array("page" => "mynodes", "node" => get('node'))));
+			$main->message->set_fromlang('info', 'request_range_success', make_ref('/mynodes', array("node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

@@ -29,7 +29,7 @@ class hostmaster {
 			$p = "hostmaster_".get('subpage');
 			$this->page = new $p;
 		} else {
-			redirect(makelink2('/hostmaster/ranges'));
+			redirect(make_ref('/hostmaster/ranges'));
 		}
 		
 		
@@ -38,10 +38,10 @@ class hostmaster {
 	function output() {
 		global $main, $lang;
 		$hostmaster_entry = $main->menu->main_menu->getRootEntry()->getChild('hostmaster');
-		$hostmaster_entry->createLink($lang['ip_ranges'], makelink2('/hostmaster/ranges'));
-		$hostmaster_entry->createLink($lang['dns_zones'], makelink2('/hostmaster/dnszones'));
-		$hostmaster_entry->createLink($lang['db']['schema'], makelink2('/hostmaster/dnszones_schema'));
-		$hostmaster_entry->createLink($lang['dns_nameservers'], makelink2('/hostmaster/dnsnameservers'));
+		$hostmaster_entry->createLink($lang['ip_ranges'], make_ref('/hostmaster/ranges'));
+		$hostmaster_entry->createLink($lang['dns_zones'], make_ref('/hostmaster/dnszones'));
+		$hostmaster_entry->createLink($lang['db']['schema'], make_ref('/hostmaster/dnszones_schema'));
+		$hostmaster_entry->createLink($lang['dns_nameservers'], make_ref('/hostmaster/dnsnameservers'));
 		
 		return $this->page->output();
 	}

@@ -57,7 +57,7 @@ class admin_regions_region {
 								"regions", "id", get('region'));
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "admin", "subpage" => "regions")));
+			$main->message->set_fromlang('info', 'insert_success', make_ref('/admin/regions'));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

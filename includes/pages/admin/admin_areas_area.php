@@ -58,7 +58,7 @@ class admin_areas_area {
 								"areas", "id", get('area'));
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "admin", "subpage" => "areas")));
+			$main->message->set_fromlang('info', 'insert_success', make_ref('/admin/areas'));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

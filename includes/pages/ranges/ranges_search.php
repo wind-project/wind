@@ -63,7 +63,7 @@ class ranges_search {
 				$table_ip_ranges->data[$key]['ip_end'] = long2ip($table_ip_ranges->data[$key]['ip_end']);
 				$table_ip_ranges->data[$key]['ip_range'] = $table_ip_ranges->data[$key]['ip_start']." - ".$table_ip_ranges->data[$key]['ip_end'];
 				$table_ip_ranges->data[$key]['nodes__name'] .= " (#".$table_ip_ranges->data[$key]['nodes__id'].")";
-				$table_ip_ranges->info['EDIT'][$key] = makelink(array("page" => "nodes", "node" => $table_ip_ranges->data[$key]['nodes__id']));
+				$table_ip_ranges->info['EDIT'][$key] = make_ref('/nodes', array("node" => $table_ip_ranges->data[$key]['nodes__id']));
 			}
 		}
 		$table_ip_ranges->info['EDIT_COLUMN'] = 'nodes__name';

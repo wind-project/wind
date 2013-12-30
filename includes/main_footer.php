@@ -28,7 +28,7 @@ class footer {
 		$this->tpl['mysql_time'] = $db->total_time;
 		$this->tpl['wind_version'] = format_version($vars['info']['version']);
 		if (isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE && $vars['debug']['enabled'] == TRUE) {
-			$this->tpl['debug_mysql'] = ROOT_PATH."debug/mysql.php?".get_qs();
+			$this->tpl['debug_mysql'] = ROOT_PATH."debug/mysql.php?".get_query_string();
 		}
 		return template($this->tpl, __FILE__);
 	}

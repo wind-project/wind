@@ -54,7 +54,7 @@ class mynodes_dnsnameserver {
 								"dns_nameservers", "id", $nameserver);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnsnameserver_success':'edit_success'), makelink(array("page" => "mynodes", "node" => intval(get('node')))));
+			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnsnameserver_success':'edit_success'), make_ref("/mynodes", array("node" => intval(get('node')))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

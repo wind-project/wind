@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {if $extra_data.MULTICHOICE[1] != ''}
-<form name="{$extra_data.FORM_NAME}" method="post">
-<input type="hidden" name="query_string" value="{$hidden_qs}" />
+<form name="{$extra_data.FORM_NAME}" method="post" action={$action_url}>
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 {/if}
 <table class="table-data" width="100%"  border="0" cellspacing="0" cellpadding="2">

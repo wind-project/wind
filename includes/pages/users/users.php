@@ -72,7 +72,7 @@ class users {
 		{
 			$ret = $db->del("users", '', "id = '".get('user')."'");
 			if ($ret) {
-				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "admin", "subpage" => "users")));
+				$main->message->set_fromlang('info', 'delete_success', make_ref('/admin/users'));
 			} else {
 				$main->message->set_fromlang('error', 'generic');		
 			}
@@ -89,7 +89,7 @@ class users {
 		} else if (get('action') == 'logout') {
 			$main->userdata->logout();
 			$redirect = get('redirect');
-			$redirect = ($redirect == ""?makelink():$redirect);
+			$redirect = ($redirect == ""?self_ref():$redirect);
 			$main->message->set_fromlang('info', 'logout_success', $redirect);
 			return;
 		} else if (get('action') == 'restore') {
@@ -103,7 +103,7 @@ class users {
 		if (get('user') != '') {
 			$this->tpl['user_method'] = (get('user') == 'add' ? 'add' : 'edit');
 			if(get('user') != 'add' && $main->userdata->privileges['admin'] === TRUE)
-				$this->tpl['link_user_delete'] = makelink(array("action" => "delete"),TRUE);
+				$this->tpl['link_user_delete'] = self_ref(array("action" => "delete"));
 			$this->tpl['form_user'] = $construct->form($this->form_user(), __FILE__);
 		}
 		return template($this->tpl, __FILE__);
@@ -169,7 +169,7 @@ class users {
 			}
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('user') == 'add'?'signup':'edit').'_success', makelink());
+			$main->message->set_fromlang('info', (get('user') == 'add'?'signup':'edit').'_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

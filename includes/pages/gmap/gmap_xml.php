@@ -76,7 +76,7 @@ class gmap_xml {
 			if ($value['total_clients'] != 0) $xml .= ' clients="'.$value['total_clients'].'"';
 			$xml .= ' lat="'.$value['latitude'].'"';
 			$xml .= ' lon="'.$value['longitude'].'"';
-			$xml .= ' url="'.htmlspecialchars(makelink(array("page" => "nodes", "node" => $value['id']))).'"';
+			$xml .= ' url="'.htmlspecialchars(make_ref('/nodes', array("node" => $value['id']))).'"';
 			$xml .= " />\r";
 		}
 		$xml .= "</nodes>\r";

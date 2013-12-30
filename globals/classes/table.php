@@ -42,7 +42,7 @@ class table {
 			if ($vars['constructor']['max_rows'] != '' && $cnt > $vars['constructor']['max_rows']) {
 				$this->info['TOTAL_PAGES'] = ceil($cnt / $vars['constructor']['max_rows']);
 				for ($i=1;$i<=$this->info['TOTAL_PAGES'];$i++) {
-					$this->info['PAGES'][$i] = makelink(array($this->info['TABLE_NAME']."_showpage" => $i), TRUE);
+					$this->info['PAGES'][$i] = self_ref(array($this->info['TABLE_NAME']."_showpage" => $i));
 				}
 			}
 		}
@@ -97,40 +97,11 @@ class table {
 		$search = serialize($search);
 		if (isset($this->info['TOTAL_PAGES'])) {
 			for ($i=1;$i<=$this->info['TOTAL_PAGES'];$i++) {
-			        $this->info['PAGES'][$i] = makelink(array($form->info['FORM_NAME']."_search" => $search, $this->info['TABLE_NAME']."_showpage" => $i), TRUE);
+			        $this->info['PAGES'][$i] = self_ref(array($form->info['FORM_NAME']."_search" => $search, $this->info['TABLE_NAME']."_showpage" => $i));
 			}
 		}
 	}
 	
-	function db_data_edit() {
-		$args = func_get_args();
-		for($i=1;$i<count($this->data);$i++) {
-			if (isset($this->data[$i])) {
-				unset($edit_par);
-				for($j=1;$j<func_num_args();$j=$j+2) {
-					$edit_par[$args[$j]] = $this->data[$i][$args[$j+1]];
-				}
-				$this->info['EDIT'][$i] = makelink($edit_par);
-			}
-		}
-		return $this->data;
-	}
-
-	function db_data_delete() {
-		$args = func_get_args();
-		for($i=1;$i<count($this->data);$i++) {
-			if (isset($this->data[$i])) {
-				unset($delete_par);
-				for($j=1;$j<func_num_args();$j=$j+2) {
-					$delete_par[$args[$j]] = $this->data[$i][$args[$j+1]];
-				}
-				$delete_par['delete_item'] = 'true';
-				$this->info['DELETE'][$i] = makelink($delete_par);
-			}
-		}
-		return $this->data;
-	}
-
 	function db_data_multichoice() {
 		$args = func_get_args();
 		for($i=1;$i<count($this->data);$i++) {

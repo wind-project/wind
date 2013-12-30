@@ -54,7 +54,7 @@ class mynodes_ipaddr {
 								"ip_addresses", "id", $ipaddr);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "mynodes", "node" => get('node'))));
+			$main->message->set_fromlang('info', 'insert_success', make_ref('/mynodes', array("node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

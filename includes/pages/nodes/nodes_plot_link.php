@@ -74,17 +74,18 @@ class nodes_plot_link {
 				$this->tpl['b_node_tilt'] = -($this->tpl['a_node_tilt']);
 			}
 			$this->tpl['distance'] = sqrt( pow($this->tpl['distance'] * 1000, 2) + pow( abs($a_node_total_elevation - $b_node_total_elevation), 2 ) ) / 1000;
-			$this->tpl['gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('a_node'), "node2" => get('b_node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
+			$this->tpl['gearth'] = make_ref('/gearth/download', array("node" => get('a_node'), "node2" => get('b_node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 			$this->tpl['frequency'] = (integer)(isset($_GET['frequency'])?$_GET['frequency']:2450);
 			if ($this->tpl['frequency'] <= 0) $this->tpl['frequency'] = 2450;
 			$frequency = $this->tpl['frequency'] * 1000000;
 			$c = 299792.458; // light speed in km
 			$this->tpl['fsl'] = 20 * log10(4 * pi() * $this->tpl['distance'] * ($frequency / $c));
 			
-			$this->tpl['plot_image'] = makelink(array("page" => "nodes", "subpage" => "plot", "a_node" => $this->tpl['a_node'], "b_node" => $this->tpl['b_node'], "frequency" => $this->tpl['frequency']));
+			$this->tpl['nodes_pickup_link'] = make_ref('/pickup/nodes');
+			$this->tpl['plot_image'] = make_ref('/nodes/plot', array("a_node" => $this->tpl['a_node'], "b_node" => $this->tpl['b_node'], "frequency" => $this->tpl['frequency']));
 		}
 		
-		$this->tpl['hidden_qs'] = get_qs();
+		$this->tpl['action_url'] = self_ref();
 		return template($this->tpl, __FILE__);
 	}
 

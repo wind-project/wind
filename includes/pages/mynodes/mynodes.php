@@ -101,7 +101,7 @@ class mynodes {
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnszone", "zone" => $table_dns->data[$i]['id'], "node" => intval(get('node'))));
+				$table_dns->info['EDIT'][$i] = make_ref('/mynodes/dnszone', array("zone" => $table_dns->data[$i]['id'], "node" => intval(get('node'))));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
@@ -129,7 +129,7 @@ class mynodes {
 		$table_nameservers->db_data_multichoice('dns_nameservers', 'id');
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
-				$table_nameservers->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnsnameserver", "nameserver" => $table_nameservers->data[$i]['id'], "node" => intval(get('node'))));
+				$table_nameservers->info['EDIT'][$i] = make_ref('/mynodes/dnsnameserver', array("nameserver" => $table_nameservers->data[$i]['id'], "node" => intval(get('node'))));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
@@ -161,7 +161,7 @@ class mynodes {
 					$table_links->data[$i]['peer'] = $table_links->data[$i]['peer_ap_nodename']." (#".$table_links->data[$i]['peer_ap_nodeid'].")";
 					$table_links->data[$i]['ssid'] = $table_links->data[$i]['peer_ap_ssid'];
 				}				
-				$table_links->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "link", 'node' => intval(get('node')), "link" => $table_links->data[$i]['id']));
+				$table_links->info['EDIT'][$i] = make_ref('/mynodes/link', array('node' => intval(get('node')), "link" => $table_links->data[$i]['id']));
 			}
 		}
 		$table_links->info['EDIT_COLUMN'] = 'type';
@@ -224,7 +224,7 @@ class mynodes {
 		$table_subnets->db_data_multichoice('subnets', 'id');
 		for($i=1;$i<count($table_subnets->data);$i++) {
 			if (isset($table_subnets->data[$i])) {
-				$table_subnets->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "subnet", 'node' => intval(get('node')), "subnet" => $table_subnets->data[$i]['id']));
+				$table_subnets->info['EDIT'][$i] = make_ref('/mynodes/subnet', array('node' => intval(get('node')), "subnet" => $table_subnets->data[$i]['id']));
 			}
 		}
 		$table_subnets->info['EDIT_COLUMN'] = 'subnet';
@@ -251,7 +251,7 @@ class mynodes {
 		$table_ipaddr->db_data_multichoice('ip_addresses', 'id');
 		for($i=1;$i<count($table_ipaddr->data);$i++) {
 			if (isset($table_ipaddr->data[$i])) {
-				$table_ipaddr->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "ipaddr", 'node' => intval(get('node')), "ipaddr" => $table_ipaddr->data[$i]['id']));
+				$table_ipaddr->info['EDIT'][$i] = make_ref('/mynodes/ipaddr', array('node' => intval(get('node')), "ipaddr" => $table_ipaddr->data[$i]['id']));
 			}
 		}
 		$table_ipaddr->info['EDIT_COLUMN'] = 'hostname';
@@ -277,7 +277,7 @@ class mynodes {
 			if ($key != 0) {
 				if ($table_services->data[$key]['ip']) 
 					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
-				$table_services->info['EDIT'][$key] = makelink(array("page" => "mynodes", "subpage" => "services", "node" => intval(get('node')), "service" => $table_services->data[$key]['id']));
+				$table_services->info['EDIT'][$key] = make_ref('/mynodes/services', array("node" => intval(get('node')), "service" => $table_services->data[$key]['id']));
 			}
 		}
 		$table_services->info['EDIT_COLUMN'] = 'title';
@@ -359,7 +359,7 @@ class mynodes {
 					LEFT JOIN subnets ON nodes.id = subnets.node_id 
 					LEFT JOIN users_nodes ON nodes.id = users_nodes.node_id', 
 				"nodes.id = ".intval(get('node')))) { 
-				$main->message->set_fromlang('info', 'delete_success', makelink());
+				$main->message->set_fromlang('info', 'delete_success', self_ref());
 			} else {
 				$main->message->set_fromlang('error', 'generic');		
 			}
@@ -382,19 +382,20 @@ class mynodes {
 				$this->tpl['table_ipaddr'] = $construct->table($this->table_ipaddr(), __FILE__);
 				$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 				$this->tpl['table_photosview'] = $construct->table($this->table_photosview(), __FILE__);
-				if ($this->has_owner_access()) $this->tpl['link_node_delete'] = makelink(array('action' => 'delete'), TRUE);
-				$this->tpl['link_node_view'] = makelink(array('page' => 'nodes', 'node' => get('node')));
-				$this->tpl['link_req_cclass'] = makelink(array('page' => 'mynodes', 'subpage' => 'range', 'node' => get('node')));
-				$this->tpl['link_req_dns_for'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
-				$this->tpl['link_req_dns_rev'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnszone', 'type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
-				$this->tpl['link_nameserver_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'dnsnameserver', 'node' => get('node'), 'nameserver' => 'add'));
-				$this->tpl['link_link_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'link', 'node' => get('node'), 'link' => 'add'));
-				$this->tpl['link_subnet_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'subnet', 'node' => get('node'), 'subnet' => 'add'));
-				$this->tpl['link_ipaddr_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'ipaddr', 'node' => get('node'), 'ipaddr' => 'add'));
-				$this->tpl['link_services_add'] = makelink(array('page' => 'mynodes', 'subpage' => 'services', 'node' => get('node'), 'service' => 'add'));
+				if ($this->has_owner_access())
+					$this->tpl['link_node_delete'] = self_ref(array('action' => 'delete'));
+				$this->tpl['link_node_view'] = make_ref('/nodes', array('node' => get('node')));
+				$this->tpl['link_req_cclass'] = make_ref('/mynodes/range', array('node' => get('node')));
+				$this->tpl['link_req_dns_for'] = make_ref('/mynodes/dnszone', array('type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
+				$this->tpl['link_req_dns_rev'] = make_ref('/mynodes/dnszone', array('type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
+				$this->tpl['link_nameserver_add'] = make_ref('/mynodes/dnsnameserver', array('node' => get('node'), 'nameserver' => 'add'));
+				$this->tpl['link_link_add'] = make_ref('/mynodes/link', array('node' => get('node'), 'link' => 'add'));
+				$this->tpl['link_subnet_add'] = make_ref('/mynodes/subnet', array('node' => get('node'), 'subnet' => 'add'));
+				$this->tpl['link_ipaddr_add'] = make_ref('mynodes/ipaddr', array('node' => get('node'), 'ipaddr' => 'add'));
+				$this->tpl['link_services_add'] = make_ref('/mynodes/services', array('node' => get('node'), 'service' => 'add'));
 
 			}
-			$this->tpl['link_map_pickup'] = makelink(array('page' => 'pickup', 'subpage' => 'map', "object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
+			$this->tpl['link_map_pickup'] = make_ref('/pickup/map', array("object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));
 			return template($this->tpl, __FILE__);
 		}
 	}
@@ -447,7 +448,7 @@ class mynodes {
 			}
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('node') == 'add'?'insert':'edit').'_success', makelink(array("node" => $ins_id),TRUE));
+			$main->message->set_fromlang('info', (get('node') == 'add'?'insert':'edit').'_success', self_ref(array("node" => $ins_id)));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -461,7 +462,7 @@ class mynodes {
 			$ret = $ret && $db->set("ip_ranges", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'update_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -477,7 +478,7 @@ class mynodes {
 						"dns_zones.id = '".intval($value)."' AND dns_zones.node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -493,7 +494,7 @@ class mynodes {
 						"dns_nameservers.id = '".intval($value)."' AND dns_nameservers.node_id =  ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -510,7 +511,7 @@ class mynodes {
 						"links.id = '".intval($value)."' AND links.node_id = ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -523,7 +524,7 @@ class mynodes {
 			$ret = $ret && $db->del("links", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -536,7 +537,7 @@ class mynodes {
 			$ret = $ret && $db->del("subnets", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -549,7 +550,7 @@ class mynodes {
 			$ret = $ret && $db->del("ip_addresses", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -562,7 +563,7 @@ class mynodes {
 			$ret = $ret && $db->del("nodes_services", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -605,7 +606,7 @@ class mynodes {
 				$db->set("photos", array('info' => $_POST['info-'.$value]), "node_id = ".intval(get('node'))." AND view_point = '".$value."'");
 			}
 		}
-		$main->message->set_fromlang('info', 'update_success', makelink("",TRUE));
+		$main->message->set_fromlang('info', 'update_success', self_ref());
 	}
 
 }

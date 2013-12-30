@@ -35,19 +35,19 @@ class menu {
 		global $lang, $main;
 
 		$this->main_menu = new SmartMenu(array('class' => 'main-menu menu gadget'));
-		$this->main_menu->createLink($lang['all_nodes'], makelink2('/nodes'), 'nodes');
-		$this->main_menu->createLink($lang['all_ranges'], makelink2('/ranges/search'), 'addresses');
-		$this->main_menu->createLink($lang['all_services'], makelink2('/services'), 'services');
-		$this->main_menu->createLink($lang['all_zones'], makelink2('/dnszones'), 'dnszones');
+		$this->main_menu->createLink($lang['all_nodes'], make_ref('/nodes'), 'nodes');
+		$this->main_menu->createLink($lang['all_ranges'], make_ref('/ranges/search'), 'addresses');
+		$this->main_menu->createLink($lang['all_services'], make_ref('/services'), 'services');
+		$this->main_menu->createLink($lang['all_zones'], make_ref('/dnszones'), 'dnszones');
 		
 		if ($main->userdata->logged) {
 			if ($main->userdata->privileges['admin'] === true) {
 				// Create administration submenu
-				$this->main_menu->createLink($lang['admin_panel'], makelink2('/admin'), 'admin');
+				$this->main_menu->createLink($lang['admin_panel'], make_ref('/admin'), 'admin');
 			}
 			if ($main->userdata->privileges['admin'] === true || $main->userdata->privileges['hostmaster'] === true) {
 				// Create hostmaster submenu
-				$this->main_menu->createLink($lang['hostmaster_panel'], makelink2('/hostmaster'), 'hostmaster');
+				$this->main_menu->createLink($lang['hostmaster_panel'], make_ref('/hostmaster'), 'hostmaster');
 			}
 		}
 	}
@@ -145,12 +145,11 @@ class menu {
 			$this->tpl['mynodes'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");
 			
 			foreach( (array) $this->tpl['mynodes'] as $key => $value) {
-				$this->tpl['mynodes'][$key]['url'] = makelink(array("page" => "mynodes", "node" => $this->tpl['mynodes'][$key]['id']));
-				$this->tpl['mynodes'][$key]['url_view'] = makelink(array("page" => "nodes", "node" => $this->tpl['mynodes'][$key]['id']));
+				$this->tpl['mynodes'][$key]['url_view'] = make_ref('/nodes', array("node" => $this->tpl['mynodes'][$key]['id']));
 			}
 			
-			$this->tpl['link_addnode'] = makelink(array("page" => "mynodes", "node" => "add"));
-			$this->tpl['link_edit_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));
+			$this->tpl['link_addnode'] = make_ref('/mynodes', array("node" => "add"));
+			$this->tpl['link_edit_profile'] = make_ref('/users', array("user" => $main->userdata->user));
 			if ($main->userdata->privileges['admin'] === TRUE) {
 				$this->tpl['is_admin'] = TRUE;
 			}
@@ -158,18 +157,18 @@ class menu {
 			if ($main->userdata->privileges['admin'] === TRUE || $main->userdata->privileges['hostmaster'] === TRUE) {
 				$this->tpl['is_hostmaster'] = TRUE;
 
-				$this->tpl['link_dnsnameservers'] = makelink2('/hostmaster/dnsnameservers');
-				$this->tpl['link_dnsnameservers_waiting'] = makelink2('/hostmaster/dnsnameservers', array("form_search_nameservers_search" => serialize(array("dns_nameservers__status" => "waiting"))));
+				$this->tpl['link_dnsnameservers'] = make_ref('/hostmaster/dnsnameservers');
+				$this->tpl['link_dnsnameservers_waiting'] = make_ref('/hostmaster/dnsnameservers', array("form_search_nameservers_search" => serialize(array("dns_nameservers__status" => "waiting"))));
 				$this->tpl['dnsnameservers_waiting'] = $db->cnt('', "dns_nameservers", "status = 'waiting'");
 
-				$this->tpl['link_dnszones'] = makelink2('/hostmaster/dnszones');
-				$this->tpl['link_dnszones_waiting'] = makelink2('hostmaster/dnszones', array("form_search_dns_search" => serialize(array("dns_zones__status" => "waiting"))));
+				$this->tpl['link_dnszones'] = make_ref('/hostmaster/dnszones');
+				$this->tpl['link_dnszones_waiting'] = make_ref('hostmaster/dnszones', array("form_search_dns_search" => serialize(array("dns_zones__status" => "waiting"))));
 				$this->tpl['dnszones_waiting'] = $db->cnt('', "dns_zones", "status = 'waiting'");
 
-				$this->tpl['link_ranges'] = makelink2('/hostmaster/ranges');
-				$this->tpl['link_ranges_waiting'] = makelink2('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__status" => "waiting", "ip_ranges__delete_req" => "N"))));
+				$this->tpl['link_ranges'] = make_ref('/hostmaster/ranges');
+				$this->tpl['link_ranges_waiting'] = make_ref('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__status" => "waiting", "ip_ranges__delete_req" => "N"))));
 				$this->tpl['ranges_waiting'] = $db->cnt('', "ip_ranges", "status = 'waiting' AND delete_req = 'N'");
-				$this->tpl['link_ranges_req_del'] = makelink2('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__delete_req" => "Y"))));
+				$this->tpl['link_ranges_req_del'] = make_ref('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__delete_req" => "Y"))));
 				$this->tpl['ranges_req_del'] = $db->cnt('', "ip_ranges", "delete_req = 'Y'");
 			}
 		}
@@ -177,7 +176,7 @@ class menu {
 		$this->tpl['main_menu_content'] = (string)$this->main_menu->render();
 		
 		$this->calculate_menu_stats();
-		$main->html->head->add_script("text/javascript", makelink2('/search/suggest_js'));
+		$main->html->head->add_script("text/javascript", make_ref('/search/suggest_js'));
 		return template($this->tpl, __FILE__);
 	}
 }

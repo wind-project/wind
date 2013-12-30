@@ -47,7 +47,7 @@ class hostmaster_dnsnameserver {
 		for($i=1;$i<count($table_node_info->data);$i++) {
 			if (isset($table_node_info->data[$i])) {
 				$table_node_info->data[$i]['nodes__name'] .= " (#".$table_node_info->data[$i]['id'].")";
-				$table_node_info->info['EDIT'][$i] = makelink(array("page" => "mynodes", "node" => $table_node_info->data[$i]['id']));
+				$table_node_info->info['EDIT'][$i] = make_ref('/mynodes', array("node" => $table_node_info->data[$i]['id']));
 			}
 		}
 		$table_node_info->info['EDIT_COLUMN'] = 'nodes__name';
@@ -68,7 +68,7 @@ class hostmaster_dnsnameserver {
 			'users_nodes.owner ASC');
 		for($i=1;$i<count($table_user_info->data);$i++) {
 			if (isset($table_user_info->data[$i])) {
-				$table_user_info->info['EDIT'][$i] = makelink(array("page" => "users", "user" => $table_user_info->data[$i]['id']));
+				$table_user_info->info['EDIT'][$i] = make_ref('/users', array("user" => $table_user_info->data[$i]['id']));
 			}
 		}
 		$table_user_info->info['EDIT_COLUMN'] = 'username';
@@ -122,7 +122,7 @@ class hostmaster_dnsnameserver {
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = makelink(array("page" => "hostmaster", "subpage" => "dnszone", "zone" => $table_dns->data[$i]['id']));
+				$table_dns->info['EDIT'][$i] = make_ref('/hostmaster/dnszone', array("zone" => $table_dns->data[$i]['id']));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
@@ -141,7 +141,7 @@ class hostmaster_dnsnameserver {
 						LEFT JOIN dns_zones_nameservers ON dns_nameservers.id = dns_zones_nameservers.nameserver_id', 
 					"dns_nameservers.id = '".get('nameserver')."'");
 			if ($ret) {
-				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers")));
+				$main->message->set_fromlang('info', 'delete_success', make_ref('/hostmaster/dnsnameservers'));
 			} else {
 				$main->message->set_fromlang('error', 'generic');		
 			}
@@ -164,7 +164,7 @@ class hostmaster_dnsnameserver {
 							"dns_nameservers", "id", get('nameserver'));
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'edit_success', makelink(array("page" => "hostmaster", "subpage" => "dnsnameservers")));
+			$main->message->set_fromlang('info', 'edit_success', make_ref('/hostmaster/dnsnameservers'));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

@@ -32,7 +32,7 @@ class construct {
 		}
 		return template(array("data" => $form->data,
 				"extra_data" => $form->info,
-				"action_url" => '.?'.get_qs()),
+				"action_url" => '.?'.get_query_string()),
 				$template);
 	}
 	
@@ -47,7 +47,7 @@ class construct {
 				$template='constructors/table.tpl';
 			}
 		}
-		return template(array("data" => $table->data, "extra_data" => $table->info, "hidden_qs" => get_qs()), $template);
+		return template(array("data" => $table->data, "extra_data" => $table->info, "action_url" => self_ref()), $template);
 	}
 		
 }

@@ -89,7 +89,7 @@ class hostmaster_ranges {
 		for($i=1;$i<count($table_ip_ranges->data);$i++) {
 			if (isset($table_ip_ranges->data[$i])) {
 				$table_ip_ranges->data[$i]['total_active_peers'] = ($table_ip_ranges->data[$i]['total_active_p2p']>0?$table_ip_ranges->data[$i]['total_active_p2p']." ".$lang['backbones_abbr']:"").($table_ip_ranges->data[$i]['total_active_aps']>0?" + ".$table_ip_ranges->data[$i]['total_active_aps']." ".$lang['aps_abbr']:"");
-				$table_ip_ranges->info['EDIT'][$i] = makelink(array("page" => "hostmaster", "subpage" => "range", "iprange" => $table_ip_ranges->data[$i]['id']));
+				$table_ip_ranges->info['EDIT'][$i] = make_ref('/hostmaster/range', array("iprange" => $table_ip_ranges->data[$i]['id']));
 			}
 		}
 		$table_ip_ranges->info['EDIT_COLUMN'] = 'ip_range';
@@ -114,7 +114,7 @@ class hostmaster_ranges {
 			$ret = $ret && $db->del("ip_ranges", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

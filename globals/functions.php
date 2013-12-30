@@ -76,13 +76,40 @@ function get_user_title() {
 }
 
 /**
- * @brief Get query string of the request
- * @param string $htmlspecialchars
- * @return Ambigous <string, unknown>
+ * @brief Get the raw query string 
+ * @return string The raw url query string with any escape character included.
  */
-function get_qs($htmlspecialchars=TRUE) {
-	$ret = $_SERVER['QUERY_STRING'];
-	return ($htmlspecialchars?htmlspecialchars($ret):$ret);
+function get_query_string() {
+	if (isset($_SERVER['QUERY_STRING'])){
+		return $_SERVER['QUERY_STRING'];
+	} else {
+		return '';
+	}
+}
+
+/**
+ * @brief Get query string as an array
+ * @return array An associative array with all parameters
+ */
+function get_query_string_array() {
+	if (get_query_string() == '')
+		return array();
+	
+	$params = array();
+	foreach(explode('&', get_query_string()) as $param_token) {
+		// Split params tokens in two
+		$param_parts = explode('=', $param_token, 2);
+		// Url decode parameter parts
+		array_walk($param_parts, function(& $val){
+			$val = urldecode($val);
+		});
+		if (count($param_parts) == 2) {
+			$params[$param_parts[0]] = urldecode($param_parts[1]);
+		} else {
+			$params[$param_parts[0]] = true;
+		}
+	}
+	return $params;
 }
 
 /**
@@ -175,65 +202,46 @@ function getdirlist($dirName, $dirs=TRUE, $files=FALSE) {
 } 
 
 /**
- * @brief Create an absolute url for a specific action
- * @param array $params A list of parameters for 
- * @param string $cur_qs
- * @param string $cur_gs_vars
- * @param string $htmlspecialchars
- * @return string
- * @todo remove html escaping functionality from here, it should be moved on the output layer
- */
-function makelink($params = array(), $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
-	global $qs_vars;
-	$o = array();
-	if ($cur_qs == TRUE) {
-		parse_str(get_qs(FALSE), $qs);
-		$o = array_merge($o, $qs);
-	}
-	if ($cur_gs_vars == TRUE) {
-		$o = array_merge($o, (array)$qs_vars);
-	}
-	$o = array_merge($o, (array)$params);
-	$ret = ($htmlspecialchars?htmlspecialchars('?'.create_query_string($o)):'?'.create_query_string($o));
-	return url($ret);
-}
-
-/**
- * @brief Create an absolute url for a specific resource
+ * @brief Create an absolute reference for a specific resource
  * @param string $path The path to the resource
  * @param array $params A list of parameters for the resource (query string)
  * @return string The absolute url for this resource.
  */
 
-function makelink2($path, $params = array()) {
+function make_ref($path, $params = array()) {
 	if (!empty($params))
-		$path = $path . '?' . create_query_string($params);
+		$path = $path . '?' .  http_build_query($params);
 	return url($path);
 }
 
 /**
- * @brief Create an fully qualified named url for a specific resource
- * @return string The absolute url of the resource
+ * @brief Get a link to the current resource
+ * @param array $extra A list of extra query parameters for this link (same will be overrided)
+ * @return string The absolute url for this resource.
  */
-function absolute_link($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
 
-	// Format absolute path
-	$relative = makelink($extra, $cur_qs, $cur_gs_vars, $htmlspecialchars);
-	if (! strstr($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'])) {
-		$absolute_path = (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'') . $relative;
-	} else {
-		$absolute_path = $_SERVER['SCRIPT_NAME'] . $relative;
-	}
-	
-	// Detect connection scheme
+function self_ref($extra_query = array()) {
+	$params = array_merge(get_query_string_array(), $extra_query);
+	return make_ref(get_path(), $params);
+}
+
+/**
+ * @brief Create an fully qualified named url for a specific resource
+ * @return string $absolute_url The absolute url of the resource
+ */
+function fqn_url($absolute_url) {
+
+	// Detect scheme
 	$scheme = empty($_SERVER['HTTPS'])?'http':'https';
 
-	// Craft absolute url
-	$url = "${scheme}://${_SERVER['HTTP_HOST']}${absolute_path}";
+	// Craft fqn url
+	$url = "{$scheme}://{$_SERVER['HTTP_HOST']}{$absolute_url}";
 	return $url;
 }
 
-//! Create an absolute url based on root file
+/**
+ * @brief Create an absolute url for a relative dynamic resource
+ */
 function url($relative)
 {
 	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
@@ -242,7 +250,9 @@ function url($relative)
 	return $_SERVER['SCRIPT_NAME'] . $relative;
 }
 
-//! Create an absolute url for static content
+/**
+ * @brief Create an absolute url for a relative static resource
+ */
 function surl($relative)
 {
 	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
@@ -579,7 +589,7 @@ function include_map_dependencies() {
 	$map_options = array();
 	$map_options['bound_sw'] = array($vars['gmap']['bounds']['min_latitude'], $vars['gmap']['bounds']['min_longitude']);
 	$map_options['bound_ne'] = array($vars['gmap']['bounds']['max_latitude'], $vars['gmap']['bounds']['max_longitude']);
-	$map_options['topology_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), false, true, false);
+	$map_options['topology_url'] = make_ref('/gmap/json', array("node" => get('node')));
 	$map_options_string = json_encode($map_options);
 
 	$main->html->head->add_extra(

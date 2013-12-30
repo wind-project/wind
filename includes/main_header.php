@@ -36,15 +36,15 @@ class header {
 			$this->tpl['mylogo'] = TRUE;
 			$this->tpl['mylogo_dir'] = ROOT_PATH.'config/';
 		}
-		$this->tpl['link_home'] = makelink(array());
-		$this->tpl['link_login_form'] = makelink(array("page" => "users", "subpage" => "loginform"), false, true, false);
-		$this->tpl['link_logout'] = makelink(array("page" => "users", "action" => "logout"));
+		$this->tpl['link_home'] = make_ref('/');
+		$this->tpl['link_login_form'] = make_ref('/users/loginform');
+		$this->tpl['link_logout'] = make_ref('/users', array('action' => 'logout'));
 		$this->tpl['current_language'] = $vars['info']['current_language'];
-		$this->tpl['search_url'] = makelink2('/search');
+		$this->tpl['search_url'] = make_ref('/search');
 		foreach($vars['language']['enabled'] as $key => $value) {
 			if ($value) {
 				$this->tpl['languages'][$key]['name'] = ($lang['languages'][$key]==''?$key:$lang['languages'][$key]);
-				$this->tpl['languages'][$key]['link'] = makelink(array("session_lang" => $key), TRUE);
+				$this->tpl['languages'][$key]['link'] = self_ref(array("session_lang" => $key));
 			}
 		}
 		
@@ -52,11 +52,11 @@ class header {
 			$this->tpl['logged'] = $main->userdata->logged; 
 			$this->tpl['logged_username'] = isset($main->userdata->info['username'])?$main->userdata->info['username']:"";
 			$this->tpl['logged_title'] = get_user_title();
-			$this->tpl['link_user_profile'] = makelink(array("page" => "users", "user" => $main->userdata->user));;
+			$this->tpl['link_user_profile'] = make_ref('/users', array("user" => $main->userdata->user));;
 		} else {
-			$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
-			$this->tpl['link_restore_password'] = makelink(array("page" => "users", "action" => "restore"));
-			$this->tpl['link_register'] = makelink(array("page" => "users", "user" => "add"));
+			$this->tpl['link_register'] = make_ref('/users', array("user" => "add"));
+			$this->tpl['link_restore_password'] = make_ref('/users', array("action" => "restore"));
+			$this->tpl['link_register'] = make_ref('/users', array("user" => "add"));
 		}
 		return template($this->tpl, __FILE__);
 	}

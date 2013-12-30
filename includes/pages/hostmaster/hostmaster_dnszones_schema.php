@@ -66,7 +66,7 @@ class hostmaster_dnszones_schema {
 		fclose($f);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'edit_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'edit_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
@@ -81,7 +81,7 @@ class hostmaster_dnszones_schema {
 		fclose($f);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'edit_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'edit_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

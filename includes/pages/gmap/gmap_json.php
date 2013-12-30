@@ -102,7 +102,7 @@ class gmap_json {
 			
 			$node['lat'] = floatval($value['latitude']);
 			$node['lon'] = floatval($value['longitude']);
-			$node['url'] = absolute_link(array("page" => "nodes", "node" => $value['id']), false, true, false);
+			$node['url'] = fqn_url(make_ref('/nodes', array("node" => $value['id'])));
 			
 			$node['total_ap'] = intval($value['total_aps']);
 			$node['total_p2p'] = intval($value['total_p2p']);
@@ -114,7 +114,7 @@ class gmap_json {
 			if(get('node') && (get('node') != $value['id'])) {
 				$node['extra_refs'][] = array(
 					'title' => $lang['plot'],
-					'href' => makelink(array('page'=>'nodes', 'subpage' => 'plot_link', 'a_node' => get('node'), 'b_node' => $node['id']), false, true, false),
+					'href' => make_ref('/nodes/plot_link', array('a_node' => get('node'), 'b_node' => $node['id'])),
 					'popup' => true,
 				);
 			}

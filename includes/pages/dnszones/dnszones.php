@@ -53,7 +53,7 @@ class dnszones {
 			if (isset($table_dns->data[$i])) {
 				$table_dns->data[$i]['nodes__name'] .= " (#".$table_dns->data[$i]['nodes__id'].")";
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['dns_zones__name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = makelink(array("page" => "nodes", "node" => $table_dns->data[$i]['nodes__id']));
+				$table_dns->info['EDIT'][$i] = make_ref('/nodes', array("node" => $table_dns->data[$i]['nodes__id']));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'nodes__name';

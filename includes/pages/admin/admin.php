@@ -30,19 +30,19 @@ class admin {
 			$p = "admin_".get('subpage');
 			$this->page = new $p;
 		} else {
-			redirect(makelink2('/admin/nodes'));
+			redirect(make_ref('/admin/nodes'));
 		}
 	}
 	
 	function output() {
 		global $main, $lang;
 		$admin_entry = $main->menu->main_menu->getRootEntry()->getChild('admin');
-		$admin_entry->createLink($lang['nodes'], makelink2('/admin/nodes'));
-		$admin_entry->createLink($lang['users'], makelink2('/admin/users'));
-		$admin_entry->createLink($lang['services'], makelink2('/admin/nodes_services'));
-		$admin_entry->createLink($lang['services_categories'], makelink2('/admin/services'));
-		$admin_entry->createLink($lang['regions'], makelink2('/admin/regions'));
-		$admin_entry->createLink($lang['areas'], makelink2('/admin/areas'));
+		$admin_entry->createLink($lang['nodes'], make_ref('/admin/nodes'));
+		$admin_entry->createLink($lang['users'], make_ref('/admin/users'));
+		$admin_entry->createLink($lang['services'], make_ref('/admin/nodes_services'));
+		$admin_entry->createLink($lang['services_categories'], make_ref('/admin/services'));
+		$admin_entry->createLink($lang['regions'], make_ref('/admin/regions'));
+		$admin_entry->createLink($lang['areas'], make_ref('/admin/areas'));
 		
 		return $this->page->output();
 		
