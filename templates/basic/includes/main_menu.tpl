@@ -17,33 +17,6 @@
  *}
 {$main_menu_content}
 
-<div class="statistics gadget">
-	<span class="title">{$lang.statistics}</span>
-	
-  	<ul class="statistics">
-		<li>
-			<span class="quantity">{$stats_nodes_active}/{$stats_nodes_total}</span>
-			<span class="desc">{$lang.active_nodes|lower}</span>
-		</li>
-	  	<li>
-	  		<span class="quantity">{$stats_backbone}</span>
-	  		<span class="desc">{$lang.backbone_nodes|lower}</span>
-	  	</li>
-	  	<li>
-	  		<span class="quantity">{$stats_links}</span>
-	  		<span class="desc">{$lang.links|lower}</span>
-	  	</li>
-	  	<li>
-			<span class="quantity">{$stats_aps}</span>
-			<span class="desc">{$lang.aps|lower}</span>
-	  	</li>
-	  	<li>
-			<span class="quantity">{$stats_services_active}/{$stats_services_total}</span>
-			<span class="desc">{$lang.active_services|lower}</span>
-		</li>
-	</ul>
-</div>
-
 {if $logged==TRUE}
 
 	<div class="mynodes toolbox gadget">
@@ -118,3 +91,29 @@
 
 {/if}
 
+<div class="statistics gadget">
+	<span class="title">{$lang.statistics}</span>
+	
+  	<ul class="statistics">
+		<li>
+			<span class="quantity">{$stats_nodes_active}/{$stats_nodes_total}</span>
+			<span class="desc">{$lang.active_nodes|lower}</span>
+		</li>
+	  	<li>
+	  		<span class="quantity">{$stats_backbone}</span>
+	  		<span class="desc">{$lang.backbone_nodes|lower}</span>
+	  	</li>
+	  	<li>
+	  		<span class="quantity">{$stats_links}</span>
+	  		<span class="desc">{$lang.links|lower}</span>
+	  	</li>
+	  	<li>
+			<span class="quantity">{$stats_aps}</span>
+			<span class="desc">{$lang.aps|lower}</span>
+	  	</li>
+	  	<li>
+			<span class="quantity">{$stats_services_active}/{$stats_services_total}</span>
+			<span class="desc">{$lang.active_services|lower}</span>
+		</li>
+	</ul>
+</div>
