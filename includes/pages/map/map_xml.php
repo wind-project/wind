@@ -17,39 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class gmap_json {
+class map_xml {
 	
-	function gmap_json() {
+	function __construct() {
 		
 	}
 	
 	function output() {
-		global $db, $lang, $vars;
+		global $db, $lang;
 		
 		$node = $db->get('latitude, longitude', 'nodes', "id = ".intval(get('node')));
 		$node = isset($node[0])?$node[0]:'';
 
-		// Preprocess filter
-		$filters = array(
-				'p2p' => false,
-				'ap' => false,
-				'client' => false,
-				'unlinked' => false
-		);
-		$request_filters = get('filter')?explode(",",get('filter')):array();
-		foreach($request_filters as $filter) {
-			if (in_array($filter, array_keys($filters))) {
-				$filters[$filter] = true;
-			}
-		}
-		
-		// Prepare SQL query.
 		$having = '';
 		if (get('node') != '') $having .= ($having!=''?' OR ':'')."id = ".intval(get('node'));
-		if ($filters['p2p'] == 1) $having .= ($having!=''?' OR ':'').'total_p2p > 0';
-		if ($filters['ap'] == 1) $having .= ($having!=''?' OR ':'').'total_aps > 0';
-		if ($filters['client'] == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap > 0)';
-		if ($filters['unlinked'] == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap = 0)';
+		if (get('show_p2p') == 1) $having .= ($having!=''?' OR ':'').'total_p2p > 0';
+		if (get('show_aps') == 1) $having .= ($having!=''?' OR ':'').'total_aps > 0';
+		if (get('show_clients') == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap > 0)';
+		if (get('show_unlinked') == 1) $having .= ($having!=''?' OR ':'').'(total_p2p = 0 AND total_aps = 0 AND total_client_on_ap = 0)';
 		if ($having != '') $nodes = $db->get(
 			'nodes.id, nodes.latitude, nodes.longitude, nodes.name AS nodes__name, areas.name AS areas__name, COUNT(DISTINCT p2p.id) AS total_p2p, COUNT(DISTINCT aps.id) AS total_aps, COUNT(DISTINCT clients.id) AS total_clients, COUNT(DISTINCT client_ap.id) AS total_client_on_ap',
 			'nodes
@@ -64,68 +49,41 @@ class gmap_json {
 			"users.status = 'activated'",
 			'nodes.id' .
 			($having!=''?' HAVING '.$having:''));
-		
-		// Create json object
-		$json = array(
-				'meta' => array(
-						'bounds' => $vars['gmap']['bounds']),
-				'nodes' => array(),
-				'links' => array()
-		);
-		if (get('node') != '') {
-			$json['meta']['selected'] = intval(get('node'));
-		}
-		
-		// Push node information
+		$xml = "<?xml version=\"1.0\" encoding=\"".$lang['charset']."\" standalone=\"yes\"?>\r"; 
+		$xml .= "<wind>\r";
+		$xml .= "<nodes>\r";
 		foreach ((array) $nodes as $key => $value) {
-			$node = array();
+			$xml .= "<";
 			if (get('node') == $value['id']) {
-				$node['selected'] =  true;
-			}
-			
-			// Calculate type
-			if ($value['total_aps'] != 0 && $value['total_p2p'] != 0) {
-				$node['type'] = 'p2p-ap';
+				$xml .= 'selected';
+			} elseif ($value['total_aps'] != 0 && $value['total_p2p'] != 0) {
+				$xml .= 'p2p-ap';
 			} elseif ($value['total_aps'] != 0) {
-				$node['type'] = 'ap';
+				$xml .= 'ap';
 			} elseif ($value['total_p2p'] != 0) {
-				$node['type'] = 'p2p';
+				$xml .= 'p2p';
 			} elseif ($value['total_client_on_ap'] != 0) {
-				$node['type'] = 'client';
+				$xml .= 'client';
 			} else {
-				$node['type'] = 'unlinked';
+				$xml .= 'unlinked';
 			}
-			$node['id'] = intval($value['id']);
-			
-			$node['name'] = $value['nodes__name'];
-			$node['area'] = $value['areas__name'];
-			
-			$node['lat'] = floatval($value['latitude']);
-			$node['lon'] = floatval($value['longitude']);
-			$node['url'] = fqn_url(make_ref('/nodes', array("node" => $value['id'])));
-			
-			$node['total_ap'] = intval($value['total_aps']);
-			$node['total_p2p'] = intval($value['total_p2p']);
-			$node['total_ap_subscriptions'] = intval($value['total_client_on_ap']);
-			$node['total_clients'] = intval($value['total_clients']);
-			$node['extra_refs'] = array();
-			
-			// if we have a selected one
-			if(get('node') && (get('node') != $value['id'])) {
-				$node['extra_refs'][] = array(
-					'title' => $lang['plot'],
-					'href' => make_ref('/nodes/plot_link', array('a_node' => get('node'), 'b_node' => $node['id'])),
-					'popup' => true,
-				);
-			}
-			// Append node
-			$json['nodes'][$value['id']] = $node;
+			$xml .= ' id="'.$value['id'].'"';
+			$xml .= ' name="'.htmlspecialchars($value['nodes__name'], ENT_COMPAT, $lang['charset']).'"';
+			$xml .= ' area="'.htmlspecialchars($value['areas__name'], ENT_COMPAT, $lang['charset']).'"';
+			if ($value['total_p2p'] != 0) $xml .= ' p2p="'.$value['total_p2p'].'"';
+			if ($value['total_aps'] != 0) $xml .= ' aps="'.$value['total_aps'].'"';
+			if ($value['total_client_on_ap'] != 0) $xml .= ' client_on_ap="'.$value['total_client_on_ap'].'"';
+			if ($value['total_clients'] != 0) $xml .= ' clients="'.$value['total_clients'].'"';
+			$xml .= ' lat="'.$value['latitude'].'"';
+			$xml .= ' lon="'.$value['longitude'].'"';
+			$xml .= ' url="'.htmlspecialchars(make_ref('/nodes', array("node" => $value['id']))).'"';
+			$xml .= " />\r";
 		}
+		$xml .= "</nodes>\r";
 		
-		// Craft sql query
 		$where = '';
-		if ($filters['p2p'] == 1) $where .= ($where!=''?' OR ':'')."p2p.type = 'p2p'";
-		if ($filters['client'] == 1) $where .= ($where!=''?' OR ':'')."clients.type = 'client'";
+		if (get('show_links_p2p') == 1) $where .= ($where!=''?' OR ':'')."p2p.type = 'p2p'";
+		if (get('show_links_client') == 1) $where .= ($where!=''?' OR ':'')."clients.type = 'client'";
 		if ($where != '') $links = $db->get(
 			'IFNULL(p2p.id, clients.id) AS id, IFNULL(p2p.type, clients.type) AS type, n1.latitude AS n1_lat, n1.longitude AS n1_lon, IFNULL(n_p2p.latitude, n_clients.latitude) AS n2_lat, IFNULL(n_p2p.longitude, n_clients.longitude) AS n2_lon, l1.status AS l1_status, IFNULL(p2p.status, clients.status) AS l2_status',
 			'links AS l1 ' .
@@ -136,22 +94,23 @@ class gmap_json {
 			"LEFT JOIN nodes AS n_clients ON clients.node_id = n_clients.id",
 			($where!=''?'('.$where.')':'')." HAVING n1_lat IS NOT NULL AND n1_lon IS NOT NULL AND n2_lat IS NOT NULL AND n2_lon IS NOT NULL"
 			);
-		
-		// Push link information
+		$xml .= "<links>\r";
 		foreach ((array) $links as $key => $value) {
-			$link = array();
-			$link['type'] = $value['type'];
-			$link['id'] = intval($value['id']);
-			$link['lat1'] = floatval($value['n1_lat']);
-			$link['lon1'] = floatval($value['n1_lon']);
-			$link['lat2'] = floatval($value['n2_lat']);
-			$link['lon2'] =  floatval($value['n2_lon']);
-			$link['status'] = ($value['l1_status']!='active' || $value['l2_status']!='active'?'inactive':'active');
-			$json['links'][$link['id']] = $link;
+			$xml .= "<link_".$value['type'];
+			$xml .= ' id="'.$value['id'].'"';
+			$xml .= ' lat1="'.$value['n1_lat'].'"';
+			$xml .= ' lon1="'.$value['n1_lon'].'"';
+			$xml .= ' lat2="'.$value['n2_lat'].'"';
+			$xml .= ' lon2="'.$value['n2_lon'].'"';
+			$xml .= ' status="'.($value['l1_status']!='active' || $value['l2_status']!='active'?'inactive':'active').'"';
+			$xml .= " />\r";
 		}
+		$xml .= "</links>\r";
+		$xml .= "</wind>\r";
 		
-		header("Content-type: application/json; charset=".$lang['charset']);
-		echo json_encode($json);
+		header("Expires: 0");
+		header("Content-type: text/xml; charset=".$lang['charset']);
+		echo $xml;
 		exit;
 	}
 

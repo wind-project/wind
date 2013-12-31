@@ -27,7 +27,7 @@ require_once dirname(__FILE__) . '/../../globals/classes/srtm.php';
 
 // Calculate needed files
 $needed_files = array();
-$bounds = $_SESSION['config']['gmap']['bounds'];
+$bounds = $_SESSION['config']['map']['bounds'];
 
 for($lat = floor($bounds['min_latitude']); $lat <= ceil($bounds['max_latitude']);$lat += 1) {
 	// Clamp

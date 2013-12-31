@@ -481,10 +481,6 @@ $lang = array(
 				'title' => 'Schema files are missing',
 				'body' => 'Please, contact with the system administrator(s) to fix the problem.'
 			),
-			'gmap_key_failed' => array(
-				'title' => 'GMAP key is missing',
-				'body' => 'The activation key for Google Maps is missing. Please, contact with the system administrator(s) to fix the problem.'
-			),
 			'node_not_found' => array(
 				'title' => 'The node was not found',
 				'body' => 'The node you are looking for does not exist. Check that you supplied the correct data and try again. If you are sure that you submit the correct data, it is likely that the node has been deleted or that the user has not activated his/her account yet.'

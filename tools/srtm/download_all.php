@@ -24,7 +24,7 @@ function get_srtm_directory() {
  */
 function get_bounds() {
 	global $config;
-	return $config['gmap']['bounds'];
+	return $config['map']['bounds'];
 }
 
 

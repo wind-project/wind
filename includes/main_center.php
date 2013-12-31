@@ -60,7 +60,7 @@ class center {
 			case 'ranges':
 			case 'dnszones':
 			case 'pickup':
-			case 'gmap':
+			case 'map':
 			case 'gearth':
 			case 'services':
 			case 'search':

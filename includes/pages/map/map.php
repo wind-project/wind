@@ -17,15 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(ROOT_PATH."includes/pages/gmap/gmap_".get('subpage').".php");
+require_once(ROOT_PATH."includes/pages/map/map_".get('subpage').".php");
 
-class gmap {
+class map {
 
 	var $tpl;
 	var $page;
 	
-	function gmap() {
-		$p = "gmap_".get('subpage');
+	function __construct() {
+		$p = "map_".get('subpage');
 		$this->page = new $p;
 	}
 	

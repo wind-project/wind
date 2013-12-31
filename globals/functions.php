@@ -587,9 +587,9 @@ function include_map_dependencies() {
 
 
 	$map_options = array();
-	$map_options['bound_sw'] = array($vars['gmap']['bounds']['min_latitude'], $vars['gmap']['bounds']['min_longitude']);
-	$map_options['bound_ne'] = array($vars['gmap']['bounds']['max_latitude'], $vars['gmap']['bounds']['max_longitude']);
-	$map_options['topology_url'] = make_ref('/gmap/json', array("node" => get('node')));
+	$map_options['bound_sw'] = array($vars['map']['bounds']['min_latitude'], $vars['map']['bounds']['min_longitude']);
+	$map_options['bound_ne'] = array($vars['map']['bounds']['max_latitude'], $vars['map']['bounds']['max_longitude']);
+	$map_options['topology_url'] = make_ref('/map/json', array("node" => get('node')));
 	$map_options_string = json_encode($map_options);
 
 	$main->html->head->add_extra(

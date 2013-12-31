@@ -479,10 +479,6 @@ $lang = array(
 				'title' => 'Schema bestanden ontbreken',
 				'body' => 'Neem a.u.b. contact op met de systeem beheerder(s) om dit probleem te laten oplossen.'
 			),
-			'gmap_key_failed' => array(
-				'title' => 'GMAP key onbreekt',
-				'body' => 'De activatie key voor Google Maps ontbreekt. Neem a.u.b. contact op met de systeembeheerder(s) om dit probleem te laten oplossen.'
-			),
 			'node_not_found' => array(
 				'title' => 'De node is niet gevonden.',
 				'body' => 'De node die u op zoek bent, bestaat niet. Controleer of u de juiste gegevens verstrekt en probeer het opnieuw. Als u zeker weet dat u de juiste gegevens heeft ingegeven, is het mogelijk dat de node is verwijderd of dat de gebruiker zijn / haar account nog niet heeft geactiveerd.'

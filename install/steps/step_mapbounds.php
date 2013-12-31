@@ -18,7 +18,7 @@
  */
 
 // Process input
-$def_values = $_SESSION['config']['gmap']['bounds'];
+$def_values = $_SESSION['config']['map']['bounds'];
 if (is_method_post()) {
 	$step_result = 'auto';
 	$def_values = array_merge($def_values, $_POST);
@@ -33,7 +33,7 @@ if (is_method_post()) {
 	}
 	
 	if ($step_result) {
-		$_SESSION['config']['gmap']['bounds'] = $def_values;
+		$_SESSION['config']['map']['bounds'] = $def_values;
 	}
 	
 }
