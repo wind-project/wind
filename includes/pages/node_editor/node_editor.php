@@ -17,27 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/mynodes/mynodes_".get('subpage').".php");
+if (get('subpage') != '')
+	require_once(ROOT_PATH."includes/pages/node_editor/node_editor_".get('subpage').".php");
 
-class mynodes {
+class node_editor {
 
 	var $tpl;
 	var $page;
 	
-	function mynodes() {
+	function __construct() {
 		if (get('subpage') != '') {
-			$p = "mynodes_".get('subpage');
+			$p = "node_editor_".get('subpage');
 			$this->page = new $p;
 		}
 	}
 	
 	function has_owner_access() {
 		global $db, $main;
-		if ($main->userdata->privileges['admin']===TRUE) return TRUE;
+		if ($main->userdata->privileges['admin'] === true)
+			return true;
 		
-		if ($db->cnt('', "users_nodes", "user_id = '".$main->userdata->user."' AND node_id = ".intval(get('node'))." AND owner = 'Y'") > 0) return TRUE;
+		if ($db->cnt('', "users_nodes", "user_id = '".$main->userdata->user."' AND node_id = ".intval(get('node'))." AND owner = 'Y'") > 0)
+			return true;
 		
-		return FALSE;
+		return false;
 	}
 	
 	function form_node() {
@@ -57,7 +60,7 @@ class mynodes {
 			$form_node->data[7]['Null'] = 'YES';
 		}
 		
-		if ($main->userdata->privileges['admin'] === TRUE)
+		if ($main->userdata->privileges['admin'] === true)
 			$form_node->db_data('nodes.id, nodes.name_ns');
 		$form_node->db_data_enum('nodes.area_id', $db->get("id AS value, name AS output", "areas"));
 		$form_node->db_data_values("nodes", "id", intval(get('node')));
@@ -101,7 +104,7 @@ class mynodes {
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = make_ref('/mynodes/dnszone', array("zone" => $table_dns->data[$i]['id'], "node" => intval(get('node'))));
+				$table_dns->info['EDIT'][$i] = make_ref('/node_editor/dnszone', array("zone" => $table_dns->data[$i]['id'], "node" => intval(get('node'))));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
@@ -129,7 +132,7 @@ class mynodes {
 		$table_nameservers->db_data_multichoice('dns_nameservers', 'id');
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
-				$table_nameservers->info['EDIT'][$i] = make_ref('/mynodes/dnsnameserver', array("nameserver" => $table_nameservers->data[$i]['id'], "node" => intval(get('node'))));
+				$table_nameservers->info['EDIT'][$i] = make_ref('/node_editor/dnsnameserver', array("nameserver" => $table_nameservers->data[$i]['id'], "node" => intval(get('node'))));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
@@ -161,7 +164,7 @@ class mynodes {
 					$table_links->data[$i]['peer'] = $table_links->data[$i]['peer_ap_nodename']." (#".$table_links->data[$i]['peer_ap_nodeid'].")";
 					$table_links->data[$i]['ssid'] = $table_links->data[$i]['peer_ap_ssid'];
 				}				
-				$table_links->info['EDIT'][$i] = make_ref('/mynodes/link', array('node' => intval(get('node')), "link" => $table_links->data[$i]['id']));
+				$table_links->info['EDIT'][$i] = make_ref('/node_editor/link', array('node' => intval(get('node')), "link" => $table_links->data[$i]['id']));
 			}
 		}
 		$table_links->info['EDIT_COLUMN'] = 'type';
@@ -224,7 +227,7 @@ class mynodes {
 		$table_subnets->db_data_multichoice('subnets', 'id');
 		for($i=1;$i<count($table_subnets->data);$i++) {
 			if (isset($table_subnets->data[$i])) {
-				$table_subnets->info['EDIT'][$i] = make_ref('/mynodes/subnet', array('node' => intval(get('node')), "subnet" => $table_subnets->data[$i]['id']));
+				$table_subnets->info['EDIT'][$i] = make_ref('/node_editor/subnet', array('node' => intval(get('node')), "subnet" => $table_subnets->data[$i]['id']));
 			}
 		}
 		$table_subnets->info['EDIT_COLUMN'] = 'subnet';
@@ -251,7 +254,7 @@ class mynodes {
 		$table_ipaddr->db_data_multichoice('ip_addresses', 'id');
 		for($i=1;$i<count($table_ipaddr->data);$i++) {
 			if (isset($table_ipaddr->data[$i])) {
-				$table_ipaddr->info['EDIT'][$i] = make_ref('/mynodes/ipaddr', array('node' => intval(get('node')), "ipaddr" => $table_ipaddr->data[$i]['id']));
+				$table_ipaddr->info['EDIT'][$i] = make_ref('/node_editor/ipaddr', array('node' => intval(get('node')), "ipaddr" => $table_ipaddr->data[$i]['id']));
 			}
 		}
 		$table_ipaddr->info['EDIT_COLUMN'] = 'hostname';
@@ -277,7 +280,7 @@ class mynodes {
 			if ($key != 0) {
 				if ($table_services->data[$key]['ip']) 
 					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
-				$table_services->info['EDIT'][$key] = make_ref('/mynodes/services', array("node" => intval(get('node')), "service" => $table_services->data[$key]['id']));
+				$table_services->info['EDIT'][$key] = make_ref('/node_editor/services', array("node" => intval(get('node')), "service" => $table_services->data[$key]['id']));
 			}
 		}
 		$table_services->info['EDIT_COLUMN'] = 'title';
@@ -385,14 +388,14 @@ class mynodes {
 				if ($this->has_owner_access())
 					$this->tpl['link_node_delete'] = self_ref(array('action' => 'delete'));
 				$this->tpl['link_node_view'] = make_ref('/nodes', array('node' => get('node')));
-				$this->tpl['link_req_cclass'] = make_ref('/mynodes/range', array('node' => get('node')));
-				$this->tpl['link_req_dns_for'] = make_ref('/mynodes/dnszone', array('type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
-				$this->tpl['link_req_dns_rev'] = make_ref('/mynodes/dnszone', array('type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
-				$this->tpl['link_nameserver_add'] = make_ref('/mynodes/dnsnameserver', array('node' => get('node'), 'nameserver' => 'add'));
-				$this->tpl['link_link_add'] = make_ref('/mynodes/link', array('node' => get('node'), 'link' => 'add'));
-				$this->tpl['link_subnet_add'] = make_ref('/mynodes/subnet', array('node' => get('node'), 'subnet' => 'add'));
-				$this->tpl['link_ipaddr_add'] = make_ref('mynodes/ipaddr', array('node' => get('node'), 'ipaddr' => 'add'));
-				$this->tpl['link_services_add'] = make_ref('/mynodes/services', array('node' => get('node'), 'service' => 'add'));
+				$this->tpl['link_req_cclass'] = make_ref('/node_editor/range', array('node' => get('node')));
+				$this->tpl['link_req_dns_for'] = make_ref('/node_editor/dnszone', array('type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
+				$this->tpl['link_req_dns_rev'] = make_ref('/node_editor/dnszone', array('type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
+				$this->tpl['link_nameserver_add'] = make_ref('/node_editor/dnsnameserver', array('node' => get('node'), 'nameserver' => 'add'));
+				$this->tpl['link_link_add'] = make_ref('/node_editor/link', array('node' => get('node'), 'link' => 'add'));
+				$this->tpl['link_subnet_add'] = make_ref('/node_editor/subnet', array('node' => get('node'), 'subnet' => 'add'));
+				$this->tpl['link_ipaddr_add'] = make_ref('node_editor/ipaddr', array('node' => get('node'), 'ipaddr' => 'add'));
+				$this->tpl['link_services_add'] = make_ref('/node_editor/services', array('node' => get('node'), 'service' => 'add'));
 
 			}
 			$this->tpl['link_map_pickup'] = make_ref('/pickup/map', array("object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));

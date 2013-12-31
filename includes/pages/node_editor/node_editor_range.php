@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class mynodes_range {
+class node_editor_range {
 
 	var $tpl;
 	
-	function mynodes_range() {
+	function __construct() {
 		
 	}
 	
@@ -89,7 +89,7 @@ class mynodes_range {
 		$ret = TRUE;
 		$ret = $form_getrange->db_set(array("node_id" => intval(get('node')), "ip_start" => $nextr['ip_start'], "ip_end" => $nextr['ip_end'], "status" => $status));
 		if ($ret) {
-			$main->message->set_fromlang('info', 'request_range_success', make_ref('/mynodes', array("node" => get('node'))));
+			$main->message->set_fromlang('info', 'request_range_success', make_ref('/node_editor', array("node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

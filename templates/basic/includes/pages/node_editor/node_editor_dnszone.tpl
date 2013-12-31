@@ -15,9 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include assign=help file=generic/help.tpl help="mynodes_subnet_`$subnet_method`"}
-{assign var=t value="subnet_`$subnet_method`"}
+{include assign=help file=generic/help.tpl help="node_editor_dnszone_`$dnszone_method`"}
+{assign var=t value="dnszone_`$dnszone_method`"}
 {include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_subnet}
-
-
+{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_zone}

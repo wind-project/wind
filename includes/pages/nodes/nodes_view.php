@@ -93,7 +93,7 @@ class nodes_view {
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = make_ref('/mynodes/dnszone', array("zone" => $table_dns->data[$i]['id']));
+				$table_dns->info['EDIT'][$i] = make_ref('/node_editor/dnszone', array("zone" => $table_dns->data[$i]['id']));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
@@ -120,7 +120,7 @@ class nodes_view {
 		$table_nameservers->db_data_multichoice('dns_nameservers', 'id');
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
-				$table_nameservers->info['EDIT'][$i] = make_ref('/mynodes/dnsnameserver', array("nameserver" => $table_nameservers->data[$i]['id']));
+				$table_nameservers->info['EDIT'][$i] = make_ref('/node_editor/dnsnameserver', array("nameserver" => $table_nameservers->data[$i]['id']));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
@@ -310,7 +310,7 @@ class nodes_view {
 		}
 		
 		$this->tpl['link_plot_link'] = make_ref('/nodes/plot_link', array("a_node" => $this->tpl['node']['id']));
-		if((isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE) || $db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) $this->tpl['edit_node'] = make_ref('/mynodes', array("node" => get('node')));
+		if((isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE) || $db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) $this->tpl['edit_node'] = make_ref('/node_editor', array("node" => get('node')));
 
 		include_map('map');
 		return template($this->tpl, __FILE__);

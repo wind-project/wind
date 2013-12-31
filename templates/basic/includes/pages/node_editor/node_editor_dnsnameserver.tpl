@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include assign=help file=generic/help.tpl help="mynodes_services_`$services_method`"}
-{assign var=t value="services_`$services_method`"}
+{include assign=help file=generic/help.tpl help="node_editor_dnsnameserver_`$nameserver_method`"}
+{assign var=t value="nameserver_`$nameserver_method`"}
 {include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_services}
+{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_nameserver}

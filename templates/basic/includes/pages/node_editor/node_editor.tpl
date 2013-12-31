@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {if $node_method == 'add'}
-	{include assign=help file=generic/help.tpl help=mynodes_add}
+	{include assign=help file=generic/help.tpl help=node_editor_add}
 	{assign var=t value="`$lang.node_add`"}
 	{else}
-	{include assign=help file=generic/help.tpl help=mynodes}
+	{include assign=help file=generic/help.tpl help=node_editor}
 	{assign var=t value="`$lang.node` $node_name (#$node_id)"|escape}
 	{include assign="view" file="generic/link.tpl" link=$link_node_view content="`$lang.node_view`"}
 	{if $link_node_delete}

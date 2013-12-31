@@ -66,7 +66,7 @@ class hostmaster_dnszone {
 		for($i=1;$i<count($table_node_info->data);$i++) {
 			if (isset($table_node_info->data[$i])) {
 				$table_node_info->data[$i]['nodes__name'] .= " (#".$table_node_info->data[$i]['id'].")";
-				$table_node_info->info['EDIT'][$i] = make_ref('/mynodes', array("node" => $table_node_info->data[$i]['id']));
+				$table_node_info->info['EDIT'][$i] = make_ref('/node_editor', array("node" => $table_node_info->data[$i]['id']));
 			}
 		}
 		$table_node_info->info['EDIT_COLUMN'] = 'nodes__name';
@@ -194,7 +194,7 @@ class hostmaster_dnszone {
 		$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
 		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
-		$this->tpl['link_dnszone_delete'] = makelink (array("action" => "delete"),TRUE);
+		$this->tpl['link_dnszone_delete'] = self_ref(array("action" => "delete"));
 		return template($this->tpl, __FILE__);
 	}
 

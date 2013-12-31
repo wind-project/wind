@@ -58,7 +58,7 @@ class admin_nodes_services {
 					}
 				}
 				$table_services->data[$key]['name'] .= " (#".$table_services->data[$key]['nodes__id'].")";
-				$table_services->info['EDIT'][$key] = make_ref('/mynodes/services', array("node" => $table_services->data[$key]['nodes__id'], "service" => $table_services->data[$key]['id']));
+				$table_services->info['EDIT'][$key] = make_ref('/node_editor/services', array("node" => $table_services->data[$key]['nodes__id'], "service" => $table_services->data[$key]['id']));
 			}
 		}
 		$table_services->info['EDIT_COLUMN'] = 'title';

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include assign=help file=generic/help.tpl help="mynodes_link_`$link_method`"}
-{assign var=t value="link_`$link_method`"}
+{include assign=help file=generic/help.tpl help="node_editor_ipaddr_`$ip_address_method`"}
+{assign var=t value="ip_address_`$ip_address_method`"}
 {include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_link}
+{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_ipaddr}

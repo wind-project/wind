@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include assign=help file=generic/help.tpl help="mynodes_dnszone_`$dnszone_method`"}
-{assign var=t value="dnszone_`$dnszone_method`"}
-{include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_zone}
+{include assign=help file=generic/help.tpl help=node_editor_range}
+{include file=generic/page-title.tpl title="`$lang.ip_range_request`" right="$help"}
+{include file=generic/section-level2.tpl title="`$lang.ip_range_request_for_node` $node_name (#$node_id)"|escape content=$form_getrange}

@@ -38,7 +38,7 @@ class center {
 			case 'hostmaster':
 				return ($main->userdata->privileges['hostmaster'] === TRUE);
 				break;
-			case 'mynodes':
+			case 'node_editor':
 				if ($main->userdata->logged === TRUE) {
 					if (get('node') == 'add') return TRUE;
 					if (get('node') != 'add' && get('action') == 'delete') {

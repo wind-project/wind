@@ -19,19 +19,19 @@
 
 {if $logged==TRUE}
 
-	<div class="mynodes toolbox gadget">
+	<div class="node_editor toolbox gadget">
 		<span class="title">			
 			<span class="text">{$lang.mynodes}</span>
 		</span>
 		
 		<ul class="menu nodes-list">
-		{section name=row loop=$mynodes}
+		{section name=row loop=$node_editor}
 		{if $smarty.section.row.index is not even}
 			<li>
 		{else}
 			<li>
 		{/if}
-				<a href="{$mynodes[row].url_view}">{$mynodes[row].name|escape} (#{$mynodes[row].id})</a>
+				<a href="{$node_editor[row].url_view}">{$node_editor[row].name|escape} (#{$node_editor[row].id})</a>
 			</li>
 		{/section}
 		<li class="add">

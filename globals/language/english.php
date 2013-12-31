@@ -577,68 +577,68 @@ $lang = array(
 			'body' => 'In this page you can search for network services by filling in the corresponding fields. The results are displayed in the follwing table. Furthermore, you cat choose a service or a node for viewing.'
 		),
 		
-		'mynodes_add' => array(
+		'node_editor_add' => array(
 			'title' => 'Add node',
 			'body' => 'In this page you can add a node. Be sure to submit accurate data.'
 		),
-		'mynodes' => array(
+		'node_editor' => array(
 			'title' => 'Nodes administration',
 			'body' => 'In this page you can fully administrate your node. Be sure to submit accurate data. There is a help section for each page.'
 		),
-		'mynodes_range' => array(
+		'node_editor_range' => array(
 			'title' => 'IP C-Class request',
 			'body' => 'Describe clearly the reason for your request in the field "Info".'
 		),
-		'mynodes_dnszone_request_reverse' => array(
+		'node_editor_dnszone_request_reverse' => array(
 			'title' => 'DNS zone request',
 			'body' => 'Describe clearly the reason for your request in the field "Info".'
 		),
-		'mynodes_dnszone_request_forward' => array(
+		'node_editor_dnszone_request_forward' => array(
 			'title' => 'DNS zone request',
 			'body' => 'Describe clearly the reason for your request in the field "Info".'
 		),
-		'mynodes_dnszone_edit' => array(
+		'node_editor_dnszone_edit' => array(
 			'title' => 'Edit DNS zone',
 			'body' => 'In this page you can add the nameservers (NS) that are responsible for the zone.'
 		),
-		'mynodes_dnsnameserver_add' => array(
+		'node_editor_dnsnameserver_add' => array(
 			'title' => 'Add nameserver (NS)',
 			'body' => 'Submit the name and the IP address of the nameserver.'
 		),
-		'mynodes_dnsnameserver_edit' => array(
+		'node_editor_dnsnameserver_edit' => array(
 			'title' => 'Edit Nameserver (NS)',
 			'body' => 'In this page you can edit the name of your nameserver (NS). You cannot change the IP address of the nameserver. Instead, you can request the deletion of the nameserver and request the addition of a new nameserver with the new IP address.'
 		),
-		'mynodes_link_add' => array(
+		'node_editor_link_add' => array(
 			'title' => 'Add link',
 			'body' => 'In this page you can add a link of your node with another node. Fill in clearly as many of the fields as possible.'
 		),
-		'mynodes_link_edit' => array(
+		'node_editor_link_edit' => array(
 			'title' => 'Edit link',
 			'body' => 'In this page you can edit a link of your node with another node. Fill in clearly as many of the fields as possible.'
 		),
-		'mynodes_subnet_add' => array(
+		'node_editor_subnet_add' => array(
 			'title' => 'Add subnet',
 			'body' => 'In this page you can add a subnet for your node. If the subnet is used in a link with another node, it must belong to any of the IP C-Classes that have been assigned to those two nodes and can be added only by the owner of the IP C-Class that the subnet belongs to. For your LAN, you may add subnets that do not belong to any of the IP C-Classes that have been assigned to your node.'
 		),
-		'mynodes_subnet_edit' => array(
+		'node_editor_subnet_edit' => array(
 			'title' => 'Edit subnet',
 			'body' => 'In this page you can edit a subnet of your node.'
 		),
-		'mynodes_ipaddr_add' => array(
+		'node_editor_ipaddr_add' => array(
 			'title' => 'Add IP address',
 			'body' => 'In this page you can add an IP address for your node. The field Hostname describes the device that the corresponding IP address belongs to and must be the same for all the IP addresses of that device.'
 		),
-		'mynodes_ipaddr_edit' => array(
+		'node_editor_ipaddr_edit' => array(
 			'title' => 'Edit IP address',
 			'body' => 'In this page you can add or edit an IP address for your node. The \'Hostname\' field describes the device that the corresponding IP address belongs to and must be the same for all the IP addresses of that device.'
 		),
 		
-		'mynodes_services_add' => array(
+		'node_editor_services_add' => array(
 			'title' => 'Add Service',
 			'body' => 'In this page you can add a service of your node. The IP Address field should contain the IP address that the service is listening at. The URL field should contain a link to the service or a link to a page about the service. The Protocol and Port should contain the protocol (ie. tcp,udp) and the port that the service uses.'
 		),
-		'mynodes_services_edit' => array(
+		'node_editor_services_edit' => array(
 			'title' => 'Edit Service',
 			'body' => 'In this page you can edit a service of your node. The IP Address field contains all the IP addresses that you have commit and should contain the IP address that the service is listening at. The URL field should contain a link to the service or a link to a page about the service. The Protocol and Port should contain the protocol (ie. tcp,udp) and the port that the service uses.'
 		),

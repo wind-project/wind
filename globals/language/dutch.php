@@ -575,69 +575,69 @@ $lang = array(
 			'body' => 'Op deze pagina kunt u zoeken naar netwerkdiensten door het invullen van de betreffende velden. De resultaten worden weergegeven in de navolgende tabel. Bovendien kunt u kiezen voor een dienst of een node voor het bekijken hiervan..'
 		),
 		
-		'mynodes_add' => array(
+		'node_editor_add' => array(
 			'title' => 'Node toevoeren',
 			'body' => 'Op deze pagina kunt u een node toevoegen. Zorg er voor dat de juiste informatie wordt ingevoerd.'
 		),
-		'mynodes' => array(
+		'node_editor' => array(
 			'title' => 'Node beheer',
 			'body' => 'Op deze pagina kunt u volledig beheer doen over uw node. Zorg ervoor dat u nauwkeurige gegevens invult. Er is een Help-gedeelte voor elke pagina.'
 		),
-		'mynodes_range' => array(
+		'node_editor_range' => array(
 			'title' => 'Aanvraag IP C-Class',
 			'body' => 'Omschrijf duidelijk de reden van uw aanvraag in het veld "Informatie".'
 		),
-		'mynodes_dnszone_request_reverse' => array(
+		'node_editor_dnszone_request_reverse' => array(
 			'title' => 'Aanvraag DNS zone',
 			'body' => 'Omschrijf duidelijk de reden van uw aanvraag in het veld "Informatie".'
 		),
-		'mynodes_dnszone_request_forward' => array(
+		'node_editor_dnszone_request_forward' => array(
 			'title' => 'Aanvraag DNS zone',
 			'body' => 'Omschrijf duidelijk de reden van uw aanvraag in het veld "Informatie".'
 		),
-		'mynodes_dnszone_edit' => array(
+		'node_editor_dnszone_edit' => array(
 			'title' => 'Wijzigen DNS zone',
 			'body' => 'Op deze pagina kunt u de nameservers (NS) toevoegen die verantwoordelijk zijn voor de zone'
 		),
-		'mynodes_dnsnameserver_add' => array(
+		'node_editor_dnsnameserver_add' => array(
 			'title' => 'Toevoegen nameserver (NS)',
 			'body' => 'Voer de naam en het IP adres in van de nameserver.'
 		),
-		'mynodes_dnsnameserver_edit' => array(
+		'node_editor_dnsnameserver_edit' => array(
 			'title' => 'Wijzigen Nameserver (NS)',
 			'body' => 'Op deze pagina kunt u de naam van uw nameserver (NS wijzigen). Je kan niet het IP-adres van de nameserver wijzigen. In plaats daarvan, kunt u verzoeken sturen om de nameserver en het vragen voor het toevoeging van een nieuwe nameserver met het nieuwe IP-adres.'
 		),
-		'mynodes_link_add' => array(
+		'node_editor_link_add' => array(
 			'title' => 'Toevoegen verbinding',
 			'body' => 'Op deze pagina kunt u een link van je node met een ander node toevoegen. Vul duidelijk en nauwkeurig zoveel mogelijk velden in.'
 		),
-		'mynodes_link_edit' => array(
+		'node_editor_link_edit' => array(
 			'title' => 'Wijzigen verbinding',
 			'body' => 'Op deze pagina kunt u een link van je node met een ander node wijzigen. Vul duidelijk en nauwkeurig zoveel mogelijk velden in.'
 		),
-		'mynodes_subnet_add' => array(
+		'node_editor_subnet_add' => array(
 			'title' => 'Toevoegen subnet',
 			'body' => 'Op deze pagina kunt u een subnet voor uw node toevoegen. Als het subnet wordt gebruikt in een verbinding met een andere node, moet bij een van de C-IP Classes die zijn toegewezen aan een van de twee nodes en kan worden toegevoegd door de eigenaar van de IP C-Klasse de bij het subnet behoort. Voor uw netwerk, kunt u zoveel subnetten toevoegen als u wenst die niet behoren tot een van de IP-C-Klassen die zijn toegewezen aan uw node.'
 		),
-		'mynodes_subnet_edit' => array(
+		'node_editor_subnet_edit' => array(
 			'title' => 'Wijzigingen subnet',
 			'body' => 'Op deze pagina kunt een een subnet wijzigen van uw node.'
 		),
-		'mynodes_ipaddr_add' => array(
+		'node_editor_ipaddr_add' => array(
 			'title' => 'Toevoegen IP adres',
 			'body' => 'Op deze pagina kunt u een IP-adres voor uw node toevoegen. Het veld Hostnaam beschrijft het apparaat dat bij het betreffende IP-adres behoort en moet hetzelfde zijn voor alle IP-adressen van dat apparaat'
 
 		),
-		'mynodes_ipaddr_edit' => array(
+		'node_editor_ipaddr_edit' => array(
 			'title' => 'Wijzigen IP adres',
 			'body' => 'In deze pagina kunt u toevoegen of een IP-adres bewerken voor uw node. Het \'Hostname\' veld beschrijft het apparaat dat bij het betreffende IP-adres behoort en moet hetzelfde zijn voor alle IP-adressen van dat apparaat'
 		),
 		
-		'mynodes_services_add' => array(
+		'node_editor_services_add' => array(
 			'title' => 'Toevoegen dienst',
 			'body' => 'Op deze pagina kunt u een dienst van uw node toevoegen. Het veld IP-adres dient een IP-adres te bevatten waar de dienst naar luistert. Het URL-veld moet een link bevatten naar de dienst of een link naar een pagina over de dienst. Het protocol en de poort veld moeten het protocol bevatten (dwz TCP, UDP) en het poort-nummer waar de dienst gebruik van maakt'
 		),
-		'mynodes_services_edit' => array(
+		'node_editor_services_edit' => array(
 			'title' => 'Wijzigen diensten ',
 			'body' => 'Op deze pagina kunt u een dienst van uw node wijzigen. Het veld IP-adres dient een IP-adres te bevatten waar de dienst naar luistert. Het URL-veld moet een link bevatten naar de dienst of een link naar een pagina over de dienst. Het protocol en de poort veld moeten het protocol bevatten (dwz TCP, UDP) en het poort-nummer waar de dienst gebruik van maakt'
 		),

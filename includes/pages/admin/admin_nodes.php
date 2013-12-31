@@ -52,7 +52,7 @@ class admin_nodes {
 		for($i=1;$i<count($table_nodes->data);$i++) {
 			if (isset($table_nodes->data[$i])) {
 				$table_nodes->data[$i]['nodes__name'] .= " (#".$table_nodes->data[$i]['id'].")";
-				$table_nodes->info['EDIT'][$i] = make_ref('/mynodes', array("node" => $table_nodes->data[$i]['id']));
+				$table_nodes->info['EDIT'][$i] = make_ref('/node_editor', array("node" => $table_nodes->data[$i]['id']));
 			}
 		}
 		$table_nodes->info['EDIT_COLUMN'] = 'nodes__name';

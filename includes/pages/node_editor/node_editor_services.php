@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class mynodes_services {
+class node_editor_services {
 
 	var $tpl;
 	
-	function mynodes_services() {
+	function __construct() {
 		
 	}
 	
@@ -75,7 +75,7 @@ class mynodes_services {
 								"nodes_services", "id", $service);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', 'insert_success', make_ref('/mynodes', array("node" => $_POST['nodes_services__node_id'])));
+			$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => $_POST['nodes_services__node_id'])));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

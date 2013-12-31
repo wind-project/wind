@@ -17,44 +17,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class mynodes_dnsnameserver {
+class node_editor_ipaddr {
 
 	var $tpl;
 	
-	function mynodes_dnsnameserver() {
+	function __construct() {
 		
 	}
 	
-	function form_nameserver() {
+	function form_ipaddr() {
 		global $db, $vars;
-		$form_nameserver = new form(array('FORM_NAME' => 'form_nameserver'));
-		$form_nameserver->db_data('dns_nameservers.name'.(get('nameserver') == 'add'?", dns_nameservers.ip":""));
-		$form_nameserver->db_data_values("dns_nameservers", "id", get('nameserver'));
-		return $form_nameserver;
+		$form_ipaddr = new form(array('FORM_NAME' => 'form_ipaddr'));
+		$form_ipaddr->db_data('ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type, ip_addresses.always_on, ip_addresses.info');
+		$form_ipaddr->db_data_values("ip_addresses", "id", get('ipaddr'));
+		if (get('ipaddr') != 'add') {
+			$form_ipaddr->data[1]['value'] = long2ip($form_ipaddr->data[1]['value']);
+		}
+		return $form_ipaddr;
 	}
 	
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
-		$this->tpl['nameserver_method'] = (get('nameserver') == 'add' ? 'add' : 'edit' );
-		$this->tpl['form_nameserver'] = $construct->form($this->form_nameserver(), __FILE__);
+		$this->tpl['ip_address_method'] = (get('ipaddr') == 'add' ? 'add' : 'edit' );
+		$this->tpl['form_ipaddr'] = $construct->form($this->form_ipaddr(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 
-	function output_onpost_form_nameserver() {
+	function output_onpost_form_ipaddr() {
 		global $construct, $main, $db;
-		$form_nameserver = $this->form_nameserver();
-		$nameserver = get('nameserver');
-		if (get('nameserver') == 'add') {
-			$_POST['dns_nameservers__ip'] = ip2long($_POST['dns_nameservers__ip']);
-		}
-		$f['node_id'] = intval(get('node'));
+		$form_ipaddr = $this->form_ipaddr();
+		$ipaddr = get('ipaddr');
 		$ret = TRUE;
-		$ret = $form_nameserver->db_set($f,
-								"dns_nameservers", "id", $nameserver);
+		$_POST['ip_addresses__ip'] = ip2long($_POST['ip_addresses__ip']);
+		$ret = $form_ipaddr->db_set(array('node_id' => intval(get('node'))),
+								"ip_addresses", "id", $ipaddr);
 		
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnsnameserver_success':'edit_success'), make_ref("/mynodes", array("node" => intval(get('node')))));
+			$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

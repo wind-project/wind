@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class mynodes_dnszone {
+class node_editor_dnszone {
 
 	var $tpl;
 	
-	function mynodes_dnszone() {
+	function __construct() {
 		
 	}
 	
@@ -117,7 +117,7 @@ class mynodes_dnszone {
 		$ret = $ret && $form_zone->db_set_multi(array(), "dns_zones_nameservers", "zone_id", $ins_id);
 
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnszone_success':'edit_success'), make_ref('/mynodes', array("node" => intval(get('node')))));
+			$main->message->set_fromlang('info', (get('zone') == 'add'?'request_dnszone_success':'edit_success'), make_ref('/node_editor', array("node" => intval(get('node')))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

@@ -142,13 +142,13 @@ class menu {
 		$this->tpl['logged'] = $main->userdata->logged;
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
-			$this->tpl['mynodes'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");
+			$this->tpl['node_editor'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");
 			
-			foreach( (array) $this->tpl['mynodes'] as $key => $value) {
-				$this->tpl['mynodes'][$key]['url_view'] = make_ref('/nodes', array("node" => $this->tpl['mynodes'][$key]['id']));
+			foreach( (array) $this->tpl['node_editor'] as $key => $value) {
+				$this->tpl['node_editor'][$key]['url_view'] = make_ref('/nodes', array("node" => $this->tpl['node_editor'][$key]['id']));
 			}
 			
-			$this->tpl['link_addnode'] = make_ref('/mynodes', array("node" => "add"));
+			$this->tpl['link_addnode'] = make_ref('/node_editor', array("node" => "add"));
 			$this->tpl['link_edit_profile'] = make_ref('/users', array("user" => $main->userdata->user));
 			if ($main->userdata->privileges['admin'] === TRUE) {
 				$this->tpl['is_admin'] = TRUE;
