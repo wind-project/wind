@@ -75,7 +75,7 @@
 			{if $extra_data.LINK.$fullkey[row] != ''}
 			</a>
 			{/if}
-		</td>
+		</{$cellType}>
 		{/if}
 	{/foreach}
 	{if $extra_data.MULTICHOICE[row] != ''}
