@@ -19,11 +19,24 @@
 
 class form {
 	
-	var $info=array();
-	var $data=array();
+	public $info=array();
 	
-	function form($info="") {
-		if (is_array($info)) $this->info = $info;
+	public $data=array();
+	
+	public $buttons = array();
+	
+	function __construct($info = null) {
+		if (is_array($info))
+			$this->info = $info;
+	}
+	
+	function add_button($title, $href, $classes = array()) {
+		$this->buttons[] = array('title' => $title, 'href' => $href, 'classes' => implode(' ', $classes));
+	}
+	
+	function add_cancel_button($href) {
+		global $lang;
+		$this->add_button($lang['cancel'], $href, array('cancel'));
 	}
 	
 	function db_data($db_info) {

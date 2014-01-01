@@ -74,7 +74,7 @@ class admin_areas {
 			$ret = $ret && $db->del("areas", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', make_ref("/"));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

@@ -19,7 +19,7 @@
 <form name="{$extra_data.FORM_NAME}" method="post" action={$action_url}>
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 {/if}
-<table class="table-data" width="100%"  border="0" cellspacing="0" cellpadding="2">
+<table class="table-data">
 {section name=row loop=$data}
 
 	{if $smarty.section.row.index == 0 }

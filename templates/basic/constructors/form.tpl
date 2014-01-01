@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
  
-<form name="{$extra_data.FORM_NAME}" method="post" action="{$hidden_qs}">
+<form name="{$extra_data.FORM_NAME}" method="post" action="{$action_url}">
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 <table class="table-form">
 {section loop=$data name=d}
@@ -112,7 +112,10 @@
 	</tr>
 {/section}
 <tr><td class="table-form-submit" colspan="2">
-<button type="submit">{$lang.submit}</button>
+<button class="submit" type="submit">{$lang.submit}</button>
+{foreach from=$buttons item=button}
+	<button type="button" class="{$button.classes}" onclick="javascript: window.location='{$button.href}';">{$button.title}</button>
+{/foreach}
 </td></tr>
 </table>
 </form>

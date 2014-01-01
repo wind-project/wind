@@ -32,7 +32,8 @@ class construct {
 		}
 		return template(array("data" => $form->data,
 				"extra_data" => $form->info,
-				"action_url" => '.?'.get_query_string()),
+				'buttons' => $form->buttons,
+				"action_url" => self_ref()),
 				$template);
 	}
 	

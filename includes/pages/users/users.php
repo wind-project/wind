@@ -68,13 +68,12 @@ class users {
 
 	function output() {
 		global $main, $construct, $db;
-		if(get('action') === "delete" && $main->userdata->privileges['admin'] === TRUE)
-		{
+		if(get('action') === "delete" && $main->userdata->privileges['admin'] === true) {
 			$ret = $db->del("users", '', "id = '".get('user')."'");
 			if ($ret) {
 				$main->message->set_fromlang('info', 'delete_success', make_ref('/admin/users'));
 			} else {
-				$main->message->set_fromlang('error', 'generic');		
+				$main->message->set_fromlang('error', 'generic');
 			}
 			return ;
 		} else if (get('action') == 'activate') {
@@ -99,10 +98,11 @@ class users {
 			$sp = new loginform();
 			return $sp->output();
 		}
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		if (get('user') != '') {
 			$this->tpl['user_method'] = (get('user') == 'add' ? 'add' : 'edit');
-			if(get('user') != 'add' && $main->userdata->privileges['admin'] === TRUE)
+			if(get('user') != 'add' && $main->userdata->privileges['admin'] === true)
 				$this->tpl['link_user_delete'] = self_ref(array("action" => "delete"));
 			$this->tpl['form_user'] = $construct->form($this->form_user(), __FILE__);
 		}

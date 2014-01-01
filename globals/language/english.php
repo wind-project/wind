@@ -130,6 +130,7 @@ $lang = array(
 	'ip_ranges_search' => "Search for IP C-Classes",
 	'change' => "Change",
 	'submit' => "OK",
+	'cancel' => 'Cancel',
 	'add' => "Add",
 	'remove' => "Remove",
 	'update' => "Update",

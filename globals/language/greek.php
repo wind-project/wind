@@ -131,6 +131,7 @@ $lang = array(
 	'ip_ranges_search' => "Αναζήτηση IP C-Classes",
 	'change' => "Αλλαγή",
 	'submit' => "OK",
+	'cancel' => 'Άκυρο',
 	'add' => "Προσθήκη",
 	'remove' => "Αφαίρεση",
 	'update' => "Ανανέωση",
