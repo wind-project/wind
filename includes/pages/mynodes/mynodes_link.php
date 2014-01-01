@@ -77,19 +77,19 @@ class mynodes_link {
 				$f['peer_ap_id'] = '';
 				break;
 		}
-                $Day = $_POST["CONDATETIME__Day"];
-                $Month = $_POST["CONDATETIME__Month"];
-                $Year = $_POST["CONDATETIME__Year"];
-                $Hour = $_POST["CONDATETIME__Hour"];
-                $Minute = $_POST["CONDATETIME__Minute"];
-                $Second = $_POST["CONDATETIME__Second"];
+                $Day = $_POST["CONDATETIME_links__due_date_Day"];
+                $Month = $_POST["CONDATETIME_links__due_date_Month"];
+                $Year = $_POST["CONDATETIME_links__due_date_Year"];
+                $Hour = $_POST["CONDATETIME_links__due_date_Hour"];
+                $Minute = $_POST["CONDATETIME_links__due_date_Minute"];
+                $Second = $_POST["CONDATETIME_links__due_date_Second"];
 
-                unset($_POST["CONDATETIME__Day"]);
-                unset($_POST["CONDATETIME__Month"]);
-                unset($_POST["CONDATETIME__Year"]);
-                unset($_POST["CONDATETIME__Hour"]);
-                unset($_POST["CONDATETIME__Minute"]);
-                unset($_POST["CONDATETIME__Second"]);
+                unset($_POST["CONDATETIME_links__due_date_Day"]);
+                unset($_POST["CONDATETIME_links__due_date_Month"]);
+                unset($_POST["CONDATETIME_links__due_date_Year"]);
+                unset($_POST["CONDATETIME_links__due_date_Hour"]);
+                unset($_POST["CONDATETIME_links__due_date_Minute"]);
+                unset($_POST["CONDATETIME_links__due_date_Second"]);
                                                                 
                 $f['due_date'] = "$Year-$Month-$Day $Hour:$Minute:$Second";
 		$ret = $form_link->db_set($f,
