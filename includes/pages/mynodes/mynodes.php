@@ -43,10 +43,10 @@ class mynodes {
 	function form_node() {
 		global $db, $main;
 		$form_node = new form(array('FORM_NAME' => 'form_node'));
-		$form_node->db_data('nodes.name, nodes.area_id, nodes.latitude, nodes.longitude, nodes.elevation, nodes.info'.($this->has_owner_access() || get('node') == 'add'?', users_nodes.user_id, users_nodes.user_id':''));
+		$form_node->db_data('nodes.name, nodes.area_id, nodes.latitude, nodes.longitude, nodes.elevation, nodes.status, nodes.due_date, nodes.info'.($this->has_owner_access() || get('node') == 'add'?', users_nodes.user_id, users_nodes.user_id':''));
 		if ($this->has_owner_access() || get('node') == 'add') {
-			$form_node->data[6]['Field'] = 'user_id_owner';
-			$form_node->data[6]['fullField'] = 'user_id_owner';
+			$form_node->data[8]['Field'] = 'user_id_owner';
+			$form_node->data[8]['fullField'] = 'user_id_owner';
 			if (get('node') == 'add') {
 				$temp = $db->get("users.id AS value, users.username AS output", "users", "users.id = '".$main->userdata->user."'");
 			} else {
@@ -54,7 +54,7 @@ class mynodes {
 			}
 			$form_node->db_data_pickup("user_id_owner", "users", $temp);
 			$form_node->db_data_pickup("users_nodes.user_id", "users", $db->get("users.id AS value, users.username AS output", "users_nodes, users", "users.id = users_nodes.user_id AND users_nodes.node_id = ".intval(get('node'))." AND users_nodes.owner != 'Y'"), TRUE);
-			$form_node->data[7]['Null'] = 'YES';
+			$form_node->data[9]['Null'] = 'YES';
 		}
 		
 		if ($main->userdata->privileges['admin'] === TRUE)

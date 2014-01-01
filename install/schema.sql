@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
 CREATE TABLE IF NOT EXISTS `links` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
+  `due_date` datetime DEFAULT '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
   `peer_node_id` int(10) unsigned default NULL,
   `peer_ap_id` int(10) unsigned default NULL,

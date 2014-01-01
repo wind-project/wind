@@ -303,7 +303,7 @@ class nodes_view {
 			return;
 		}
 		$this->tpl['node'] = $db->get(
-			'nodes.id, nodes.name, nodes.date_in, nodes.latitude, nodes.longitude, nodes.elevation, nodes.info, areas.name as area_name, regions.name as region_name, users.username AS owner_username, users.email AS owner_email',
+			'nodes.id, nodes.name, nodes.date_in, nodes.latitude, nodes.longitude, nodes.elevation, nodes.info, nodes.status, areas.name as area_name, regions.name as region_name, users.username AS owner_username, users.email AS owner_email',
 			'nodes
 			LEFT JOIN areas ON nodes.area_id = areas.id
 			LEFT JOIN regions ON areas.region_id = regions.id
