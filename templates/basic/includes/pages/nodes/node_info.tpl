@@ -41,6 +41,10 @@
 <td class="table-node-value">{$node.status|escape}</td>
 </tr>
 <tr>
+<td class="table-node-key">{$lang.db.nodes__due_date}</td>
+<td class="table-node-value">{$node.due_date|escape}</td>
+</tr>
+<tr>
 <td class="table-node-key">{$lang.db.user_id_owner}</td>
 <td class="table-node-value">{$node.owner_username|escape} {include file="generic/link.tpl" onclick="javascript: t = window.open('$link_contact', 'contact', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;" content=$lang.contact}</td>
 </tr>
