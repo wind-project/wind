@@ -303,6 +303,7 @@ $lang = array(
 		'dns_nameservers__status-invalid' => 'Άκυρο',
 
 		'links__date_in' => 'Δημιουργήθηκε',
+                'links__due_date' => 'Εκτιμώμενη ημ/νια Εγκατάστασης',
 		'links__peer_node_id' => 'Κόμβος διασύνδεσης',
 		'links__peer_ap_id' => 'Access point',
 		'links__type' => 'Τύπος διασύνδεσης',

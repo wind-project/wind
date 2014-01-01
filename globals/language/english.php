@@ -302,6 +302,7 @@ $lang = array(
 		'dns_nameservers__status-invalid' => 'Invalid',
 
 		'links__date_in' => 'Created',
+                'links__due_date' => 'Due Date',
 		'links__peer_node_id' => 'Peer node',
 		'links__peer_ap_id' => 'Access point',
 		'links__type' => 'Link type',
