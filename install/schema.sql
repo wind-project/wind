@@ -140,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `ssid` varchar(50) default NULL,
   `protocol` enum('IEEE 802.11b','IEEE 802.11g','IEEE 802.11a','IEEE 802.11n','IEEE 802.3i (Ethernet)','IEEE 802.3u (Fast Ethernet)','IEEE 802.3ab (Gigabit Ethernet)','other') default NULL,
   `channel` varchar(50) default NULL,
+  `frequency` enum('2412','2417','2422','2427','2432','2437','2442','2447','2452','2457','2462','2467','2472','2484','4915','4920','4925','4935','4940','4945','4960','4980','5035','5040','5045','5055','5060','5080','5170','5180','5190','5200','5210','5220','5230','5240','5260','5280','5300','5320','5500','5520','5540','5560','5580','5600','5620','5640','5660','5680','5700','5745','5765','5785','5805','5825') NOT NULL default '5500',
   `status` enum('active','inactive','pending') NOT NULL default 'active',
   `equipment` text,
   `info` text,

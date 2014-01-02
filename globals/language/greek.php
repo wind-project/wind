@@ -314,6 +314,7 @@ $lang = array(
 		'links__protocol' => 'Πρωτόκολλο',
 		'links__protocol-other' => 'Άλλο',
 		'links__channel' => 'Κανάλι επικοινωνίας',
+                'links__frequency' => 'Συχνότητα (Mhz)',
 		'links__status' => 'Κατάσταση',
 		'links__status-active' => 'Ενεργό',
 		'links__status-inactive' => 'Ανενεργό',

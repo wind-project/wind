@@ -313,6 +313,7 @@ $lang = array(
 		'links__protocol' => 'Protocol',
 		'links__protocol-other' => 'Other',
 		'links__channel' => 'Channel',
+                'links__frequency' => 'Frequency (Mhz)',
 		'links__status' => 'Status',
 		'links__status-active' => 'Active',
 		'links__status-inactive' => 'Inactive',

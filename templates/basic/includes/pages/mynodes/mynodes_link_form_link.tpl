@@ -133,18 +133,28 @@ function type_changed() {
 		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.4.fullField]}{if $data[4].Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data[4].fullField}" type="text" value="{$data[4].value|escape}" /></td></tr>
 		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.5.fullField]}{if $data[5].Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data[5].fullField}" type="text" value="{$data[5].value|escape}" /></td></tr>
 
-		<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.6.fullField]}{if $data[6].Null != 'YES'}*{/if}:</td>
+                         <tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.6.fullField]}{if $data[6].Null != 'YES'}*{/if}:</td>
+                <td class="table-form-field">
+                        <select class="fld-form-input" name="{$data[6].fullField}">
+                                {if $data[6].Null == 'YES'}<option value=""></option>{/if}
+                                {section loop=$data[6].Type_Enums name=e}
+                                <option value="{$data[6].Type_Enums[e].value|escape}"{if $data[6].Type_Enums[e].value == $data[6].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.6.fullField value=$data[6].Type_Enums[e].output}</option>
+                                {/section}
+                        </select>
+                </td></tr>
+
+		<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.7.fullField]}{if $data[7].Null != 'YES'}*{/if}:</td>
 		<td class="table-form-field">
-			<select class="fld-form-input" name="{$data[6].fullField}">
-				{if $data[6].Null == 'YES'}<option value=""></option>{/if}
-				{section loop=$data[6].Type_Enums name=e}
-				<option value="{$data[6].Type_Enums[e].value|escape}"{if $data[6].Type_Enums[e].value == $data[6].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.6.fullField value=$data[6].Type_Enums[e].output}</option>
+			<select class="fld-form-input" name="{$data[7].fullField}">
+				{if $data[7].Null == 'YES'}<option value=""></option>{/if}
+				{section loop=$data[7].Type_Enums name=e}
+				<option value="{$data[7].Type_Enums[e].value|escape}"{if $data[7].Type_Enums[e].value == $data[7].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.7.fullField value=$data[7].Type_Enums[e].output}</option>
 				{/section}
 			</select>
 		</td></tr>
-                <tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.7.fullField]}{if $data[7].Null != 'YES'}*{/if}:</td><td class="table-form-field">{html_select_date time="`$data[7].value`" prefix=CONDATETIME_`$data[7].fullField`_"} - {html_select_time time="`$data[7].value`" prefix="CONDATETIME_`$data[7].fullField`_"}</td></tr>
-		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.8.fullField]}{if $data[8].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[8].fullField}">{$data[8].value|escape}</textarea></td></tr>
-		<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.9.fullField]}{if $data[9].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[9].fullField}">{$data[9].value|escape}</textarea></td></tr>
+                <tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.8.fullField]}{if $data[8].Null != 'YES'}*{/if}:</td><td class="table-form-field">{html_select_date time="`$data[8].value`" prefix=CONDATETIME_`$data[8].fullField`_"} - {html_select_time time="`$data[8].value`" prefix="CONDATETIME_`$data[8].fullField`_"}</td></tr>
+		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.9.fullField]}{if $data[9].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[9].fullField}">{$data[9].value|escape}</textarea></td></tr>
+		<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.10.fullField]}{if $data[10].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[10].fullField}">{$data[10].value|escape}</textarea></td></tr>
 
 <tr><td class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td></tr>
 </table>

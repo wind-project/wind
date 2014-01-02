@@ -28,7 +28,7 @@ class mynodes_link {
 	function form_link() {
 		global $db, $vars;
 		$form_link = new form(array('FORM_NAME' => 'form_link'));
-		$form_link->db_data('links.type, links.peer_node_id, links.peer_ap_id, links.protocol, links.ssid, links.channel, links.status, links.due_date, links.equipment, links.info');
+		$form_link->db_data('links.type, links.peer_node_id, links.peer_ap_id, links.protocol, links.ssid, links.channel, links.frequency, links.status, links.due_date, links.equipment, links.info');
 		$form_link->db_data_values("links", "id", get('link'));
 		
 		$form_link->db_data_pickup('links.peer_node_id', "nodes", $db->get("links.peer_node_id AS value, CONCAT(nodes.name, ' (#', nodes.id, ')') AS output", "links, nodes", "links.peer_node_id = nodes.id AND links.id = '".get("link")."'"));
@@ -92,8 +92,7 @@ class mynodes_link {
                 unset($_POST["CONDATETIME_links__due_date_Second"]);
                                                                 
                 $f['due_date'] = "$Year-$Month-$Day $Hour:$Minute:$Second";
-		$ret = $form_link->db_set($f,
-								"links", "id", $link);
+		$ret = $form_link->db_set($f, "links", "id", $link);
 		
 		if ($ret) {
 			$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "mynodes", "node" => get('node'))));

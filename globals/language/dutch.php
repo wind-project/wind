@@ -312,6 +312,7 @@ $lang = array(
 		'links__protocol' => 'Protocol',
 		'links__protocol-other' => 'Anders',
 		'links__channel' => 'Kanaal',
+                'links__frequency' => 'Frequency (Mhz)',
 		'links__status' => 'Status',
 		'links__status-active' => 'Actief',
 		'links__status-inactive' => 'Niet actief',
