@@ -155,7 +155,7 @@ class nodes_view {
 		global $db;
 		$table_links = new table(array('TABLE_NAME' => 'table_links_p2p'));
 		$table_links->db_data(
-			'"" AS distance, n1.name AS node_name, n1.id AS node_id, n2.name AS peer_node_name, l1.type AS links__type, l1.info AS links__info, l1.peer_node_id AS links__peer_node_id, l1.date_in AS links__date_in, l1.ssid AS links__ssid, l1.protocol AS links__protocol, l1.channel AS links__channel, l1.equipment AS links__equipment, l1.status AS l1_status, l2.status AS l2_status, "" AS links__status',
+			'"" AS distance, n1.name AS node_name, n1.id AS node_id, n2.name AS peer_node_name, l1.type AS links__type, l1.info AS links__info, l1.peer_node_id AS links__peer_node_id, l1.date_in AS links__date_in, l1.due_date AS links__due_date, l1.ssid AS links__ssid, l1.protocol AS links__protocol, l1.channel AS links__channel, l1.equipment AS links__equipment, l1.status AS l1_status, l2.status AS l2_status, "" AS links__status',
 			'links AS l1
 			INNER JOIN links AS l2 ON l1.peer_node_id = l2.node_id
 			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
@@ -164,7 +164,7 @@ class nodes_view {
 			"",
 			"l1.date_in ASC");
 		$table_links->db_data(
-			'"" AS distance, n1.name AS node_name, n1.id AS node_id, n2.name AS peer_node_name, l1.type AS links__type, l1.info AS links__info, l2.node_id AS links__peer_node_id, l1.date_in AS links__date_in, l2.ssid AS links__ssid, l2.protocol AS links__protocol, l2.channel AS links__channel, l1.equipment AS links__equipment, l1.status AS l1_status, l2.status AS l2_status, "" AS links__status',
+			'"" AS distance, n1.name AS node_name, n1.id AS node_id, n2.name AS peer_node_name, l1.type AS links__type, l1.info AS links__info, l2.node_id AS links__peer_node_id, l1.date_in AS links__date_in, l1.due_date AS links__due_date, l2.ssid AS links__ssid, l2.protocol AS links__protocol, l2.channel AS links__channel, l1.equipment AS links__equipment, l1.status AS l1_status, l2.status AS l2_status, "" AS links__status',
 			'links AS l1
 			INNER JOIN links AS l2 ON l1.peer_ap_id = l2.id
 			INNER JOIN nodes AS n1 ON l1.node_id = n1.id
