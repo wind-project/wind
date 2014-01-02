@@ -42,6 +42,10 @@
 	<td class="table-node-value2">{$data.1.links__date_in|date_format:"%x"}</td>
 </tr>
 <tr>
+        <td class="table-node-key2">{$lang.db.links__due_date}</td>
+        <td class="table-node-value2">{$data[rowl].links__due_date|date_format:"%x"}</td>
+</tr>
+<tr>
 	<td class="table-node-key2">{$lang.db.links__protocol}</td>
 	<td class="table-node-value2">{$data.1.links__protocol|escape}</td>
 </tr>
@@ -52,6 +56,10 @@
 <tr>
 	<td class="table-node-key2">{$lang.db.links__channel}</td>
 	<td class="table-node-value2">{$data.1.links__channel|escape}</td>
+</tr>
+<tr>
+        <td class="table-node-key2">{$lang.db.links__frequency}</td>
+        <td class="table-node-value2">{$data[rowl].links__frequency|escape}</td>
 </tr>
 <tr>
 	<td class="table-node-key2">{$lang.db.links__equipment}</td>

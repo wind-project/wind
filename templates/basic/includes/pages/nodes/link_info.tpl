@@ -58,6 +58,10 @@
 	<td class="table-node-value2">{$data[rowl].links__channel|escape}</td>
 </tr>
 <tr>
+        <td class="table-node-key2">{$lang.db.links__frequency}</td>
+        <td class="table-node-value2">{$data[rowl].links__frequency|escape}</td>
+</tr>
+<tr>
 	<td class="table-node-key2">{$lang.db.links__equipment}</td>
 	<td class="table-node-value2">{$data[rowl].links__equipment|escape|nl2br}</td>
 </tr>
