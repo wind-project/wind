@@ -37,10 +37,10 @@ NetworkMap = function(el_id, options) {
 	};							// Default filter
 	
 	this._filter = $.extend({}, this._default_filter);
-	this._node_popup = null	// The current Node popup
-	this._olControls = {};	// All used OL controls
-	this._olLayers = {};	// All used OL layers
-	this._controls = [];	// All active NetworkMap controls
+	this._node_popup = null;	// The current Node popup
+	this._olControls = {};		// All used OL controls
+	this._olLayers = {};		// All used OL layers
+	this._controls = [];		// All active NetworkMap controls
 	
 	// Process options
 	this._default_options = {
@@ -119,12 +119,12 @@ NetworkMap.prototype._constructMap = function() {
 						popup_body.html(),
 						false
 				);
-
 				popup.autoSize = true;
 				popup.panMapIfOutOfView = true;
 				networkMapObject._node_popup = popup;
 				networkMapObject._olMap.addPopup(popup);
-
+				networkMapObject._popupInjectJS(popup.contentDiv);
+				
 			},
 			onUnselect : function(feature) {
 				if (networkMapObject._node_popup)
@@ -177,7 +177,7 @@ NetworkMap.prototype._constructMap = function() {
 };
 
 /**
- * @brief Construct and return DOM Element for a node popup
+ * @brief Construct and return HTML for a node popup
  */
 NetworkMap.prototype._constructNodePopup = function(feature) {
 	
@@ -193,20 +193,12 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 	popup_body.find('.id').text('#'+String(feature.attributes['id']));
 	popup_body.find('a.node-info').text(lang['node_info']).attr('href', feature.attributes['url']);
 	
-	$('body').delegate('.olPopupContent .extra-ref', 'click', function(e){
-		e.preventDefault();
-		console.log('clicked');
-	});
-	
 	// Add extra references
 	$.each(feature.attributes['extra_refs'], function(index, ref) {
 		var ref_anchor = $('<a class="link extra-ref" />').text(ref['title']).attr('href', ref['href']);
 		
 		if (ref['popup']) {
-			var js_href = "javascript: $('<div class=\"map-node-action-popup\"/>').append($('<iframe/>').attr('src', '" + ref['href'] + "'))"
-			 + ".dialog({modal:true, width: 'auto', height: 'auto',}); return false;";
-			ref_anchor.attr('href', js_href);
-			
+			ref_anchor.addClass('popup');
 		}
 		popup_body.append(ref_anchor);
 	});
@@ -238,6 +230,19 @@ NetworkMap.prototype._constructNodePopup = function(feature) {
 	displayAttribute("Links", total_links);
 
 	return popup_body;
+};
+
+/**
+ * @brief Add extra javascript on DOM Element
+ */
+NetworkMap.prototype._popupInjectJS = function(popup) {
+	$(popup).find('a.extra-ref.popup').click(function(event){
+		var iframe = $('<iframe/>').attr('src', $(this).attr('href'));
+		$('<div class=\"map-node-action-popup\"/>').append(iframe)
+			.dialog({modal:true, width: 'auto', height: 'auto',});
+		event.preventDefault();
+	});
+
 };
 
 /**
@@ -596,7 +601,6 @@ var NetworkMapControlPicker = function(map, options) {
 		var pos = new OpenLayers.LonLat(this.options['position'][1], this.options['position'][0])
 			.transform('EPSG:4326', 'EPSG:3857');
 		this.options['position'] = pos;
-		console.log(this.options['zoom']);
 		if (!this.options['zoom'])
 			this.options['zoom'] = 17;	// Auto zoom
 	} else {
