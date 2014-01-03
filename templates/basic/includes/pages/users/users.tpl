@@ -20,4 +20,4 @@
 
 {include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
 {if $link_user_delete}{include assign=user_delete file=generic/link.tpl content="`$lang.delete`" link=$link_user_delete confirm=TRUE}{/if}
-{include file=generic/section-level2.tpl title="`$lang.user_info`" right="$user_delete" content=$form_user}
+{$form_user}

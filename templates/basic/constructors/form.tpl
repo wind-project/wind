@@ -37,24 +37,34 @@
 				{/section}
 			</select>
 	{elseif $data[d].Type == 'enum_multi'}
-			<select name="{$data[d].fullField}[]" size="5" multiple="multiple">
+			<div class="multi-select">
 				{section loop=$data[d].Type_Enums name=e}
 				{assign var="value" value=$data[d].Type_Enums[e].value}
-				<option value="{$data[d].Type_Enums[e].value}"{if $data[d].value.$value == 'YES'} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Enums[e].output}</option>
+				<span class="multi-select-entry">
+					<input type="checkbox" name="{$data[d].fullField}[]" value="{$data[d].Type_Enums[e].value}" {if $data[d].value.$value == 'YES'} checked="checked"{/if}>
+					{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Enums[e].output}
+				</span>
 				{/section}
-			</select>
+			</div>
 	{elseif $data[d].Type == 'enum_radio'}
 			{if $data[d].Null == 'YES'}<input type="radio" name="{$data[d].fullField}" value="" /><br />{/if}
 			{section loop=$data[d].Type_Enums name=e}
-			<input type="radio" name="{$data[d].fullField}" value="{$data[d].Type_Enums[e].value|escape}"{if $data[d].Type_Enums[e].value == $data[d].value} checked="checked"{/if} />{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Enums[e].output}<br />
+				<input type="radio" name="{$data[d].fullField}" value="{$data[d].Type_Enums[e].value|escape}"{if $data[d].Type_Enums[e].value == $data[d].value} checked="checked"{/if} />{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Enums[e].output}<br />
 			{/section}
 	{elseif $data[d].Type == 'pickup'}
 		{assign var=use_pickup value=TRUE}
+		<div class="pickup">
 			<input type="hidden" name="{$data[d].fullField}" value="{$data[d].Type_Pickup.value|escape}" />
 			<input type="text" disabled="disabled" name="{$data[d].fullField}_output" value="{$data[d].Type_Pickup.output|escape}" />
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[d].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
-			{if $data[d].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[d].fullField`.value = ''; `$data[d].fullField`_output.innerText = ''; return false;"}{/if}
-
+			<button type="button" class="pickup" onclick="javascript: t = window.open('{$data[d].Pickup_url}', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;">
+				{$lang.change}
+			</button>
+			{if $data[d].Null == 'YES'}
+			<button type="button" class="pickup" onclick="javascript: {$data[d].fullField}.value = ''; {$data[d].fullField}_output.innerText = ''; return false;">
+				{$lang.delete}
+			</button>
+			{/if}
+		</div>
 	{elseif $data[d].Type == 'pickup_multi'}
 		{assign var=use_pickup value=TRUE}
 			<select name="{$data[d].fullField}[]" size="5" multiple="multiple">
@@ -63,12 +73,32 @@
 				<option value="{$data[d].Type_Pickup[e].value|escape}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Pickup[e].output}</option>
 				{/section}
 			</select>
-			{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: t = window.open('`$data[d].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
-			{include file=generic/link.tpl content="`$lang.remove`" onclick="javascript: remove_selected(window.document.`$extra_data.FORM_NAME`.elements['`$data[d].fullField`[]']); return false;"}
+			<button type="button" class="add" onclick="javascript: t = window.open('{$data[d].Pickup_url}', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus();">
+				{$lang.add}
+			</button>
+			<button type="button" class="delete" onclick="javascript: remove_selected(window.document.{$extra_data.FORM_NAME}.elements['{$data[d].fullField}[]']); return false;">
+				{$lang.remove}
+			</button>
+		{*<ul class="pickup-list menu">
+		{section loop=$data[d].Type_Pickup name=e}
+		{assign var="value" value=$data[d].Type_Pickup[e].value}
+			<li>
+				<span class="text">
+					{include file=constructors/form_enum.tpl fullField=$fullField value=$data[d].Type_Pickup[e].output}
+				</span>
+				<button type="button" class="delete">{$lang.delete}</button>
+			</li>
+		{/section}
+		</ul>
+		<div class="pickup-node">
+		<input type="text"> <button type="button" class="add">{$lang.add}</button>
+		</div>
+		*}
 	{elseif $data[d].Field|truncate:8:"":true == 'password'}
 		<input name="{$data[d].fullField}" type="password" value="{$data[d].value|escape}" />
 	{else}
 		{if $data[d].Compare != ''}
+			<div class="comparison">
 			<select name="{$data[d].fullField}_compare">
 				{if $data[d].Compare == 'full' || $data[d].Compare == 'numeric'}
 				<option value="equal"{if $data[d].Compare_value == 'equal'} selected="selected"{/if}>{$lang.compare_equal}</option>
@@ -85,11 +115,14 @@
 			</select>
 		{/if}
 		<input name="{$data[d].fullField}" type="text" value="{$data[d].value|escape}" />
+		{if $data[d].Compare != ''}
+			</div>
+		{/if}
 	{/if}
 	</div>
 {/section}
 <div class="buttons">
-<button class="submit" type="submit">{$lang.submit}</button>
+<button class="primary submit" type="submit">{$lang.submit}</button>
 {foreach from=$buttons item=button}
 	<button type="button" class="{$button.classes}" onclick="javascript: window.location='{$button.href}';">{$button.title}</button>
 {/foreach}

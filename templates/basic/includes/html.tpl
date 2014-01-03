@@ -25,7 +25,7 @@
 	{$head}
 	<link href="{$css_dir}jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 	<link href="{$css_dir}styles.css" rel="stylesheet" type="text/css" />
-	<link rel="icon" type="image/png" href="templates/basic/images/favicon_32.png" />
+	<link rel="icon" type="image/png" href="{$img_dir}/favicon_32.png" />
 
 	
 </head>

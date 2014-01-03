@@ -20,7 +20,7 @@
 <ul id="languages" class="languages">
 	{foreach key=key item=item from=$languages}
 	<li>
-	<a href="{$item.link}"><img alt="{$item.name}" src="{$img_dir}flags/{$key}.gif" /> {$item.name}</a>
+	<a href="{$item.link|escape}"><img alt="{$item.name}" src="{$img_dir}flags/{$key}.gif" /> {$item.name}</a>
 	</li> 
 	{/foreach}
 </ul>

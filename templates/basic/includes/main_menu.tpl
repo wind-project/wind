@@ -26,12 +26,8 @@
 		
 		<ul class="menu nodes-list">
 		{section name=row loop=$node_editor}
-		{if $smarty.section.row.index is not even}
 			<li>
-		{else}
-			<li>
-		{/if}
-				<a href="{$node_editor[row].url_view}">{$node_editor[row].name|escape} (#{$node_editor[row].id})</a>
+				<a href="{$node_editor[row].url_view|escape}">{$node_editor[row].name|escape} (#{$node_editor[row].id})</a>
 			</li>
 		{/section}
 		<li class="add">
