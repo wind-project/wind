@@ -1133,3 +1133,39 @@ td.node-view-right-bottom {
 .olControlLayerSwitcher div.maximizeDiv:hover {
 	background-color: rgba(0, 60, 136, 0.698) !important;
 }
+
+/** Table Data **/
+table.table-data {
+	width: 100%;
+}
+
+/** Table Filter **/
+.table-data-filter-toolbar {
+	line-height: 34px;
+	border-radius: 5px;
+	padding: 4px 15px;
+	text-align: right;
+}
+.table-data-filter-wrapper button {
+	margin-right: 25px;
+}
+.table-data-filter-wrapper .enabled-filters {
+	display: inline-block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	font-size: 1.2em;
+}
+.table-data-filter-wrapper .enabled-filters li {
+	line-height: 22px;
+	background-color: #f3f3f3;
+	border-radius: 5px;
+	padding: 4px 15px;
+	display: inline-block;
+	margin: 0px 5px;
+}
+.table-data-filter-wrapper .enabled-filters .value {
+	font-weight: bold;
+	margin: 0px 5px;
+	color: rgb(201, 47, 102);
+}

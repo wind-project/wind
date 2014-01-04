@@ -15,7 +15,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include assign=help file=generic/help.tpl help=dnszones}
-{include file=generic/page-title.tpl title="`$lang.all_zones`" right="$help"}
-{include file=generic/filter.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
-{include file=generic/section-level3.tpl title="`$lang.dns_zones_found`" content=$table_dns}
+<div class="table-filter">
+	<div class="content">
+			{$content}
+	</div>
+</div>
+{literal}
+<script type="text/javascript">
+$(function(){
+	table_filter = new TableFilter({/literal} '{$title}' {literal}, '.table-filter', 'div.table-data');
+});
+</script>
+{/literal}

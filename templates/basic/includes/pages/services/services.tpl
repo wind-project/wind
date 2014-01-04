@@ -17,5 +17,5 @@
  *}
 {include assign=help file=generic/help.tpl help=services}
 {include file=generic/page-title.tpl title="`$lang.all_services`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.services_search`" content=$form_search_services}
+{include file=generic/filter.tpl title="`$lang.services_search`" content=$form_search_services}
 {include file=generic/section-level2.tpl title="`$lang.services_found`" content=$table_services}

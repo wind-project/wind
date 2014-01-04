@@ -16,5 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.nodes`"}
-{include file=generic/section-level3.tpl title="`$lang.nodes_search`" content=$form_search_nodes}
+{include file=generic/filter.tpl title="`$lang.nodes_search`" content=$form_search_nodes}
 {include file=generic/section-level3.tpl title="`$lang.nodes_found`" content=$table_nodes}

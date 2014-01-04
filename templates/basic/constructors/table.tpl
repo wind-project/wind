@@ -15,6 +15,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
+ 
+ <div class="table-data">
 {if $extra_data.MULTICHOICE[1] != ''}
 <form name="{$extra_data.FORM_NAME}" method="post" action={$action_url}>
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
@@ -108,3 +110,4 @@
 {/if}
 </table>
 {if $extra_data.MULTICHOICE[1] != ''}</form>{/if}
+</div>

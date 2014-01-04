@@ -16,5 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.hostmaster_panel` > `$lang.dns_zones`"}
-{include file=generic/section-level3.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
+{include file=generic/filter.tpl title="`$lang.dns_zones_search`" content=$form_search_dns}
 {include file=generic/section-level3.tpl title="`$lang.dns_zones_found`" content=$table_dns}

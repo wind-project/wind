@@ -17,5 +17,5 @@
  *}
 {include assign=help file=generic/help.tpl help=ranges_search}
 {include file=generic/page-title.tpl title="`$lang.all_ranges`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.ip_ranges_search`" content=$form_search_ranges}
+{include file=generic/filter.tpl title="`$lang.ip_ranges_search`" content=$form_search_ranges}
 {include file=generic/section-level2.tpl title="`$lang.ip_ranges_found`" content=$table_ranges}
