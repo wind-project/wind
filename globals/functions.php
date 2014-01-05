@@ -242,11 +242,13 @@ function fqn_url($absolute_url) {
 /**
  * @brief Create an absolute url for a relative dynamic resource
  */
-function url($relative)
-{
+function url($relative) {
+	global $vars;
+	
 	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
-	if (! strstr($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
+	if ($vars['site']['short_urls']) {
 		return (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'')  . $relative;
+	}
 	return $_SERVER['SCRIPT_NAME'] . $relative;
 }
 
