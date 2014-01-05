@@ -19,6 +19,69 @@
 
 {if $logged==TRUE}
 
+	{if $is_admin === TRUE || $is_hostmaster === TRUE }
+	
+	{if $ranges_waiting != 0 || $ranges_req_del != 0 || $dnszones_waiting != 0 || $dnsnameservers_waiting != 0}
+	<div class="hostmaster toolbox gadget">
+		<span class="title">
+			<span class="text">{$lang.hostmaster_panel}</span>
+		</span>
+		<ul class="menu">
+		{if $link_ranges != '' && ($ranges_waiting != 0 || $ranges_req_del != 0)}
+			<li>
+				<img src="{$img_dir}/node-small.png" alt="{$lang.ip_ranges}" />
+				<a href="{$link_ranges}">{$lang.ip_ranges}</a>
+			</li>
+
+			{if $ranges_waiting != 0}
+				<li>
+				<a class="btn btn-info btn-sm" href="{$link_ranges_waiting}">
+					<span class="badge">{$ranges_waiting}</span> {$lang.waiting}</a>
+				</li>
+			{/if}
+			{if $ranges_req_del != 0}
+				<li>
+				<a class="btn btn-warning btn-sm" href="{$link_ranges_req_del}">
+					<span class="badge">{$ranges_req_del}</span> {$lang.waiting}</a>
+				</li>
+			</li>
+			{/if}
+		{/if}
+		{if $link_dnszones != '' && $dnszones_waiting != 0}
+			<li>
+				<img src="{$img_dir}/dns-small.png" alt="{$lang.dns_zones}" />
+				<a href="{$link_dnszones}">{$lang.dns_zones}</a>
+			</li>
+			
+			{if $dnszones_waiting != 0}
+				<li>
+				<a class="btn btn-success btn-sm" href="{$link_dnszones_waiting}">
+					<span class="badge">{$dnszones_waiting}</span> {$lang.waiting}</a>
+				</li>
+			{/if}
+			
+		
+		{/if}
+		{if $link_dnsnameservers != '' && $dnsnameservers_waiting != 0}
+			<li>
+				<img src="{$img_dir}/nameserver.gif" alt="{$lang.dns_nameservers}" />
+				<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a>
+			</li>
+			
+			{if $dnsnameservers_waiting != 0}
+				<li>
+				<a class="btn btn-success btn-sm" href="{$link_dnsnameservers_waiting}">
+					<span class="badge">{$dnsnameservers_waiting}</span> {$lang.waiting}</a>
+				</li>
+			{/if}
+			
+		{/if}
+		</ul>
+	</div>
+	{/if}
+
+	{/if}
+
 	<div class="node_editor toolbox gadget">
 		<span class="title">			
 			<span class="text">{$lang.mynodes}</span>
@@ -31,59 +94,10 @@
 			</li>
 		{/section}
 		<li class="add">
-			<a class="button" href="{$link_addnode}">{$lang.node_add}</a>
+			<a class="btn btn-default btn-xs btn-success" href="{$link_addnode}"><span class="glyphicon glyphicon-plus-sign"></span> {$lang.node_add}</a>
 		</li>
 		</ul>
 	</div>
-					
-	{if $is_admin === TRUE || $is_hostmaster === TRUE}
-					
-	<div class="hostmaster toolbox gadget">
-		<span class="title">
-			<span class="text">{$lang.hostmaster_panel}</span>
-		</span>
-		<ul class="menu">
-		{if $link_ranges != ''}
-			<li>
-				<img src="{$img_dir}/node-small.png" alt="{$lang.ip_ranges}" />
-				<a href="{$link_ranges}">{$lang.ip_ranges}</a>
-			</li>
-			<li>
-			{if $ranges_waiting != 0}
-			<a class="button" href="{$link_ranges_waiting}"><em>{$ranges_waiting}</em> {$lang.waiting}</a>
-			{/if}
-			{if $ranges_req_del != 0}
-				<a class="button" href="{$link_ranges_req_del}"><em>{$ranges_req_del}</em> {$lang.for_deletion}</a>
-			{/if}
-			</li>
-		{/if}
-		{if $link_dnszones != ''}
-			<li>
-				<img src="{$img_dir}/dns-small.png" alt="{$lang.dns_zones}" />
-				<a href="{$link_dnszones}">{$lang.dns_zones}</a>
-			</li>
-			<li>
-			{if $dnszones_waiting != 0}
-				<a class="button" href="{$link_dnszones_waiting}"><em>{$dnszones_waiting}</em> {$lang.waiting}</a>
-			{/if}
-			</li>
-		
-		{/if}
-		{if $link_dnsnameservers != ''}
-			<li>
-				<img src="{$img_dir}/nameserver.gif" alt="{$lang.dns_nameservers}" />
-				<a href="{$link_dnsnameservers}">{$lang.dns_nameservers}</a>
-			</li>
-			<li>
-				{if $dnsnameservers_waiting != 0}
-					<a class="button" href="{$link_dnsnameservers_waiting}"><em>{$dnsnameservers_waiting}</em> {$lang.waiting}</a>
-				{/if}
-			</li>
-		{/if}
-		</ul>
-	</div>
-
-	{/if}
 
 {/if}
 

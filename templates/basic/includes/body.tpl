@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 <div class="layout">
+	{if $header != ''}
 	<div class="header">{$header}</div>
+	{/if}
 	{if $menu != ''}
 	<div class="navigation">{$menu}</div>
 	{/if}

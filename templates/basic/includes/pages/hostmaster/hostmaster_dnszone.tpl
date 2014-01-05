@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include file=generic/page-title.tpl title="`$lang.dnszone_edit`"}
-{include assign=dnszone_delete file=generic/link.tpl content="`$lang.delete`" link=$link_dnszone_delete confirm=TRUE}
-{$dnszone_delete}
+{include assign="delete_link" file=generic/button.tpl class="btn-danger btn-sm" content="`$lang.delete`" 
+	href=$link_dnszone_delete glyph=remove confirm=TRUE}
+{include file=generic/page-title.tpl title="`$lang.dnszone_edit`" right="`$delete_link`"}
 {$form_zone}
 {include file=generic/section-level3.tpl title="`$lang.node_info`" content=$table_node_info}
 {include file=generic/section-level3.tpl title="`$lang.users_info`" content=$table_user_info}

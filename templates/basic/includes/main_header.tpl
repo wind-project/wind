@@ -17,9 +17,9 @@
  *}
 	<a href="{$link_home}"><img
 {if $mylogo}
-	src="{$mylogo_dir}mylogo.png"
+	src="{$mylogo_dir}/mylogo.png"
 {else}	
-	src="{$img_dir}main_logo.png"
+	src="{$img_dir}/main_logo.png"
 {/if}
 	alt="Logo" class="{$lang.site_title}"/></a>
 

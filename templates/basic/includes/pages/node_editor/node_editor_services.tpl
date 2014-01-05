@@ -18,4 +18,4 @@
 {include assign=help file=generic/help.tpl help="node_editor_services_`$services_method`"}
 {assign var=t value="services_`$services_method`"}
 {include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_services}
+{$form_services}

@@ -17,4 +17,4 @@
  *}
 {assign var=t value="region_`$region_method`"}
 {include file=generic/page-title.tpl title="`$lang.$t`"}
-{include file=generic/section-level3.tpl title="`$lang.$t`" content=$form_region}
+{$form_region}

@@ -61,7 +61,7 @@
 	{foreach key=key item=cell from=$data[0]}
 	<td></td>
 	{/foreach}
-	<td><button type="submit">{$lang.update}</button></td>
+	<td><button class="btn btn-primary" type="submit">{$lang.update}</button></td>
 </tr>
 </table>
 </form>

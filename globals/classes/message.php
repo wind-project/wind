@@ -26,6 +26,7 @@ class message {
 	var $forward;
 	var $forward_sec;
 	var $template='constructors/message.tpl';
+	var $type='info';
 	var $tpl;
 	
 	function message() {
@@ -35,6 +36,7 @@ class message {
 	function set_fromlang($type, $message, $forward="", $image="", $hide_menu="", $override=FALSE) {
 		global $lang;
 		$this->set($lang['message'][$type][$message]['title'], $lang['message'][$type][$message]['body'], $forward, $image, $hide_menu, $override);
+		$this->type = $type;
 	}
 	
 	function set($title, $message, $forward="", $image="", $hide_menu="", $override=FALSE) {
@@ -61,6 +63,7 @@ class message {
 		$this->tpl['image'] = $this->image;
 		$this->tpl['forward'] = $this->forward;
 		$this->tpl['forward_text'] = $lang['forward_text'];
+		$this->tpl['type'] = $this->type;
 		return template($this->tpl, $this->template);
 	}	
 	

@@ -15,6 +15,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.services_categories`"}
-{include file="generic/link.tpl" link=$link_services_categories_add content="`$lang.services_categories_add`"}
+{include assign="add_btn" file="generic/button.tpl" class="btn-success btn-sm" glyph="plus-sign" 
+	href=$link_services_categories_add content="`$lang.services_categories_add`"}
+{include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.services_categories`" right="`$add_btn`"}
+
 {$table_services}

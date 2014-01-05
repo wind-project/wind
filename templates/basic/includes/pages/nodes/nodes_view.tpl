@@ -15,17 +15,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include file=generic/page-title.tpl title="`$lang.node` `$node.name` (#`$node.id`)"|escape right="$help"}
+{if $edit_node}
+	{include assign=ed file="generic/button.tpl" class="btn-sm btn-default" glyph="edit" href=`$edit_node` content=`$lang.edit_node`}
+{/if}
+{include file=generic/page-title.tpl title="`$lang.node` `$node.name` (#`$node.id`)"|escape right="$help `$ed`"}
 <table class="table-page">
 <tr>
 	<td class="table-page-split">
 		{include assign=t1 file="includes/pages/nodes/node_info.tpl"}
-		{if $edit_node}{include assign=ed file="generic/link.tpl" content="`$lang.edit_node`" link=$edit_node}{/if}
-		{include file="generic/section-level4.tpl" title="`$lang.node_info` $ed" content="$t1"}
-		{include file="generic/section-level5.tpl" title="`$lang.db.nodes__info`" content="`$node.info`"|escape|nl2br}
-		{include file="generic/section-level6.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
-		{include file="generic/section-level6.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
-		{include file="generic/section-level6.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}
+		{include file="generic/section-level3.tpl" title="`$lang.node_info`" content="$t1"}
+		{include file="generic/section-level3.tpl" title="`$lang.db.nodes__info`" content="`$node.info`"|escape|nl2br}
+		{include file="generic/section-level3.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
+		{include file="generic/section-level3.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
+		{include file="generic/section-level3.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}
 		<br />
 		<div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 	</td>

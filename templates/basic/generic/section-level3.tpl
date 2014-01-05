@@ -15,9 +15,4 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<div class="section section-level-2">
-	<h3>{$title}</h3>
-	<div class="content">
-			{$content}
-	</div>
-</div>
+{include file="generic/section.tpl" title=`$title` content=`$content` level=3}

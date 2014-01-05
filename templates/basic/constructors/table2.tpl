@@ -15,8 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<table class="table-form">
+<table class="table">
 {section name=row loop=$data}
+{if $smarty.section.row.index == 0 }
+	<thead>
+	{assign var=cellType value="th"}
+{else}
+	{assign var=cellType value="td"}
+{/if}
 <tr>
 	{foreach key=key item=itm from=$data[row]}
 	{assign var="fullkey" value=$data.0.$key}
@@ -37,7 +43,7 @@
 		{assign var="cell" value=$itm}
 	{/if}
 	
-	<td class="{$cellclass}">
+	<{$cellType} class="{$cellclass}">
 		{if $extra_data.LINK.$fullkey[row] != ''}
 		<a href="{$extra_data.LINK.$fullkey[row]}">
 		{/if}
@@ -45,9 +51,12 @@
 		{if $extra_data.LINK.$fullkey[row] != ''}
 		</a>
 		{/if}
-	</td>
+	</{$cellType}>
 	{/if}
 	{/foreach}
 </tr>
+{if $smarty.section.row.index == 0}
+	</thead>
+{/if}
 {/section}
 </table>

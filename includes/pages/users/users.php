@@ -82,7 +82,7 @@ class users {
 				$db->set('users', array('status' => 'activated'), "id = '".get('user')."'");
 				$main->message->set_fromlang('info', 'activation_success');
 			} else {
-				$main->message->set_fromlang('info', 'activation_failed');
+				$main->message->set_fromlang('error', 'activation_failed');
 			}
 			return;
 		} else if (get('action') == 'logout') {

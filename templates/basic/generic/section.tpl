@@ -15,4 +15,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include file="generic/section.tpl" title=`$title` content=`$content` level=4}
+<div class="section section-level-{$level} panel panel-default">
+	<div class="panel-heading">
+		<h{$level} class="panel-title">{$title}
+		</h{$level}>
+		{if $buttons}
+		<div class="buttons .panel-title">
+			{$buttons}
+		</div>
+{/if}
+	</div>
+	<div class="content panel-body">
+		{$content}
+	</div>
+</div>

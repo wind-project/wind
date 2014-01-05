@@ -15,9 +15,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include file=generic/page-title.tpl title="`$lang.ip_range_edit`"}
-{include assign=range_delete file=generic/link.tpl content="`$lang.delete`" link=$link_range_delete confirm=TRUE}
-{include file=generic/section-level2.tpl title="`$lang.ip_range_edit`" right="$range_delete" content=$form_range}
+{include assign="delete_link" file=generic/button.tpl class="btn-danger btn-sm" content="`$lang.delete`" 
+	href=$link_range_delete glyph=remove confirm=TRUE}
+{include file=generic/page-title.tpl title="`$lang.ip_range_edit`" right="`$delete_link`"}
+
+{$form_range}
 {include file=generic/section-level2.tpl title="`$lang.node_info`" content=$table_node_info}
 {include file=generic/section-level2.tpl title="`$lang.users_info`" content=$table_user_info}
 {include file=generic/section-level2.tpl title="`$lang.links`" content=$table_links}

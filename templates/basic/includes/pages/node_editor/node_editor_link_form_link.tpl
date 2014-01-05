@@ -87,68 +87,77 @@ function type_changed() {
 }
 </script>
 {/literal}
-<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
-<form name="{$extra_data.FORM_NAME}" method="post" action="{$action_url}">
+<script language="JavaScript" type="text/javascript" src="{$js_dir}/pickup.js"></script>
+<div class="form-bs">
+<form name="{$extra_data.FORM_NAME}" method="post" action="{$action_url}" id="{$extra_data.FORM_NAME}_t">
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
-<table class="table-form" id="{$extra_data.FORM_NAME}_t">
-		<tr class="table-form-row1">
-		<td class="table-form-title">{$lang.db[$data.0.fullField]}{if $data[0].Null != 'YES'}*{/if}:</td>
-		<td class="table-form-field">
-			<select class="fld-form-input" name="{$data[0].fullField}" onchange="type_changed()">
-				{if $data[0].Null == 'YES'}<option value=""></option>{/if}
-				{section loop=$data[0].Type_Enums name=e}
-				<option value="{$data[0].Type_Enums[e].value|escape}"{if $data[0].Type_Enums[e].value == $data[0].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.0.fullField value=$data[0].Type_Enums[e].output}</option>
-				{/section}
-			</select>
-		</td>
-		</tr>	
-		<tr class="table-form-row2">
-		<td class="table-form-title">{$lang.db[$data.1.fullField]}{if $data[1].Null != 'YES'}*{/if}:</td>
-		<td class="table-form-field">
+	<div class="form-group">
+		<label>{$lang.db[$data.0.fullField]}{if $data[0].Null != 'YES'}*{/if}:</label>
+		<select class="form-control" name="{$data[0].fullField}" onchange="type_changed()">
+			{if $data[0].Null == 'YES'}<option value=""></option>{/if}
+			{section loop=$data[0].Type_Enums name=e}
+			<option value="{$data[0].Type_Enums[e].value|escape}"{if $data[0].Type_Enums[e].value == $data[0].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.0.fullField value=$data[0].Type_Enums[e].output}</option>
+			{/section}
+		</select>
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.1.fullField]}{if $data[1].Null != 'YES'}*{/if}:</label>
 			<input type="hidden" name="{$data[1].fullField}" value="{$data[1].Type_Pickup.value|escape}" />
-			<input type="text" disabled="disabled" class="fld-form-input-pickup" name="{$data[1].fullField}_output" value="{$data[1].Type_Pickup.output|escape}" />
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			<input class="form-control" type="text" disabled="disabled" name="{$data[1].fullField}_output" value="{$data[1].Type_Pickup.output|escape}" />
+			{include file=generic/button.tpl content="`$lang.change`" class="btn-default btn-sm" glyph=edit 
+				onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 			{if $data[1].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[1].fullField`.value = ''; `$data[1].fullField`_output.innerText = ''; return false;"}{/if}
-		</td>	
-		</tr>	
-		<tr class="table-form-row2">
-		<td class="table-form-title">{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</td>
-		<td class="table-form-field">
+	</div>	
+	<div class="form-group">
+		<label>{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</label>
 			<input type="hidden" name="{$data[2].fullField}" value="{$data[2].Type_Pickup.value|escape}" />
-			<input type="text" disabled="disabled" class="fld-form-input-pickup" name="{$data[2].fullField}_output" value="{$data[2].Type_Pickup.output|escape}" />
-			{include file=generic/link.tpl content="`$lang.change`" onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
-			{if $data[2].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[2].fullField`.value = ''; `$data[2].fullField`_output.innerText = ''; return false;"}{/if}
-		</td>	
-		</tr>	
-		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.3.fullField]}{if $data[3].Null != 'YES'}*{/if}:</td>
-		<td class="table-form-field">
-			<select class="fld-form-input" name="{$data[3].fullField}">
-				{if $data[3].Null == 'YES'}<option value=""></option>{/if}
-				{section loop=$data[3].Type_Enums name=e}
-				<option value="{$data[3].Type_Enums[e].value|escape}"{if $data[3].Type_Enums[e].value == $data[3].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.3.fullField value=$data[3].Type_Enums[e].output}</option>
-				{/section}
-			</select>
-		</td></tr>	
-
-		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.4.fullField]}{if $data[4].Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data[4].fullField}" type="text" value="{$data[4].value|escape}" /></td></tr>
-		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.5.fullField]}{if $data[5].Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data[5].fullField}" type="text" value="{$data[5].value|escape}" /></td></tr>
-
-		<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.6.fullField]}{if $data[6].Null != 'YES'}*{/if}:</td>
-		<td class="table-form-field">
-			<select class="fld-form-input" name="{$data[6].fullField}">
-				{if $data[6].Null == 'YES'}<option value=""></option>{/if}
-				{section loop=$data[6].Type_Enums name=e}
-				<option value="{$data[6].Type_Enums[e].value|escape}"{if $data[6].Type_Enums[e].value == $data[6].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.6.fullField value=$data[6].Type_Enums[e].output}</option>
-				{/section}
-			</select>
-		</td></tr>	
-
-		<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.7.fullField]}{if $data[7].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[7].fullField}">{$data[7].value|escape}</textarea></td></tr>
-		<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.8.fullField]}{if $data[8].Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data[8].fullField}">{$data[8].value|escape}</textarea></td></tr>
-
-<tr><td class="table-form-submit" colspan="2"><button>{$lang.submit}</button></td></tr>
-</table>
+			<input type="text" disabled="disabled" class="form-control" name="{$data[2].fullField}_output" value="{$data[2].Type_Pickup.output|escape}" />
+			{include file=generic/button.tpl content="`$lang.change`" class="btn-default btn-sm" glyph=edit
+			onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
+			
+			{if $data[2].Null == 'YES'}
+				{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[2].fullField`.value = ''; `$data[2].fullField`_output.innerText = ''; return false;"}
+			{/if}
+	</div>
+	<div class="form-group">	
+		<label>{$lang.db[$data.3.fullField]}{if $data[3].Null != 'YES'}*{/if}:</label>
+		<select class="form-control" name="{$data[3].fullField}">
+			{if $data[3].Null == 'YES'}<option value=""></option>{/if}
+			{section loop=$data[3].Type_Enums name=e}
+			<option value="{$data[3].Type_Enums[e].value|escape}"{if $data[3].Type_Enums[e].value == $data[3].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.3.fullField value=$data[3].Type_Enums[e].output}</option>
+			{/section}
+		</select>
+	</div>	
+	<div class="form-group">
+		<label>{$lang.db[$data.4.fullField]}{if $data[4].Null != 'YES'}*{/if}:</label>
+		<input class="form-control" name="{$data[4].fullField}" type="text" value="{$data[4].value|escape}" />
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.5.fullField]}{if $data[5].Null != 'YES'}*{/if}:</label>
+		<input class="form-control" name="{$data[5].fullField}" type="text" value="{$data[5].value|escape}" />
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.6.fullField]}{if $data[6].Null != 'YES'}*{/if}:</label>
+		<select class="form-control" name="{$data[6].fullField}">
+			{if $data[6].Null == 'YES'}<option value=""></option>{/if}
+			{section loop=$data[6].Type_Enums name=e}
+			<option value="{$data[6].Type_Enums[e].value|escape}"{if $data[6].Type_Enums[e].value == $data[6].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.6.fullField value=$data[6].Type_Enums[e].output}</option>
+			{/section}
+		</select>
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.7.fullField]}{if $data[7].Null != 'YES'}*{/if}:
+		<textarea class="form-control" name="{$data[7].fullField}">{$data[7].value|escape}</textarea>
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.8.fullField]}{if $data[8].Null != 'YES'}*{/if}:</label>
+		<textarea class="form-control" name="{$data[8].fullField}">{$data[8].value|escape}</textarea>
+	</div>
+<div class="buttons">
+<button class="btn btn-primary">{$lang.submit}</button>
+</div>
 </form>
+</div>
 <script type="text/javascript" language="javascript">
 type_changed()
 </script>

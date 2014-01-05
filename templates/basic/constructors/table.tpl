@@ -21,10 +21,11 @@
 <form name="{$extra_data.FORM_NAME}" method="post" action={$action_url}>
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 {/if}
-<table class="table-data">
+<table class="table-data table table-hover .table-striped">
 {section name=row loop=$data}
 
 	{if $smarty.section.row.index == 0 }
+		<thead>
 		<tr class="header">
 	{else}
 		<tr>
@@ -81,33 +82,44 @@
 		{/if}
 	{/foreach}
 	{if $extra_data.MULTICHOICE[row] != ''}
-	<td class="table-list-cell-extra"><input class="fld-form-check" type="checkbox" name="id[]" value="{$extra_data.MULTICHOICE[row]|escape}" {if $extra_data.MULTICHOICE_CHECKED[row] == 'YES'}checked="checked" {/if}/></td>
+	<td class="table-list-cell-extra"><input type="checkbox" name="id[]" value="{$extra_data.MULTICHOICE[row]|escape}" {if $extra_data.MULTICHOICE_CHECKED[row] == 'YES'}checked="checked" {/if}/></td>
 	{elseif $extra_data.MULTICHOICE_LABEL != ''}
 	<td width="1%">{$lang[$extra_data.MULTICHOICE_LABEL]}</td>
 	{/if}
 </tr>
+{if $smarty.section.row.index == 0 }
+		</thead>
+{/if}
 {/section}
+</table>
 {if $extra_data.MULTICHOICE[1] != '' || $extra_data.TOTAL_PAGES != ''}
-<tr class="paginator">
+<div class="extra">
 	{if $extra_data.TOTAL_PAGES == ''}
 		{foreach key=key item=cell from=$data[0]}
-		<td></td>
 		{/foreach}
 	{else}
 		{section name=cell loop=$data[0]}
 		{/section}
-		<td colspan="{$smarty.section.cell.total}">Pages: 
+		<ul class="pagination pagination-sm">
 		{foreach key=key item=page from=$extra_data.PAGES}
+			
 			{if $key == $extra_data.CURRENT_PAGE}
-				{$key}
+				<li class="active">
 			{else}
-				<a href="{$page}">{$key}</a>
+				<li>
 			{/if}
-		{/foreach}</td>
+			<a href="{$page}">{$key}</a><li>
+		{/foreach}
+		</ul>
 	{/if}
-	{if $extra_data.MULTICHOICE[1] != ''}<td class="table-form-submit"><button type="submit">{$lang[$extra_data.MULTICHOICE_LABEL]|escape}</button></td>{/if}
-</tr>
+	{if $extra_data.MULTICHOICE[1] != ''}
+		<div class="buttons">
+			<button type="submit" class="btn btn-danger btn-sm">
+				{$lang[$extra_data.MULTICHOICE_LABEL]|escape}
+			</button>
+		</div>
+	{/if}
+</div>
 {/if}
-</table>
 {if $extra_data.MULTICHOICE[1] != ''}</form>{/if}
 </div>

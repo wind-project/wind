@@ -23,7 +23,7 @@
 	</tr>
 	<tr>
 		<td height="100%">
-			<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
+			<script language="JavaScript" type="text/javascript" src="{$js_dir}/pickup.js"></script>
 			<form style="height:100%;" name="form_nodes_plot_link" method="get" action="{$action_url}">
 			<table cellpadding="4" cellspacing="0" class="plot-link-table">
 				<tr>

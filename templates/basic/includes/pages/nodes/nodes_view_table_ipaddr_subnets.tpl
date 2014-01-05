@@ -26,7 +26,7 @@
 	<tr><td>
 	<table class="table-form">
 	<tr><td class="table-search-menu-text">
-		<img src="{$img_dir}admin.gif" alt="{$lang.db.subnet}" />
+		<img src="{$img_dir}/admin.gif" alt="{$lang.db.subnet}" />
 		{assign var=t1 value="subnets__type-"|cat:$data[row].type}
 		{assign var=t2 value="links__type-"|cat:$data[row].links__type}
 		{$lang.db.$t1}

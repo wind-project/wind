@@ -409,10 +409,6 @@ $lang = array(
 				'title' => "Afmelden",
 				'body' => "U bent afgemeld uit het systeem."
 			),
-			'no_privilege' => array(
-				'title' => "Geen toegang",
-				'body' => "U heeft geen toegang om deze pagina te bekijken."
-			),
 			'activation_required' => array(
 				'title' => "Account registratie activeren",
 				'body' => "Uw account is niet geactiveerd. Om uw account te activeren, klik op de activatie URL die is verzonden naar uw e-mail adres."
@@ -421,16 +417,20 @@ $lang = array(
 				'title' => "Account registratie geactiveerd",
 				'body' => "Uw account is succesvol geactiveerd. U kunt zich nu aanmelden in het systeem met uw gebruikersnaam en wachtwoord."
 			),
-			'activation_failed' => array(
-				'title' => "Account registratie",
-				'body' => "Het activeren van uw registratie aanvraag is mislukt."
-			),
 			'message_sent' => array(
 				'title' => "Bericht is verzonden",
 				'body' => "Uw bericht is succesvol verstuurd. Mogelijk antwoord zal verzonden worden door de beheerder(s) van de Node, aan uw e-mail account gedefinieerd in uw profiel."
 			),
 		),
 		'error' => array(
+			'no_privilege' => array(
+					'title' => "Geen toegang",
+					'body' => "U heeft geen toegang om deze pagina te bekijken."
+			),
+			'activation_failed' => array(
+					'title' => "Account registratie",
+					'body' => "Het activeren van uw registratie aanvraag is mislukt."
+			),
 			'database_error' => array(
 				'title' => "Database fout",
 				'body' => "Er is een database fout opgetreden. Stuur indien mogelijk een fout rapport van de fout naar de beheerder(s)."

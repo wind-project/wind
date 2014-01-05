@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 	<td class="node-view-left-mid" >{include file="generic/photosview_image.tpl" image=$photosview.W}</td>
-	<td class="node-view-left-mid" ><img src="{$img_dir}compass.png" alt="" /></td>
+	<td class="node-view-left-mid" ><img src="{$img_dir}/compass.png" alt="" /></td>
 	<td class="node-view-right-mid" >{include file="generic/photosview_image.tpl" image=$photosview.E}</td>
 	</tr>
 	<tr>
@@ -36,6 +36,6 @@
 	<td class="node-view-right-bottom" >{include file="generic/photosview_image.tpl" image=$photosview.SE}</td>
 	</tr>
 	<tr>
-	<td colspan="3" align="center">{assign var=t value="photos__view_point-PANORAMIC"}{include file=generic/section-level6.tpl title="`$lang.db.$t`" content=$panoramic}</td>
+	<td colspan="3" align="center">{assign var=t value="photos__view_point-PANORAMIC"}{$panoramic}</td>
 	</tr>
 </table>

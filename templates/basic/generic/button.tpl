@@ -15,4 +15,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include file="generic/section.tpl" title=`$title` content=`$content` level=4}
+ 
+{if $glyph}
+	{assign var=extra_left_content value="<span class=\"glyphicon glyphicon-`$glyph`\"></span> "}
+{else}
+	{assign var=extra_left_content value=''}
+{/if}
+
+{if $class}
+	{assign var=btn_class value=`$class`}
+{else}
+	{assign var=btn_class value="btn-default"}
+{/if}
+
+{if $href}
+	{assign var=onclick value="javascript: window.location='`$href`'"}
+{/if}
+<button type="button" class="btn {$btn_class}" {if $onclick != ''} onclick="{$onclick}"{/if}>{$extra_left_content}{$content}</button>

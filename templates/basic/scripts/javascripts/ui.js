@@ -237,7 +237,12 @@ TableFilter = function(title, filter_element, table_element) {
 	// Add table wrapper and buttons
 	this.table_element = this.raw_table_element.wrap('<div class="table-data-filter-wrapper" />').parent();
 	this.table_element.prepend('<div class="table-data-filter-toolbar" />');
-	this.table_element.find('.table-data-filter-toolbar').append($('<button type="button" class="search"/>').text('Filter'));
+	this.table_element.find('.table-data-filter-toolbar').append(
+		$('<button type="button" class="btn btn-default btn-sm search"/>')
+			.text('Filter')
+			.prepend('<span class="glyphicon glyphicon-filter"></span>')
+			
+	);
 	
 	// Create filter overview
 	this._constructFilterOverview(this.table_element.find('.table-data-filter-toolbar'));
@@ -279,11 +284,11 @@ TableFilter.prototype._constructFilterOverview = function(toolbar) {
 	});
 	
 	// Create title bar
-	var list = $('<ul class="enabled-filters"/>');
+	var list = $('<ul class="enabled-filters list-unstyled list-inline"/>');
 	$.each(enabled_filters, function(index, obj){
 		var entry = $('<li/>').append(
 				$('<span class="name">').text(obj.label),
-				$('<span class="value">').text(obj.value)
+				$('<span class="value code">').text(obj.value)
 		);
 		list.append(entry);
 	});

@@ -70,7 +70,7 @@ class SmartMenuEntry
         {
             $li = tag('li', tag('a', array('href' => $this->link), $this->display), $this->extra_attr);
             if ($this->isSelected())
-                $li->add_class('selected');
+                $li->add_class('active');
         }
         else if ($this->type === 'custom')
             $li = tag('li html_escape_off', $this->display, $this->extra_attr);
@@ -78,8 +78,11 @@ class SmartMenuEntry
             $li = tag('li', $this->display, $this->extra_attr);
 
         // Add children if any
-        if (!empty($this->children))
-            $li->append($this->renderChildren());
+        if (!empty($this->children)) {
+        	$li->add_class('has-children');
+        	$submenu = $this->renderChildren();
+            $li->append($submenu);
+        }
             
         return $li;
     }

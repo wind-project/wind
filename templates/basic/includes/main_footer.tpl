@@ -17,9 +17,9 @@
  *}
 
 <div class="technologies">
-	<a href="http://www.php.net/"><img src="{$img_dir}logo-php.gif" alt="PHP Hypertext Preprocessor" /></a>
-	<a href="http://www.mysql.com/"><img src="{$img_dir}logo-mysql.gif" alt="MySQL database server" /></a>
-	<a href="http://www.smarty.net/"><img src="{$img_dir}logo-smarty.gif" alt="smarty template engine" /></a>
+	<a href="http://www.php.net/"><img src="{$img_dir}/logo-php.gif" alt="PHP Hypertext Preprocessor" /></a>
+	<a href="http://www.mysql.com/"><img src="{$img_dir}/logo-mysql.gif" alt="MySQL database server" /></a>
+	<a href="http://www.smarty.net/"><img src="{$img_dir}/logo-smarty.gif" alt="smarty template engine" /></a>
 </div>
 <div class="credits">
 	Powered by: <a target="_blank" href="https://github.com/wind-project/wind"><b>WiND  v{$wind_version}</b></a><br />

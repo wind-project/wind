@@ -63,71 +63,68 @@ function sendmail_changed() {{/literal}
 {literal}}
 </script>
 {/literal}
-<script type="text/javascript" src="{$js_dir}pickup.js"></script>
+<script type="text/javascript" src="{$js_dir}/pickup.js"></script>
 <form name="{$extra_data.FORM_NAME}" method="post">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
-<div class="form">
-	<div class="form-entry">
+<div class="form-bs">
+	<div class="form-group">
 		<label>{$lang.db[$data.0.fullField]}{if $data.0.Null != 'YES'}*{/if}:</label>
-		<input name="{$data.0.fullField}" type="text" value="{$data.0.value|escape}" />
+		<input class="form-control" name="{$data.0.fullField}" type="text" value="{$data.0.value|escape}" />
 	</div>
 
-	<div class="form-entry">
+	<div class="form-group">
 		<label>{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</label>
-		<textarea name="{$data.1.fullField}">{$data.1.value|escape}</textarea>
+		<textarea class="form-control" name="{$data.1.fullField}">{$data.1.value|escape}</textarea>
 	</div>
 
-	<div class="form-entry">
+	<div class="form-group">
 		<label>{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</label>
-		<select name="{$data.2.fullField}[]" size="5" multiple="multiple">
+		<select class="form-control" name="{$data.2.fullField}[]" size="5" multiple="multiple">
 			{section loop=$data.2.Type_Pickup name=e}
 			{assign var="value" value=$data.2.Type_Pickup[e].value}
 			<option value="{$data.2.Type_Pickup[e].value|escape}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data.2.Type_Pickup[e].output}</option>
 			{/section}
 		</select>
-		
-		<button type="button" class="add" onclick="javascript: t = window.open('{$data.2.Pickup_url}', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus();">
-			{$lang.add}
-		</button>
-		<button type="button" class="delete" onclick="javascript: remove_selected(window.document.{$extra_data.FORM_NAME}.elements['{$data.2.fullField}[]']); return false;">
-			{$lang.remove}
-		</button>
+		{include file="generic/button.tpl" class="btn-success btn-xs" glyph="plus-sign" content=`$lang.add`
+			onclick="javascript: t = window.open('`$data.2.Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus();"}
+		{include file="generic/button.tpl" class="btn-danger btn-xs" glyph="minus-sign" content=`$lang.remove`
+			onclick="javascript: remove_selected(window.document.`$extra_data.FORM_NAME`.elements['`$data.2.fullField`[]']); return false;" }
 	</div>
 	
 	
-	<div class="form-entry">
+	<div class="form-group">
 		<label>{$lang.db[$data.3.fullField]}{if $data[d].Null != 'YES'}*{/if}:</label>
 		
-		<select name="{$data[3].fullField}" onchange="status_changed()">
+		<select class="form-control" name="{$data[3].fullField}" onchange="status_changed()">
 			{section loop=$data[3].Type_Enums name=e}
 			<option value="{$data[3].Type_Enums[e].value|escape}"{if $data[3].Type_Enums[e].value == $data[3].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.3.fullField value=$data[3].Type_Enums[e].output}</option>
 			{/section}
 		</select>
 	</div>
-	<div class="form-entry">
+	<div class="form-group">
 		<input type="checkbox" name="sendmail" value="Y" onclick="sendmail_changed()" />&nbsp;{$lang.send_mail}
 	</div>
-	<div class="form-entry">
+	<div class="form-group">
 		<label>{$lang.to}:</label>
-		<select name="email_to_type" onchange="email_to_type_changed()" disabled="disabled">
+		<select class="form-control" name="email_to_type" onchange="email_to_type_changed()" disabled="disabled">
 			<option value="all">{$lang.mailto_all}</option>
 			<option value="owner">{$lang.mailto_owner}</option>
 			<option value="custom">{$lang.mailto_custom}</option>
 		</select><br />
-		<input type="text" name="email_to" value="{$extra_data.email_all}" disabled="disabled" />
+		<input class="form-control" type="text" name="email_to" value="{$extra_data.email_all}" disabled="disabled" />
 	</div>
 	
-	<div class="form-entry">
+	<div class="form-group">
 		<label>{$lang.subject}:</label>
-		<input type="text" name="email_subject" disabled="disabled" />
+		<input class="form-control" type="text" name="email_subject" disabled="disabled" />
 	</div>
-	<div class="form-entry">
+	<div class="form-group">
 		<label>{$lang.body}:</label>
-		<textarea class="email-body" name ="email_body" disabled="disabled"></textarea>
+		<textarea class="form-control" class="email-body" name ="email_body" disabled="disabled"></textarea>
 	</div>
 <div class="buttons">
-<button class="primary" type="submit">{$lang.submit}</button>
+<button class="btn btn-primary" type="submit">{$lang.submit}</button>
 </div>
 </div>
 </form>

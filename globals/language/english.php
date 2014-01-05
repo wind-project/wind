@@ -412,10 +412,6 @@ $lang = array(
 				'title' => "Logout",
 				'body' => "You have logged out the system."
 			),
-			'no_privilege' => array(
-				'title' => "Not authorized",
-				'body' => "You are not authorized to view this page."
-			),
 			'activation_required' => array(
 				'title' => "Account activation",
 				'body' => "You account has not been activated. To activate your account, click at the activation URL that has been sent to your e-mail address."
@@ -424,16 +420,20 @@ $lang = array(
 				'title' => "Account activation",
 				'body' => "Your account was activated successfully. You may now login to the system."
 			),
-			'activation_failed' => array(
-				'title' => "Account activation",
-				'body' => "The activation of your account failed."
-			),
 			'message_sent' => array(
 				'title' => "Message was sent",
 				'body' => "Your message was sent successfully. Possible answer will be send by the administrators of the node, at your e-mail account defined at your profile."
 			),
 		),
 		'error' => array(
+			'no_privilege' => array(
+					'title' => "Not authorized",
+					'body' => "You are not authorized to view this page."
+			),
+			'activation_failed' => array(
+					'title' => "Account activation",
+					'body' => "The activation of your account failed."
+			),
 			'database_error' => array(
 				'title' => "Database error",
 				'body' => "A database error has occured. Please report the problem to the administrator(s)."

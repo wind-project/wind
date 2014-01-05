@@ -31,7 +31,8 @@ class header {
 	function output() {
 		global $main, $construct, $vars, $lang;
 		
-		if ($this->hide) return;
+		if ($this->hide)
+			return;
 		if (file_exists(ROOT_PATH.'config/mylogo.png')) {
 			$this->tpl['mylogo'] = TRUE;
 			$this->tpl['mylogo_dir'] = ROOT_PATH.'config/';

@@ -323,10 +323,10 @@ function reset_smarty() {
 	global $smarty, $lang;
 	$smarty->clear_all_assign();
 	$smarty->assign_by_ref('lang', $lang);
-	$smarty->assign('tpl_dir', surl($smarty->template_dir));
-	$smarty->assign('img_dir', surl($smarty->template_dir."images/"));
-	$smarty->assign('css_dir', surl($smarty->template_dir."css/"));
-	$smarty->assign('js_dir', surl($smarty->template_dir."scripts/javascripts/"));
+	$smarty->assign('tpl_dir', rtrim(surl($smarty->template_dir)), '/');
+	$smarty->assign('img_dir', surl($smarty->template_dir."images"));
+	$smarty->assign('css_dir', surl($smarty->template_dir."css"));
+	$smarty->assign('js_dir', surl($smarty->template_dir."scripts/javascripts"));
 }
 
 function delfile($str) 
