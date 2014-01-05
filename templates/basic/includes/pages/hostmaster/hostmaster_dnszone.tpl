@@ -17,9 +17,10 @@
  *}
 {include file=generic/page-title.tpl title="`$lang.dnszone_edit`"}
 {include assign=dnszone_delete file=generic/link.tpl content="`$lang.delete`" link=$link_dnszone_delete confirm=TRUE}
-{include file=generic/section-level2.tpl title="`$lang.dnszone_edit`" right="$dnszone_delete" content=$form_zone}
-{include file=generic/section-level2.tpl title="`$lang.node_info`" content=$table_node_info}
-{include file=generic/section-level2.tpl title="`$lang.users_info`" content=$table_user_info}
-{include file=generic/section-level2.tpl title="`$lang.links`" content=$table_links}
-{include file=generic/section-level2.tpl title="`$lang.ip_ranges`" content=$table_ip_ranges}
-{include file=generic/section-level2.tpl title="`$lang.dns_zones`" content=$table_dns}
+{$dnszone_delete}
+{$form_zone}
+{include file=generic/section-level3.tpl title="`$lang.node_info`" content=$table_node_info}
+{include file=generic/section-level3.tpl title="`$lang.users_info`" content=$table_user_info}
+{include file=generic/section-level3.tpl title="`$lang.links`" content=$table_links}
+{include file=generic/section-level3.tpl title="`$lang.ip_ranges`" content=$table_ip_ranges}
+{include file=generic/section-level3.tpl title="`$lang.dns_zones`" content=$table_dns}

@@ -16,5 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.services_categories`"}
-{include assign="t1" file="generic/link.tpl" link=$link_services_categories_add content="`$lang.services_categories_add`"}
-{include file=generic/section-level3.tpl title="`$lang.services_categories` $t1" content=$table_services}
+{include file="generic/link.tpl" link=$link_services_categories_add content="`$lang.services_categories_add`"}
+{$table_services}

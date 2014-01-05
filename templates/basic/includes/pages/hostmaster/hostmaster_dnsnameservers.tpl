@@ -17,4 +17,4 @@
  *}
 {include file=generic/page-title.tpl title="`$lang.hostmaster_panel` > `$lang.dns_nameservers`"}
 {include file=generic/filter.tpl title="`$lang.dns_nameservers_search`" content=$form_search_nameservers}
-{include file=generic/section-level2.tpl title="`$lang.dns_nameservers_found`" content=$table_nameservers}
+{$table_nameservers}

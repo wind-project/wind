@@ -16,5 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.regions`"}
-{include assign="t1" file="generic/link.tpl" link=$link_region_add content="`$lang.region_add`"}
-{include file=generic/section-level3.tpl title="`$lang.regions` $t1" content=$table_regions}
+{include file="generic/link.tpl" link=$link_region_add content="`$lang.region_add`"}
+{$table_regions}

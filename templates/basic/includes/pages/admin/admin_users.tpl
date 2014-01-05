@@ -17,4 +17,4 @@
  *}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.users`"}
 {include file=generic/filter.tpl title="`$lang.users_search`" content=$form_search_users}
-{include file=generic/section-level3.tpl title="`$lang.users_found`" content=$table_users}
+{$table_users}
