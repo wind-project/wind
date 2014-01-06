@@ -412,7 +412,7 @@ class node_editor {
 					$this->tpl['link_node_delete'] = self_ref(array('action' => 'delete'));
 				$this->tpl['link_node_view'] = make_ref('/nodes', array('node' => get('node')));
 				$this->tpl['link_req_cclass'] = make_ref('/node_editor/range', array('node' => get('node')));
-				$this->tpl['link_req_v6_cclass'] = make_ref(array('/node_editor/range_v6', array('node' => get('node')));
+				$this->tpl['link_req_v6_cclass'] = make_ref('/node_editor/range_v6', array('node' => get('node')));
 				$this->tpl['link_req_dns_for'] = make_ref('/node_editor/dnszone', array('type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_req_dns_rev'] = make_ref('/node_editor/dnszone', array('type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_nameserver_add'] = make_ref('/node_editor/dnsnameserver', array('node' => get('node'), 'nameserver' => 'add'));

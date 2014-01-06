@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class mynodes_range_v6 {
+class node_editor_range_v6 {
 
 	var $tpl;
 	
-	function mynodes_range_v6() {
+	function __construct() {
 		
 	}
 	

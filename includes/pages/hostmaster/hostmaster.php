@@ -39,6 +39,7 @@ class hostmaster {
 		global $main, $lang;
 		$hostmaster_entry = $main->menu->main_menu->getRootEntry()->getChild('hostmaster');
 		$hostmaster_entry->createLink($lang['ip_ranges'], make_ref('/hostmaster/ranges'));
+		$hostmaster_entry->createLink($lang['ip_ranges_v6'], make_ref('/hostmaster/ranges_v6'));
 		$hostmaster_entry->createLink($lang['dns_zones'], make_ref('/hostmaster/dnszones'));
 		$hostmaster_entry->createLink($lang['db']['schema'], make_ref('/hostmaster/dnszones_schema'));
 		$hostmaster_entry->createLink($lang['dns_nameservers'], make_ref('/hostmaster/dnsnameservers'));

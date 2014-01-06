@@ -170,14 +170,20 @@ class menu {
 				$this->tpl['dnszones_waiting'] = $db->cnt('', "dns_zones", "status = 'waiting'");
 
 				$this->tpl['link_ranges'] = make_ref('/hostmaster/ranges');
-				$this->tpl['link_ranges_waiting'] = make_ref('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__status" => "waiting", "ip_ranges__delete_req" => "N"))));
+				$this->tpl['link_ranges_waiting'] = make_ref('/hostmaster/ranges',
+						array("form_search_ranges_search" => 
+								serialize(array("ip_ranges__status" => "waiting", "ip_ranges__delete_req" => "N"))));
 				$this->tpl['ranges_waiting'] = $db->cnt('', "ip_ranges", "status = 'waiting' AND delete_req = 'N'");
-				$this->tpl['link_ranges_req_del'] = make_ref('/hostmaster/ranges', array("form_search_ranges_search" => serialize(array("ip_ranges__delete_req" => "Y"))));
+				$this->tpl['link_ranges_req_del'] = make_ref('/hostmaster/ranges',
+						array("form_search_ranges_search" => 
+								serialize(array("ip_ranges__delete_req" => "Y"))));
 				$this->tpl['ranges_req_del'] = $db->cnt('', "ip_ranges", "delete_req = 'Y'");
-                                $this->tpl['link_ranges_v6'] = makelink(array("page" => "hostmaster", "subpage" => "ranges_v6"));
-				$this->tpl['link_ranges_v6_waiting'] = makelink(array("page" => "hostmaster", "subpage" => "ranges_v6", "form_search_ranges_v6_search" => serialize(array("ip_ranges_v6__status" => "waiting", "ip_ranges_v6__delete_req" => "N"))));
-                                $this->tpl['ranges_v6_waiting'] = $db->cnt('', "ip_ranges_v6", "status = 'waiting' AND delete_req = 'N'");
-				$this->tpl['link_ranges_v6_req_del'] = makelink(array("page" => "hostmaster", "subpage" => "ranges_v6", "form_search_ranges_v6_search" => serialize(array("ip_ranges_v6__delete_req" => "Y"))));
+				$this->tpl['link_ranges_v6'] = make_ref('/hostmaster/ranges_v6');
+				$this->tpl['link_ranges_v6_waiting'] = make_ref('/hostmaster/ranges_v6',
+						array("form_search_ranges_v6_search" => 
+								serialize(array("ip_ranges_v6__status" => "waiting", "ip_ranges_v6__delete_req" => "N"))));
+				$this->tpl['ranges_v6_waiting'] = $db->cnt('', "ip_ranges_v6", "status = 'waiting' AND delete_req = 'N'");
+				$this->tpl['link_ranges_v6_req_del'] = make_ref(array("page" => "hostmaster", "subpage" => "ranges_v6", "form_search_ranges_v6_search" => serialize(array("ip_ranges_v6__delete_req" => "Y"))));
 				$this->tpl['ranges_v6_req_del'] = $db->cnt('', "ip_ranges_v6", "delete_req = 'Y'");
 			}
 		}
