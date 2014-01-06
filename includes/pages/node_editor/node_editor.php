@@ -90,7 +90,29 @@ class node_editor {
 		$table_ip_ranges->db_data_translate('ip_ranges__status');
 		return $table_ip_ranges;
 	}
-
+        
+        function table_ip_ranges_v6() {
+		global $db;
+		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
+		$table_ip_ranges_v6->db_data(
+			'ip_ranges_v6.id, "" AS ip_range_v6, ipv6_node_repos.v6net AS v6net, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
+			'ip_ranges_v6, ipv6_node_repos',
+			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.v6net_id = ipv6_node_repos.id',
+			"",
+			"ip_ranges_v6.date_in ASC");
+		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
+			if ($key != 0) {
+				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+			}
+		}
+		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');
+		$table_ip_ranges_v6->db_data_multichoice_checked('delete_req', 'Y');
+		$table_ip_ranges_v6->info['MULTICHOICE_LABEL'] = 'delete_request';
+		$table_ip_ranges_v6->db_data_remove('id', 'ip_range_v6', 'delete_req');
+		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status');
+		return $table_ip_ranges_v6;
+	}
+        
 	function table_dns() {
 		global $db, $vars;
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
@@ -374,6 +396,7 @@ class node_editor {
 				$this->tpl['node_id'] = $t[0]['id'];
 				
 				$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
+                $this->tpl['table_ip_ranges_v6'] = $construct->table($this->table_ip_ranges_v6(), __FILE__);
 				$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 				$this->tpl['table_nameservers'] = $construct->table($this->table_nameservers(), __FILE__);
 				$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
@@ -389,6 +412,7 @@ class node_editor {
 					$this->tpl['link_node_delete'] = self_ref(array('action' => 'delete'));
 				$this->tpl['link_node_view'] = make_ref('/nodes', array('node' => get('node')));
 				$this->tpl['link_req_cclass'] = make_ref('/node_editor/range', array('node' => get('node')));
+				$this->tpl['link_req_v6_cclass'] = make_ref(array('/node_editor/range_v6', array('node' => get('node')));
 				$this->tpl['link_req_dns_for'] = make_ref('/node_editor/dnszone', array('type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_req_dns_rev'] = make_ref('/node_editor/dnszone', array('type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_nameserver_add'] = make_ref('/node_editor/dnsnameserver', array('node' => get('node'), 'nameserver' => 'add'));
@@ -432,6 +456,7 @@ class node_editor {
 			$db->set('dns_zones', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('ip_addresses', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('ip_ranges', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
+            $db->set('ip_ranges_v6', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('nodes_services', array('node_id' => $_POST['nodes__id']), "node_id = '".get('node')."'");
 			$db->set('links', array('node_id' => $_POST['nodes__id']), "node_id = ".intval(get('node')));
 			$db->set('links', array('peer_node_id' => $_POST['nodes__id']), "peer_node_id = ".intval(get('node')));
@@ -470,7 +495,21 @@ class node_editor {
 			$main->message->set_fromlang('error', 'generic');		
 		}
 	}
-
+        
+        function output_onpost_table_ip_ranges_v6() {
+		global $db, $main;
+		$ret = TRUE;
+		$ret = $ret && $db->set("ip_ranges_v6", array('delete_req' => 'N'), "node_id = ".intval(get('node')));
+		foreach( (array) $_POST['id'] as $key => $value) {
+			$ret = $ret && $db->set("ip_ranges_v6", array('delete_req' => 'Y'), "id = '".intval($value)."' AND node_id =  ".intval(get('node')));
+		}
+		if ($ret) {
+			$main->message->set_fromlang('info', 'update_success', self_ref());
+		} else {
+			$main->message->set_fromlang('error', 'generic');		
+		}
+	}
+        
 	function output_onpost_table_dns() {
 		global $db, $main;
 		$ret = TRUE;

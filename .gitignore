@@ -1,5 +1,20 @@
+# Exclude WiND installation-specific files
+/config/
+/files
+/templates/_compiled
+
 # Exclude Eclipse build files
 .project
 .settings/
 .buildpath
 .externalToolBuilders/
+
+# Exclude other editors meta files
+.*.swp
+*.orig
+*.rej
+*~
+.#*
+*#
+.emacs.desktop*
+nbproject/

@@ -35,7 +35,7 @@ class admin_areas {
 		global $construct, $db, $main;
 		$table_areas = new table(array('FORM_NAME' => 'table_areas', 'TABLE_NAME' => 'table_areas'));
 		$table_areas->db_data(
-			'areas.id, areas.name AS areas__name, areas.ip_start, areas.ip_end, areas.info, regions.name AS regions__name',
+			'areas.id, areas.name AS areas__name, areas.ip_start, areas.ip_end, areas.v6net, areas.v6prefix, areas.info, regions.name AS regions__name',
 			'areas ' .
 			'LEFT JOIN regions ON regions.id = areas.region_id',
 			"",
@@ -45,6 +45,7 @@ class admin_areas {
 			if (isset($table_areas->data[$i])) {
 				$table_areas->data[$i]['ip_start'] = long2ip($table_areas->data[$i]['ip_start']);
 				$table_areas->data[$i]['ip_end'] = long2ip($table_areas->data[$i]['ip_end']);
+                $table_areas->data[$i]['v6net'] = inet_ntop($table_areas->data[$i]['v6net']);  
 				$table_areas->info['EDIT'][$i] = make_ref('/admin/areas', array("area" => $table_areas->data[$i]['id']));
 			}
 		}

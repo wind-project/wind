@@ -1,5 +1,4 @@
-<?php
-/*
+{*
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
@@ -15,12 +14,5 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-$vars = array(
-	
-	'info' => array(
-		'version' => array(1, 1, '0-a1'),
-		'min_template_version' => 0
-		)
-);
+ *}
+{include file="constructors/table2.tpl"}

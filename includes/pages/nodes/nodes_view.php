@@ -79,7 +79,29 @@ class nodes_view {
 		$table_ip_ranges->db_data_translate('ip_ranges__status');
 		return $table_ip_ranges;
 	}
-
+        
+        function table_ip_ranges_v6() {
+		global $db;
+		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
+		$table_ip_ranges_v6->db_data(
+			'ip_ranges_v6.id, "" AS ip_range_v6, ipv6_node_repos.v6net AS v6net, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
+			'ip_ranges_v6, ipv6_node_repos',
+			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.v6net_id = ipv6_node_repos.id',
+			"",
+			"ip_ranges_v6.date_in ASC");
+		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
+			if ($key != 0) {
+				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+			}
+		}
+		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');
+		$table_ip_ranges_v6->db_data_multichoice_checked('delete_req', 'Y');
+		$table_ip_ranges_v6->info['MULTICHOICE_LABEL'] = 'delete_request';
+		$table_ip_ranges_v6->db_data_remove('id', 'ip_range_v6', 'delete_req');
+		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status');
+		return $table_ip_ranges_v6;
+	}
+        
 	function table_dns() {
 		global $db, $vars;
 		$table_dns = new table(array('TABLE_NAME' => 'table_dns', 'FORM_NAME' => 'table_dns'));
@@ -291,6 +313,7 @@ class nodes_view {
 		$this->tpl['node'] = $this->tpl['node'][0];
 		$this->tpl['link_contact'] = self_ref(array("subpage" => "contact"));
 		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
+                $this->tpl['table_ip_ranges_v6'] = $construct->table($this->table_ip_ranges_v6(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 		$this->tpl['table_nameservers'] = $construct->table($this->table_nameservers(), __FILE__);
 		$this->tpl['table_links_p2p'] = $construct->table($this->table_links_p2p(), __FILE__);

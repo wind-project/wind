@@ -6,6 +6,10 @@ It was created as a replacement for [NodeDB](http://www.nodedb.com/) by the memb
 
 WiND is distributed under [GNU Affero General Public License v3](http://www.gnu.org/licenses/agpl-3.0.html) where each piece of code remains under the copyright of their respective author. Everyone can see the source code and everyone can contribute to it.
 
+## Caution ##
+There have been changes in the Database. Please review the DB Schema before you try to use the current master source with your old installation.
+
+
 ## Features
  * Supports multiple users and multiple nodes per user
  * Supports controling of task authorization.
@@ -16,7 +20,8 @@ WiND is distributed under [GNU Affero General Public License v3](http://www.gnu.
  * Can be used to manage the distribution of IP Ranges and forward/reverse DNS assigned to each node (_Hostmaster_)
  * Fully themeable interface (using simple (X)HTML templates)
  * Support for localication; Unicode/UTF-8 support
- * Integrates with BIND Nameserver for serving the DNS zones.
+ * Supports provisioning of IPv4 and initial IPv6 addresses. 
+ * Integrates with BIND Nameserver for serving the IPv4 DNS zones.
  * A WHOIS server is provided that serves the data using the [WHOIS protocol](http://www.faqs.org/rfcs/rfc3912.html)
 
 ## Documentation

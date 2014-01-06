@@ -26,6 +26,7 @@
 		{include file="generic/section-level3.tpl" title="`$lang.node_info`" content="$t1"}
 		{include file="generic/section-level3.tpl" title="`$lang.db.nodes__info`" content="`$node.info`"|escape|nl2br}
 		{include file="generic/section-level3.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
+        {include file="generic/section-level3.tpl" title="`$lang.ip_ranges_v6`" content="`$table_ip_ranges_v6`"}
 		{include file="generic/section-level3.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
 		{include file="generic/section-level3.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}
 		<br />

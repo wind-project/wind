@@ -63,6 +63,10 @@
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.ip_addresses`" buttons="`$btn_add`" content=$table_ipaddr}
 		
+		{include assign="btn_add" file="generic/button.tpl" href=$link_req_v6_cclass content="`$lang.ip_range_v6_request`"
+			class="btn-success btn-sm" glyph="plus-sign"}
+		{include file=generic/section-level3.tpl title="`$lang.ip_ranges_v6`" buttons="`$btn_add`" content=$table_ipaddr}
+		
 		{include assign="btn_req_for" file="generic/button.tpl" href=$link_req_dns_for content="`$lang.dnszone_request_forward`"
 			class="btn-success btn-sm" glyph="envelope"}
 		{include assign="btn_req_rev" file="generic/button.tpl" href=$link_req_dns_rev content="`$lang.dnszone_request_reverse`"

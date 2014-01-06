@@ -587,6 +587,10 @@ $lang = array(
 			'title' => 'Aanvraag IP C-Class',
 			'body' => 'Omschrijf duidelijk de reden van uw aanvraag in het veld "Informatie".'
 		),
+        'node_editor_range_v6' => array(
+			'title' => 'IPv6 Net request',
+			'body' => 'Describe clearly the reason for your request in the field "Info".'
+		),
 		'node_editor_dnszone_request_reverse' => array(
 			'title' => 'Aanvraag DNS zone',
 			'body' => 'Omschrijf duidelijk de reden van uw aanvraag in het veld "Informatie".'

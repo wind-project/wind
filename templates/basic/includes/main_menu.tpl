@@ -47,6 +47,26 @@
 			</li>
 			{/if}
 		{/if}
+		{if $link_ranges_v6 != '' && ($ranges_v6_waiting != 0 || $ranges_v6_req_del != 0)}
+			<li>
+				<img src="{$img_dir}/node-small.png" alt="{$lang.ip_ranges}" />
+				<a href="{$link_ranges_v6}">{$lang.ip_ranges_v6}</a>
+			</li>
+
+			{if $ranges_v6_waiting != 0}
+				<li>
+				<a class="btn btn-info btn-sm" href="{$link_ranges_v6_waiting}">
+					<span class="badge">{$ranges_v6_waiting}</span> {$lang.waiting}</a>
+				</li>
+			{/if}
+			{if $ranges_v6_req_del != 0}
+				<li>
+				<a class="btn btn-warning btn-sm" href="{$link_ranges_v6_req_del}">
+					<span class="badge">{$ranges_v6_req_del}</span> {$lang.waiting}</a>
+				</li>
+			</li>
+			{/if}
+		{/if}
 		{if $link_dnszones != '' && $dnszones_waiting != 0}
 			<li>
 				<img src="{$img_dir}/dns-small.png" alt="{$lang.dns_zones}" />

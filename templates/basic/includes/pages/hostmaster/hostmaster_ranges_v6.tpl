@@ -1,5 +1,4 @@
-<?php
-/*
+{*
  * WiND - Wireless Nodes Database
  *
  * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
@@ -15,12 +14,17 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-$vars = array(
-	
-	'info' => array(
-		'version' => array(1, 1, '0-a1'),
-		'min_template_version' => 0
-		)
-);
+ *}
+{include file=generic/page-title.tpl title="`$lang.hostmaster_panel` > `$lang.ip_ranges_v6`"}
+<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
+<tr>
+<td class="table-page-pad">
+{include file=generic/title1.tpl title="`$lang.ip_ranges_search_v6`" content=$form_search_ranges_v6}
+</td>
+</tr>
+<tr>
+<td class="table-page-pad">
+{include file=generic/title2.tpl title="`$lang.ip_ranges_v6_found`" content=$table_ranges_v6}
+</td>
+</tr>
+</table>

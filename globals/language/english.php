@@ -590,6 +590,10 @@ $lang = array(
 			'title' => 'IP C-Class request',
 			'body' => 'Describe clearly the reason for your request in the field "Info".'
 		),
+        'node_editor_range_v6' => array(
+			'title' => 'IPv6 Net request',
+			'body' => 'Describe clearly the reason for your request in the field "Info".'
+		),
 		'node_editor_dnszone_request_reverse' => array(
 			'title' => 'DNS zone request',
 			'body' => 'Describe clearly the reason for your request in the field "Info".'

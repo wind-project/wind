@@ -6,11 +6,36 @@ CREATE TABLE IF NOT EXISTS `areas` (
   `ip_start` int(10) NOT NULL default '0',
   `ip_end` int(10) NOT NULL default '0',
   `info` text,
+  `v6net` varbinary(16) default '0',
+  `v6prefix` smallint(6) default '0',
   PRIMARY KEY  (`id`),
   KEY `region_id` (`region_id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
-  KEY `ip_end` (`ip_end`)
+  KEY `ip_end` (`ip_end`),
+  KEY `v6net` (`v6net`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ipv6_node_repos` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `area_id` int(10) unsigned NOT NULL default '0',
+  `node_id` int(10) unsigned NOT NULL default '0',
+  `v6net` varbinary(16) default '0',
+  PRIMARY KEY (`id`),
+  KEY `aread_id` (`area_id`),
+  KEY `node_id` (`node_id`),
+  KEY `v6net` (`v6net`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ipv6_area_repos` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `region_id` int(10) unsigned NOT NULL,
+  `area_id` int(10) unsigned default '0',
+  `v6net` varbinary(16) default '0',
+  PRIMARY KEY (`id`),
+  KEY `region_id` (`region_id`),
+  KEY `area_id` (`area_id`),
+  KEY `v6net` (`v6net`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_nameservers` (
@@ -88,6 +113,22 @@ CREATE TABLE IF NOT EXISTS `ip_ranges` (
   KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
+  `node_id` int(10) unsigned NOT NULL default '0',
+  `v6net_id` int(10) unsigned NOT NULL default '0',
+  `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
+  `info` text,
+  `delete_req` enum('Y','N') NOT NULL default 'N',
+  PRIMARY KEY  (`id`),
+  KEY `unique_keys` (`node_id`),
+  KEY `date_in` (`date_in`),
+  KEY `v6net_id` (`v6net_id`),
+  KEY `status` (`status`),
+  KEY `delete_req` (`delete_req`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `links` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -110,23 +151,29 @@ CREATE TABLE IF NOT EXISTS `links` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `nodes` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
-  `name` varchar(50) NOT NULL default '',
-  `name_ns` varchar(50) NOT NULL default '',
-  `area_id` int(10) unsigned default '0',
-  `latitude` float default NULL,
-  `longitude` float default NULL,
-  `elevation` int(10) unsigned default NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date_in` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `due_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `last_change` datetime DEFAULT '0000-00-00 00:00:00',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `name_ns` varchar(50) NOT NULL DEFAULT '',
+  `area_id` int(10) unsigned DEFAULT '0',
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  `elevation` int(10) unsigned DEFAULT NULL,
   `info` text,
-  PRIMARY KEY  (`id`),
+  `status` enum('active','inactive','pending','deleted') NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `unique_keys` (`name_ns`),
   KEY `date_in` (`date_in`),
+  KEY `due_date` (`due_date`),
+  KEY `last_change` (`last_change`),  
   KEY `name` (`name`),
   KEY `area_id` (`area_id`),
+  KEY `status` (`status`),
   KEY `latitude` (`latitude`),
   KEY `longitude` (`longitude`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 CREATE TABLE IF NOT EXISTS `nodes_services` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -164,11 +211,14 @@ CREATE TABLE IF NOT EXISTS `regions` (
   `name` varchar(40) NOT NULL default '',
   `ip_start` int(10) NOT NULL default '0',
   `ip_end` int(10) NOT NULL default '0',
+  `v6net` varbinary(16) default '0',
+  `v6prefix` smallint(6) default '0',
   `info` text,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
-  KEY `ip_end` (`ip_end`)
+  KEY `ip_end` (`ip_end`),
+  KEY `v6net` (`v6net`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `rights` (
