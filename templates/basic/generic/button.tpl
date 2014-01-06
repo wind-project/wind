@@ -29,6 +29,10 @@
 {/if}
 
 {if $href}
-	{assign var=onclick value="javascript: window.location='`$href`'"}
+	{if $confirm == TRUE}
+		{assign var=onclick value="javascript: if (confirm('$content?') == true) window.location='`$href`';"}
+	{else}
+		{assign var=onclick value="javascript: window.location='`$href`'"}
+	{/if}
 {/if}
 <button type="button" class="btn {$btn_class}" {if $onclick != ''} onclick="{$onclick}"{/if}>{$extra_left_content}{$content}</button>

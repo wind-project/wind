@@ -83,7 +83,7 @@ class center {
 	function output() {
 		global $main;
 		if (!$this->security_check()) {
-			$main->message->set_fromlang('info', 'no_privilege');
+			$main->message->set_fromlang('error', 'no_privilege');
 			return;
 		}
 		return $this->page->output();
