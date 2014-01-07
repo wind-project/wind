@@ -85,7 +85,7 @@ LoginForm.prototype.reset = function(){
 	this._dialog_el.removeClass('error');
 	this._dialog_el.removeClass('info');
 	this._dialog_el.find('input[type=text], input[type=password]').val('');
-}
+};
 
 /**
  * @brief Load form from the remote url
@@ -108,7 +108,6 @@ LoginForm.prototype.load = function(success){
 			});
 			
 			// Hook form submition
-			console.log(object._dialog_el.find('form'));
 			object._dialog_el.find('form').submit(function() {
 				object.info('Logging to the system');
 				async_form($(this), function(result){
@@ -158,7 +157,7 @@ LocationPicker = function(lat_element, lng_element) {
 	
 	// Private variables
 	this._lat_element = lat_element;
-	this._lng_element = lng_element
+	this._lng_element = lng_element;
 	
 	// Extract initial values
 	var position = null;
@@ -201,7 +200,7 @@ LocationPicker = function(lat_element, lng_element) {
 		height: 'auto',
 		closeOnEscape: false,
 		dialogClass: 'picker-dialog no-title-dialog'
-	})
+	});
 };
 
 LocationPicker.prototype.destroy = function() {
@@ -210,4 +209,89 @@ LocationPicker.prototype.destroy = function() {
 	
 	delete this._lat_element;
 	delete this._lng_element;
+};
+
+/**
+ * @brief A table data filter mechanism
+ * @param title The title of the search form
+ * @param filter_element A string or DOM element of the filter form
+ * @param table_element A string or DOM element of the data table
+ * @returns {TableFilter}
+ */
+TableFilter = function(title, filter_element, table_element) {
+	var TableFilterObject = this;
+	
+	// Accept dom element and selectors
+	if (typeof(filter_element) == 'string')
+		filter_element = $(filter_element);
+	if (typeof(table_element) == 'string')
+		table_element = $(table_element);
+	
+	// Private variables
+	this.filter_element = filter_element;
+	this.raw_table_element = table_element;
+	this.title = title;
+	
+	this.filter_element.hide();
+	
+	// Add table wrapper and buttons
+	this.table_element = this.raw_table_element.wrap('<div class="table-data-filter-wrapper" />').parent();
+	this.table_element.prepend('<div class="table-data-filter-toolbar" />');
+	this.table_element.find('.table-data-filter-toolbar').append(
+		$('<button type="button" class="btn btn-default btn-sm search"/>')
+			.text('Filter')
+			.prepend('<span class="glyphicon glyphicon-filter"></span>')
+			
+	);
+	
+	// Create filter overview
+	this._constructFilterOverview(this.table_element.find('.table-data-filter-toolbar'));
+	// Add callbacks
+	this.table_element.find('button.search').click(function(){
+		TableFilterObject.filter_element.dialog({
+			modal: true,
+			resizable: false,
+			height: 'auto',
+			width: 'auto',
+			title: title
+		});
+	});
+};
+
+TableFilter.prototype._constructFilterOverview = function(toolbar) {
+	
+	// Scan form values
+	var enabled_filters = [];
+	this.filter_element.find('.form-entry').each(function(index, entry){
+		e = $(entry);
+		var label = e.find('label').text();
+		var val = '';
+		if (e.find('input').length) {
+			val = e.find('input').val();
+			if (val && (e.find('select').length)) {
+				map_comparison = {equal : '=', greater : '>', less : '<', greater_equal : '>=', less_equal : '<='};
+				val = map_comparison[e.find('select').val()] + val;
+			}
+		} else {
+			if (e.find('select option:selected').val())
+				val = e.find('select option:selected').text();
+		} 
+
+		if (val) {
+			enabled_filters.push({label:label, value:val});
+		}
+		
+	});
+	
+	// Create title bar
+	var list = $('<ul class="enabled-filters list-unstyled list-inline"/>');
+	$.each(enabled_filters, function(index, obj){
+		var entry = $('<li/>').append(
+				$('<span class="name">').text(obj.label),
+				$('<span class="value code">').text(obj.value)
+		);
+		list.append(entry);
+	});
+	
+	toolbar.prepend(list);
 };

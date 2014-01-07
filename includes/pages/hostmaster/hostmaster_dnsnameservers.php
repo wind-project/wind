@@ -66,7 +66,7 @@ class hostmaster_dnsnameservers {
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
 			
-				$table_nameservers->info['EDIT'][$i] = makelink(array("page" => "hostmaster", "subpage" => "dnsnameserver", "nameserver" => $table_nameservers->data[$i]['id']));
+				$table_nameservers->info['EDIT'][$i] = make_ref('/hostmaster/dnsnameserver', array("nameserver" => $table_nameservers->data[$i]['id']));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
@@ -94,7 +94,7 @@ class hostmaster_dnsnameservers {
 						"dns_nameservers.id = '".intval($value)."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

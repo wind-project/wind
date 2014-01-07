@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 <div class="language-selection">
-<a href="#" id="select-language"><img alt="current" src="{$img_dir}flags/{$current_language}.gif" /></a>
+<a href="#" id="select-language"><img alt="current" src="{$img_dir}/flags/{$current_language}.gif" /></a>
 <ul id="languages" class="languages">
 	{foreach key=key item=item from=$languages}
 	<li>
-	<a href="{$item.link}"><img alt="{$item.name}" src="{$img_dir}flags/{$key}.gif" /> {$item.name}</a>
+	<a href="{$item.link|escape}"><img alt="{$item.name}" src="{$img_dir}/flags/{$key}.gif" /> {$item.name}</a>
 	</li> 
 	{/foreach}
 </ul>
@@ -31,6 +31,7 @@
 $(function(){
 	$('#select-language').click(function() {
 		$('#languages').toggle();
+		$('#languages').offset({'left': $('#select-language').offset().left -15});
 	});
 
 });

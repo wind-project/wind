@@ -38,7 +38,7 @@ class center {
 			case 'hostmaster':
 				return ($main->userdata->privileges['hostmaster'] === TRUE);
 				break;
-			case 'mynodes':
+			case 'node_editor':
 				if ($main->userdata->logged === TRUE) {
 					if (get('node') == 'add') return TRUE;
 					if (get('node') != 'add' && get('action') == 'delete') {
@@ -60,7 +60,7 @@ class center {
 			case 'ranges':
 			case 'dnszones':
 			case 'pickup':
-			case 'gmap':
+			case 'map':
 			case 'gearth':
 			case 'services':
 			case 'search':
@@ -83,7 +83,7 @@ class center {
 	function output() {
 		global $main;
 		if (!$this->security_check()) {
-			$main->message->set_fromlang('info', 'no_privilege');
+			$main->message->set_fromlang('error', 'no_privilege');
 			return;
 		}
 		return $this->page->output();

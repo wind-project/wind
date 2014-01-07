@@ -63,34 +63,52 @@ function sendmail_changed() {{/literal}
 {literal}}
 </script>
 {/literal}
+<div class="form-bs">
 <form name="{$extra_data.FORM_NAME}" method="post">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
-<table class="table-form">
-	<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.0.fullField]}{if $data.0.Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data.0.fullField}" type="text" value="{$data.0.value|escape}" /></td></tr>
-
-	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data.1.fullField}" type="text" value="{$data.1.value|escape}" /></td></tr>
-
-	<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.2.fullField]}{if $data.2.Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data.2.fullField}">{$data.2.value|escape}</textarea></td></tr>
-
-	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.3.fullField]}{if $data[3].Null != 'YES'}*{/if}:</td>
-	<td class="table-form-field">
-		<select class="fld-form-input" name="{$data[3].fullField}" onchange="status_changed()">
+	<div class="form-group">
+		<label class="form-title">{$lang.db[$data.0.fullField]}{if $data.0.Null != 'YES'}*{/if}:</label>
+		<input class="form-control" name="{$data.0.fullField}" type="text" value="{$data.0.value|escape}" />
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</label>
+		<input class="form-control"  name="{$data.1.fullField}" type="text" value="{$data.1.value|escape}" />
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.2.fullField]}{if $data.2.Null != 'YES'}*{/if}:</label>
+		<textarea class="form-control"  name="{$data.2.fullField}">{$data.2.value|escape}</textarea>
+	</div>
+	<div class="form-group">
+		<label>{$lang.db[$data.3.fullField]}{if $data[3].Null != 'YES'}*{/if}:</label>
+		<select class="form-control" name="{$data[3].fullField}" onchange="status_changed()">
 			{section loop=$data[3].Type_Enums name=e}
 			<option value="{$data[3].Type_Enums[e].value|escape}"{if $data[3].Type_Enums[e].value == $data[3].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.3.fullField value=$data[3].Type_Enums[e].output}</option>
 			{/section}
 		</select>
-	</td></tr>	
-<tr class="table-form-row1"><td class="table-form-field" colspan="2"><input type="checkbox" name="sendmail" value="Y" onclick="sendmail_changed()" />&nbsp;{$lang.send_mail}</td></tr>
-<tr class="table-form-row2"><td class="table-form-title">{$lang.to}:</td><td class="table-form-field">
-		<select class="fld-form-input" name="email_to_type" onchange="email_to_type_changed()" disabled="disabled">
+	</div>
+	<div class="form-group">
+		<input type="checkbox" name="sendmail" value="Y" onclick="sendmail_changed()" />&nbsp;{$lang.send_mail}
+	</div>
+	<div class="form-group">
+		<label>{$lang.to}:</label>
+		<select class="form-control"  name="email_to_type" onchange="email_to_type_changed()" disabled="disabled">
 			<option value="all">{$lang.mailto_all}</option>
 			<option value="owner">{$lang.mailto_owner}</option>
 			<option value="custom">{$lang.mailto_custom}</option>
-		</select><br />
-<input class="fld-form-input" type="text" name="email_to" value="{$extra_data.email_all}" disabled="disabled" /></td></tr>
-<tr class="table-form-row1"><td class="table-form-title">{$lang.subject}:</td><td class="table-form-field"><input class="fld-form-input" type="text" name="email_subject" disabled="disabled" /></td></tr>
-<tr class="table-form-row2"><td class="table-form-title"s>{$lang.body}:</td><td class="table-form-field"><textarea class="fld-form-input" name ="email_body" disabled="disabled"></textarea></td></tr>
-<tr><td  class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td></tr>
-</table>
-</form>
+		</select>
+		<input class="form-control" type="text" name="email_to" value="{$extra_data.email_all}" disabled="disabled" />
+	</div>
+	<div class="form-group">
+		<label>{$lang.subject}:</label>
+		<input class="form-control" type="text" name="email_subject" disabled="disabled" />
+	</div>
+	<div class="form-group">
+		<label>{$lang.body}:</label>
+		<textarea class="form-control" class="email-body" name="email_body" disabled="disabled"></textarea>
+	</div>
+	<div class="buttons">
+		<button class="btn btn-primary" type="submit">{$lang.submit}</button>
+	</div>
+	</form>
+</div>

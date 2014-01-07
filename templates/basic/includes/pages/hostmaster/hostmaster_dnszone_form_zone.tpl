@@ -63,47 +63,68 @@ function sendmail_changed() {{/literal}
 {literal}}
 </script>
 {/literal}
-<script language="JavaScript" type="text/javascript" src="{$js_dir}pickup.js"></script>
+<script type="text/javascript" src="{$js_dir}/pickup.js"></script>
 <form name="{$extra_data.FORM_NAME}" method="post">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
-<table class="table-form">
-	<tr class="table-form-row1"><td class="table-form-title">{$lang.db[$data.0.fullField]}{if $data.0.Null != 'YES'}*{/if}:</td><td class="table-form-field"><input class="fld-form-input" name="{$data.0.fullField}" type="text" value="{$data.0.value|escape}" /></td></tr>
+<div class="form-bs">
+	<div class="form-group">
+		<label>{$lang.db[$data.0.fullField]}{if $data.0.Null != 'YES'}*{/if}:</label>
+		<input class="form-control" name="{$data.0.fullField}" type="text" value="{$data.0.value|escape}" />
+	</div>
 
-	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</td><td class="table-form-field"><textarea class="fld-form-input" name="{$data.1.fullField}">{$data.1.value|escape}</textarea></td></tr>
+	<div class="form-group">
+		<label>{$lang.db[$data.1.fullField]}{if $data.1.Null != 'YES'}*{/if}:</label>
+		<textarea class="form-control" name="{$data.1.fullField}">{$data.1.value|escape}</textarea>
+	</div>
 
-	<tr class="table-form-row1">
-	<td class="table-form-title">{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</td>
-	<td class="table-form-field" >
-		<select class="fld-form-input" name="{$data.2.fullField}[]" size="5" multiple="multiple">
+	<div class="form-group">
+		<label>{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</label>
+		<select class="form-control" name="{$data.2.fullField}[]" size="5" multiple="multiple">
 			{section loop=$data.2.Type_Pickup name=e}
 			{assign var="value" value=$data.2.Type_Pickup[e].value}
 			<option value="{$data.2.Type_Pickup[e].value|escape}" selected="selected">{include file=constructors/form_enum.tpl fullField=$fullField value=$data.2.Type_Pickup[e].output}</option>
 			{/section}
 		</select>
-		{include file=generic/link.tpl content="`$lang.add`" onclick="javascript: t = window.open('`$data.2.Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
-		{include file=generic/link.tpl content="`$lang.remove`" onclick="javascript: remove_selected(window.document.`$extra_data.FORM_NAME`.elements['`$data.2.fullField`[]']); return false;"}
-	</td>	
-	</tr>
+		{include file="generic/button.tpl" class="btn-success btn-xs" glyph="plus-sign" content=`$lang.add`
+			onclick="javascript: t = window.open('`$data.2.Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus();"}
+		{include file="generic/button.tpl" class="btn-danger btn-xs" glyph="minus-sign" content=`$lang.remove`
+			onclick="javascript: remove_selected(window.document.`$extra_data.FORM_NAME`.elements['`$data.2.fullField`[]']); return false;" }
+	</div>
+	
+	
+	<div class="form-group">
+		<label>{$lang.db[$data.3.fullField]}{if $data[d].Null != 'YES'}*{/if}:</label>
 		
-	<tr class="table-form-row2"><td class="table-form-title">{$lang.db[$data.3.fullField]}{if $data[d].Null != 'YES'}*{/if}:</td>
-	<td class="table-form-field">
-		<select class="fld-form-input" name="{$data[3].fullField}" onchange="status_changed()">
+		<select class="form-control" name="{$data[3].fullField}" onchange="status_changed()">
 			{section loop=$data[3].Type_Enums name=e}
 			<option value="{$data[3].Type_Enums[e].value|escape}"{if $data[3].Type_Enums[e].value == $data[3].value} selected="selected"{/if}>{include file=constructors/form_enum.tpl fullField=$data.3.fullField value=$data[3].Type_Enums[e].output}</option>
 			{/section}
 		</select>
-	</td></tr>	
-<tr class="table-form-row1"><td class="table-form-field" colspan="2"><input type="checkbox" name="sendmail" value="Y" onclick="sendmail_changed()" />&nbsp;{$lang.send_mail}</td></tr>
-<tr class="table-form-row2"><td class="table-form-title">{$lang.to}:</td><td class="table-form-field">
-		<select class="fld-form-input" name="email_to_type" onchange="email_to_type_changed()" disabled="disabled">
+	</div>
+	<div class="form-group">
+		<input type="checkbox" name="sendmail" value="Y" onclick="sendmail_changed()" />&nbsp;{$lang.send_mail}
+	</div>
+	<div class="form-group">
+		<label>{$lang.to}:</label>
+		<select class="form-control" name="email_to_type" onchange="email_to_type_changed()" disabled="disabled">
 			<option value="all">{$lang.mailto_all}</option>
 			<option value="owner">{$lang.mailto_owner}</option>
 			<option value="custom">{$lang.mailto_custom}</option>
 		</select><br />
-<input class="fld-form-input" type="text" name="email_to" value="{$extra_data.email_all}" disabled="disabled" /></td></tr>
-<tr class="table-form-row1"><td class="table-form-title">{$lang.subject}:</td><td  class="table-form-field"><input class="fld-form-input" type="text" name="email_subject" disabled="disabled" /></td></tr>
-<tr class="table-form-row2"><td class="table-form-title">{$lang.body}:</td><td  class="table-form-field"><textarea class="fld-form-input" name ="email_body" disabled="disabled"></textarea></td></tr>
-<tr><td  class="table-form-submit" colspan="2"><input class="fld-form-submit" type="submit" name="submit" value="{$lang.submit}" /></td></tr>
-</table>
+		<input class="form-control" type="text" name="email_to" value="{$extra_data.email_all}" disabled="disabled" />
+	</div>
+	
+	<div class="form-group">
+		<label>{$lang.subject}:</label>
+		<input class="form-control" type="text" name="email_subject" disabled="disabled" />
+	</div>
+	<div class="form-group">
+		<label>{$lang.body}:</label>
+		<textarea class="form-control" class="email-body" name ="email_body" disabled="disabled"></textarea>
+	</div>
+<div class="buttons">
+<button class="btn btn-primary" type="submit">{$lang.submit}</button>
+</div>
+</div>
 </form>

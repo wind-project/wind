@@ -27,7 +27,7 @@ function loadXMLDoc(input) {
 		document.getElementById('searchResult').style.display = 'none';
 	} else {
 		origval = input;
-		url = "{/literal}{$suggest_url}{literal}&q=" + input;
+		url = "{/literal}{$suggest_url}{literal}?q=" + input;
 		// Internet Explorer
 		try { req = new ActiveXObject("Msxml2.XMLHTTP"); }
 		catch(e) {

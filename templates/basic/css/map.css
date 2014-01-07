@@ -1,0 +1,283 @@
+/*
+ * WiND - Wireless Nodes Database
+ *
+ * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
+@CHARSET "UTF-8";
+
+.map {
+	position: relative;
+	background-color: white;
+	border: 2px solid #d1d1d1;
+	border-radius: 4px;
+}
+
+.map-node-action-popup iframe {
+	width: 580px;
+	height: 430px;
+}
+.map-picker-dialog {
+	padding: 0px !important;
+	width: 800px;
+	height: 400px;
+}
+.map.picker{
+	width: 800px;
+	height: 400px;
+	border-width: 0px;
+	border-radius: 0px;
+}
+
+.map.fullscreen {
+	position: fixed;
+	z-index: 1000;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	width: auto !important;
+	height: auto !important;
+	border-radius: 0px;
+	border-width: 0px;
+}
+
+.map-control {
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	z-index: 1000;
+	background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
+	padding: 3px;
+	border-radius: 4px;
+}
+
+.map-control .button{
+	font: 12px Verdana;
+	padding: 8px 8px 8px 8px;
+	height: 28px;
+	border-radius: 4px;
+	border: none;
+	box-shadow: none;
+	background-color: rgba(0, 60, 136, 0.5);
+	color: #dedede;
+	text-shadow: 1px 1px 2px #565656;
+	display: inline-block;
+	white-space: pre;
+}
+
+.map-control .button:hover{
+	cursor: pointer;
+	background-color: rgba(0, 60, 136, 0.698);
+	color: white;
+}
+
+/** Location picker control **/
+.map-control.map-control-picker {
+	top: auto;
+	bottom: 8px;
+}
+
+.map-control-picker .coordinates {
+	background-color: rgba(47, 55, 66, 0.698);
+	color: white;
+	display: inline-block;
+	height: 28px;
+	padding: 8px 8px 8px 8px;
+	border-radius: 4px;
+}
+
+.map-control-picker .button {
+	background: rgba(0, 60, 136, 0.75);
+}
+.map-control-picker .button:hover{
+	background: rgba(0, 60, 136, 0.85);
+}
+	
+.map-control-picker .button.ok {
+	margin-left: 4px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px; 
+}
+
+.map-control-picker .button.cancel {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px; 
+}
+
+/** Fullscreen button **/
+.map-control-fullscreen{
+	right: 8px; 
+}
+.map-control-fullscreen span.button {
+	display: block;
+	width: 28px;
+	background-image: url('../images/fullscreen.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+/** Map Filter **/
+.map-control-filter {
+	right: 45px;
+}
+.map-control-filter ul{
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+	font: 10px Verdana;
+	margin-bottom: -2px; /** nasty hack for the extra 2px pad when overflow is hidden!!?*/
+}
+
+.map-control-filter li.button {
+	padding: 8px 0px 8px 20px;
+	background: rgba(0, 60, 136, 0.5) url('../images/map/mm_20_grey.png') no-repeat 4px 4px;
+	width: 0px;
+	overflow: hidden;
+	border-radius: 0px;
+	text-shadow: none;
+}
+
+.map-control-filter li.p2p {	background-image: url('../images/map/mm_20_orange_inactive.png');	}
+.map-control-filter li.p2p.active {	background-image: url('../images/map/mm_20_orange.png');	}
+
+.map-control-filter li.ap {	background-image: url('../images/map/mm_20_green_inactive.png');	}
+.map-control-filter li.ap.active {	background-image: url('../images/map/mm_20_green.png');	}
+
+.map-control-filter li.client {	background-image: url('../images/map/mm_20_blue_inactive.png');	}
+.map-control-filter li.client.active {	background-image: url('../images/map/mm_20_blue.png');	}
+
+.map-control-filter li.unlinked {	background-image: url('../images/map/mm_20_red_inactive.png');	}
+.map-control-filter li.unlinked.active {	background-image: url('../images/map/mm_20_red.png');	}
+
+
+.map-control-filter ul:hover li{
+	width: auto;
+	padding-right: 8px;
+	color: #d1d1d1;
+}
+
+.map-control-filter li:first-child {
+	border-radius: 4px 0px 0px 4px;
+}
+.map-control-filter li:last-child {
+	border-radius: 0px 4px 4px 0px;
+}
+
+.map-control-filter ul li.active{
+	text-shadow: 1px 1px 2px #565656;
+	color: white;
+}
+
+/** NodePopup **/
+.olPopup {
+	box-shadow: 2px 2px 8px #343434;
+	border-radius: 0px 12px 12px 12px;
+	background: white url(../images/popup-arrow.png) no-repeat 4px 4px;
+}
+
+.olPopup div.olPopupContent *{
+	font-family:  Verdana;	/* google api tries to overide this... */
+	font-size: 11px;
+}
+
+.olPopupContent {
+	color: #464646;
+	padding: 8px 14px 4px 14px !important;
+}
+
+.olPopupContent a{
+	margin-top: 8px;
+	margin-bottom: -5px;
+	display: block;
+	font-weight: bold;
+	color: #475B7A;
+}
+	
+.olPopupContent a:hover{
+	text-decoration: none;
+	color: #7989E0;
+}
+	
+.olPopupContent .title{
+	font-weight: bold;
+	font-size: 13px;
+	display: block;
+	margin: 4px 0px; 
+}
+
+.olPopupContent .id{
+	color: #909090;
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	top: 4px;
+}
+
+
+.olPopupContent ul.attributes{
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+.olPopupContent ul.attributes li{
+	margin: 1px 0px;
+}
+
+
+
+/** Layers switcher Control **/ 
+
+.olMap .olControlLayerSwitcher{
+	top: 50px !important;
+	padding: 3px 0px 3px 3px;
+	border-radius: 4px 0px 0px 4px;
+	background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.4);
+	width: auto;
+}
+
+.olMap .olControlLayerSwitcher div,
+.olMap .olControlLayerSwitcher label,
+.olMap .olControlLayerSwitcher a {
+	font-size: 10px;
+	font-family: Verdana !important;
+	font-weight: normal;
+}
+
+.olMap .olControlLayerSwitcher .layersDiv {
+	
+	border-radius: 4px 0px 0px 4px;
+	background-color: rgba(0, 60, 136, 0.698) !important;
+	padding-bottom: 10px;
+	padding-right: 50px;
+}
+
+.olControlLayerSwitcher .maximizeDiv, .olControlLayerSwitcher .minimizeDiv {
+	top: 8px !important;
+}
+
+/* fix maximize button */
+.olControlLayerSwitcher .maximizeDiv img {
+	display: none;
+}
+
+.olControlLayerSwitcher div.maximizeDiv {
+	background: rgba(0, 60, 136, 0.5) url('../images/map/layers_maximize.png') no-repeat ;
+	border-radius: 4px 0px 0px 4px;
+}
+
+.olControlLayerSwitcher div.maximizeDiv:hover {
+	background-color: rgba(0, 60, 136, 0.698) !important;
+}

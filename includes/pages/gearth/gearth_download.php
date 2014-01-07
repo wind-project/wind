@@ -71,7 +71,7 @@ class gearth_download {
 					else  $xml2 .= $lang['aps'].": ".$value['total_aps']."<br />";
 				}
 				if ($value['total_clients'] != 0) $xml2 .= $lang['clients'].": ".$value['total_clients']."<br />";
-				$xml2 .= "<a href=\"".$vars['site']['url'].makelink(array("page" => "nodes", "node" => $value['id'], "show_map" => "no"))."\">".$lang['node_page']."</a><br />";
+				$xml2 .= "<a href=\"".$vars['site']['url'].make_ref('/nodes', array("node" => $value['id'], "show_map" => "no"))."\">".$lang['node_page']."</a><br />";
 				$xml2 .= "</description>";
 				$xml2 .= "<name>".htmlspecialchars($value['nodes__name'], ENT_COMPAT, $lang['charset'])."</name>\n";
 				$xml2 .= "<LookAt>\n";
@@ -88,7 +88,7 @@ class gearth_download {
 				if ($value['id'] == get('node')) {
 					$xml2 .= "<scale>0.6</scale>\n";
 					$xml2 .= "<Icon>\n";
-					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/gmap/mm_50_grey.png</href>\n";
+					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/map/mm_50_grey.png</href>\n";
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
@@ -101,7 +101,7 @@ class gearth_download {
 				} elseif ($value['id'] == get('node2')) {
 					$xml2 .= "<scale>0.6</scale>\n";
 					$xml2 .= "<Icon>\n";
-					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/gmap/mm_50_grey.png</href>\n";
+					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/map/mm_50_grey.png</href>\n";
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
@@ -114,7 +114,7 @@ class gearth_download {
 				} elseif ($value['total_aps'] != 0 ) {
 					$xml2 .= "<scale>0.6</scale>\n";
 					$xml2 .= "<Icon>\n";
-					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/gmap/mm_50_green.png</href>\n";
+					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/map/mm_50_green.png</href>\n";
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
@@ -127,7 +127,7 @@ class gearth_download {
 				} elseif ($value['total_p2p'] != 0 ) {
 					$xml2 .= "<scale>0.6</scale>\n";
 					$xml2 .= "<Icon>\n";
-					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/gmap/mm_50_orange.png</href>\n";
+					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/map/mm_50_orange.png</href>\n";
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
@@ -140,7 +140,7 @@ class gearth_download {
 				} elseif ($value['total_client_on_ap'] != 0) {
 					$xml2 .= "<scale>0.4</scale>\n";
 					$xml2 .= "<Icon>\n";
-					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/gmap/mm_20_blue.png</href>\n";
+					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/map/mm_20_blue.png</href>\n";
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
@@ -153,7 +153,7 @@ class gearth_download {
 				} else {
 					$xml2 .= "<scale>0.4</scale>\n";
 					$xml2 .= "<Icon>\n";
-					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/gmap/mm_20_red.png</href>\n";
+					$xml2 .= "<href>".$vars['site']['url']."templates/basic/images/map/mm_20_red.png</href>\n";
 					$xml2 .= "</Icon>\n";
 					$xml2 .= "</IconStyle>\n";
 					$xml2 .= "</Style>\n";
@@ -230,8 +230,8 @@ class gearth_download {
 				$xml .= "<latitude>".$selected_node['latitude']."</latitude>\n";
 				$xml .= "<range>1600</range>\n";
 			} else {
-				$long = str_replace(",",".",($vars['gmap']['bounds']['max_longitude'] + $vars['gmap']['bounds']['min_longitude'])/2);
-				$lat = str_replace(",",".",($vars['gmap']['bounds']['max_latitude'] + $vars['gmap']['bounds']['min_latitude'])/2);
+				$long = str_replace(",",".",($vars['map']['bounds']['max_longitude'] + $vars['map']['bounds']['min_longitude'])/2);
+				$lat = str_replace(",",".",($vars['map']['bounds']['max_latitude'] + $vars['map']['bounds']['min_latitude'])/2);
 				$xml .= "<longitude>".$long."</longitude>\n";
 				$xml .= "<latitude>".$lat."</latitude>\n";
 				$xml .= "<range>40000</range>\n";

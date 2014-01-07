@@ -34,6 +34,11 @@ class ranges {
 	}
 	
 	function output() {
+		global $main, $lang;
+		$menu_addr = $main->menu->main_menu->getRootEntry()->getChild('addresses');
+		$menu_addr->createLink($lang['ip_ranges_search'], make_ref('/ranges/search'));
+		$menu_addr->createLink($lang['ip_ranges_allocation'], make_ref('/ranges/allocation'));
+		
 		return $this->page->output();
 	}
 

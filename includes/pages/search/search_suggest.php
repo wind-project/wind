@@ -50,7 +50,7 @@ class search_suggest {
 										'nodes.id ASC',
 										$this->limit);
 			foreach ((array)$this->tpl['nodes_search'] as $key => $value) {
-				$this->tpl['nodes_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['nodes_search'][$key]['id']));
+				$this->tpl['nodes_search'][$key]['href'] = make_ref("/nodes", array("node" => $this->tpl['nodes_search'][$key]['id']));
 			}
 		} elseif (is_ip($q, FALSE)) {
 			$where = "(";
@@ -69,7 +69,7 @@ class search_suggest {
 										$this->limit);
 			foreach ((array)$this->tpl['ip_search'] as $key => $value) {
 				$this->tpl['ip_search'][$key]['ip_start'] = long2ip($this->tpl['ip_search'][$key]['ip_start']);
-				$this->tpl['ip_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['ip_search'][$key]['id']));
+				$this->tpl['ip_search'][$key]['href'] = make_ref("/nodes", array("node" => $this->tpl['ip_search'][$key]['id']));
 			}
 		} elseif ((strpos($q, ".") !== FALSE && intval($q) == 0) || substr($q, -strlen(".".$vars['dns']['root_zone'])) == ".".$vars['dns']['root_zone']) {
 			$this->tpl['dns_search'] = $db->get(
@@ -81,8 +81,9 @@ class search_suggest {
 										'dns_zones.status ASC, dns_zones.name ASC',
 										$this->limit);
 			foreach ((array)$this->tpl['dns_search'] as $key => $value) {
-				if($this->tpl['dns_search'][$key]['type'] == "forward") $this->tpl['dns_search'][$key]['name'] .= ".".$vars['dns']['root_zone'];
-				$this->tpl['dns_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['dns_search'][$key]['id']));
+				if ($this->tpl['dns_search'][$key]['type'] == "forward")
+					$this->tpl['dns_search'][$key]['name'] .= ".".$vars['dns']['root_zone'];
+				$this->tpl['dns_search'][$key]['href'] = make_ref('/nodes', array("node" => $this->tpl['dns_search'][$key]['id']));
 			}
 		} else {
 			$this->tpl['nodes_search'] = $db->get(
@@ -95,7 +96,7 @@ class search_suggest {
 										'nodes.name ASC',
 										$this->limit);
 			foreach ((array)$this->tpl['nodes_search'] as $key => $value) {
-				$this->tpl['nodes_search'][$key]['href'] = makelink(array("page" => "nodes", "node" => $this->tpl['nodes_search'][$key]['id']));
+				$this->tpl['nodes_search'][$key]['href'] = make_ref('/nodes', array("node" => $this->tpl['nodes_search'][$key]['id']));
 			}
 		}
 

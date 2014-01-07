@@ -71,7 +71,7 @@ $config = array(
 		'path' => ROOT_PATH.'files/srtm/'
 		),
 		
-	'gmap' => array(
+	'map' => array(
 		'server' => 'maps.google.com',
 		'maps_available' => array(
                         'satellite' => true,
@@ -95,10 +95,6 @@ $config = array(
                         
                         'default' => 'hybrid'
                         ),
-		'api' => '3.5',
-		'keys' => array( // Domains must be as in $_SERVER['SERVER_NAME'] variable
-			// 'server.example.org/path' => 'example_key'
-			),
 		'bounds' => array(
 			'min_latitude' => 35, // MINLAT_GPS_COORDINATE,
 			'min_longitude' => 17, // MINLON_GPS_COORDINATE,

@@ -68,13 +68,12 @@ class users {
 
 	function output() {
 		global $main, $construct, $db;
-		if(get('action') === "delete" && $main->userdata->privileges['admin'] === TRUE)
-		{
+		if(get('action') === "delete" && $main->userdata->privileges['admin'] === true) {
 			$ret = $db->del("users", '', "id = '".get('user')."'");
 			if ($ret) {
-				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "admin", "subpage" => "users")));
+				$main->message->set_fromlang('info', 'delete_success', make_ref('/admin/users'));
 			} else {
-				$main->message->set_fromlang('error', 'generic');		
+				$main->message->set_fromlang('error', 'generic');
 			}
 			return ;
 		} else if (get('action') == 'activate') {
@@ -83,13 +82,13 @@ class users {
 				$db->set('users', array('status' => 'activated'), "id = '".get('user')."'");
 				$main->message->set_fromlang('info', 'activation_success');
 			} else {
-				$main->message->set_fromlang('info', 'activation_failed');
+				$main->message->set_fromlang('error', 'activation_failed');
 			}
 			return;
 		} else if (get('action') == 'logout') {
 			$main->userdata->logout();
 			$redirect = get('redirect');
-			$redirect = ($redirect == ""?makelink():$redirect);
+			$redirect = ($redirect == ""?self_ref():$redirect);
 			$main->message->set_fromlang('info', 'logout_success', $redirect);
 			return;
 		} else if (get('action') == 'restore') {
@@ -99,11 +98,12 @@ class users {
 			$sp = new loginform();
 			return $sp->output();
 		}
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		if (get('user') != '') {
 			$this->tpl['user_method'] = (get('user') == 'add' ? 'add' : 'edit');
-			if(get('user') != 'add' && $main->userdata->privileges['admin'] === TRUE)
-				$this->tpl['link_user_delete'] = makelink(array("action" => "delete"),TRUE);
+			if(get('user') != 'add' && $main->userdata->privileges['admin'] === true)
+				$this->tpl['link_user_delete'] = self_ref(array("action" => "delete"));
 			$this->tpl['form_user'] = $construct->form($this->form_user(), __FILE__);
 		}
 		return template($this->tpl, __FILE__);
@@ -169,7 +169,7 @@ class users {
 			}
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', (get('user') == 'add'?'signup':'edit').'_success', makelink());
+			$main->message->set_fromlang('info', (get('user') == 'add'?'signup':'edit').'_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

@@ -18,14 +18,6 @@
 {include assign=help file=generic/help.tpl help="users_`$user_method`"}
 {assign var=t value="user_`$user_method`"}
 
-
-
 {include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
 {if $link_user_delete}{include assign=user_delete file=generic/link.tpl content="`$lang.delete`" link=$link_user_delete confirm=TRUE}{/if}
-{include file=generic/title1.tpl title="`$lang.user_info`" right="$user_delete" content=$form_user}
-</td>
-</tr>
-</table>
+{$form_user}

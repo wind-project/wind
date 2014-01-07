@@ -17,15 +17,5 @@
  *}
 {include assign=help file=generic/help.tpl help=services}
 {include file=generic/page-title.tpl title="`$lang.all_services`" right="$help"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.services_search`" content=$form_search_services}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.services_found`" content=$table_services}
-</td>
-</tr>
-</table>
+{include file=generic/filter.tpl title="`$lang.services_search`" content=$form_search_services}
+{$table_services}

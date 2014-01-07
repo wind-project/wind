@@ -16,31 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.nameserver_edit`"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include assign=nameserver_delete file=generic/link.tpl content="`$lang.delete`" link=$link_nameserver_delete confirm=TRUE}
-{include file=generic/title1.tpl title="`$lang.nameserver_edit`" right="$nameserver_delete" content=$form_nameserver}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.node_info`" content=$table_node_info}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.users_info`" content=$table_user_info}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.links`" content=$table_links}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.dns_zones`" content=$table_dns}
-</td>
-</tr>
-</table>
+{include file=generic/link.tpl content="`$lang.delete`" link=$link_nameserver_delete confirm=TRUE}
+{$form_nameserver}
+{include file=generic/section-level3.tpl title="`$lang.node_info`" content=$table_node_info}
+{include file=generic/section-level3.tpl title="`$lang.users_info`" content=$table_user_info}
+{include file=generic/section-level3.tpl title="`$lang.links`" content=$table_links}
+{include file=generic/section-level3.tpl title="`$lang.dns_zones`" content=$table_dns}

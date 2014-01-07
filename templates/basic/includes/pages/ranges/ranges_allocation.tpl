@@ -16,13 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include assign=help file=generic/help.tpl help=ranges_allocation}
-{include assign="t1" file="generic/link.tpl" link=$link_ranges_search content="`$lang.ip_ranges_search`"}
-{include assign="t2" file="generic/link.tpl" link=$link_ranges_allocation content="`$lang.ip_ranges_allocation`"}
-{include file=generic/page-title.tpl title="`$lang.all_ranges` $t1 $t2" right="$help"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.ip_ranges_allocation`" content=$table_areas}
-</td>
-</tr>
-</table>
+{include file=generic/page-title.tpl title="`$lang.all_ranges` > `$lang.ip_ranges_allocation`" right="$help"}
+{$table_areas}

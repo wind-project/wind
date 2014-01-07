@@ -15,8 +15,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{if $image != ''}{html_image file=$image}{/if}
-{if $forward != ''}{assign var=f value="<br /><br /><div align=\"center\"><a href=\"$forward\">$forward_text</a></div>"}{/if}
-<table width="400" align="center">
-<tr><td>{include file=generic/title1.tpl title=$title content="`$message` $f"|nl2br}</td></tr>
-</table>
+{if $image != ''}
+	{html_image file=$image}
+{/if}
+{if $forward != ''}
+	{assign var=f value="<br /><br /><div align=\"center\"><a href=\"$forward\">$forward_text</a></div>"}
+{/if}
+{if $type == "error"}
+	{assign var=panel_type value="panel-danger"}
+{else}
+	{assign var=panel_type value="panel-info"}
+{/if}
+<div class="message message-{$type} panel panel-default {$panel_type}">
+	<div class="panel-heading">
+		<h2 class="panel-title">{$title}</h2>
+	</div>
+
+	<div class="panel-body">
+		{$message|nl2br}
+		{$f}
+	</div>
+
+</div>

@@ -18,7 +18,7 @@
  */
 
 // Process input
-$def_values = $_SESSION['config']['gmap']['bounds'];
+$def_values = $_SESSION['config']['map']['bounds'];
 if (is_method_post()) {
 	$step_result = 'auto';
 	$def_values = array_merge($def_values, $_POST);
@@ -33,7 +33,7 @@ if (is_method_post()) {
 	}
 	
 	if ($step_result) {
-		$_SESSION['config']['gmap']['bounds'] = $def_values;
+		$_SESSION['config']['map']['bounds'] = $def_values;
 	}
 	
 }
@@ -51,7 +51,7 @@ if ((!is_method_post()) || !$step_result){
 	<input type="hidden" name="max_latitude" value="<?php echo $def_values['max_latitude']; ?>">
 	<input type="hidden" name="max_longitude" value="<?php echo $def_values['max_longitude']; ?>">
 	<div class="buttons">
-		<input class="continue" type="submit" value="Continue">
+		<button type="submit" class="continue">Continue</button>
 	</div>
 </form>
 

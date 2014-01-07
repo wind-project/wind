@@ -19,13 +19,18 @@
 <html lang="{$lang.iso639}">
 <head>
 	<meta charset="{$lang.charset}"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script type="text/javascript" src="{$js_dir}/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="{$js_dir}/jquery-ui-1.10.3.custom.min.js"></script>
 	<script type="text/javascript" src="{$js_dir}/ui.js"></script>
+	<script type="text/javascript" src="{$tpl_dir}/static/bootstrap/js/bootstrap.min.js"></script>
 	{$head}
-	<link href="{$css_dir}jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-	<link href="{$css_dir}styles.css" rel="stylesheet" type="text/css" />
-	<link rel="icon" type="image/png" href="templates/basic/images/favicon_32.png" />
+	<link href="{$css_dir}/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+	<link href="{$tpl_dir}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="{$tpl_dir}/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	<link href="{$css_dir}/styles.css" rel="stylesheet"/>
+	<link href="{$css_dir}/map.css" rel="stylesheet"/>
+	<link rel="icon" type="image/png" href="{$img_dir}/favicon_32.png" />
 
 	
 </head>

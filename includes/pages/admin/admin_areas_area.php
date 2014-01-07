@@ -25,7 +25,7 @@ class admin_areas_area {
 		
 	}
 	
-        function form_area() {
+	function form_area() {
 		global $db, $vars;
 		$form_area = new form(array('FORM_NAME' => 'form_area'));
 		$form_area->db_data('areas.id, areas.region_id, areas.name, areas.ip_start, areas.ip_end, areas.v6net, areas.v6prefix, areas.info');
@@ -39,7 +39,7 @@ class admin_areas_area {
 		$form_area->db_data_remove('areas__id');
 		return $form_area;
 	}
-        
+	
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
@@ -48,16 +48,20 @@ class admin_areas_area {
 		return template($this->tpl, __FILE__);
 	}
 
-        function output_onpost_form_area() {
+	function output_onpost_form_area() {
 		global $construct, $main, $db;
 		$form_area = $this->form_area();
 		$area = get('area');
 		$ret = TRUE;
 		$_POST['areas__ip_start'] = ip2long($_POST['areas__ip_start']);
 		$_POST['areas__ip_end'] = ip2long($_POST['areas__ip_end']);
-                $_POST['areas__v6net'] = inet_pton($_POST['areas__v6net']);
-		$ret = $form_area->db_set(array(), "areas", "id", get('area'));
-		if (!$ret) {
+        $_POST['areas__v6net'] = inet_pton($_POST['areas__v6net']);
+		$ret = $form_area->db_set(array(),
+								"areas", "id", get('area'));
+		
+		if ($ret) {
+			$main->message->set_fromlang('info', 'insert_success', make_ref('/admin/areas'));
+		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
                 $dat = $db->get("areas.id AS id", "areas", "areas.name = '".$_POST['areas__name']."'", "" , "name ASC LIMIT 1");
@@ -72,12 +76,13 @@ class admin_areas_area {
                 	$ipv6net2 = implode(':',$ipv6net);
                         $ret2 = $db->add("ipv6_node_repos", array("v6net" => inet_pton($ipv6net2), "area_id" => $areaid));
 			if ($ret2) {
-                        	$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "admin", "subpage" => "areas")));
+                        	$main->message->set_fromlang('info', 'insert_success', make_ref('/admin/areas)));
         		} else {
                 		$main->message->set_fromlang('error', 'generic');		
                         }
 		}
 	}
+
 }
 
 ?>

@@ -15,12 +15,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.regions`"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include assign="t1" file="generic/link.tpl" link=$link_region_add content="`$lang.region_add`"}
-{include file=generic/title2.tpl title="`$lang.regions` $t1" content=$table_regions}
-</td>
-</tr>
-</table>
+{include assign="btn_add" file="generic/button.tpl" class="btn-success btn-sm" glyph="plus-sign" 
+	href=$link_region_add content="`$lang.region_add`"}
+{include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.regions`" right=$btn_add}
+
+{$table_regions}

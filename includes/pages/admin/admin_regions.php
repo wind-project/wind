@@ -44,8 +44,8 @@ class admin_regions {
 			if (isset($table_regions->data[$i])) {
 				$table_regions->data[$i]['ip_start'] = long2ip($table_regions->data[$i]['ip_start']);
 				$table_regions->data[$i]['ip_end'] = long2ip($table_regions->data[$i]['ip_end']);
-                                $table_regions->data[$i]['v6net'] = inet_ntop($table_regions->data[$i]['v6net']); 
-				$table_regions->info['EDIT'][$i] = makelink(array("page" => "admin", "subpage" => "regions", "region" => $table_regions->data[$i]['id']));
+                $table_regions->data[$i]['v6net'] = inet_ntop($table_regions->data[$i]['v6net']); 
+				$table_regions->info['EDIT'][$i] = make_ref('/admin/regions', array("region" => $table_regions->data[$i]['id']));
 			}
 		}
 		$table_regions->info['EDIT_COLUMN'] = 'name';
@@ -61,7 +61,7 @@ class admin_regions {
 		} else {
 			if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 			global $construct;
-			$this->tpl['link_region_add'] = makelink(array('page' => 'admin', 'subpage' => 'regions', 'region' => 'add'));
+			$this->tpl['link_region_add'] = make_ref('/admin/regions', array('region' => 'add'));
 			$this->tpl['table_regions'] = $construct->table($this->table_regions(), __FILE__);
 			return template($this->tpl, __FILE__);
 		}
@@ -74,7 +74,7 @@ class admin_regions {
 			$ret = $ret && $db->del("regions", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

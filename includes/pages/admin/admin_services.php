@@ -42,7 +42,7 @@ class admin_services {
 			"services.title ASC");
 		foreach( (array) $table_services->data as $key => $value) {
 			if ($key != 0) {
-				$table_services->info['EDIT'][$key] = makelink(array("page" => "admin", "subpage" => "services", "service" => $table_services->data[$key]['id']));
+				$table_services->info['EDIT'][$key] = make_ref('/admin/services', array("service" => $table_services->data[$key]['id']));
 			}
 		}
 		$table_services->info['EDIT_COLUMN'] = 'title';
@@ -59,7 +59,7 @@ class admin_services {
 			return $this->page->output();
 		} else {
 			if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-			$this->tpl['link_services_categories_add'] = makelink(array('page' => 'admin', 'subpage' => 'services', 'service' => 'add'));
+			$this->tpl['link_services_categories_add'] = make_ref('/admin/services', array('service' => 'add'));
 			$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 			return template($this->tpl, __FILE__);
 		}
@@ -72,7 +72,7 @@ class admin_services {
 			$ret = $ret && $db->del("services", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

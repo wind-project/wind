@@ -19,7 +19,7 @@
 
 ob_start();
 
-define("ROOT_PATH","./");
+define("ROOT_PATH", dirname(__FILE__) . '/');
 
 include_once(ROOT_PATH."globals/common.php");
 

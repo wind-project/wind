@@ -30,8 +30,8 @@ class admin_areas {
 			$this->page = new $p;
 		}		
 	}
-
-        function table_areas() {
+	
+	function table_areas() {
 		global $construct, $db, $main;
 		$table_areas = new table(array('FORM_NAME' => 'table_areas', 'TABLE_NAME' => 'table_areas'));
 		$table_areas->db_data(
@@ -43,10 +43,10 @@ class admin_areas {
 			"areas.ip_start ASC");
 		for($i=1;$i<count($table_areas->data);$i++) {
 			if (isset($table_areas->data[$i])) {
-                            $table_areas->data[$i]['ip_start'] = long2ip($table_areas->data[$i]['ip_start']);
-                            $table_areas->data[$i]['ip_end'] = long2ip($table_areas->data[$i]['ip_end']);
-                            $table_areas->data[$i]['v6net'] = inet_ntop($table_areas->data[$i]['v6net']);  
-                            $table_areas->info['EDIT'][$i] = makelink(array("page" => "admin", "subpage" => "areas", "area" => $table_areas->data[$i]['id']));
+				$table_areas->data[$i]['ip_start'] = long2ip($table_areas->data[$i]['ip_start']);
+				$table_areas->data[$i]['ip_end'] = long2ip($table_areas->data[$i]['ip_end']);
+                $table_areas->data[$i]['v6net'] = inet_ntop($table_areas->data[$i]['v6net']);  
+				$table_areas->info['EDIT'][$i] = make_ref('/admin/areas', array("area" => $table_areas->data[$i]['id']));
 			}
 		}
 		$table_areas->info['EDIT_COLUMN'] = 'areas__name';
@@ -62,7 +62,7 @@ class admin_areas {
 		} else {
 			if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 			global $construct;
-			$this->tpl['link_area_add'] = makelink(array('page' => 'admin', 'subpage' => 'areas', 'area' => 'add'));
+			$this->tpl['link_area_add'] = make_ref('/admin/areas', array('area' => 'add'));
 			$this->tpl['table_areas'] = $construct->table($this->table_areas(), __FILE__);
 			return template($this->tpl, __FILE__);
 		}
@@ -75,7 +75,7 @@ class admin_areas {
 			$ret = $ret && $db->del("areas", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

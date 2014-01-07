@@ -46,6 +46,8 @@ class nodes {
 	}
 	
 	function output() {
+		global $main;	
+		
 		return $this->page->output();
 	}
 

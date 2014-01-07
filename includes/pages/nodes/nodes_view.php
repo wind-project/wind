@@ -115,7 +115,7 @@ class nodes_view {
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnszone", "zone" => $table_dns->data[$i]['id']));
+				$table_dns->info['EDIT'][$i] = make_ref('/node_editor/dnszone', array("zone" => $table_dns->data[$i]['id']));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
@@ -142,7 +142,7 @@ class nodes_view {
 		$table_nameservers->db_data_multichoice('dns_nameservers', 'id');
 		for($i=1;$i<count($table_nameservers->data);$i++) {
 			if (isset($table_nameservers->data[$i])) {
-				$table_nameservers->info['EDIT'][$i] = makelink(array("page" => "mynodes", "subpage" => "dnsnameserver", "nameserver" => $table_nameservers->data[$i]['id']));
+				$table_nameservers->info['EDIT'][$i] = make_ref('/node_editor/dnsnameserver', array("nameserver" => $table_nameservers->data[$i]['id']));
 			}
 		}
 		$table_nameservers->info['EDIT_COLUMN'] = 'name';
@@ -180,7 +180,7 @@ class nodes_view {
 				} else {
 					$table_links->data[$key]['links__status'] = 'inactive';
 				}
-				$table_links->info['EDIT'][$key] = makelink(array('page' => 'nodes', 'node' => $table_links->data[$key]['links__peer_node_id']));
+				$table_links->info['EDIT'][$key] = make_ref('/nodes', array('node' => $table_links->data[$key]['links__peer_node_id']));
 			}
 		}
 		$table_links->db_data_translate('links__status', 'links__type');
@@ -201,7 +201,7 @@ class nodes_view {
 			"l1.date_in ASC");
 		foreach( (array) $table_links->data as $key => $value) {
 			if ($key != 0) {
-				$table_links->info['EDIT'][$key] = makelink(array('page' => 'nodes', 'node' => $table_links->data[$key]['c_node_id']));
+				$table_links->info['EDIT'][$key] = make_ref('/nodes', array('node' => $table_links->data[$key]['c_node_id']));
 			}
 		}
 		return $table_links;
@@ -311,7 +311,7 @@ class nodes_view {
 			LEFT JOIN users ON users.id = users_nodes.user_id',
 			"nodes.id = ".intval(get('node'))." AND (users_nodes.owner = 'Y' OR users_nodes.owner IS NULL)");
 		$this->tpl['node'] = $this->tpl['node'][0];
-		$this->tpl['link_contact'] = makelink(array("subpage" => "contact"), TRUE);
+		$this->tpl['link_contact'] = self_ref(array("subpage" => "contact"));
 		$this->tpl['table_ip_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
                 $this->tpl['table_ip_ranges_v6'] = $construct->table($this->table_ip_ranges_v6(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
@@ -332,8 +332,8 @@ class nodes_view {
 			$this->tpl['photosview'][$value['view_point']]['image'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'.jpg';
 		}
 		
-		$this->tpl['link_plot_link'] = makelink(array("page" => "nodes", "subpage" => "plot_link", "a_node" => $this->tpl['node']['id']));
-		if((isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE) || $db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) $this->tpl['edit_node'] = makelink(array("page" => "mynodes", "node" => get('node')));
+		$this->tpl['link_plot_link'] = make_ref('/nodes/plot_link', array("a_node" => $this->tpl['node']['id']));
+		if((isset($main->userdata->privileges['admin']) && $main->userdata->privileges['admin'] === TRUE) || $db->cnt('', "users_nodes", "node_id = ".get('node')." AND user_id = '".$main->userdata->user."'") > 0) $this->tpl['edit_node'] = make_ref('/node_editor', array("node" => get('node')));
 
 		include_map('map');
 		return template($this->tpl, __FILE__);

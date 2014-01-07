@@ -63,7 +63,7 @@ class ranges_search {
 				$table_ip_ranges->data[$key]['ip_end'] = long2ip($table_ip_ranges->data[$key]['ip_end']);
 				$table_ip_ranges->data[$key]['ip_range'] = $table_ip_ranges->data[$key]['ip_start']." - ".$table_ip_ranges->data[$key]['ip_end'];
 				$table_ip_ranges->data[$key]['nodes__name'] .= " (#".$table_ip_ranges->data[$key]['nodes__id'].")";
-				$table_ip_ranges->info['EDIT'][$key] = makelink(array("page" => "nodes", "node" => $table_ip_ranges->data[$key]['nodes__id']));
+				$table_ip_ranges->info['EDIT'][$key] = make_ref('/nodes', array("node" => $table_ip_ranges->data[$key]['nodes__id']));
 			}
 		}
 		$table_ip_ranges->info['EDIT_COLUMN'] = 'nodes__name';
@@ -73,10 +73,10 @@ class ranges_search {
 	}
 
 	function output() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct;
-		$this->tpl['link_ranges_search'] = makelink(array("page" => "ranges", "subpage" => "search"));
-		$this->tpl['link_ranges_allocation'] = makelink(array("page" => "ranges", "subpage" => "allocation"));
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		
 		$this->tpl['form_search_ranges'] = $construct->form($this->form_search_ranges(), __FILE__);
 		$this->tpl['table_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
 		return template($this->tpl, __FILE__);

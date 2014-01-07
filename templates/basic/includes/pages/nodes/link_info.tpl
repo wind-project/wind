@@ -25,7 +25,7 @@
 <td class="table-d1-text1">
 		<table border="0" cellpadding="0" cellspacing="6" class="table-form">
 		<tr class="table-form-row1">
-		<td class="table-node-link-info"><img src="{$img_dir}node.gif" width="32" height="32" alt="{$lang.db.peer}" /></td>
+		<td class="table-node-link-info"><img src="{$img_dir}/node.gif" width="32" height="32" alt="{$lang.db.peer}" /></td>
 		<td class="table-node-link-info" width="33%">
 
 <table class="table-form">
@@ -69,7 +69,7 @@
 		</td>
 		<td class="table-node-link-info" width="33%">{include file=generic/plot.tpl}</td>
 		<td class="table-node-link-info" width="33%" height="100%">
-		{include file="generic/title4.tpl" title="`$lang.db.links__info`" content="`$data[rowl].links__info`"|escape|nl2br}
+		{include file="generic/section-level5.tpl" title="`$lang.db.links__info`" content="`$data[rowl].links__info`"|escape|nl2br}
 		</td>
 		</tr>
 		</table>

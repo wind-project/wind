@@ -35,30 +35,35 @@ class main {
 	var $footer;
 	var $menu;
 	
-	function main() {
-		$this->html = new html;
-		$this->userdata = new userdata;
-		$this->message = new message;
-		$this->header = new header;
-		$this->center = new center;
-		$this->footer = new footer;
-		$this->menu = new menu;
+	function __construct() {
+		global $lang;
+		
+		$this->userdata = new userdata();
+		
+		if (get('session_lang') != '')
+			$_SESSION['lang'] = get('session_lang');
+		if (isset($this->userdata->info)) {
+			language_set($this->userdata->info['language']);
+		}
+		else {
+			language_set();
+		}
+		
+		// Reload user info from database using SET NAMES (workaround)
+		$this->userdata->load_info();
+		
 	}
 	
 	function output() {
 		global $lang;
 		
-		if (get('session_lang') != '')
-			$_SESSION['lang'] = get('session_lang');
-		if (isset($this->userdata->info)) {
-		    language_set($this->userdata->info['language']);
-		}
-		else {
-		    language_set();
-		}
-		
-		// Reload user info from database using SET NAMES (workaround)
-		$this->userdata->load_info();
+		// Construct HTML Elements
+		$this->html = new html();
+		$this->message = new message();
+		$this->header = new header();
+		$this->center = new center();
+		$this->footer = new footer();
+		$this->menu = new menu();
 		
 		$this->html->head->add_title($lang['site_title']);
 		header("Content-Type: text/html; charset=".$lang['charset']);
@@ -67,11 +72,11 @@ class main {
 		$this->html->body->tpl['menu'] = $this->menu->output();
 		$this->html->body->tpl['header'] = $this->header->output();
 		$this->html->body->tpl['footer'] = $this->footer->output();
-		if ($this->message->show) $this->html->body->tpl['message'] = $this->message->output();
+		if ($this->message->show)
+			$this->html->body->tpl['message'] = $this->message->output();
 		
 		return $this->html->output();
 	}
 	
 }
 
-?>

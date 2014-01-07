@@ -50,7 +50,7 @@ class hostmaster_dnszones {
 		for($i=1;$i<count($table_dns->data);$i++) {
 			if (isset($table_dns->data[$i])) {
 				if ($table_dns->data[$i]['type'] == 'forward') $table_dns->data[$i]['name'] .= ".".$vars['dns']['root_zone'];
-				$table_dns->info['EDIT'][$i] = makelink(array("page" => "hostmaster", "subpage" => "dnszone", "zone" => $table_dns->data[$i]['id']));
+				$table_dns->info['EDIT'][$i] = make_ref('/hostmaster/dnszone', array("zone" => $table_dns->data[$i]['id']));
 			}
 		}
 		$table_dns->info['EDIT_COLUMN'] = 'name';
@@ -65,7 +65,7 @@ class hostmaster_dnszones {
 		global $construct;
 		$this->tpl['form_search_dns'] = $construct->form($this->form_search_dns(), __FILE__);
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
-		$this->tpl['link_schema'] = makelink(array('page' => 'hostmaster', 'subpage' => 'dnszones_schema'));
+		$this->tpl['link_schema'] = make_ref('/hostmaster/dnszones_schema');
 		return template($this->tpl, __FILE__);
 	}
 
@@ -79,7 +79,7 @@ class hostmaster_dnszones {
 						"dns_zones.id = '".intval($value)."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

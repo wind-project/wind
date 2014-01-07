@@ -19,11 +19,24 @@
 
 class form {
 	
-	var $info=array();
-	var $data=array();
+	public $info=array();
 	
-	function form($info="") {
-		if (is_array($info)) $this->info = $info;
+	public $data=array();
+	
+	public $buttons = array();
+	
+	function __construct($info = null) {
+		if (is_array($info))
+			$this->info = $info;
+	}
+	
+	function add_button($title, $href, $classes = array()) {
+		$this->buttons[] = array('title' => $title, 'href' => $href, 'classes' => implode(' ', $classes));
+	}
+	
+	function add_cancel_button($href) {
+		global $lang;
+		$this->add_button($lang['cancel'], $href, array('cancel'));
 	}
 	
 	function db_data($db_info) {
@@ -68,7 +81,7 @@ class form {
 		for ($i=0;$i<count($this->data);$i++) {
 			if ($data_field == str_replace("__", ".", $this->data[$i]['fullField'])) {
 				$this->data[$i]['Type'] = 'pickup'.($multi==FALSE?'':"_multi");
-				$this->data[$i]['Pickup_url'] = makelink(array("page" => "pickup", "subpage" => $subpage, "object" => $this->info['FORM_NAME'].".elements['".str_replace(".", "__", $data_field).($multi==FALSE?'':"[]")."']"));
+				$this->data[$i]['Pickup_url'] = make_ref("/pickup/$subpage", array("object" => $this->info['FORM_NAME'].".elements['".str_replace(".", "__", $data_field).($multi==FALSE?'':"[]")."']"));
 				if ($multi == FALSE) {
 					$this->data[$i]['Type_Pickup'] = (isset($values[0])?$values[0]:'');
 				} else {

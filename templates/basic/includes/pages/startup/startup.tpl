@@ -38,7 +38,7 @@ to confirm your email. If, for any reason you didn't get any email, you can requ
 <h3>Add Your Node</h3>
 <p>
 To create a new node you must be a registered user. After you have logged on on the system you
-can request to <a href="?page=mynodes&amp;action=add">add a node</a>.
+can request to <a href="?page=node_editor&amp;action=add">add a node</a>.
 </p>
 
 <h3>Declare links</h3>

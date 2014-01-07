@@ -86,7 +86,7 @@ class nodes_search {
 			if (isset($table_nodes->data[$i])) {
 				$table_nodes->data[$i]['nodes__name'] .= " (#".$table_nodes->data[$i]['id'].")";
 				$table_nodes->data[$i]['total_active_peers'] = $table_nodes->data[$i]['total_active_peers'].($table_nodes->data[$i]['total_active_aps']>0?" (+".$table_nodes->data[$i]['total_active_aps']." ".$lang['aps'].")":"");
-				$table_nodes->info['EDIT'][$i] = makelink(array("page" => "nodes", "node" => $table_nodes->data[$i]['id']));
+				$table_nodes->info['EDIT'][$i] = make_ref('/nodes', array("node" => $table_nodes->data[$i]['id']));
 			}
 		}
 		$table_nodes->info['EDIT_COLUMN'] = 'nodes__name';
@@ -95,13 +95,14 @@ class nodes_search {
 	}
 	
 	function output() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $vars, $main;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
+			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
+		
 		$this->tpl['form_search_nodes'] = $construct->form($this->form_search_nodes(), __FILE__);
 		$this->tpl['table_nodes'] = $construct->table($this->table_nodes(), __FILE__);
 
-		$this->tpl['link_fullmap'] = makelink(array("page" => "gmap", "node" => get('node')));
-		$this->tpl['link_gearth'] = makelink(array("page" => "gearth", "subpage" => "download", "node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
+		$this->tpl['link_gearth'] = make_ref("/gearth/donwload", array("node" => get('node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
 		$this->tpl['skip_map'] = 'no';
 		if(get('show_map') != "no") {
 			include_map('map');

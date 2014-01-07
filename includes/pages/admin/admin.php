@@ -17,22 +17,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (get('subpage') != '') include_once(ROOT_PATH."includes/pages/admin/admin_".get('subpage').".php");
+if (get('subpage') != '')
+	include_once(ROOT_PATH."includes/pages/admin/admin_".get('subpage').".php");
 
 class admin {
 
 	var $tpl;
 	var $page;
 	
-	function admin() {
+	function __construct() {
 		if (get('subpage') != '') {
 			$p = "admin_".get('subpage');
 			$this->page = new $p;
+		} else {
+			redirect(make_ref('/admin/nodes'));
 		}
 	}
 	
 	function output() {
+		global $main, $lang;
+		$admin_entry = $main->menu->main_menu->getRootEntry()->getChild('admin');
+		$admin_entry->createLink($lang['nodes'], make_ref('/admin/nodes'));
+		$admin_entry->createLink($lang['users'], make_ref('/admin/users'));
+		$admin_entry->createLink($lang['services'], make_ref('/admin/nodes_services'));
+		$admin_entry->createLink($lang['services_categories'], make_ref('/admin/services'));
+		$admin_entry->createLink($lang['regions'], make_ref('/admin/regions'));
+		$admin_entry->createLink($lang['areas'], make_ref('/admin/areas'));
+		
 		return $this->page->output();
+		
 	}
 
 }

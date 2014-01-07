@@ -18,22 +18,6 @@
 
 {include assign=help file=generic/help.tpl help=nodes_search}
 {include file=generic/page-title.tpl title="`$lang.all_nodes`" right="$help"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-{if $skip_map!='yes'}
-	<tr>
-		<td class="table-page-split">
-		<div id="map" class="map" style="height: 350px;" > </div>
-		</td>
-	</tr>
-{/if}
-	<tr>
-		<td class="table-page-split">
-			{include file=generic/title1.tpl title="`$lang.nodes_search`" content=$form_search_nodes}
-		</td>
-	</tr>
-	<tr>
-		<td class="table-page-pad">
-			{include file=generic/title2.tpl title="`$lang.nodes_found`" content=$table_nodes}
-		</td>
-	</tr>
-</table>
+<div id="map" class="map" style="height: 350px;" > </div>
+{include file=generic/filter.tpl title="`$lang.nodes_search`" content=$form_search_nodes}
+{include file=generic/section-level3.tpl title="`$lang.nodes_found`" content=$table_nodes}

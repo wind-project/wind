@@ -23,7 +23,7 @@
 {$lang.help.$help.body}
 </div>
 
-<img src="{$img_dir}help.png" alt="help" id="help-dialog-icon" />
+<img src="{$img_dir}/help.png" alt="help" id="help-dialog-icon" />
 
 {literal}	
 <script>

@@ -16,15 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$lang.hostmaster_panel` > `$lang.ip_ranges`"}
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
-<tr>
-<td class="table-page-pad">
-{include file=generic/title1.tpl title="`$lang.ip_ranges_search`" content=$form_search_ranges}
-</td>
-</tr>
-<tr>
-<td class="table-page-pad">
-{include file=generic/title2.tpl title="`$lang.ip_ranges_found`" content=$table_ranges}
-</td>
-</tr>
-</table>
+{include file=generic/filter.tpl title="`$lang.ip_ranges_search`" content=$form_search_ranges}
+{$table_ranges}

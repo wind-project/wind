@@ -52,7 +52,7 @@ class admin_nodes {
 		for($i=1;$i<count($table_nodes->data);$i++) {
 			if (isset($table_nodes->data[$i])) {
 				$table_nodes->data[$i]['nodes__name'] .= " (#".$table_nodes->data[$i]['id'].")";
-				$table_nodes->info['EDIT'][$i] = makelink(array("page" => "mynodes", "node" => $table_nodes->data[$i]['id']));
+				$table_nodes->info['EDIT'][$i] = make_ref('/node_editor', array("node" => $table_nodes->data[$i]['id']));
 			}
 		}
 		$table_nodes->info['EDIT_COLUMN'] = 'nodes__name';
@@ -77,7 +77,7 @@ class admin_nodes {
 			$ret = $ret && $db->del("nodes", '', "id = '".$value."'");
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+			$main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

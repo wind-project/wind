@@ -76,13 +76,62 @@ function get_user_title() {
 }
 
 /**
- * @brief Get query string of the request
- * @param string $htmlspecialchars
- * @return Ambigous <string, unknown>
+ * @brief Get the raw query string 
+ * @return string The raw url query string with any escape character included.
  */
-function get_qs($htmlspecialchars=TRUE) {
-	$ret = $_SERVER['QUERY_STRING'];
-	return ($htmlspecialchars?htmlspecialchars($ret):$ret);
+function get_query_string() {
+	if (isset($_SERVER['QUERY_STRING'])){
+		return $_SERVER['QUERY_STRING'];
+	} else {
+		return '';
+	}
+}
+
+/**
+ * @brief Get query string as an array
+ * @return array An associative array with all parameters
+ */
+function get_query_string_array() {
+	if (get_query_string() == '')
+		return array();
+	
+	$params = array();
+	foreach(explode('&', get_query_string()) as $param_token) {
+		// Split params tokens in two
+		$param_parts = explode('=', $param_token, 2);
+		// Url decode parameter parts
+		array_walk($param_parts, function(& $val){
+			$val = urldecode($val);
+		});
+		if (count($param_parts) == 2) {
+			$params[$param_parts[0]] = urldecode($param_parts[1]);
+		} else {
+			$params[$param_parts[0]] = true;
+		}
+	}
+	return $params;
+}
+
+/**
+ * @brief Get the relative resource path that user requested
+ * @param string $default the string to return if no path is given by the user
+ * @return string the path of the user to return.
+ */
+function get_path($default = ''){
+	return isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:$default;
+}
+
+/**
+ * @brief Get a specific level of the requested resource path.
+ * @param int $level The path level to request. 1 is the leftmost.
+ * @param string $default the string to return if path level not found
+ * @return string the path of the user to return.
+ */
+function get_path_level($level, $default = null){
+	$path = explode('/', get_path());
+	if (empty($path[$level]))
+		return $default;
+	return $path[$level];
 }
 
 /**
@@ -99,10 +148,21 @@ function get($key) {
 	
 	switch ($key) {
 		case 'page':
+			// Try to get page from path info (higher priority)
+			if (!is_null(get_path_level(1))){
+				$ret= get_path_level(1);
+			}
+			
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/");
 			array_unshift($valid_array, 'startup');
+			
 			break;
 		case 'subpage':
+			// Try to get page from path info (higher priority)
+			if (!is_null(get_path_level(2))){
+				$ret= get_path_level(2);
+			}
+			
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/".get('page').'/', FALSE, TRUE);
 			for ($key=0;$key<count($valid_array);$key++) {
 				$valid_array[$key] = basename($valid_array[$key], '.php');
@@ -142,51 +202,71 @@ function getdirlist($dirName, $dirs=TRUE, $files=FALSE) {
 } 
 
 /**
- * @brief Create a relative url for a specific action
- * @param string $extra
- * @param string $cur_qs
- * @param string $cur_gs_vars
- * @param string $htmlspecialchars
- * @return string
+ * @brief Create an absolute reference for a specific resource
+ * @param string $path The path to the resource
+ * @param array $params A list of parameters for the resource (query string)
+ * @return string The absolute url for this resource.
  */
-function makelink($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
-	global $qs_vars;
-	$o = array();
-	if(get('show_map') == "no") $o = array_merge($o,array("show_map" => "no"));
-	if ($cur_qs == TRUE) {
-		parse_str(get_qs(FALSE), $qs);
-		$o = array_merge($o, $qs);
-	}
-	if ($cur_gs_vars == TRUE) {
-		$o = array_merge($o, (array)$qs_vars);
-	}
-	$o = array_merge($o, (array)$extra);
-	return ($htmlspecialchars?htmlspecialchars('?'.query_str($o)):'?'.query_str($o));
+
+function make_ref($path, $params = array()) {
+	if (!empty($params))
+		$path = $path . '?' .  http_build_query($params);
+	return url($path);
 }
 
 /**
- * @brief Create an absolute url for a specific resource
- * @return string The absolute url of the resource
+ * @brief Get a link to the current resource
+ * @param array $extra A list of extra query parameters for this link (same will be overrided)
+ * @return string The absolute url for this resource.
  */
-function absolute_link($extra="", $cur_qs=FALSE, $cur_gs_vars=TRUE, $htmlspecialchars=TRUE) {
 
-	// Format absolute path
-	$relative = makelink($extra, $cur_qs, $cur_gs_vars, $htmlspecialchars);
-	if (! strstr($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'])) {
-		$absolute_path = (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'') . $relative;
-	} else {
-		$absolute_path = $_SERVER['SCRIPT_NAME'] . $relative;
-	}
-	
-	// Detect connection scheme
+function self_ref($extra_query = array()) {
+	$params = array_merge(get_query_string_array(), $extra_query);
+	return make_ref(get_path(), $params);
+}
+
+/**
+ * @brief Create an fully qualified named url for a specific resource
+ * @return string $absolute_url The absolute url of the resource
+ */
+function fqn_url($absolute_url) {
+
+	// Detect scheme
 	$scheme = empty($_SERVER['HTTPS'])?'http':'https';
 
-	// Craft absolute url
-	$url = "${scheme}://${_SERVER['HTTP_HOST']}${absolute_path}";
+	// Craft fqn url
+	$url = "{$scheme}://{$_SERVER['HTTP_HOST']}{$absolute_url}";
 	return $url;
 }
 
-function query_str($params) {
+/**
+ * @brief Create an absolute url for a relative dynamic resource
+ */
+function url($relative) {
+	global $vars;
+	
+	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
+	if ($vars['site']['short_urls']) {
+		return (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'')  . $relative;
+	}
+	return $_SERVER['SCRIPT_NAME'] . $relative;
+}
+
+/**
+ * @brief Create an absolute url for a relative static resource
+ */
+function surl($relative)
+{
+	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
+	return (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'') . $relative;
+}
+
+/**
+ * @brief Create a query string from an associative array
+ * @param array $params All params of query string given as key => values
+ * @return A prefixed list
+ */
+function create_query_string($params) {
    $str = '';
    foreach( (array) $params as $key => $value) {
    		if ($value == '') continue;
@@ -243,10 +323,10 @@ function reset_smarty() {
 	global $smarty, $lang;
 	$smarty->clear_all_assign();
 	$smarty->assign_by_ref('lang', $lang);
-	$smarty->assign('tpl_dir', $smarty->template_dir);
-	$smarty->assign('img_dir', $smarty->template_dir."images/");
-	$smarty->assign('css_dir', $smarty->template_dir."css/");
-	$smarty->assign('js_dir', $smarty->template_dir."scripts/javascripts/");
+	$smarty->assign('tpl_dir', rtrim(surl($smarty->template_dir)), '/');
+	$smarty->assign('img_dir', surl($smarty->template_dir."images"));
+	$smarty->assign('css_dir', surl($smarty->template_dir."css"));
+	$smarty->assign('js_dir', surl($smarty->template_dir."scripts/javascripts"));
 }
 
 function delfile($str) 
@@ -502,7 +582,7 @@ function include_map_dependencies() {
 
 	// Include needed javascript
 	include_js_language_tokens();
-	$js_dir = $smarty->template_dir."scripts/javascripts/";
+	$js_dir = surl($smarty->template_dir . "/scripts/javascripts/");
 	if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
 		$main->html->head->add_script('text/javascript', 'https://maps.google.com/maps/api/js?v=3&amp;sensor=false');
 	} else {
@@ -513,9 +593,9 @@ function include_map_dependencies() {
 
 
 	$map_options = array();
-	$map_options['bound_sw'] = array($vars['gmap']['bounds']['min_latitude'], $vars['gmap']['bounds']['min_longitude']);
-	$map_options['bound_ne'] = array($vars['gmap']['bounds']['max_latitude'], $vars['gmap']['bounds']['max_longitude']);
-	$map_options['topology_url'] = makelink(array("page" => "gmap", "subpage" => "json", "node" => get('node')), false, true, false);
+	$map_options['bound_sw'] = array($vars['map']['bounds']['min_latitude'], $vars['map']['bounds']['min_longitude']);
+	$map_options['bound_ne'] = array($vars['map']['bounds']['max_latitude'], $vars['map']['bounds']['max_longitude']);
+	$map_options['topology_url'] = make_ref('/map/json', array("node" => get('node')));
 	$map_options_string = json_encode($map_options);
 
 	$main->html->head->add_extra(
