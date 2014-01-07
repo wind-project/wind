@@ -18,6 +18,6 @@
 {include assign=help file=generic/help.tpl help="node_editor_subnet_`$subnet_method`"}
 {assign var=t value="subnet_`$subnet_method`"}
 {include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-{include file=generic/section-level2.tpl title="`$lang.$t`" content=$form_subnet}
+{$form_subnet}
 
 
