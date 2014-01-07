@@ -38,7 +38,7 @@ class ranges_allocation {
 		global $construct, $db;
 		$table_areas = new table(array('TABLE_NAME' => 'table_areas', 'FORM_NAME' => 'table_areas'));
 		$table_areas->db_data(
-			'"" AS ip_range, areas.name AS areas__name, regions.name AS regions__name, areas.ip_start, areas.ip_end',
+			'"" AS ip_range, areas.v6net, areas.v6prefix, areas.name AS areas__name, regions.name AS regions__name, areas.ip_start, areas.ip_end',
 			'areas
 			LEFT JOIN regions ON areas.region_id = regions.id',
 			"",
@@ -49,6 +49,7 @@ class ranges_allocation {
 				$table_areas->data[$key]['ip_start'] = long2ip($table_areas->data[$key]['ip_start']);
 				$table_areas->data[$key]['ip_end'] = long2ip($table_areas->data[$key]['ip_end']);
 				$table_areas->data[$key]['ip_range'] = $table_areas->data[$key]['ip_start']." - ".$table_areas->data[$key]['ip_end'];
+                                $table_areas->data[$key]['v6net'] = inet_ntop($table_areas->data[$key]['v6net']);
 			}
 		}
 		$table_areas->db_data_remove('ip_start', 'ip_end');
