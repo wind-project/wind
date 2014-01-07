@@ -183,7 +183,7 @@ class menu {
 						array("form_search_ranges_v6_search" => 
 								serialize(array("ip_ranges_v6__status" => "waiting", "ip_ranges_v6__delete_req" => "N"))));
 				$this->tpl['ranges_v6_waiting'] = $db->cnt('', "ip_ranges_v6", "status = 'waiting' AND delete_req = 'N'");
-				$this->tpl['link_ranges_v6_req_del'] = make_ref(array("page" => "hostmaster", "subpage" => "ranges_v6", "form_search_ranges_v6_search" => serialize(array("ip_ranges_v6__delete_req" => "Y"))));
+				$this->tpl['link_ranges_v6_req_del'] = make_ref('/hostmaster/ranges_v6', array("form_search_ranges_v6_search" => serialize(array("ip_ranges_v6__delete_req" => "Y"))));
 				$this->tpl['ranges_v6_req_del'] = $db->cnt('', "ip_ranges_v6", "delete_req = 'Y'");
 			}
 		}
