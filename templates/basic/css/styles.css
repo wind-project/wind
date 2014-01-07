@@ -543,3 +543,8 @@ div.toolbox ul.menu li {
 	padding: 3px 8px;
 	margin-right: 10px;
 }
+
+/** Misc **/
+.page-content {
+	padding: 5px 25px 15px 25px;
+}

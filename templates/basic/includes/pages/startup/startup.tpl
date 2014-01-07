@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 {include file=generic/page-title.tpl title="`$community_name`"}
+<div class="page-content start-page">
 {if $startup_html != ''}
 {$startup_html}
 {else}
-<div style="padding: 30px; font-size: 12px;">
 <h2>{$lang.welcome}</h2>
 <p>Welcome at {$community_name}. Here you can find information about <a href="?page=nodes">registered nodes</a>
 of {$community_short_name} and <a href="?page=services">services</a> running on the network.
@@ -58,10 +58,9 @@ For each node you can declare its links with other <strong>existing</strong> nod
 For any node you can update its information by visiting its page. Through your node page you can also interract
 with the Hostmaster team, to request IP Ranges, DNS zones and nameservers.
 </p>
-<br />
 <hr/>
 <em>Try to update your nodes, with as much as possible <strong>valid</strong> information.
 If you see invalid data on foreign nodes don't hesitate to contact them and request to update/change their public information.</em>
 
-</div>
 {/if}
+</div>
