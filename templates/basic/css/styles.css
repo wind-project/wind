@@ -325,7 +325,7 @@ div.statistics li .quantity{
 
 div.toolbox ul.menu li {
 	padding: 3px 0px;
-	white-space: nowrap;
+	white-space: normal;
 	color: rgb(0, 0, 0);
 	font-weight: normal;
 }
