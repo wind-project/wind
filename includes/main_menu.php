@@ -146,7 +146,7 @@ class menu {
 		$this->tpl['logged'] = $main->userdata->logged;
 		if ($main->userdata->logged) {
 			$this->tpl = array_merge($this->tpl, $main->userdata->info);
-			$this->tpl['node_editor'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'");
+			$this->tpl['node_editor'] = $db->get('nodes.id, nodes.name', 'nodes INNER JOIN users_nodes ON nodes.id = users_nodes.node_id', "users_nodes.user_id = '".$main->userdata->user."'", 'nodes.id');
 			
 			foreach( (array) $this->tpl['node_editor'] as $key => $value) {
 				$this->tpl['node_editor'][$key]['url_view'] = make_ref('/nodes', array("node" => $this->tpl['node_editor'][$key]['id']));
