@@ -1,5 +1,26 @@
 #!/usr/bin/env php
 <?php
+/*
+ * WiND - Wireless Nodes Database
+*
+* Copyright (C) 2005-2014 	by WiND Contributors (see AUTHORS.txt)
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+if (!php_sapi_name() == 'cli')
+	die('This is a command line only script.');
 
 /**
  * Returns absolute path to srtm direactory based on configuration.
@@ -13,7 +34,7 @@ function get_srtm_directory() {
 		// It is relative folder so we have to resolve relatively
 		// to website root
 		
-		$srtm_directory = dirname(__FILE__) . '/../../' . $srtm_directory;
+		$srtm_directory = dirname(__FILE__) . '/../' . $srtm_directory;
 	}
 	
 	return $srtm_directory;
@@ -126,14 +147,14 @@ if (!extension_loaded('zip') || !function_exists('zip_open')) {
 }
 
 //## Configuration checks
-$config_file = dirname(__FILE__) . '/../../config/config.php';
+$config_file = dirname(__FILE__) . '/../config/config.php';
 
 if (! file_exists($config_file)) {
 	die("Cannot find configuration file.\n");
 }
 require($config_file);
 
-require_once dirname(__FILE__) . '/../../globals/classes/srtm.php';
+require_once dirname(__FILE__) . '/../globals/classes/srtm.php';
 
 //## SRTM path checks
 if (! is_dir(get_srtm_directory())) {
