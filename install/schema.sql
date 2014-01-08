@@ -1,4 +1,11 @@
 
+CREATE TABLE IF NOT EXISTS `update_log` (
+  `version_major` int unsigned NOT NULL,
+  `version_minor` int unsigned NOT NULL,
+  `ts_applied` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`version_major`, `version_minor`),
+) CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `areas` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `region_id` int(10) unsigned NOT NULL default '0',
