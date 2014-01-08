@@ -1,0 +1,34 @@
+# Redirection rules
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # If your site can be accessed both with and without the 'www.' prefix, you
+  # can use one of the following settings to redirect users to your preferred
+  # URL, either WITH or WITHOUT the 'www.' prefix. Choose ONLY one option:
+  #
+  # To redirect all users to access the site WITH the 'www.' prefix,
+  # (http://example.com/... will be redirected to http://www.example.com/...)
+  # adapt and uncomment the following:
+  # RewriteCond %{HTTP_HOST} ^example\.com$ [NC]
+  # RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
+  #
+  # To redirect all users to access the site WITHOUT the 'www.' prefix,
+  # (http://www.example.com/... will be redirected to http://example.com/...)
+  # uncomment and adapt the following:
+  # RewriteCond %{HTTP_HOST} ^www\.example\.com$ [NC]
+  # RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
+
+  # Modify the RewriteBase if you are using site in a subdirectory or in a
+  # VirtualDocumentRoot and the rewrite rules are not working properly.
+  # For example if your site is at http://example.com/drupal uncomment and
+  # modify the following line:
+  # RewriteBase /drupal
+  #
+  # If your site is running in a VirtualDocumentRoot at http://example.com/subfolder,
+  # uncomment the following line:
+  RewriteBase /projects/wind
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ ./index.php/$1 [PT,L,QSA]
+</IfModule>

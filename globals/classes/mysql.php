@@ -2,7 +2,7 @@
 /*
  * WiND - Wireless Nodes Database
  * 
- * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * Copyright (C) 2005-2014 	by WiND Contributors (see AUTHORS.txt)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -228,6 +228,7 @@ class mysql {
 		if (isset($main)) {
 			if ($main->userdata->privileges['admin'] === TRUE) {
 				$main->message->set('MySQL Error', $this->get_error().'<br /><br />Last MySQL query:<br />'.$this->last_query);
+				$main->message->type = "error";
 			} else {
 				$main->message->set_fromlang('error', 'database_error');	
 			}

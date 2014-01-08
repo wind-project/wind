@@ -2,7 +2,7 @@
 /*
  * WiND - Wireless Nodes Database
  * 
- * Copyright (C) 2005-2013 	by WiND Contributors (see AUTHORS.txt)
+ * Copyright (C) 2005-2014 	by WiND Contributors (see AUTHORS.txt)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
