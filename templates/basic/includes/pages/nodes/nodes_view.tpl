@@ -32,7 +32,7 @@
 		<br />
 		<div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 	</td>
-	<td class="table-page-split">
+	<td class="table-page-split" valign="top">
 		<div id="map" class="map" style="width: 600px; height: 500px;" > </div>
 	</td>
 	
