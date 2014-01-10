@@ -107,10 +107,10 @@
 			<span class="text">{$lang.mynodes}</span>
 		</span>
 		
-		<ul class="menu nodes-list">
+		<ul class="menu node-list">
 		{section name=row loop=$node_editor}
 			<li>
-				<a href="{$node_editor[row].url_view|escape}">{$node_editor[row].name|escape} (#{$node_editor[row].id})</a>
+				<a href="{$node_editor[row].url_view|escape}">{$node_editor[row].name|escape} <small class="node-id">#{$node_editor[row].id}</small></a>
 			</li>
 		{/section}
 		<li class="add">
