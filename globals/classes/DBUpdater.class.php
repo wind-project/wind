@@ -161,6 +161,11 @@ class DBUpdater {
 		$current_version = $this->getCurrentSchemaVersion();
 		printf("Schema is currently at %s version\n", $current_version);
 		
+		if ($current_version->isGreaterEqual($target_version)){
+			print "Database is already updated to latest version.\n";
+			return;
+		}
+		
 		// Function to get the update for a specific target_version
 		$get_update_for = function($target_version) use ($available_updates) {
 			foreach($available_updates as $update) {

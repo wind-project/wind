@@ -75,7 +75,7 @@ class SchemaVersion {
 	}
 	
 	/**
-	 * @brief Check if this version is greater
+	 * @brief Check if this version is greater than an other one.
 	 * @param SchemaVersion $other The other version to compare at.
 	 */
 	public function isGreater($other) {
@@ -84,10 +84,44 @@ class SchemaVersion {
 		}
 		
 		if ($this->getMajor() == $other->getMajor()
-				&&	$this->getMinor() >= $other->getMinor()) {
+				&&	$this->getMinor() > $other->getMinor()) {
 			return true;
 		} 
 		return false;
+	}
+	
+	/**
+	 * @brief Check if this version is less than an other one.
+	 * @param SchemaVersion $other The other version to compare at.
+	 */
+	public function isLess($other) {
+		if ($this->getMajor() < $other->getMajor()) {
+			return true;
+		}
+	
+		if ($this->getMajor() == $other->getMajor()
+				&&	$this->getMinor() < $other->getMinor()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @brief Check if this version is greater or equal than an other one.
+	 * @param SchemaVersion $other The other version to compare at.
+	 */
+	public function isGreaterEqual($other) {
+		return ($this->isGreater($other) 
+				|| $this->isEqual($other));
+	}
+	
+	/**
+	 * @brief Check if this version is less or equal than an other one.
+	 * @param SchemaVersion $other The other version to compare at.
+	 */
+	public function isLessEqual($other) {
+		return ($this->isLess($other)
+				|| $this->isEqual($other));
 	}
 };
 
