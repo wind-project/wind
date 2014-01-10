@@ -265,6 +265,7 @@ ul.menu > li:nth-child(even) {
 
 ul.main-menu {
 	padding: 0px;
+	background-color: #313131;
 }
 
 ul.main-menu > li {
@@ -272,7 +273,8 @@ ul.main-menu > li {
 	font-size: 1.1em;
 	font-weight: bold;
 	text-align: left;
-	vertical-align: text-bottom;	
+	vertical-align: text-bottom;
+	background-color: transparent !important;
 }
 
 ul.main-menu > li:last-child, ul.main-menu > li:last-child > a {
@@ -282,7 +284,6 @@ ul.main-menu > li:last-child, ul.main-menu > li:last-child > a {
 ul.main-menu > li > a{
 	padding: 8px;
 	color: #EEEEEE;
-	background-color: #313131;
 	line-height: 40px;
 	height: 40px;
 	vertical-align: top;
