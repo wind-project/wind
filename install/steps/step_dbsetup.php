@@ -66,7 +66,7 @@ if (is_method_post()) {
 					}
 					
 					// Initial version of mysql
-					mysql_query("INSERT INTO `update_log` (version_major, version_minor) VALUES(1,1)'");
+					mysql_query("INSERT INTO `update_log` (version_major, version_minor) VALUES(1,1)");
 				}
 			}
 		} else {
