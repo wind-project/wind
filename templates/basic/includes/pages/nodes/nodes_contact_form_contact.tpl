@@ -15,19 +15,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<form name="{$extra_data.FORM_NAME}" method="post">
-<input type="hidden" name="query_string" value="{$hidden_qs}" />
+ <div class="form-bs">
+<form name="{$extra_data.FORM_NAME}" method="post" action="{$action_url}">
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
-<table class="table-form">
-	<tr class="table-form-row1"><td class="table-form-title">{$lang.from}:</td><td class="table-form-field">{$extra_data.from_username|escape} &lt;{$extra_data.from_email|escape}&gt;</td></tr>
-<tr class="table-form-row2"><td class="table-form-title">{$lang.to}:</td><td class="table-form-field">
-		<select class="fld-form-input" name="email_to_type">
-			<option value="all">{$lang.mailto_all}</option>
-			<option value="owner">{$lang.mailto_owner}</option>
-		</select>
-</td></tr>
-<tr class="table-form-row1"><td class="table-form-title">{$lang.subject}:</td><td  class="table-form-field"><input class="fld-form-input" type="text" name="email_subject" /></td></tr>
-<tr class="table-form-row2"><td class="table-form-title">{$lang.body}:</td><td  class="table-form-field"><textarea class="fld-form-input" name ="email_body"></textarea></td></tr>
-<tr><td  class="table-form-submit" colspan="2"><button type="submit">{$lang.send}</button></td></tr>
-</table>
+<div class="form-group">
+	<label>{$lang.from}:</label>
+	<input type="text" class="form-control" disabled=disabled value="{$extra_data.from_username|escape} &lt;{$extra_data.from_email|escape}&gt;"/>
+</div>
+<div class="form-group">
+	<label>{$lang.to}:</label>
+	<select class="form-control" name="email_to_type">
+		<option value="all">{$lang.mailto_all}</option>
+		<option value="owner">{$lang.mailto_owner}</option>
+	</select>
+</div>
+<div class="form-group">
+	<label>{$lang.subject}:</label>
+	<input class="form-control" type="text" name="email_subject" />
+</div>
+<div class="form-group">
+	<label>{$lang.body}:</label>
+	<textarea class="form-control" name ="email_body"></textarea>
+</div>
+<div class="buttons">
+	<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span> {$lang.send}</button>
+</div>
 </form>
+</div>
