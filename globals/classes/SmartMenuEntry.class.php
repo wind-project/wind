@@ -36,7 +36,7 @@ class SmartMenuEntry
     private $link = '';
 
     //! Autoselect mode for links
-    private $autoselect_mode = 'prefix';
+    private $autoselect_mode = 'equal';
 
     //! Children of this entry
     private $children = array();
@@ -47,15 +47,17 @@ class SmartMenuEntry
     //! Check if it is selected
     public function isSelected()
     {
-        $REQUEST_URL = $_SERVER['REQUEST_URI'];
+    	// Get only the path fromt the requested uri
+        $requested_path = explode('?', $_SERVER['REQUEST_URI']);
+        $requested_path = $requested_path[0];
         if ($this->autoselect_mode === false)
             return false;
             
         if ($this->autoselect_mode === 'prefix')
-            if( $this->link === substr($REQUEST_URL, 0, strlen($this->link)))
+            if( $this->link === substr($requested_path, 0, strlen($this->link)))
                 return true;
         if ($this->autoselect_mode === 'equal')
-            if ($this->link === $REQUEST_URL)
+            if ($this->link === $requested_path)
                 return true;
         return false;
     }

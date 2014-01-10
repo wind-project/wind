@@ -35,14 +35,10 @@ class menu {
 		global $lang, $main;
 
 		$this->main_menu = new SmartMenu(array('class' => 'main-menu menu'));
-		$this->main_menu->createLink($lang['all_nodes'], make_ref('/nodes'), 'nodes')
-			->setAutoselectMode('equal');
-		$this->main_menu->createLink($lang['all_ranges'], make_ref('/ranges/search'), 'addresses')
-			->setAutoselectMode('equal');
-		$this->main_menu->createLink($lang['all_services'], make_ref('/services'), 'services')
-			->setAutoselectMode('equal');
-		$this->main_menu->createLink($lang['all_zones'], make_ref('/dnszones'), 'dnszones')
-			->setAutoselectMode('equal');
+		$this->main_menu->createLink($lang['all_nodes'], make_ref('/nodes'), 'nodes');
+		$this->main_menu->createLink($lang['all_ranges'], make_ref('/ranges/search'), 'addresses');
+		$this->main_menu->createLink($lang['all_services'], make_ref('/services'), 'services');
+		$this->main_menu->createLink($lang['all_zones'], make_ref('/dnszones'), 'dnszones');
 		
 		if ($main->userdata->logged) {
 			if ($main->userdata->privileges['admin'] === true) {
