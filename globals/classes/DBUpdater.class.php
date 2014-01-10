@@ -101,7 +101,7 @@ class DBUpdater {
 			return new SchemaVersion(1,0);
 		
 		// Get the latest update and check version
-		$result = $this->db_conn->query("SELECT version_major, version_minor FROM update_log ORDER BY version_major, version_minor LIMIT 1");
+		$result = $this->db_conn->query("SELECT version_major, version_minor FROM update_log ORDER BY version_major DESC, version_minor DESC LIMIT 1");
 		if (!$result || !$result->num_rows)
 			throw new RuntimeException("Unknown schema version of the database");
 		$row = $result->fetch_assoc();
