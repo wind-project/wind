@@ -29,8 +29,7 @@
         {include file="generic/section-level3.tpl" title="`$lang.ip_ranges_v6`" content="`$table_ip_ranges_v6`"}
 		{include file="generic/section-level3.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
 		{include file="generic/section-level3.tpl" title="`$lang.dns_nameservers`" content="`$table_nameservers`"}
-		<br />
-		<div align="center">{include file=generic/link.tpl content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
+		<div align="center">{include file=generic/button.tpl class="btn btn-sm btn-default" glyph="globe" content="`$lang.node_plot_link`" onclick="javascript: t = window.open('$link_plot_link', 'popup_plot_link', 'width=600,height=420,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}</div>
 	</td>
 	<td class="table-page-split" style="vertical-align: text-top;">
 		<div id="map" class="map" style="width: 600px; height: 500px;" > </div>

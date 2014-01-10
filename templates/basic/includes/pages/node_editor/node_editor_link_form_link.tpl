@@ -106,7 +106,7 @@ function type_changed() {
 			<input class="form-control" type="text" disabled="disabled" name="{$data[1].fullField}_output" value="{$data[1].Type_Pickup.output|escape}" />
 			{include file=generic/button.tpl content="`$lang.change`" class="btn-default btn-sm" glyph=edit 
 				onclick="javascript: t = window.open('`$data[1].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
-			{if $data[1].Null == 'YES'}{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[1].fullField`.value = ''; `$data[1].fullField`_output.innerText = ''; return false;"}{/if}
+			{if $data[1].Null == 'YES'}{include file=generic/button.tpl class="btn btn-xs btn-danger" glyph="remove" content="`$lang.delete`" onclick="javascript: `$data[1].fullField`.value = ''; `$data[1].fullField`_output.innerText = ''; return false;"}{/if}
 	</div>	
 	<div class="form-group">
 		<label>{$lang.db[$data.2.fullField]}{if $data[2].Null != 'YES'}*{/if}:</label>
@@ -116,7 +116,7 @@ function type_changed() {
 			onclick="javascript: t = window.open('`$data[2].Pickup_url`', 'popup_pickup', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"}
 			
 			{if $data[2].Null == 'YES'}
-				{include file=generic/link.tpl content="`$lang.delete`" onclick="javascript: `$data[2].fullField`.value = ''; `$data[2].fullField`_output.innerText = ''; return false;"}
+				{include file=generic/button.tpl class="btn btn-xs btn-danger" glyph="remove" content="`$lang.delete`" onclick="javascript: `$data[2].fullField`.value = ''; `$data[2].fullField`_output.innerText = ''; return false;"}
 			{/if}
 	</div>
 	<div class="form-group">	

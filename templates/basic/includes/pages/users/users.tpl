@@ -18,6 +18,10 @@
 {include assign=help file=generic/help.tpl help="users_`$user_method`"}
 {assign var=t value="user_`$user_method`"}
 
-{include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
-{if $link_user_delete}{include assign=user_delete file=generic/link.tpl content="`$lang.delete`" link=$link_user_delete confirm=TRUE}{/if}
+{if $link_user_delete}
+	{include assign=user_delete file=generic/button.tpl class="btn btn-danger btn-sm" glyph="remove" content="`$lang.delete`" href=$link_user_delete confirm=TRUE}
+{/if}
+{include file=generic/page-title.tpl title="`$lang.$t`" right="`$user_delete` `$help`"}
+
+
 {$form_user}
