@@ -70,7 +70,7 @@ class node_editor_range_v6 {
 		$ret = $form_getrange_v6->db_set(array("node_id" => intval(get('node')), "v6net_id" => $nextr['id'], "status" => $status));
 		$ret2 = $db->set("ipv6_node_repos", array('node_id' => intval(get('node'))), 'id = '.$nextr['id']);
 		if ($ret && $ret2) {
-			$main->message->set_fromlang('info', 'request_range_success', makelink(array("page" => "mynodes", "node" => get('node'))));
+                        $main->message->set_fromlang('info', 'request_range_success', make_ref('/node_editor', array("node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

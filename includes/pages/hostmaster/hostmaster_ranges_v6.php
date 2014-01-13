@@ -55,7 +55,7 @@ class hostmaster_ranges_v6 {
 		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'v6net_id');
 		for($i=1;$i<count($table_ip_ranges_v6->data);$i++) {
 			if (isset($table_ip_ranges_v6->data[$i])) {
-				$table_ip_ranges_v6->info['EDIT'][$i] = makelink(array("page" => "hostmaster", "subpage" => "range_v6", "v6net_id" => $table_ip_ranges_v6->data[$i]['v6net_id']));
+                                $table_ip_ranges_v6->info['EDIT'][$i] = make_ref('/hostmaster/range_v6', array("v6net_id" => $table_ip_ranges_v6->data[$i]['v6net_id']));
 			}
 		}
 		$table_ip_ranges_v6->info['EDIT_COLUMN'] = 'v6net';
@@ -84,7 +84,7 @@ class hostmaster_ranges_v6 {
                         $ret2 = $ret2 && $db->set("ipv6_node_repos", array('node_id' => '0'), "id = '".$ret1[0]['v6net_id']."'");
                 }
                 if ($ret && $ret2) {
-                        $main->message->set_fromlang('info', 'delete_success', makelink("",TRUE));
+                        $main->message->set_fromlang('info', 'delete_success', self_ref());
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

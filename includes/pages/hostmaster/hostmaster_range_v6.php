@@ -61,7 +61,7 @@ class hostmaster_range_v6 {
 		for($i=1;$i<count($table_node_info->data);$i++) {
 			if (isset($table_node_info->data[$i])) {
 				$table_node_info->data[$i]['nodes__name'] .= " (#".$table_node_info->data[$i]['id'].")";
-				$table_node_info->info['EDIT'][$i] = makelink(array("page" => "mynodes", "node" => $table_node_info->data[$i]['id']));
+                                $table_node_info->info['EDIT'][$i] = make_ref('/node_editor', array("node" => $table_node_info->data[$i]['id']));
 			}
 		}
 		$table_node_info->info['EDIT_COLUMN'] = 'nodes__name';
@@ -82,7 +82,7 @@ class hostmaster_range_v6 {
 			'users_nodes.owner ASC');
 		for($i=1;$i<count($table_user_info->data);$i++) {
 			if (isset($table_user_info->data[$i])) {
-				$table_user_info->info['EDIT'][$i] = makelink(array("page" => "users", "user" => $table_user_info->data[$i]['id']));
+                                $table_user_info->info['EDIT'][$i] = make_ref('/users', array("user" => $table_user_info->data[$i]['id']));
 			}
 		}
 		$table_user_info->info['EDIT_COLUMN'] = 'username';
@@ -160,7 +160,7 @@ class hostmaster_range_v6 {
                         $ret2 = TRUE;
                         $ret2 = $ret2 && $db->set("ipv6_node_repos", array('node_id' => '0'), "id = '".$ret1[0]['v6net_id']."'");
                         if ($ret && $ret2) {
-				$main->message->set_fromlang('info', 'delete_success', makelink(array("page" => "hostmaster", "subpage" => "ranges_v6")));
+                                $main->message->set_fromlang('info', 'delete_success', make_ref('/hostmaster/ranges_v6'));
 			} else {
 				$main->message->set_fromlang('error', 'generic');		
 			}
@@ -171,7 +171,7 @@ class hostmaster_range_v6 {
 		$this->tpl['table_user_info'] = $construct->table($this->table_user_info(), __FILE__);
 		$this->tpl['table_links'] = $construct->table($this->table_links(), __FILE__);
 		$this->tpl['table_ip_ranges_v6'] = $construct->table($this->table_ip_ranges_v6(), __FILE__);
-		$this->tpl['link_range_delete'] = makelink (array("action" => "delete"),TRUE);
+                $this->tpl['link_range_delete'] = self_ref(array("action" => "delete"));
 		return template($this->tpl, __FILE__);
 	}
 
@@ -186,7 +186,7 @@ class hostmaster_range_v6 {
 			if ($ret) $ret = $ret && sendmail(stripslashes($_POST['email_to']), stripslashes($_POST['email_subject']), stripslashes($_POST['email_body']), '', '', TRUE);
 		}
 		if ($ret) {
-			$main->message->set_fromlang('info', 'edit_success', makelink(array("page" => "hostmaster", "subpage" => "ranges_v6")));
+                        $main->message->set_fromlang('info', 'edit_success', make_ref('/hostmaster/ranges_v6'));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
