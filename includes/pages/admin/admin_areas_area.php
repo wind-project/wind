@@ -76,7 +76,7 @@ class admin_areas_area {
                 	$ipv6net2 = implode(':',$ipv6net);
                         $ret2 = $db->add("ipv6_node_repos", array("v6net" => inet_pton($ipv6net2), "area_id" => $areaid));
 			if ($ret2) {
-                        	$main->message->set_fromlang('info', 'insert_success', make_ref('/admin/areas)));
+                        	$main->message->set_fromlang('info', 'insert_success', make_ref('/admin/areas'));
         		} else {
                 		$main->message->set_fromlang('error', 'generic');		
                         }
