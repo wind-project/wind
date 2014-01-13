@@ -19,3 +19,4 @@
 {include file=generic/page-title.tpl title="`$lang.all_ranges` > `$lang.ip_ranges_search`" right="$help"}
 {include file=generic/filter.tpl title="`$lang.ip_ranges_search`" content=$form_search_ranges}
 {$table_ranges}
+{$table_ranges_v6}

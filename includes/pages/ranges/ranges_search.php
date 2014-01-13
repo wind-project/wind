@@ -71,7 +71,39 @@ class ranges_search {
 		$table_ip_ranges->db_data_translate('ip_ranges__status');
 		return $table_ip_ranges;
 	}
+        
+        function form_search_ranges_v6() {
+		global $construct, $db;
+		$form_search_ranges_v6 = new form(array('FORM_NAME' => 'form_search_ranges_v6'));
+		$form_search_ranges_v6->data = array("0" => array("Field" => "ipv6", "fullField" => "ipv6"));
+		$form_search_ranges_v6->db_data('ip_ranges_v6.status, ip_ranges_v6.delete_req, nodes.id, nodes.name');
+		array_push($form_search_ranges_v6->data, array('Compare' => 'numeric', 'Field' => 'total_active_p2p', 'fullField' => 'total_active_p2p'));
+		array_push($form_search_ranges_v6->data, array('Compare' => 'numeric', 'Field' => 'total_active_aps', 'fullField' => 'total_active_aps'));
+		$form_search_ranges_v6->db_data_search();
+		return $form_search_ranges_v6;
+	}
 
+	function table_ip_ranges_v6() {
+		global $construct, $db, $lang;
+		$form_search_ranges_v6 = $this->form_search_ranges_v6();
+		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
+		$table_ip_ranges_v6->db_data(
+			'ipv6_node_repos.v6net AS v6net, ip_ranges_v6.id AS v6net_id, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req' , 
+			'ip_ranges_v6, ipv6_node_repos ' ,
+			'ipv6_node_repos.id = ip_ranges_v6.v6net_id' , 
+			"ip_ranges_v6.id" ,
+			"ip_ranges_v6.date_in DESC, ip_ranges_v6.status ASC");
+		$table_ip_ranges_v6->db_data_search($form_search_ranges_v6);
+		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
+			if ($key != 0) {
+				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+			}
+		}
+		$table_ip_ranges_v6->db_data_remove('v6net_id');
+		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status', 'ip_ranges_v6__delete_req');
+		return $table_ip_ranges_v6;
+	}
+        
 	function output() {
 		global $construct;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
@@ -79,6 +111,7 @@ class ranges_search {
 		
 		$this->tpl['form_search_ranges'] = $construct->form($this->form_search_ranges(), __FILE__);
 		$this->tpl['table_ranges'] = $construct->table($this->table_ip_ranges(), __FILE__);
+                $this->tpl['table_ranges_v6'] = $construct->table($this->table_ip_ranges_v6(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 
