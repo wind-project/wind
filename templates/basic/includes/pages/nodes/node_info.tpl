@@ -15,39 +15,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<table width="100%"  border="0" cellspacing="0" cellpadding="0" class="table-node">
-<tr>
-<td class="table-node-key">{$lang.db.nodes__id}</td>
-<td class="table-node-value">{$node.id}</td>
-</tr>
-<tr>
-<td class="table-node-key">{$lang.db.nodes__name}</td>
-<td class="table-node-value">{$node.name|escape}</td>
-</tr>
-<tr>
-<td class="table-node-key">{$lang.db.areas__name}</td>
-<td class="table-node-value">{$node.area_name|escape}</td>
-</tr>
-<tr>
-<td class="table-node-key">{$lang.db.regions__name}</td>
-<td class="table-node-value">{$node.region_name|escape}</td>
-</tr>
-<tr>
-<td class="table-node-key">{$lang.db.nodes__date_in}</td>
-<td class="table-node-value">{$node.date_in|date_format:"%x"}</td>
-</tr>
-<tr>
-<td class="table-node-key">{$lang.db.nodes__status}</td>
-<td class="table-node-value">{$node.status|escape}</td>
-</tr>
-<tr>
-<td class="table-node-key">{$lang.db.nodes__due_date}</td>
-<td class="table-node-value">{$node.due_date|escape}</td>
-</tr>
-<tr>
-<td class="table-node-key">{$lang.db.user_id_owner}</td>
-<td class="table-node-value">{$node.owner_username|escape}
-{include file="generic/button.tpl" glyph=envelope class="btn-info btn-xs" onclick="javascript: t = window.open('$link_contact', 'contact', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;" content=$lang.contact}
-</td>
-</tr>
-</table>
+<div class="node-info">
+<span class="node-status node-status-{$node.status|escape}">{$node.status|escape}</span>
+<dl class="node-details dl-horizontal">
+<dt>{$lang.db.user_id_owner}</dt>
+	<dd>{$node.owner_username|escape}
+		{include file="generic/button.tpl" glyph=envelope class="btn-info btn-xs" onclick="javascript: t = window.open('$link_contact', 'contact', 'width=700,height=600,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;" content=$lang.contact}
+	</dd>
+<dt>{$lang.location}</dt>
+	<dd>{if $node.area_name}{$node.area_name|escape}{else}n/a{/if}<br/>
+		{if $node.region_name}{$node.region_name|escape}{else}n/a{/if}<br />
+		<code> {$node.latitude}, {$node.longitude} </code>
+	</dd>
+<dt>{$lang.db.nodes__date_in}</dt>
+	<dd>{$node.date_in|date_format:"%x"}</dd>
+<dt>{$lang.db.nodes__due_date}</dt>
+	<dd>{$node.due_date|escape}</dd>
+</dl>
+{if $node.info }
+<pre class="node-comments">
+{$node.info}
+</pre>
+{/if}
+</div>

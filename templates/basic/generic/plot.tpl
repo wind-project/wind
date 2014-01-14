@@ -15,8 +15,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<table class="plot-table" cellspacing="0">
-<tr><td colspan="3" class="plot-title">{$lang.plot}</td></tr>
-<tr><td width="33%" align="left">{$data[rowl].node_name|escape} (#{$data[rowl].node_id})</td><td width="33%" align="center">-- {$data[rowl].distance|round:3}km --</td><td align="right">{$data[rowl].peer_node_name|escape} (#{$data[rowl].links__peer_node_id})</td></tr>
-<tr><td colspan="3" align="center"><a href="" onclick="javascript: t = window.open('?page=nodes&amp;subpage=plot_link&amp;a_node={$data[rowl].node_id}&amp;b_node={$data[rowl].links__peer_node_id}', 'popup_plot_link', 'width=600,height=450,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"><img src="?page=nodes&amp;subpage=plot&amp;a_node={$data[rowl].node_id}&amp;b_node={$data[rowl].links__peer_node_id}&amp;width=300&amp;height=150" width="300" height="150" alt="{$lang.plot}" /></a></td></tr>
-</table>
+<div class="plot-table">
+	<div class="plot-peers">
+	<span class="plot-left-peer">{$data[rowl].node_name|escape} <small>#{$data[rowl].node_id}</small></span>
+	<span class="plot-right-peer"><small>#{$data[rowl].links__peer_node_id}</small> {$data[rowl].peer_node_name|escape}</span>
+	</div>
+	<span class="plot-distance">-- {$data[rowl].distance|round:3}km --</span>
+	<div class="plot-image-cell">
+		<a href="" onclick="javascript: t = window.open('?page=nodes&amp;subpage=plot_link&amp;a_node={$data[rowl].node_id}&amp;b_node={$data[rowl].links__peer_node_id}', 'popup_plot_link', 'width=600,height=450,toolbar=0,resizable=1,scrollbars=1'); t.focus(); return false;"><img src="?page=nodes&amp;subpage=plot&amp;a_node={$data[rowl].node_id}&amp;b_node={$data[rowl].links__peer_node_id}&amp;width=300&amp;height=150" width="300" height="150" alt="{$lang.plot}" /></a>
+	</div>
+</div>

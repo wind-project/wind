@@ -215,6 +215,10 @@ div.page-title h1 {
 	padding-left: 20px;
 }
 
+div.page-title h1 small{
+	color: #d1d1d1;
+}
+
 div.page-title .extra {
 	position: absolute;
 	bottom: 10px;
@@ -255,13 +259,14 @@ ul.menu {
 
 ul.menu > li > a{
 	display: block;
+	padding: 0px 5px;
 }
 ul.menu > li:nth-child(odd) {
-	background-color: rgb(255, 255, 255);
+	background-color: rgb(253, 253, 253);
 }
 
 ul.menu > li:nth-child(even) {
-	background-color: rgb(240, 240, 240);
+	background-color: rgb(245, 245, 245);
 }
 
 ul.main-menu {
@@ -533,6 +538,50 @@ div.toolbox ul.menu li {
 .login-dialog .btn {
 	margin-right: 10px;
 	font-size: 1.2em;
+}
+
+/** Node view **/
+.node-status {
+	padding: 2px 4px;
+	font-size: 1.2em;
+	background-color: #f2f2f2;
+	text-transform: capitalize;
+	border-radius: 4px;
+}
+
+.node-status-active {
+	background-color: #398439;
+	color: white;
+}
+
+.plot-table {
+	position: relative;
+	width: 300px;
+	text-shadow: 0px 0px 5px white;
+	color: black;
+	font-weight: bold;
+}
+
+.plot-table .plot-peers{
+	position: absolute;
+	top: 2px;
+	right: 0px;
+	left: 0px;
+	font-weight: normal;
+	padding: 0px 5px;
+}
+
+.plot-table .plot-peers .plot-right-peer{
+	float: right;
+}
+
+.plot-table  .plot-distance{
+	display: block;
+	text-align: center;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
 }
 
 /** Misc **/
