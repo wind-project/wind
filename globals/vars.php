@@ -22,5 +22,10 @@ $vars = array(
 	'info' => array(
 		'version' => array(1, 1, '0-a1'),
 		'min_template_version' => 0
-		)
+		),
+		
+	// Default Configuration
+	'site' => array(
+		'short_urls' => false
+	)
 );
