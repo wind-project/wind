@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS `update_log` (
   `version_major` int unsigned NOT NULL,
   `version_minor` int unsigned NOT NULL,
-  `ts_applied` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `applied_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`version_major`, `version_minor`)
 ) CHARSET=utf8;
 
