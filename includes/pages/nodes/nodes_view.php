@@ -328,8 +328,8 @@ class nodes_view {
 		$t = $db->get('id, date_in, view_point, info', 'photos', "node_id = ".intval(get('node')));
 		foreach( (array) $t as $key => $value) {
 			$this->tpl['photosview'][$value['view_point']] = $value;
-			$this->tpl['photosview'][$value['view_point']]['image_s'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'-s.jpg';
-			$this->tpl['photosview'][$value['view_point']]['image'] = $vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'.jpg';
+			$this->tpl['photosview'][$value['view_point']]['image_s'] = surl($vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'-s.jpg');
+			$this->tpl['photosview'][$value['view_point']]['image'] = surl($vars['folders']['photos'].'photo-'.$this->tpl['photosview'][$value['view_point']]['id'].'.jpg');
 		}
 		
 		$this->tpl['link_plot_link'] = make_ref('/nodes/plot_link', array("a_node" => $this->tpl['node']['id']));
