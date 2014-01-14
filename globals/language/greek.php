@@ -32,7 +32,7 @@ $lang = array(
 	'forward_text' => "Αν δεν επιθυμείτε να περιμένετε πατήστε εδώ...",
 	
 	'delete_request' => "Αίτηση διαγραφής",
-	
+	'location' => 'Τοποθεσία',
 	'delete' => "Διαγραφή",
 	'home' => "Αρχική σελίδα",
 	'edit_profile' => "Προφίλ χρήστη",
@@ -173,6 +173,7 @@ $lang = array(
 	'unlinked' => "Ασύνδετοι",
 	'find_coordinates' => "Βρείτε τις συντεταγμένες σας",
 	'select_the_coordinates' => "Επιλογή των συντεταγμένων",
+	'coordinates' => 'Συντεταγμένες',
 	'quick_search' => "Γρήγορη εύρεση",
 	'statistics' => "Στατιστικά",
 	'active_nodes' => "Ενεργοί κόμβοι",
