@@ -16,6 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
  {include assign="btn_add" file="generic/button.tpl" class="btn-success btn-sm" glyph="plus-sign" 
-	link=$link_area_add content="`$lang.area_add`"}
+	href=$link_area_add content="`$lang.area_add`"}
 {include file=generic/page-title.tpl title="`$lang.admin_panel` > `$lang.areas`" right="$btn_add}
 {$table_areas}
