@@ -20,4 +20,4 @@
 {include file=generic/page-title.tpl title="`$lang.all_nodes`" right="$help"}
 <div id="map" class="map" style="height: 350px;" > </div>
 {include file=generic/filter.tpl title="`$lang.nodes_search`" content=$form_search_nodes}
-{include file=generic/section-level3.tpl title="`$lang.nodes_found`" content=$table_nodes}
+{$table_nodes}

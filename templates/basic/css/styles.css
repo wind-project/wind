@@ -106,6 +106,7 @@ div.user-panel {
 	position: absolute;
 	right: 0;
 	z-index: 1;
+	color: #d1d1d1;
 }
 
 div.user-panel .quicksearch{
@@ -284,9 +285,7 @@ ul.main-menu > li:last-child, ul.main-menu > li:last-child > a {
 ul.main-menu > li > a{
 	padding: 8px;
 	color: #EEEEEE;
-	line-height: 40px;
 	height: 40px;
-	vertical-align: top;
 	padding-left: 10px;
 	border-bottom: 1px solid #545454;
 }
@@ -473,30 +472,23 @@ div.toolbox ul.menu li {
 /** Login dialog **/
 
 .login-dialog {
-	padding: 10px;
+	padding: 15px 15px;
 	border-radius: 15px;
 	border-width: 0px;
-	font-size: 12px;
-	font-family: Verdana !important;
+	font-size: 1em;
 	color: white !important;
-	background-color: #9ba8c2 !important;
+	background-color: #A0A0A0 !important;
 	background-image: none;
 	box-shadow: 0px 0px 10px #343434;
-	width: 250px !important;
+	width: 280px !important;
 	position: relative;
 }
 
-.login-dialog .close.button{
-	border: none;
-	box-shadow: none;
-	padding: 0px;
+.login-dialog button.close{
 	position: absolute;
 	right: 0px;
-	top: 0px;
-	cursor: pointer;
-	width: 16px;
-	height: 16px;
-	background: transparent url('../images/login_close.png') no-repeat center center;
+	top: -13px;
+	font-size: 28px;
 }
 	
 .login-dialog a {
@@ -526,6 +518,7 @@ div.toolbox ul.menu li {
 .login-dialog label{
 	display: block;
 	margin: 15px 0px;
+	font-weight: normal;
 }
 
 .login-dialog fieldset {
@@ -533,24 +526,13 @@ div.toolbox ul.menu li {
 	padding: 0px;;
 }
 
-.login-dialog input[type=password], .login-dialog input[type=text]{
-	display: block;
-	font-size: 15px;
-	width: 212px;
-	border: none;
-	border-radius: 4px;
-	padding: 5px;
-	color: #424242;
+.login-dialog input[type=text], .login-dialog input[type=password]{
+	font-size: 1.2em;
 }
 
-.login-dialog button {
-	background: #627295;
-	color: #f1f1f1;
-	font-size: 13px;
-	font-weight: bold;
-	border: 0px;
-	padding: 3px 8px;
+.login-dialog .btn {
 	margin-right: 10px;
+	font-size: 1.2em;
 }
 
 /** Misc **/

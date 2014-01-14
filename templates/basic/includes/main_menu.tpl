@@ -35,13 +35,13 @@
 
 			{if $ranges_waiting != 0}
 				<li>
-				<a class="btn btn-info btn-sm" href="{$link_ranges_waiting}">
+				<a class="btn btn-info btn-xs" href="{$link_ranges_waiting}">
 					<span class="badge">{$ranges_waiting}</span> {$lang.waiting}</a>
 				</li>
 			{/if}
 			{if $ranges_req_del != 0}
 				<li>
-				<a class="btn btn-warning btn-sm" href="{$link_ranges_req_del}">
+				<a class="btn btn-warning btn-xs" href="{$link_ranges_req_del}">
 					<span class="badge">{$ranges_req_del}</span> {$lang.waiting}</a>
 				</li>
 			</li>
@@ -55,13 +55,13 @@
 
 			{if $ranges_v6_waiting != 0}
 				<li>
-				<a class="btn btn-info btn-sm" href="{$link_ranges_v6_waiting}">
+				<a class="btn btn-info btn-xs" href="{$link_ranges_v6_waiting}">
 					<span class="badge">{$ranges_v6_waiting}</span> {$lang.waiting}</a>
 				</li>
 			{/if}
 			{if $ranges_v6_req_del != 0}
 				<li>
-				<a class="btn btn-warning btn-sm" href="{$link_ranges_v6_req_del}">
+				<a class="btn btn-warning btn-xs" href="{$link_ranges_v6_req_del}">
 					<span class="badge">{$ranges_v6_req_del}</span> {$lang.waiting}</a>
 				</li>
 			</li>
@@ -75,7 +75,7 @@
 			
 			{if $dnszones_waiting != 0}
 				<li>
-				<a class="btn btn-success btn-sm" href="{$link_dnszones_waiting}">
+				<a class="btn btn-success btn-xs" href="{$link_dnszones_waiting}">
 					<span class="badge">{$dnszones_waiting}</span> {$lang.waiting}</a>
 				</li>
 			{/if}
@@ -90,7 +90,7 @@
 			
 			{if $dnsnameservers_waiting != 0}
 				<li>
-				<a class="btn btn-success btn-sm" href="{$link_dnsnameservers_waiting}">
+				<a class="btn btn-success btn-xs" href="{$link_dnsnameservers_waiting}">
 					<span class="badge">{$dnsnameservers_waiting}</span> {$lang.waiting}</a>
 				</li>
 			{/if}

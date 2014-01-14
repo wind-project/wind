@@ -15,16 +15,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<div class="login">
-<div class="close button"></div>
+<div class="logins">
+<button type="button" class="close" aria-hidden="true">&times;</button>
 <form name="login-form" action="{$form_submit_url}" method="POST">
 	<input type="hidden" name="form_name" value="login"/> 
   <fieldset>
-    <label><input type="text" name="username" placeholder="{$lang.username}"></label>
-    <label><input type="password" name="password" placeholder="{$lang.password}"></label>
+    <label><input type="text" class="form-control" name="username" placeholder="{$lang.username}"></label>
+    <label><input type="password" class="form-control" name="password" placeholder="{$lang.password}"></label>
 	<label>{$lang.rememberme}: <input type="checkbox" name="rememberme"></label>
   </fieldset>
   	<div class="notification"></div>
-    <button type="submit">{$lang.login}</button> <a href="{$link_restore_password}">{$lang.password_recover}</a>
+    <button type="submit" class="btn btn-primary">{$lang.login}</button> <a href="{$link_restore_password}">{$lang.password_recover}</a>
 </form>
 </div>
