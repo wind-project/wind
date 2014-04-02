@@ -56,7 +56,7 @@ function type_changed() {
 }
 </script>
 {/literal}
-<form name="{$extra_data.FORM_NAME}" method="post" action="?">
+<form name="{$extra_data.FORM_NAME}" method="post">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 <table class="table-form" id="{$extra_data.FORM_NAME}_t">
