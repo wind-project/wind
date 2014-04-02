@@ -284,7 +284,7 @@ NetworkMap.prototype._downloadTopology = function(focus_selected) {
 			// Color mapping for nodes
 			var colors_per_type = {
 				'p2p' : '#f5c70c',
-				'p2p-ap' : '#f5c70c',
+				'p2p-ap' : '#61d961',
 				'ap' : '#61d961',
 				'client' : '#5858ff',
 				'unlinked' : '#ff3f4f',
