@@ -26,6 +26,6 @@
 	</div>
 	<div class="credits">
 		Powered by: <a target="_blank" href="https://github.com/wind-project/wind"><b>WiND  v{$wind_version}</b></a><br />
-		&copy; 2005-2013 <a target="_blank" href="https://github.com/wind-project/wind/wiki/Team">WiND Contributors</a>
+		&copy; 2005-2014 <a target="_blank" href="https://github.com/wind-project/wind/wiki/Team">WiND Contributors</a>
 	</div>
 </div>
