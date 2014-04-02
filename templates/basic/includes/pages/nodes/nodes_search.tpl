@@ -16,13 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
 
-{include assign=help file=generic/help.tpl help=nodes_search}
+{include assign=help file=generic/help.tpl help=nodes_search }
 {include file=generic/page-title.tpl title="`$lang.all_nodes`" right="$help"}
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table-page">
 {if $skip_map!='yes'}
 	<tr>
 		<td class="table-page-split">
 		<div id="map" class="map" style="height: 350px;" > </div>
+		<div style="text-align: right"> {include file=generic/link.tpl link="$link_gearth" content="Google Earth"}</div>
 		</td>
 	</tr>
 {/if}
