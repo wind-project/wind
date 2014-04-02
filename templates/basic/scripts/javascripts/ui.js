@@ -108,7 +108,6 @@ LoginForm.prototype.load = function(success){
 			});
 			
 			// Hook form submition
-			console.log(object._dialog_el.find('form'));
 			object._dialog_el.find('form').submit(function() {
 				object.info('Logging to the system');
 				async_form($(this), function(result){
@@ -186,7 +185,6 @@ LocationPicker = function(lat_element, lng_element) {
 			locationPickerObject.destroy();
 		},
 		cancel: function() {
-			console.log('canceled');
 			locationPickerObject.destroy();
 		}
 	});
