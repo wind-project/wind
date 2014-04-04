@@ -94,7 +94,7 @@ $step_current_index = array_search($step_current, $step_keys);
 </div>
 <div class="footer">
 Powered by: <a href="https://github.com/wind-project/wind"><b>WiND - Wireless Nodes Database project</b></a><br/>
-&copy; 2005-2013 <a href="https://github.com/wind-project/wind/wiki/Team">WiND Contributors</a>
+&copy; 2005-2014 <a href="https://github.com/wind-project/wind/wiki/Team">WiND Contributors</a>
 </div>
 </body>
 </html>

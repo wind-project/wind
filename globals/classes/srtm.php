@@ -17,8 +17,86 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 /**
- * Class to handle SRTM Data
+ * @brief A Class for managing latitude and longtitude coordinates
+ */
+class LatLon {
+	
+	/**
+	 * @brief The latitude in decimal format
+	 * @param float $lat
+	 */
+	public $lat;
+	
+	/**
+	 * @brief The longtitude in decimal format
+	 * @param float $lot
+	 */
+	public $lon;
+	
+	/**
+	 * @brief Construct a new coordinates object
+	 * @param float $lat
+	 * @param float $lon
+	 */
+	public function __construct($lat, $lon) {
+		$this->lat = $lat;
+		$this->lon = $lon;
+	}
+	
+	/**
+	 * @brief Normalize coordinates
+	 */
+	public function normalize() {
+		if ($this->lon > 180)
+			$this->lon -= 360;
+	}
+	
+	/**
+	 * @brief Check if this coordinates coorespond souther
+	 * of the equator
+	 * @return boolean
+	 */
+	public function is_south() {
+		$this->normalize();
+		return ($this->lat <= 0);
+	}
+	
+	/**
+	 * @brief Check if this coordinates coorespond northen
+	 * of the equator
+	 * @return boolean
+	 */
+	public function is_north() {
+		$this->normalize();
+		return ($this->lat > 0);
+	}
+	
+	/**
+	 * @brief Check if this coordinates coorespond eastward
+	 * of the Prime Meridian
+	 * @return boolean
+	 */
+	public function is_east() {
+		$this->normalize();
+		return ($this->lon >= 0);
+	}
+	
+	/**
+	 * @brief Check if this coordinates coorespond westward
+	 * of the Prime Meridian
+	 * @return boolean
+	 */
+	public function is_west() {
+		$this->normalize();
+		return ($this->lon < 0);
+	}
+	
+}
+
+/**
+ * @brief Class to handle SRTM Data
  */
 class srtm {
 	
@@ -28,15 +106,15 @@ class srtm {
 		$this->data_path = $data_path;
 	}
 	
-	public static function get_filename($lat, $lon) {
-		if ($lat < 0) {
+	public static function get_filename(LatLon $latlon) {
+		if ($latlon->is_south()) {
 			$lat_dir = 'S';
 			$lat_adj = 1;
 		} else {
 			$lat_dir = 'N';
 			$lat_adj = 0;
 		}
-		if ($lon < 0) {
+		if ($latlon->is_west()) {
 			$lon_dir = 'W';
 			$lon_adj = 1;
 		} else {
@@ -44,29 +122,25 @@ class srtm {
 			$lon_adj = 0;
 		}
 		
-		return $lat_dir . sprintf("%02.0f", (integer)($lat+$lat_adj)).$lon_dir.sprintf("%03.0f", (integer)($lon+$lon_adj)).'.hgt';
+		return $lat_dir
+			. sprintf("%02d", (integer)(abs($latlon->lat)+$lat_adj))
+			. $lon_dir
+			. sprintf("%03d", (integer)(abs($latlon->lon)+$lon_adj)).'.hgt';
 	}
 	
-	function get_elevation($lat, $lon, $round=TRUE) {
-		if ($lat < 0) {
-			$lat_dir = 'S';
-			$lat_adj = 1;
-		} else {
-			$lat_dir = 'N';
-			$lat_adj = 0;
-		}
-		if ($lon < 0) {
-			$lon_dir = 'W';
-			$lon_adj = 1;
-		} else {
-			$lon_dir = 'E';
-			$lon_adj = 0;
-		}
-		$y = $lat;
-		$x = $lon;
+	function get_elevation(LatLon $latlon, $round=TRUE) {
+
+		$lat_adj = (integer)$latlon->is_south();
+		$lon_adj = (integer)$latlon->is_west();
 		
-		$filename = $this->data_path.$lat_dir.sprintf("%02.0f", (integer)($lat+$lat_adj)).$lon_dir.sprintf("%03.0f", (integer)($lon+$lon_adj)).'.hgt';
-		if ($lat === '' || $lon === '' || !file_exists($filename)) return FALSE;
+		$y = abs($latlon->lat);
+		$x = abs($latlon->lon);
+		
+		$filename = $this->data_path . $this->get_filename($latlon);
+		if (!file_exists($filename)) {
+			error_log("file not found '". $filename);
+			return FALSE;
+		}
 		
 		$file = fopen($filename, 'r');
 		$offset = ( (integer)(($x - (integer)$x + $lon_adj) * 1200) * 2 + (1200 - (integer)(($y - (integer)$y + $lat_adj) * 1200)) * 2402 );
@@ -85,8 +159,8 @@ class srtm {
 				$$c = $m;
 		}
 	
-		$fx = ($lon - ((integer)($lon * 1200) / 1200)) * 1200;
-		$fy = ($lat - ((integer)($lat * 1200) / 1200)) * 1200;
+		$fx = ($latlon->lon - ((integer)($latlon->lon * 1200) / 1200)) * 1200;
+		$fy = ($latlon->lat - ((integer)($latlon->lat * 1200) / 1200)) * 1200;
 	
 		// normalizing data
 		$elevation = ($h1 * (1 - $fx) + $h2 * $fx) * (1 - $fy) + ($h3 * (1 - $fx) + $h4 * $fx) * $fy;

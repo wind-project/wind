@@ -52,8 +52,8 @@ class nodes_plot_link {
 		if ($this->tpl['a_node'] != '' && $this->tpl['b_node'] != '') {
 			$this->tpl['a_node_azimuth'] = $geocalc->GCAzimuth($a_node_data['latitude'], $a_node_data['longitude'], $b_node_data['latitude'], $b_node_data['longitude']);
 			$this->tpl['b_node_azimuth'] = $geocalc->GCAzimuth($b_node_data['latitude'], $b_node_data['longitude'], $a_node_data['latitude'], $a_node_data['longitude']);
-			$this->tpl['a_node_geo_elevation'] = $srtm->get_elevation($a_node_data['latitude'], $a_node_data['longitude']); 
-			$this->tpl['b_node_geo_elevation'] = $srtm->get_elevation($b_node_data['latitude'], $b_node_data['longitude']);
+			$this->tpl['a_node_geo_elevation'] = $srtm->get_elevation(new LatLon($a_node_data['latitude'], $a_node_data['longitude'])); 
+			$this->tpl['b_node_geo_elevation'] = $srtm->get_elevation(new LatLon($b_node_data['latitude'], $b_node_data['longitude']));
 			$this->tpl['a_node_elevation'] = $a_node_data['elevation']; 
 			$this->tpl['b_node_elevation'] = $b_node_data['elevation']; 
 

@@ -54,7 +54,7 @@ class geoimage {
 		$step_lat = ($point_b->lat - $point_a->lat) / ($width - 1);
 		$step_log = ($point_b->lon - $point_a->lon) / ($width - 1);
 		for ($i=0;$i<$width;$i++) {
-			$elevations[$i] = $srtm->get_elevation($point_a->lat + $step_lat * $i, $point_a->lon + $step_log * $i, FALSE);
+			$elevations[$i] = $srtm->get_elevation(new LatLon($point_a->lat + $step_lat * $i, $point_a->lon + $step_log * $i), FALSE);
 			if ($point_a->lat == '' || $point_a->lon == '' || $point_b->lat == '' || $point_b->lon == '' || $elevations[$i] === FALSE) {
 				imagestring ($image, 5, 10, 10, "Data error!", $black);
 				return $image;

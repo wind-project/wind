@@ -30,19 +30,12 @@ $needed_files = array();
 $bounds = $_SESSION['config']['gmap']['bounds'];
 
 for($lat = floor($bounds['min_latitude']); $lat <= ceil($bounds['max_latitude']);$lat += 1) {
-	// Clamp
-	if ($lat > 90)
-		$lat = -90;
 	for($lng = floor($bounds['min_longitude']); $lng <= ceil($bounds['max_longitude']);$lng += 1) {
-		// clamp
-		if ($lng > 180)
-			$lng = -180;
-			
-		$fname = srtm::get_filename($lat, $lng);
+		$coords = new LatLon($lat, $lng);
+		$fname = srtm::get_filename($coords);
 		$needed_files[$fname] = array(
-			'exists' => file_exists(dirname(__FILE__) . '/../../files/srtm/' . $fname),
-			'lat' => $lat,
-			'lng' => $lng
+				'exists' => file_exists(dirname(__FILE__) . '/../../files/srtm/' . $fname),
+				'latlon' => $coords
 		);
 	}
 }
@@ -63,7 +56,7 @@ if (!extension_loaded('zip') || !function_exists('zip_open')) {
 
 echo '<ul class="srtm">';
 foreach($needed_files as $fname => $data) {
-	echo '<li data-lat="' . $data['lat']. '" data-lng="' . $data['lng']. '" class="' . ($data['exists']?'existing':'missing') .'">' 
+	echo '<li data-lat="' . $data['latlon']->lat. '" data-lng="' . $data['latlon']->lon. '" class="' . ($data['exists']?'existing':'missing') .'">' 
 		. '<span>'. $fname . '</span></li>';
 }
 echo '</ul>';

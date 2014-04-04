@@ -27,7 +27,7 @@ if (!isset($_GET['lat']) || !isset($_GET['lng']))
 	
 $base_url = 'http://dds.cr.usgs.gov/srtm/version2_1/SRTM3/';
 $srtm_directory = dirname(__FILE__) . '/../files/srtm/';
-$fname = srtm::get_filename((int)$_GET['lat'], (int)$_GET['lng']);
+$fname = srtm::get_filename(new LatLon((int)$_GET['lat'], (int)$_GET['lng']));
 $zip_fname = $fname . '.zip';
 $regions = array(
 	'Africa',

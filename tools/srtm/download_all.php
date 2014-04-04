@@ -2,7 +2,7 @@
 <?php
 
 /**
- * Returns absolute path to srtm direactory based on configuration.
+ * @brief Returns absolute path to srtm direactory based on configuration.
  * @return string
  */
 function get_srtm_directory() {
@@ -20,7 +20,7 @@ function get_srtm_directory() {
 }
 
 /**
- * Get bounds from configuration file
+ * @brief Get bounds from configuration file
  */
 function get_bounds() {
 	global $config;
@@ -29,7 +29,7 @@ function get_bounds() {
 
 
 /**
- * Get all SRTM regions
+ * @brief Get all SRTM regions
  */
 function get_regions() {
 	return array(
@@ -43,26 +43,20 @@ function get_regions() {
 }
 
 /**
- * Get the list with all SRTM files to be downloaded 
+ * @brief Get the list with all SRTM files to be downloaded 
  */
 function srtm_files($bound_sw, $bound_ne) {
 	// Calculate needed files
 	$needed_files = array();
 	
 	for($lat = floor($bound_sw['lat']); $lat <= ceil($bound_ne['lat']);$lat += 1) {
-		// Clamp
-		if ($lat > 90)
-			$lat = -90;
+
 		for($lon = floor($bound_sw['lon']); $lon <= ceil($bound_ne['lon']);$lon += 1) {
-			// clamp
-			if ($lon > 180)
-				$lon = -180;
-				
-			$fname = srtm::get_filename($lat, $lon);
+			$coords = new LatLon($lat, $lon);
+			$fname = srtm::get_filename($coords);
 			$needed_files[$fname] = array(
 					'exists' => file_exists(get_srtm_directory() . "/" . $fname),
-					'lat' => $lat,
-					'lon' => $lon
+					'latlon' => $coords
 			);
 		}
 	}
@@ -71,14 +65,13 @@ function srtm_files($bound_sw, $bound_ne) {
 
 /**
  * Download srtm files for a specific latitude and longitude.
- * @param int $lat
- * @param int $lng
+ * @param LatLon $latlon
  */
-function download_srtm_for($lat, $lon) {
+function download_srtm_for($latlon) {
 	global $config;
 	$base_url = 'http://dds.cr.usgs.gov/srtm/version2_1/SRTM3/';
 	$srtm_directory = get_srtm_directory() . "/";
-	$fname = srtm::get_filename($lat, $lon);
+	$fname = srtm::get_filename($latlon);
 	$zip_fname = $fname . '.zip';
 	$regions = array(
 			'Africa',
@@ -114,7 +107,8 @@ function download_srtm_for($lat, $lon) {
 			return true;
 		}
 	}
-	die("Cannot find tile for {$lat},{$lon}\" in any region.\n");
+	print("Cannot find tile for \"{$latlon->lat},{$latlon->lon}\" in any region.\n");
+	return false;
 }
 
 //-------------------------------------------------------------------------
@@ -177,8 +171,10 @@ foreach($files as $fname => $info) {
 	}
 	print "downloading... ";
 	
-	if (download_srtm_for($info['lat'], $info['lon'])) {
+	if (download_srtm_for($info['latlon'])) {
 		print "OK\n";
+	} else {
+		print "SKIP\n";
 	}
 }
 print "Download finshed succesfully!\n";

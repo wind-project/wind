@@ -42,8 +42,8 @@ class nodes_view {
 		$lat2 = isset($b_node_i[0]['latitude'])?$b_node_i[0]['latitude']:1;   // the same
 		$lon2 = isset($b_node_i[0]['longitude'])?$b_node_i[0]['longitude']:1; // the same
 
-		$a_node_el = str_replace(",", ".", $srtm->get_elevation($lat1, $lon1, FALSE));
-		$b_node_el = str_replace(",", ".", $srtm->get_elevation($lat2, $lon2, FALSE));
+		$a_node_el = str_replace(",", ".", $srtm->get_elevation(new LatLon($lat1, $lon1), FALSE));
+		$b_node_el = str_replace(",", ".", $srtm->get_elevation(new LatLon($lat2, $lon2), FALSE));
 		
 		$dist   = $geocalc->GCDistance($lat1, $lon1, $lat2, $lon2);
 		
