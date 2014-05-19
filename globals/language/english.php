@@ -107,6 +107,7 @@ $lang = array(
 	'ap' => "Access Point",
 	'aps' => "Access Points",
 	'aps_abbr' => "APs",
+	'free' => "Free",
 	'aps_search' => "Search for Access Points",
 	'aps_found' => "Access Points found",
 	'subnet_edit' => "Edit subnet",
