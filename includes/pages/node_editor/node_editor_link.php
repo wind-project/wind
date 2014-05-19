@@ -76,6 +76,9 @@ class node_editor_link {
 				$f['peer_node_id'] = '';
 				$f['peer_ap_id'] = '';
 				break;
+			case 'free':
+				$f['peer_node_id'] = '';
+				break;
 		}
                 $Day = $_POST["CONDATETIME_links__due_date_Day"];
                 $Month = $_POST["CONDATETIME_links__due_date_Month"];
