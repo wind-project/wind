@@ -313,6 +313,7 @@ $lang = array(
 		'links__type-p2p' => 'Backbone',
 		'links__type-ap' => 'Access Point',
 		'links__type-client' => 'Πελάτης',
+		'links__type-free' => 'Ελεύθερο',
 		'links__ssid' => 'SSID',
 		'links__protocol' => 'Πρωτόκολλο',
 		'links__protocol-other' => 'Άλλο',
