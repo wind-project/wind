@@ -40,10 +40,7 @@
 {foreach from=$table_links_ap item=ap}
 	{assign var=aps value="`$aps``$ap`"}
 {/foreach}
-{include file=generic/section-level3.tpl title="`$lang.links`" content="`$table_links_p2p``$aps`"}
-</td>
-<td colspan="2" class="table-page-pad">
-{include file=generic/section-level3.tpl title="`$lang.links`" content="`$table_links_free`"}
+{include file=generic/section-level3.tpl title="`$lang.links`" content="`$table_links_p2p``$aps``$table_links_free`"}
 </td>
 </tr>
 <tr>
