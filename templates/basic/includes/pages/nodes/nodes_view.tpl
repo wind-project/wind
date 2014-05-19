@@ -42,7 +42,7 @@
 {/foreach}
 {include file=generic/section-level3.tpl title="`$lang.links`" content="`$table_links_p2p``$aps`"}
 <br>
-{include file=generic/section-level3.tpl title="`$lang.links`" content="`$table_links_free`"}
+{include file=generic/section-level3.tpl title="`$lang.free` `$lang.links`" content="`$table_links_free`"}
 </td>
 </tr>
 <tr>
