@@ -207,6 +207,51 @@ class nodes_view {
 		return $table_links;
 	}
 
+	function table_links_free() {
+		global $db;
+		$table_links = new table(array('TABLE_NAME' => 'table_links_free'));
+		$table_links->db_data(
+			'nodes.id AS c_node_id, nodes.name AS c_node_name, l1.status AS c_status, l2.date_in AS links__date_in, l2.due_date AS links__due_date, l2.ssid AS links__ssid, l2.type AS links__type, l2.info AS links__info, l2.protocol AS links__protocol, l2.channel AS links__channel, l2.frequency AS links__frequency, l2.equipment AS links__equipment, l2.status AS links__status',
+			'links AS l2
+			LEFT JOIN links AS l1 ON l1.peer_ap_id = l2.id
+			LEFT JOIN nodes ON l1.node_id = nodes.id',
+			"(l1.type = 'client' OR l1.id IS NULL) AND l2.id = '".$id."'",
+			"",
+			"l1.date_in ASC");
+		foreach( (array) $table_links->data as $key => $value) {
+			if ($key != 0) {
+				$table_links->info['EDIT'][$key] = make_ref('/nodes', array('node' => $table_links->data[$key]['c_node_id']));
+			}
+		}
+		return $table_links;
+	}
+        function table_links_free() {
+                global $db;
+                $table_links = new table(array('TABLE_NAME' => 'table_links_free'));
+                $table_links->db_data(
+                        '"" AS distance, n1.name AS node_name, n1.id AS node_id, n2.name AS peer_node_name, l1.type AS links__type, l1.info AS links__info, l1.peer_node_id AS links__peer_node_id, l1.date_in AS links__date_in, l1.due_date AS links__due_date, l1.ssid AS links__ssid, l1.protocol AS links__protocol, l1.channel AS links__channel, l1.frequency AS links__frequency, l1.equipment AS links__equipment, l1.status AS l1_status, l2.status AS l2_status, "" AS links__status',
+                        'links AS l1
+                        INNER JOIN links AS l2 ON l1.peer_node_id = l2.node_id
+                        INNER JOIN nodes AS n1 ON l1.node_id = n1.id
+                        INNER JOIN nodes AS n2 ON l2.node_id = n2.id',
+                        "l1.node_id = ".intval(get('node'))." AND l2.peer_node_id = l1.node_id AND l1.type ='free'",
+                        "",
+                        "l1.date_in ASC");
+                foreach( (array) $table_links->data as $key => $value) {
+                        $table_links->data[$key]['distance'] = $this->calculate_distance($table_links->data[$key]['node_id'], $table_links->data[$key]['links__peer_node_id']);
+                        if ($key != 0) {
+                                if ($table_links->data[$key]['l1_status'] == 'active' && $table_links->data[$key]['l2_status'] == 'active') {
+                                        $table_links->data[$key]['links__status'] = 'active';
+                                } else {
+                                        $table_links->data[$key]['links__status'] = 'inactive';
+                                }
+                                $table_links->info['EDIT'][$key] = make_ref('/nodes', array('node' => $table_links->data[$key]['links__peer_node_id']));
+                        }
+                }
+                $table_links->db_data_translate('links__status', 'links__type');
+                $table_links->db_data_hide('peer_node_name', 'links__info', 'links__peer_node_id', 'l1_status', 'l2_status');
+                return $table_links;
+        }
 	function table_ipaddr_subnets() {
 		global $construct, $db;
 		$table_ipaddr_subnets = new table(array('TABLE_NAME' => 'table_ipaddr_subnets'));
@@ -323,6 +368,7 @@ class nodes_view {
 			if ($value['type'] == 'ap') $this->tpl['table_links_ap'][$value['id']] = $construct->table($this->table_links_ap($value['id']), __FILE__);
 		}
 
+		$this->tpl['table_links_free'] = $construct->table($this->table_links_free(), __FILE__);
 		$this->tpl['table_ipaddr_subnets'] = $construct->table($this->table_ipaddr_subnets(), __FILE__);
 		$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 		$t = $db->get('id, date_in, view_point, info', 'photos', "node_id = ".intval(get('node')));
