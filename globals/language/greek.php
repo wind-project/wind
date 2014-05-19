@@ -109,6 +109,7 @@ $lang = array(
 	'ap' => "Access Point",
 	'aps' => "Access Points",
 	'aps_abbr' => "APs",
+	'free' => "Ελεύθερα",
 	'aps_search' => "Αναζήτηση Access Points",
 	'aps_found' => "Access Points που βρέθηκαν",
 	'subnet_edit' => "Επεξεργασία υποδικτύου",
