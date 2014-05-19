@@ -83,6 +83,26 @@ function type_changed() {
 			t.rows[4].style.display = "none"
 			t.rows[5].style.display = "none"
 			break
+                case 'free':
+                        form.links__peer_node_id.value = ''
+                        form.links__peer_node_id.disabled = true
+                        form.links__peer_ap_id.value = ''
+                        form.links__peer_ap_id.disabled = true
+                        form.links__protocol.disabled = false
+                        form.links__ssid.disabled = false
+                        form.links__channel.disabled = false
+                        t.rows[1].style.display = "none"
+                        t.rows[2].style.display = "none"
+                        try {
+                                t.rows[3].style.display = 'table-row';
+                                t.rows[4].style.display = 'table-row';
+                                t.rows[5].style.display = 'table-row';
+                        } catch(e) {
+                                t.rows[3].style.display = 'block';
+                                t.rows[4].style.display = 'block';
+                                t.rows[5].style.display = 'block';
+                        }
+                        break
 	}
 }
 </script>
