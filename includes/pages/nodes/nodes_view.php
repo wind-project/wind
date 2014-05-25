@@ -331,12 +331,10 @@ class nodes_view {
 		$this->tpl['table_dns'] = $construct->table($this->table_dns(), __FILE__);
 		$this->tpl['table_nameservers'] = $construct->table($this->table_nameservers(), __FILE__);
 		$this->tpl['table_links_p2p'] = $construct->table($this->table_links_p2p(), __FILE__);
-
 		$t = $db->get('id, type', 'links', "node_id = ".intval(get('node')));
 		foreach( (array) $t as $key => $value) {
 			if ($value['type'] == 'ap') $this->tpl['table_links_ap'][$value['id']] = $construct->table($this->table_links_ap($value['id']), __FILE__);
 		}
-
 		$this->tpl['table_links_free'] = $construct->table($this->table_links_free(intval(get('node'))), __FILE__);
 		$this->tpl['table_ipaddr_subnets'] = $construct->table($this->table_ipaddr_subnets(), __FILE__);
 		$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
