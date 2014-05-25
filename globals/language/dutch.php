@@ -81,10 +81,11 @@ $lang = array(
 	'services_categories' => "Diensten categorieen",
 	'services_categories_add' => "Dienst categorie toevoegen",
 	'services_categories_edit' => "Dienst categorie wijzigen",
+	'nodesettingschanges_add' => "Add Change Log for this Node",
+	'nodesettingschanges' => "ChangeLog",
 	'services_edit' => "Dienst bewerken",
 	'services_add' => "Dienst toevoegen",
 	'services' => "Diensten",
-	
 	'user_add' => "Nieuwe gebruiker",
 	'user_edit' => "Gebruiker profiel",
 	'node' => "Node",
@@ -374,6 +375,15 @@ $lang = array(
 		'nodes_services__protocol-tcp' => 'TCP',
 		'nodes_services__protocol-udp' => 'UDP',
 		'nodes_services__port' => 'Poort',
+
+		'nodesettingschanges__id' => 'id',
+	     	'nodesettingschanges__node_id' => 'nodeid',
+		'nodesettingschanges__uid' => 'uid',
+		'nodesettingschanges__changemenu' => 'Section Changed',
+		'nodesettingschanges__changemade' => 'Last Change',
+		'nodesettingschanges__reason' => 'Change Reason',
+		'nodesettingschanges__comment' => 'Comment',
+		'nodesettingschanges__dateline' => 'Date and Time',
 		
 		'photos__date_in' => 'Datum',
 		'photos__view_point' => 'Aspect',
