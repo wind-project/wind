@@ -37,6 +37,7 @@
 		<li><a href="#tab-network" data-toggle="tab">{$lang.network}</a></li>
 		<li><a href="#tab-services" data-toggle="tab">{$lang.services}</a></li>
 		<li><a href="#tab-myview" data-toggle="tab">{$lang.myview}</a></li>
+   		<li><a href="#tab-nodesettingschanges" data-toggle="tab">{$lang.nodesettingschanges}</a></li>
 		{/if}
 	</ul>
  
@@ -96,6 +97,12 @@
 	<div class="tab-pane" id="tab-myview">
 		{include file=generic/section-level3.tpl title="`$lang.myview`" content=$table_photosview}
 	</div>
+    <div class="tab-pane" id="tab-nodesettingschanges">
+    	{include assign="t1" file="generic/button.tpl" link=$link_nodesettingschanges_add content="`$lang.nodesettingschanges_add`"
+          class="btn-success btn-sm" glyph="plus-sign"}
+		{include file=generic/section-level3.tpl title="`$lang.nodesettingschanges`" content=$table_nodesettingschanges}
+	</div>
+    
 {/if}
 </div>
 </div>
