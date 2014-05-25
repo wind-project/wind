@@ -313,6 +313,28 @@ class node_editor {
 		return $table_services;
 	}
 	
+	function table_nodesettingschanges() {
+		global $construct, $db, $main;
+		$table_nodesettingschanges = new table(array('TABLE_NAME' => 'table_nodesettingschanges', 'FORM_NAME' => 'table_nodesettingschanges'));
+		$table_nodesettingschanges->db_data(
+			'nodesettingschanges.changemenu, nodesettingschanges.changemade, nodesettingschanges.reason, nodesettingschanges.comment, nodesettingschanges.dateline, users.username',
+			'nodesettingschanges
+			INNER JOIN users on nodesettingschanges.uid = users.id',
+			"nodesettingschanges.nodeid = '".get('node')."'",
+			'',
+			"nodesettingschanges.entryid DESC");
+		
+		for($i=1;$i<count($table_nodesettingschanges->data);$i++) {
+			if (isset($table_nodesettingschanges->data[$i])) {
+				#$table_actionlog->data[$i]['ip_start'] = long2ip($table_actionlog->data[$i]['ip_start']);
+				#$table_actionlog->data[$i]['ip_end'] = long2ip($table_actionlog->data[$i]['ip_end']);
+				#$table_actionlog->info['EDIT'][$i] = makelink(array("page" => "admin", "subpage" => "actionlog", "area" => $table_actionlog->data[$i]['id']));
+			}
+		}
+		
+		return $table_nodesettingschanges;
+	}
+
 	function table_photosview() {
 		global $db, $vars;
 		$table_photosview = new table(array('TABLE_NAME' => 'table_photosview', 'FORM_NAME' => 'table_photosview'));
@@ -407,6 +429,7 @@ class node_editor {
 				$this->tpl['table_subnets'] = $construct->table($this->table_subnets(), __FILE__);
 				$this->tpl['table_ipaddr'] = $construct->table($this->table_ipaddr(), __FILE__);
 				$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
+				$this->tpl['table_nodesettingschanges'] = $construct->table($this->table_nodesettingschanges(), __FILE__);
 				$this->tpl['table_photosview'] = $construct->table($this->table_photosview(), __FILE__);
 				if ($this->has_owner_access())
 					$this->tpl['link_node_delete'] = self_ref(array('action' => 'delete'));
