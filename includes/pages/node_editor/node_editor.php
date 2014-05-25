@@ -443,6 +443,7 @@ class node_editor {
 				$this->tpl['link_subnet_add'] = make_ref('/node_editor/subnet', array('node' => get('node'), 'subnet' => 'add'));
 				$this->tpl['link_ipaddr_add'] = make_ref('node_editor/ipaddr', array('node' => get('node'), 'ipaddr' => 'add'));
 				$this->tpl['link_services_add'] = make_ref('/node_editor/services', array('node' => get('node'), 'service' => 'add'));
+				$this->tpl['link_nodesettingschanges_add'] = make_ref('/node_editor/nodesettingschanges', array('node' => get('node'), 'nodesettingschanges' => 'add'));
 
 			}
 			$this->tpl['link_map_pickup'] = make_ref('/pickup/map', array("object_lat" => "form_node.elements['nodes__latitude']", "object_lon" => "form_node.elements['nodes__longitude']"));

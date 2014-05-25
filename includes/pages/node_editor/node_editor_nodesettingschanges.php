@@ -19,15 +19,14 @@
  *
  */
 
-class node_editor_nodesettingschanges {
+class mynodes_nodesettingschanges {
 
 	var $tpl;
-	
 	function __construct() {
 		
 	}
-		
-	function node_editor_nodesettingschanges() {
+	
+	function mynodes_nodesettingschanges() {
 		
 	}
 	
@@ -68,8 +67,9 @@ function output() {
 		#						"dns_nameservers", "id", $nameserver);
 		
 		if ($ret) {
-				$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "mynodes", "node" => get('node'))));
-				log_admin_action($nodes,"#nodesetttingschange#".get('node'),get('entryid'), "nodesetttingschanges", "insert_success");#@#
+				#$main->message->set_fromlang('info', 'insert_success', makelink(array("page" => "node_editor", "node" => get('node'))));
+				$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => $_POST['nodes_nodesettingschanges__node_id'])));
+				#log_admin_action($nodes,"#nodesetttingschange#".get('node'),get('entryid'), "nodesetttingschanges", "insert_success");#@#
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
