@@ -295,3 +295,18 @@ CREATE TABLE IF NOT EXISTS `users_nodes` (
   UNIQUE KEY `unique_keys` (`node_id`,`user_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `nodesettingschanges` (
+  `entryid` int(10) NOT NULL AUTO_INCREMENT,
+  `nodeid` int(10) NOT NULL DEFAULT '0',
+  `uid` int(10) NOT NULL,
+  `dateline` varchar(30) DEFAULT NULL,
+  `changemade` text NOT NULL,
+  `changemenu` enum('routerOS version upgrade/downgrade','groups','users','other','script','ip firewall other','ip firewall nat','ip firewall filter','wireless','snmp','radius','partitions','ipv6','ppp','INTERFACE','driver','led','user','system','special-login','routing','queue','port','mpls','log','ip','file','HARDWARE','certificate') NOT NULL,
+  `reason` enum('other','bug fix','critical-problem','imporovement','termination') NOT NULL,
+  `comment` text,
+  PRIMARY KEY (`entryid`,`nodeid`),
+  KEY `uid` (`uid`),
+  KEY `changemenu` (`changemenu`),
+  FULLTEXT KEY `changemade` (`changemade`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
