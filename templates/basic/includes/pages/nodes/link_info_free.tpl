@@ -18,7 +18,7 @@
 <table border="0" cellspacing="0" cellpadding="0" class="table-d1">
 <tr>
 <td rowspan="2" class="table-d1-side">&nbsp;</td>
-<td class="table-d1-title-text" >{assign var=t value="links__type-"|cat:$data.1.links__type}{$lang.db.$t} Interface</td>
+<td class="table-d1-title-text" >{assign var=t value="links__type-"|cat:$data[rowl].links__type}{$lang.db.$t} Interface</td>
 <td rowspan="2" class="table-d1-side2">&nbsp;</td>
 </tr>
 <tr>
@@ -30,39 +30,39 @@
 <table class="table-form">
 <tr>
         <td class="table-node-key2">{$lang.db.links__type}</td>
-        <td class="table-node-value2">{assign var=t value="links__type-"|cat:$data.1.links__type}{$lang.db.$t}</td>
+        <td class="table-node-value2">{assign var=t value="links__type-"|cat:$data[rowl].links__type}{$lang.db.$t}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__status}</td>
-        <td class="{if $data.1.links__status == 'active'}link-up{else}link-down{/if}">{assign var=t value="links__status-"|cat:$data.1.links__status}{$lang.db.$t}</td>
+        <td class="{if $data[rowl].links__status == 'active'}link-up{else}link-down{/if}">{assign var=t value="links__status-"|cat:$data[rowl].links__status}{$lang.db.$t}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__date_in}</td>
-        <td class="table-node-value2">{$data.1.links__date_in|date_format:"%x"}</td>
+        <td class="table-node-value2">{$data[rowl].links__date_in|date_format:"%x"}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__due_date}</td>
-        <td class="table-node-value2">{$data.1.links__due_date|date_format:"%x"}</td>
+        <td class="table-node-value2">{$data[rowl].links__due_date|date_format:"%x"}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__protocol}</td>
-        <td class="table-node-value2">{$data.1.links__protocol|escape}</td>
+        <td class="table-node-value2">{$data[rowl].links__protocol|escape}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__ssid}</td>
-        <td class="table-node-value2">{$data.1.links__ssid|escape}</td>
+        <td class="table-node-value2">{$data[rowl].links__ssid|escape}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__channel}</td>
-        <td class="table-node-value2">{$data.1.links__channel|escape}</td>
+        <td class="table-node-value2">{$data[rowl].links__channel|escape}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__frequency}</td>
-        <td class="table-node-value2">{$data.1.links__frequency|escape}</td>
+        <td class="table-node-value2">{$data[rowl].links__frequency|escape}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__equipment}</td>
-        <td class="table-node-value2">{$data.1.links__equipment|escape|nl2br}</td>
+        <td class="table-node-value2">{$data[rowl].links__equipment|escape|nl2br}</td>
 </tr>
 </table>
 </table>
