@@ -317,12 +317,12 @@ class node_editor {
 		global $construct, $db, $main;
 		$table_nodesettingschanges = new table(array('TABLE_NAME' => 'table_nodesettingschanges', 'FORM_NAME' => 'table_nodesettingschanges'));
 		$table_nodesettingschanges->db_data(
-			'nodesettingschanges.changemenu, nodesettingschanges.changemade, nodesettingschanges.reason, nodesettingschanges.comment, nodesettingschanges.dateline, users.username',
-			'nodesettingschanges
-			INNER JOIN users on nodesettingschanges.uid = users.id',
-			"nodesettingschanges.nodeid = '".get('node')."'",
+			'node_settings_changes.changemenu, node_settings_changes.changemade, node_settings_changes.reason, node_settings_changes.comment, node_settings_changes.dateline, users.username',
+			'node_settings_changes
+			INNER JOIN users on node_settings_changes.uid = users.id',
+			"node_settings_changes.node_id = '".get('node')."'",
 			'',
-			"nodesettingschanges.entryid DESC");
+			"node_settings_changes.id DESC");
 		
 		for($i=1;$i<count($table_nodesettingschanges->data);$i++) {
 			if (isset($table_nodesettingschanges->data[$i])) {
