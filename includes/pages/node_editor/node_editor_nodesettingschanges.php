@@ -65,7 +65,7 @@ class node_editor_nodesettingschanges {
 		
 		if ($ret) {
 				$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => $_POST['nodes_nodesetttingschanges__node_id'])));
-				#log_admin_action($nodes,"#nodesetttingschange#".get('node'),get('entryid'), "nodesetttingschanges", "insert_success");#@#
+				#log_admin_action($nodes,"#nodesetttingschange#".get('node'),get('id'), "node_setttings_changes", "insert_success");#@#
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}
