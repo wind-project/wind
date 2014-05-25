@@ -37,11 +37,11 @@ class nodechangeslog {
 		global $construct, $db, $main;
 		$table_nodechangeslog = new table(array('FORM_NAME' => 'table_nodechangeslog', 'TABLE_NAME' => 'table_nodechangeslog'));
 		$table_nodechangeslog->db_data(
-			'nodesettingschanges.dateline, nodes.name,  nodesettingschanges.changemenu, nodesettingschanges.changemade, users.username, nodesettingschanges.comment',
-			'nodesettingschanges INNER JOIN `users` ON `users`.`id` = `nodesettingschanges`.`uid` INNER JOIN `nodes` ON `nodes`.`id` = `nodesettingschanges`.`nodeid` ',
+			'node_settings_changes.dateline, nodes.name,  node_settings_changes.changemenu, node_settings_changes.changemade, users.username, node_settings_changes.comment',
+			'node_settings_changes INNER JOIN `users` ON `users`.`id` = `node_settings_changes`.`uid` INNER JOIN `nodes` ON `nodes`.`id` = `node_settings_changes`.`node_id` ',
 			"",
 			"",
-			"nodesettingschanges.entryid DESC");
+			"node_settings_changes.id DESC");
 		for($i=1;$i<count($table_nodechangeslog->data);$i++) {
 			if (isset($table_nodechangeslog->data[$i])) {
 				#$table_nodechangeslog->data[$i]['ip_start'] = long2ip($table_nodechangeslog->data[$i]['ip_start']);
