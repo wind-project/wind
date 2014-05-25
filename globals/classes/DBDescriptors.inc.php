@@ -157,6 +157,7 @@ class DBColumnDescriptor {
 	 *  - default : The default value of field
 	 *  - not_null : Flag if this field can be null
 	 *  - unique: Flag if values must be unique
+	 *  - key: This field is indexed
 	 *  - ftk: This field is a full text key
 	 *  - fk: Array(foreign_table_name, foreign_table_id)
 	 */
@@ -172,7 +173,8 @@ class DBColumnDescriptor {
 				'ftk' => false,
 				'default' => null,
 				'not_null' => false,
-				'unique' => false);
+				'unique' => false,
+				'key' => false);
 		
 		$this->options = array_merge(
 				$default_options,
@@ -295,6 +297,21 @@ class DBTableDescriptor {
 		}
 		return $ftks;
 	}
+
+	/**
+	 * @brief Get all columns that are full text keys
+	 */
+	public function getKey() {
+		$keys = array();
+		foreach($this->columns as $column) {
+			$opt = $column->getOptions();
+			if ($opt['key']) {
+				$keys[] = $column->getName();
+			}
+		}
+		return $keys;
+	}
+
 	
 	/**
 	 * @brief Get SQL representation of the table
@@ -313,7 +330,7 @@ class DBTableDescriptor {
 				return "`{$pk}`";
 			}, $this->getPrimaryKeys());
 			
-			$properties_sql[] = 'PRIMARY KEY(' . implode(',', $pks) . ")";
+			$properties_sql[] = 'PRIMARY KEY (' . implode(',', $pks) . ")";
 		}
 
 		// Full Text Keys
@@ -322,7 +339,7 @@ class DBTableDescriptor {
 				return "`{$ftk}`";
 			}, $this->getFullTextKeys());
 			
-			$properties_sql[] = 'FULLTEXT KEY(' . implode(',', $ftks) . ")";
+			$properties_sql[] = 'FULLTEXT KEY (' . implode(',', $ftks) . ")";
 		}
 		
 		// Unique keys
@@ -332,7 +349,16 @@ class DBTableDescriptor {
 				$properties_sql[] = "UNIQUE (`{$column->getName()}`)";
 			}
 		}
-		
+
+		// Indexes
+		if(count($this->getKey())) {
+			$keys = array_map(function($key){
+				return "`{$key}`";
+			}, $this->getKey());
+			
+			$properties_sql[] = 'KEY (' . implode(',', $keys) . ")";
+		}
+
 		$sql .= implode(",\n", $properties_sql) . "\n";
 		$sql .= sprintf(") CHARSET=utf8;\n");
 		
