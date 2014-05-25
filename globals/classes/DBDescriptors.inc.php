@@ -153,10 +153,11 @@ class DBColumnDescriptor {
 	 * @param string $name
 	 * @param string $type
 	 * @param array $options
-	 * 	- pk : This field is primary key
+	 *  - pk : This field is primary key
 	 *  - default : The default value of field
 	 *  - not_null : Flag if this field can be null
 	 *  - unique: Flag if values must be unique
+	 *  - ftk: This field is a full text key
 	 *  - fk: Array(foreign_table_name, foreign_table_id)
 	 */
 	public function __construct($name, $type, $options = array()) {
@@ -168,6 +169,7 @@ class DBColumnDescriptor {
 				'ai' => false,
 				'pk' => false,
 				'fk' => false,
+				'ftk' => false,
 				'default' => null,
 				'not_null' => false,
 				'unique' => false);
@@ -279,6 +281,20 @@ class DBTableDescriptor {
 		}
 		return $pks;
 	}
+
+	/**
+	 * @brief Get all columns that are full text keys
+	 */
+	public function getFullTextKeys() {
+		$ftks = array();
+		foreach($this->columns as $column) {
+			$opt = $column->getOptions();
+			if ($opt['ftk']) {
+				$ftks[] = $column->getName();
+			}
+		}
+		return $ftks;
+	}
 	
 	/**
 	 * @brief Get SQL representation of the table
@@ -298,6 +314,15 @@ class DBTableDescriptor {
 			}, $this->getPrimaryKeys());
 			
 			$properties_sql[] = 'PRIMARY KEY(' . implode(',', $pks) . ")";
+		}
+
+		// Full Text Keys
+		if(count($this->getFullTextKeys())) {
+			$ftks = array_map(function($ftk){
+				return "`{$ftk}`";
+			}, $this->getFullTextKeys());
+			
+			$properties_sql[] = 'FULLTEXT KEY(' . implode(',', $ftks) . ")";
 		}
 		
 		// Unique keys
