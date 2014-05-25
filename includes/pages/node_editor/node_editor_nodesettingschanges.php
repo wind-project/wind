@@ -2,21 +2,19 @@
 /*
  * WiND - Wireless Nodes Database
  *
- * Copyright (C) 2012 Leonidas Papadopoulos <stargazer@wna.gr>
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 dated June, 1991.
+ * Copyright (C) 2005-2014 	by WiND Contributors (see AUTHORS.txt)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 class node_editor_nodesettingschanges {
@@ -34,11 +32,10 @@ class node_editor_nodesettingschanges {
 		global $main, $db, $vars, $lang;
 		$form_nodesettingschanges = new form(array('FORM_NAME' => 'form_nodesettingschanges'));
 		
-		$form_nodesettingschanges->db_data('nodesettingschanges.uid, nodesettingschanges.nodeid, nodesettingschanges.dateline, 
-								 nodesettingschanges.changemade, nodesettingschanges.changemenu, nodesettingschanges.reason, nodesettingschanges.comment');
+		$form_nodesettingschanges->db_data('node_settings_changes.uid, node_settings_changes.node_id, node_settings_changes.dateline, node_settings_changes.changemade, node_settings_changes.changemenu, node_settings_changes.reason, node_settings_changes.comment');
 		$form_nodesettingschanges->data[1]['value']= intval(get('node'));
 		$uid=$main->userdata->user;
-     	$form_nodesettingschanges->data[0]['value']= $uid;
+     		$form_nodesettingschanges->data[0]['value']= $uid;
 		$form_nodesettingschanges->data[2]['value']= date("Y-m-d H:i:s");	
 
 		return $form_nodesettingschanges;
@@ -62,7 +59,7 @@ class node_editor_nodesettingschanges {
 		$f['node_id'] = intval(get('node'));
 		$ret = TRUE;
 		$ret = $form_nodesettingschanges->db_set(array(),
-								"nodesettingschanges", "entryid", $nodesettingschanges);
+								"node_settings_changes", "id", $nodesettingschanges);
 		#$ret = $form_nameserver->db_set($f,
 		#						"dns_nameservers", "id", $nameserver);
 		
