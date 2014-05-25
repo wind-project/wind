@@ -2,43 +2,48 @@
 /*
  * WiND - Wireless Nodes Database
  *
- * Copyright (C) 2005-2014 	by WiND Contributors (see AUTHORS.txt)
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 dated June, 1991.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  */
 
-/* el_GR.utf8 for GNU/Linux - ell for Windows */
-setlocale(LC_ALL, 'el_GR.utf8', 'ell');
+/* el_GR for GNU/Linux - ell for Windows */
+setlocale(LC_ALL, 'el_GR', 'ell');
 
 $lang = array(
 
 	'charset' => 'utf-8',
 	'iso639' => 'el',
 	'mysql_charset' => 'utf8',
-	
+
 	'site_title' => "WiND - Wireless Nodes Database",
 	'title_small' => "WiND",
-	
+	'community' => "Ασύρματη κοινότητα/Ομάδα",
+	'communities' => "Ασύρματη κοινότητα/Ομάδα",
+
 	'forward_text' => "Αν δεν επιθυμείτε να περιμένετε πατήστε εδώ...",
-	
+	'hpl' => "Κρυφό",
+	'adpl' => "Δεν έχετε δικαίωμα πρόσβασης. Παρακαλώ συνδεθείτε.",
 	'delete_request' => "Αίτηση διαγραφής",
-	'location' => 'Τοποθεσία',
+
 	'delete' => "Διαγραφή",
 	'home' => "Αρχική σελίδα",
 	'edit_profile' => "Προφίλ χρήστη",
 	'edit_node' => "Επεξεργασία κόμβου",
-	'logout' => "Αποσύνδεση",
-	'login' => "Σύνδεση",
+	'log_out' => "Αποσύνδεση",
+	'login' => "Σύνδεση (με τον λογαριασμό σας στο wna.gr)",
 	'register' => "Εγγραφή",
 	'password_recover' => "Ανάκτηση κωδικού",
 	'password_change' => "Αλλαγή κωδικού",
@@ -48,9 +53,6 @@ $lang = array(
 	'user_info' => "Στοιχεία χρήστη",
 	'users_info' => "Στοιχεία χρηστών",
 	'username' => "Όνομα χρήστη",
-	'password' => "Κωδικός πρόσβασης",
-	'network' => 'Δίκτυο',
-	'rememberme' => "Διατηρήστε με σε σύνδεση ",
 	'registered_since' => "Εγγραφή",
 	'name' => "Όνομα",
 	'surname' => "Επώνυμο",
@@ -62,7 +64,6 @@ $lang = array(
 	'users' => "Χρήστες",
 	'hostmaster_panel' => "Hostmaster",
 	'ip_ranges' => "IP C-Classes",
-        'ip_ranges_v6' => "IPv6 Networks",
 	'dns_zones' => "Ζώνες DNS",
 	'dns_nameservers' => "Nameservers (NS)",
 	'waiting' => "προς έλεγχο",
@@ -78,9 +79,11 @@ $lang = array(
 	'dns_zones_found' => "Ζώνες DNS που βρέθηκαν",
 	'not_found' => "Δεν βρέθηκαν αποτελέσματα",
 	'all_services' => "Υπηρεσίες δικτύου",
+	'communities' =>"Ασύρματες Κοινότητες",
 	'active_services' => "Ενεργές υπηρεσίες",
 	'services_search' => "Αναζήτηση υπηρεσιών",
 	'services_found' => "Υπηρεσίες που βρέθηκαν",
+	'communities_registered' =>"Καταχωρημένες Ασύρματες Κοινότητες",
 	'services_edit' => "Επεξεργασία υπηρεσίας",
 	'services_add' => "Προσθήκη υπηρεσίας",
 	'services' => "Υπηρεσίες",
@@ -88,7 +91,9 @@ $lang = array(
 	'services_categories_add' => "Προσθήκη κατηγορίας υπηρεσίων",
 	'services_categories_edit' => "Επεξεργασία κατηγορίας υπηρεσίων",
 	'nodesettingschanges_add' => "Προσθήκη αλλαγής στο αρχείο καταγραφής για τον κόμβο αυτό",
-	'nodesettingschanges' => "Αρχείο αλλαγών",
+	'nodesettingschanges' => "Καταχώρηση τροποποίησης ρύθμισης κόμβου",
+	
+
 	'user_add' => "Εγγραφή νέου χρήστη",
 	'user_edit' => "Προφίλ χρήστη",
 	'node' => "Κόμβος",
@@ -97,8 +102,6 @@ $lang = array(
 	'node_delete' => "Διαγραφή κόμβου",
 	'ip_range_request' => "Αίτηση απόδοσης IP C-Class",
 	'ip_range_request_for_node' => "Αίτηση απόδοσης IP C-Class για τον κόμβο",
-        'ip_range_v6_request' => "Αίτηση απόδοσης IPv6 Δικτύου",
-	'ip_range_v6_request_for_node' => "Αίτηση απόδοσης IPv6 Δικτύου για τον κόμβο",
 	'dnszone_request_forward' => "Αίτηση απόδοσης ζώνης DNS (forward)",
 	'dnszone_request_reverse' => "Αίτηση απόδοσης ζώνης DNS (reverse)",
 	'dnszone_edit' => "Επεξεργασία ζώνης DNS",
@@ -109,8 +112,6 @@ $lang = array(
 	'links' => "Διασυνδέσεις",
 	'ap' => "Access Point",
 	'aps' => "Access Points",
-	'aps_abbr' => "APs",
-	'free' => "Ελεύθερες",
 	'aps_search' => "Αναζήτηση Access Points",
 	'aps_found' => "Access Points που βρέθηκαν",
 	'subnet_edit' => "Επεξεργασία υποδικτύου",
@@ -120,8 +121,9 @@ $lang = array(
 	'ip_address_add' => "Προσθήκη διεύθυνσης IP",
 	'ip_addresses' => "Διευθύνσεις IP",
 	'myview' => "Η οπτική του κόμβου",
-	'ip_ranges_search' => "Αναζήτηση IP Δικτύων",
-	'ip_ranges_found' => "IP Δίκτυα που βρέθηκαν",
+	'nodesettingschanges' => "Αρχείο καταγραφής αλλαγών στον κόμβο",
+	'ip_ranges_search' => "Αναζήτηση IP C-Classes",
+	'ip_ranges_found' => "IP C-Classes που βρέθηκαν",
 	'dns_nameservers_search' => "Αναζήτηση DNS nameservers",
 	'dns_nameservers_found' => "DNS nameservers που βρέθηκαν",
 	'ip_range_edit' => "Επεξεργασία IP C-Class",
@@ -133,10 +135,9 @@ $lang = array(
 	'mailto_owner' => "Διαχειριστή",
 	'mailto_custom' => "Άλλους",
 	'ip_ranges_allocation' => "Κατανομή διευθύνσεων IP",
-	'ip_ranges_search' => "Αναζήτηση IP Δικτύων",
+	'ip_ranges_search' => "Αναζήτηση IP C-Classes",
 	'change' => "Αλλαγή",
 	'submit' => "OK",
-	'cancel' => 'Άκυρο',
 	'add' => "Προσθήκη",
 	'remove' => "Αφαίρεση",
 	'update' => "Ανανέωση",
@@ -153,6 +154,8 @@ $lang = array(
 	'fsl' => "Free space loss",
 	'tilt' => "Κλίση",
 	'clients' => "Πελάτες",
+	'nodes__freeifs' =>"Ελεύθερα interfaces",
+	'adminowner' =>"Διαχειριστής",
 	'compare_equal' => "Ίσο με",
 	'compare_greater' => "Μεγαλύτερο από",
 	'compare_less' => "Μικρότερο από",
@@ -167,15 +170,13 @@ $lang = array(
 	'contact_node' => "Επικοινωνία με τον κόμβο",
 	'from' => "Από",
 	'send' => "Αποστολή",
-	'node_page' => "Σελίδα κόμβου",
+	'node_page' => "σελίδα κόμβου",
 	'yes' => "Ναι",
 	'no' => "Όχι",
 	'backbone' => "Backbone",
-	'backbones_abbr' => "BBs",
 	'unlinked' => "Ασύνδετοι",
 	'find_coordinates' => "Βρείτε τις συντεταγμένες σας",
 	'select_the_coordinates' => "Επιλογή των συντεταγμένων",
-	'coordinates' => 'Συντεταγμένες',
 	'quick_search' => "Γρήγορη εύρεση",
 	'statistics' => "Στατιστικά",
 	'active_nodes' => "Ενεργοί κόμβοι",
@@ -189,7 +190,11 @@ $lang = array(
 	'areas' => "Δήμοι / Κοινότητες",
 	'area_add' => "Προσθήκη δήμου / κοινότητας",
 	'area_edit' => "Επεξεργασία δήμου / κοινότητας",
-
+	'communities'=>'Ασύρματες κοινότητες',
+	'communities_add' =>'Προσθήκη κοινότητας',
+	'actionlog' =>'Ιστορικό ενεργειών',
+	'nodechangeslog' => 'Ιστορικό αλλαγών σε κόμβους',
+	
 	'db' => array(
 		'users__username' => 'Όνομα χρήστη',
 		'users__password' => 'Κωδικός πρόσβασης',
@@ -204,23 +209,55 @@ $lang = array(
 		'users__status-activated' => 'Ενεργοποιημένη',
 		'users__language' => 'Γλώσσα',
 		'fullname' => 'Ονοματεπώνυμο',
+				
+		'actionlog__ipaddress' => 'IP Address',
+		'actionlog__date'=>'TimeStamp',
+		'actionlog__page'=>'Module',
+		'actionlog__action'=>'Subpage',
+		'actionlog__data'=>'Log entry',
+		
+		
+		'communities__id' => 'A/A',
+		'communities__name' => 'Ασύρματη Κοινότητα',
+		'communities__windURL' => 'WiND κοινότητας',
+		'communities__TOS' => 'Όροι χρήσης',
+		'communities__fullname' => 'Πλήρες όνομα',
+ 		'communities__dnstld' =>'DNS TLD',
+		'communities__ns1' =>'Master DNS server',
+		'communities__ns2' =>'Secondary DNS server',
+		'communities__admins' =>'Διαχειριστές',
 		
 		'nodes__id' => 'Αριθμός κόμβου',
-		'nodes__name' => 'Όνομα κόμβου',
+		'nodes__name' => 'Όνομα κόμβου/URL',
 		'nodes__date_in' => 'Δημιουργήθηκε',
-                'nodes__due_date' => 'Εκτιμώμενη ημ/νια Εγκατάστασης',
-		'nodes__last_change' => 'Τελευταία αλλαγή',
+		'nodes__last_modified' => 'Τροποποιήθηκε',
+    	'nodes__mikrotik_license_software_id' => 'Mikrotik SoftID',
 		'nodes__area_id' => 'Δήμος / Κοινότητα',
 		'nodes__latitude' => 'Γεωγραφικό πλάτος (lat)',
 		'nodes__longitude' => 'Γεωγραφικό μήκος (lon)',
 		'nodes__elevation' => 'Ύψος κτιρίου (μ)',
 		'nodes__info' => 'Πληροφορίες',
-                'nodes__status' => 'Κατάσταση',
-		'nodes__status-active' => 'Ενεργός',
-		'nodes__status-inactive' => 'Ανενεργός',
-                'nodes__status-pending' => 'Σε αναμονή',
-                'nodes__status-deleted' => 'Διεγραμμένος',
+		'nodes__nodestatus' => 'Κατάσταση',
+		'nodes__freeifs' => 'Ελεύθερα Interfaces',
+		'nodes__url' => '<acronym title="Πληκτρολογήστε το URL της σελίδας που θέλετε να εμφανίζεται στο http://όνομαΤουΚόμβουΣας.wna.gr">Ιστοσελίδα κόμβου</acronym> (Δώστε το πλήρες URL <br>στο οποίο θα ανακατευθύνεται όταν κάποιος επισκέπτεται<br> το subdomain http://<ονομακόμβου>.wna.gr <br>ή αφήστε το κενό για να εμφανίζεται η σελίδα με τον χάρτη!) ',
 		'nodes__name_ns' => 'Πρόθεμα nameserver',
+		
+		'nodes__internetaccess' => 'Πρόσβαση Internet',
+		'nodes__internetprovider'=>'Πάροχος Internet',
+		'nodes__mikrotik_license_software_id'=>'Mikrotik Software-ID',
+		'nodes__declared_status'=>'Τρέχουσα Κατάσταση Κόμβου',
+		'active'=>'Τρέχουσα Κατάσταση Κόμβου',
+    	'future_client'=>'Ενδιαφέρεται να συνδεθεί στο δίκτυο',
+    	'future_client'=>'Ενδιαφέρεται να συνδεθεί στο δίκτυο',
+    	'future_access_point'=>'Ενδιαφέρεται να γίνει σημείο πρόσβασης δίκτυου',
+		'test_inactive'=>'Δοκιμαστικό σημείο',
+		'old_inactive'=>'Παλιός Ανενεργός κόμβος',
+		'nodes__autonomy_minutes'=>'Εκτιμόμενος χρόνος αυτονομίας σε λεπτά (χωρίς παροχή ρεύματος)',
+		'nodes__autonomy'=>'Αυτονομία (σε λεπτά)',
+				
+		'nodes__system_identity'=>'System Identity (για όσους κόμβους έχουν Hotspot <br>πρέπει να είναι το ίδιο με το όνομα του συστήματος)',
+		'nodes__community_id' => "Ασύρματη κοινότητα/Ομάδα",
+		'nodes__com_wind_id' => "Αριθμός κόμβου σε τοπική κοινότητα <br>(εάν υπάρχει, χωρίς # μπροστά)",
 		
 		'users_nodes__owner' => 'Δικαίωμα',
 		'users_nodes__owner-Y' => 'Διαχειριστής',
@@ -235,17 +272,19 @@ $lang = array(
 		'areas__name' => 'Δήμος / Κοινότητα',
 		'areas__ip_start' => 'IP από',
 		'areas__ip_end' => 'IP μέχρι',
-                'areas__v6net' => 'Δίκτυο IPv6',
-                'areas__v6prefix' => 'IPv6 Prefix',
 		'areas__info' => 'Πληροφορίες',
 
 		'regions__id' => 'Νομαρχία',
 		'regions__name' => 'Νομαρχία',
 		'regions__ip_start' => 'IP από',
 		'regions__ip_end' => 'IP μέχρι',
-                'regions__v6net' => 'Δίκτυο IPv6',
-                'regions__v6prefix' => 'IPv6 Prefix',
+		'regions__dns_suffix' => 'dns suffix',
 		'regions__info' => 'Πληροφορίες',
+		'regions__image' => 'εικονίδιο νομού',
+		'regions__min_lat' => 'min lat',
+		'regions__max_lat' => 'max lat',
+		'regions__min_long' => 'mix lon',
+		'regions__max_long' => 'max lon',
 
 		'ip_ranges__date_in' => 'Ημερομηνία',
 		'ip_ranges__ip_start' => 'Από',
@@ -263,23 +302,6 @@ $lang = array(
 		'ip_range' => 'C Class',
 		'ip' => 'Διεύθυνση IP',
 
-                'ip_ranges_v6__date_in' => 'Ημερομηνία',
-		'ip_ranges_v6__v6net' => 'IPv6 Net',
-		'ip_ranges_v6__ip_end' => 'Μέχρι',
-		'ip_ranges_v6__status' => 'Κατάσταση',
-		'ip_ranges_v6__status-waiting' => 'Προς έλεγχο',
-		'ip_ranges_v6__status-pending' => 'Σε αναμονή',
-		'ip_ranges_v6__status-active' => 'Ενεργό',
-		'ip_ranges_v6__status-rejected' => 'Απορριφθέν',
-		'ip_ranges_v6__status-invalid' => 'Άκυρο',
-		'ip_ranges_v6__info' => 'Πληροφορίες IPv6',
-		'ip_ranges_v6__delete_req' => 'Αίτηση διαγραφής',
-		'ip_ranges_v6__delete_req-Y' => 'ΝΑΙ',
-		'ip_ranges_v6__delete_req-N' => 'ΟΧΙ',
-		'ip_range_v6' => 'IPv6 ID',
-		'ipv6' => 'Διεύθυνση IPv6',            
-                'v6net' => 'Δίκτυο IPv6',
-            
 		'dns_zones__date_in' => 'Ημερομηνία',
 		'dns_zones__name' => 'Όνομα ζώνης',
 		'dns_zones__type' => 'Τύπος ζώνης',
@@ -292,6 +314,9 @@ $lang = array(
 		'dns_zones__status-rejected' => 'Απορριφθέν',
 		'dns_zones__status-invalid' => 'Άκυρο',
 		'dns_zones__info' => 'Πληροφορίες',
+		'dns_zones__delete_req' => 'Αίτηση διαγραφής',
+		'dns_zones__delete_req-Y' => 'ΝΑΙ',
+		'dns_zones__delete_req-N' => 'ΟΧΙ',
 
 		'schema' => "Schema",
 
@@ -299,6 +324,9 @@ $lang = array(
 
 		'dns_nameservers__date_in' => 'Ημερομηνία',
 		'dns_nameservers__name' => 'Όνομα Nameserver',
+		'dns_nameservers__delete_req' => 'Αίτηση διαγραφής',
+		'dns_nameservers__delete_req-Y' => 'ΝΑΙ',
+		'dns_nameservers__delete_req-N' => 'ΟΧΙ',
 		'dns_nameservers__ip' => 'Διεύθυνση IP',
 		'dns_nameservers__status' => 'Κατάσταση',
 		'dns_nameservers__status-waiting' => 'Προς έλεγχο',
@@ -308,31 +336,37 @@ $lang = array(
 		'dns_nameservers__status-invalid' => 'Άκυρο',
 
 		'links__date_in' => 'Δημιουργήθηκε',
-                'links__due_date' => 'Εκτιμώμενη ημ/νια Εγκατάστασης',
 		'links__peer_node_id' => 'Κόμβος διασύνδεσης',
 		'links__peer_ap_id' => 'Access point',
 		'links__type' => 'Τύπος διασύνδεσης',
 		'links__type-p2p' => 'Backbone',
 		'links__type-ap' => 'Access Point',
+		'links__type-hs' => 'HotSpot',
 		'links__type-client' => 'Πελάτης',
-		'links__type-free' => 'Ελεύθερο',
 		'links__ssid' => 'SSID',
 		'links__protocol' => 'Πρωτόκολλο',
+		'links__tspeed' => 'Ονομαστική ταχύτητα σε Mbits',
+		'links__throughput' => 'Πραγματικό throughput σε Mbits',
+		'links__ospfcost' => 'Estimated OSPF cost',
 		'links__protocol-other' => 'Άλλο',
 		'links__channel' => 'Κανάλι επικοινωνίας',
-                'links__frequency' => 'Συχνότητα (Mhz)',
 		'links__status' => 'Κατάσταση',
 		'links__status-active' => 'Ενεργό',
+		'links__security-active' => 'Ενεργή',		
+		'links__security-inactive' => 'Ανενεργή',
+		'links__security-sec_active' => 'Ενεργοποιημένη',		
+		'links__security-sec_inactive' => 'Απενεργοποιημένη',
 		'links__status-inactive' => 'Ανενεργό',
-                'links__status-pending' => 'Σε αναμονή',
 		'links__equipment' => 'Εξοπλισμός',
 		'links__info' => 'Πληροφορίες',
+		'links__hs_logged_in_msg'=>'Πληροφορίες HotSpot Status page<br>(Το κείμενο που υπάρχει εδώ εμφανίζεται <br>μέσα στη σελίδα του HotSpot σας, <br>στους χρήστες που έχουν <br>συνδεθεί στο HotSpot επιτυχώς και πουθενά αλλού)',
+		'links__security' => 'Ασφάλεια διασύνδεσης',
+		'links__ip' => 'IP Address',
 		'peer' => 'Διασύνδεση',
 		'total_active_peers' => 'Ενεργές διασυνδέσεις',
-		'total_active_p2p' => 'Ενεργές διασυνδέσεις backbone',
-		'total_active_aps' => 'Ενεργά Access Point',
 		'total_active_clients' => 'Ενεργοί πελάτες',
 		'has_ap' => 'Διαθέτει Access Point',
+		'freeifs'=>'Ελεύθερα Interfaces',
 
 		'subnets__ip_start' => 'Από',
 		'subnets__ip_end' => 'Μέχρι',
@@ -360,7 +394,7 @@ $lang = array(
 		'ip_addresses__always_on-Y' => 'ΝΑΙ',
 		'ip_addresses__always_on-N' => 'ΟΧΙ',
 		'ip_addresses__info' => 'Πληροφορίες',
-	
+
 		'services__title' => 'Κατηγορία',
 		'services__protocol' => 'Πρωτόκολλο',
 		'services__protocol-tcp' => 'TCP',
@@ -380,6 +414,9 @@ $lang = array(
 		'nodes_services__protocol-tcp' => 'TCP',
 		'nodes_services__protocol-udp' => 'UDP',
 		'nodes_services__port' => 'Πόρτα',
+
+		
+		
 		
 		'nodesettingschanges__entryid' => 'entry',
      	'nodesettingschanges__nodeid' => 'nodeid',
@@ -409,7 +446,7 @@ $lang = array(
 		'rights__type-admin' => 'Διαχειριστής',
 		'rights__type-hostmaster' => 'Hostmaster'
 	),
-	
+
 	'message' => array(
 		'info' => array(
 			'insert_success' => array(
@@ -455,10 +492,14 @@ $lang = array(
 			'password_restored' => array(
 				'title' => "Αλλαγή κωδικού",
 				'body' => "Ο κωδικός πρόσβασης αλλάχτηκε με επιτυχία. Μπορείτε να προχωρήσετε σε σύνδεση με το νέο σας κωδικό πρόσβασης."
-			),	
+			),
 			'logout_success' => array(
 				'title' => "Αποσύνδεση",
 				'body' => "Έγινε αποσύνδεση από το σύστημα."
+			),
+			'no_privilege' => array(
+				'title' => "Χωρίς δικαίωμα πρόσβασης",
+				'body' => "Δεν έχετε δικαίωμα πρόσβασης σε αυτή τη σελίδα."
 			),
 			'activation_required' => array(
 				'title' => "Ενεργοποίηση λογαριασμού",
@@ -468,20 +509,16 @@ $lang = array(
 				'title' => "Ενεργοποίηση λογαριασμού",
 				'body' => "Η ενεργοποίηση του λογαριασμού σας έγινε με επιτυχία. Μπορείτε να προχωρήσετε σε σύνδεση με το σύστημα."
 			),
+			'activation_failed' => array(
+				'title' => "Ενεργοποίηση λογαριασμού",
+				'body' => "Υπήρξε πρόβλημα στην ενεργοποίηση του λογαριασμού."
+			),
 			'message_sent' => array(
 				'title' => "Το μήνυμα εστάλη",
 				'body' => "Το μήνυμα εστάλη με επιτυχία. Πιθανή απάντηση στο μήνυμά σας θα αποσταλλεί από τους διαχειριστές του κόμβου, στον λογαριασμό e-mail που έχετε δηλώσει στο προφίλ σας."
 			),
 		),
 		'error' => array(
-			'no_privilege' => array(
-					'title' => "Χωρίς δικαίωμα πρόσβασης",
-					'body' => "Δεν έχετε δικαίωμα πρόσβασης σε αυτή τη σελίδα."
-			),
-			'activation_failed' => array(
-					'title' => "Ενεργοποίηση λογαριασμού",
-					'body' => "Υπήρξε πρόβλημα στην ενεργοποίηση του λογαριασμού."
-			),
 			'database_error' => array(
 				'title' => "Σφάλμα στη βάση δεδομένων",
 				'body' => "Υπήρξε σφάλμα στην βάση δεδομένων κατά την εκτέλεση της ενέργειάς σας. Επικοινωνήστε με τον διαχειριστή του συστήματος για την αντιμετώπιση του προβλήματος."
@@ -518,6 +555,10 @@ $lang = array(
 				'title' => 'Αλλαγή ονόματος κόμβου',
 				'body' => 'Δεν επιτρέπεται η αλλαγή ονόματος του κόμβου.'
 			),
+			'nodes_field_area_id' => array(
+				'title' => 'Αλλαγή δήμου/κοινότητας κόμβου',
+				'body' => 'Δεν επιτρέπεται η αλλαγή περιοχής του κόμβου. Σας έχουν αποδοθεί IP C-Classes, με βάση την περιοχή που έχετε ήδη δηλώσει. Για περισσότερες λεπτομέρειες, επικοινωνήστε με την ομάδα hostmaster.'
+			),
 			'nodes_no_area_id' => array(
 				'title' => 'Σφάλμα δήμου/κοινότητας κόμβου',
 				'body' => 'Δεν έχετε δηλώσει τον δήμο/κοινότητα που ανήκει ο κόμβος. Για την απόδοση IP C-Classes απαιτείται η δήλωση δήμου/κοινότητας. Ανατρέξτε στα στοιχεία του κόμβου σας.'
@@ -530,21 +571,13 @@ $lang = array(
 				'title' => 'Τα αρχεία schema δεν βρέθηκαν',
 				'body' => 'Παρακαλώ, επικοινωνήστε με τον διαχειριστή του συστήματος για τη διόρθωση του σφάλματος.'
 			),
+			'gmap_key_failed' => array(
+				'title' => 'Το κλειδί δεν βρέθηκε',
+				'body' => 'Δεν βρέθηκε το κλειδί ενεργοποίησης του Google Maps. Επικοινωνήστε με τον διαχειριστή του συστήματος για την επίλυση του προβλήματος.'
+			),
 			'node_not_found' => array(
 				'title' => 'Ο κόμβος δεν βρέθηκε',
 				'body' => 'Ο κόμβος που ζητήσατε δεν υπάρχει. Ελέγξτε τα στοιχεία και προσπαθήστε ξανά. Αν τα στοιχεία είναι σωστά, είναι πιθανό ο κόμβος να έχει διαγραφεί ή ο χρήστης να μην έχει πραγματοποιήσει ενεργοποίηση του λογαριασμού.'
-			),
-			'zone_invalid_name' => array(
-				'title' => 'Μη έγκυρο όνομα ζώνης',
-				'body' => 'Το όνομα ζώνης που δηλώσατε περιέχει μη έγκυρους χαρακτήρες.'
-			),
-			'zone_out_of_range' => array(
-				'title' => 'Όνομα ζώνης εκτός C-Class',
-				'body' => 'Το όνομα ζώνης που δηλώσατε δεν αντιστοιχεί σε κανένα από τα C-Classes που σας έχουν αποδοθεί.'
-			),
-			'zone_reserved_name' => array(
-				'title' => 'Δεσμευμένο όνομα ζώνης',
-				'body' => 'Το όνομα ζώνης που δηλώσατε είναι δεσμευμένο από το σύστημα.'
 			),
 			'generic' => array(
 				'title' => "Γενικό σφάλμα",
@@ -552,154 +585,146 @@ $lang = array(
 			)
 		)
 	),
-		
+
 	'email' => array(
 		'user_activation' => array(
-			'subject' => "Ενεργοποίηση λογαριασμού: ##username##",
-			'body' => "WiND - Wireless Nodes Database\n------------------------------------------\nΕνεργοποίηση λογαριασμού ##username##\n\nΠατήστε εδώ: ##act_link##"
+			'subject' => "WiND.WNA.gr:Ενεργοποίηση λογαριασμού: ##username##",
+			'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\nΕνεργοποίηση λογαριασμού ##username##\n\nΠατήστε εδώ: ##act_link##\n\n-- \nWΝΑ"
 		),
 
 		'user_restore' => array(
-			'subject' => "Ανάκτηση κωδικού: ##username##",
-			'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΑνάκτηση κωδικού για το λογαριασμό ##username##\n\nΠατήστε εδώ: ##act_link##"
+			'subject' => "WiND.WNA.gr:Ανάκτηση κωδικού: ##username##",
+			'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nΑνάκτηση κωδικού για το λογαριασμό ##username##\n\nΠατήστε εδώ: ##act_link##\n\n-- \n"
 		),
 
 		'user_change_email' => array(
-			'subject' => "Αλλαγή e-mail λογαριασμού: ##username##",
-			'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΑλλαγή e-mail λογαριασμού ##username##\n\nΠατήστε εδώ: ##act_link##"
+			'subject' => "WiND.WNA.gr:Αλλαγή e-mail λογαριασμού: ##username##",
+			'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nΑλλαγή e-mail λογαριασμού ##username##\n\nΠατήστε εδώ: ##act_link##\n\n-- \nWNA\n"
 		),
 
 		'node_contact' => array(
-			'subject_prefix' => "WiND: ",
+			'subject_prefix' => "WiND.WNA.gr - WiND: ",
 			'subject_suffix' => "",
-			'body_prefix' => "Επικοινωνία με τους διαχειριστές του κόμβου ##node_name## (###node_id##).\nΟ χρήστης ##username## σας έστειλε το παρακάτω μήνυμα\nμέσω της εφαρμογής WiND - Wireless Nodes Database:\n-------------------------------------------------------------------\n\n",
-			'body_suffix' => "\n\n-------------------------------------------------------------------\nΑπαντήστε σε αυτό το μήνυμα για να επικοινωνήσετε με τον αποστολέα.\nWiND - Wireless Nodes Database\n-------------------------------------------------------------------"
+			'body_prefix' => "Επικοινωνία με τους διαχειριστές του κόμβου ##node_name## (###node_id##).\nΟ χρήστης ##username## σας έστειλε το παρακάτω μήνυμα\nμέσω της εφαρμογής WiND.WNA.gr - Wireless Nodes Database:\n-------------------------------------------------------------------\n\n",
+			'body_suffix' => "\n\n-------------------------------------------------------------------\nΑπαντήστε σε αυτό το μήνυμα για να επικοινωνήσετε με τον αποστολέα.\nWiND - Wireless Nodes Database\n-------------------------------------------------------------------\n\n-- \nWNA"
 		),
 
 		'range' => array(
 			'pending' => array(
-				'subject' => "##range##: Σε αναμονή",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class μπήκε σε κατάσταση αναμονής.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##range##: Σε αναμονή",
+				'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class μπήκε σε κατάσταση αναμονής.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n-- \nWNA"
 			),
 			'active' => array(
-				'subject' => "##range##: Ενεργοποιήθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ενεργοποιήθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##range##: Ενεργοποιήθηκε",
+				'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ενεργοποιήθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n Υπενθυμίζεται πως το http://όνομακόμβου.wna.gr αποτελεί ενεργό URL και η σελίδα στην οποία ανακατευθύνει  ορίζεται μέσα από το WiND (εάν την αφήσετε κενή θα πηγαίνει αυτόματα στον χάρτη κόμβου). \n Επιπλέον σε κάθε διασύνδεσή σας μπορείτε να δηλώσετε την IP του Interface από την μεριά σας έτσι ώστε να δημιουργηθεί αυτόματα το κατάλληλο Reverse DNS record με βάση την πανελλαδική διευθυσιοδότηση και τα επιθέματα DNS (http://www.wna.gr/wiki/addressing). Με το που εγκριθεί το C-Class το σύστημα του φόρουμ θα σας αναγνωρίσει επιπλέον δικαιώματα, όπως επίσης και αφότου προσθέσετε τις διασυνδέσεις σας και θα σας δώσει αυτόματα προσβάσεις σε ειδικές ενότητες για διαχειριστές κόμβων!. \n Για περισσότερες πληροφορίες ανατρέξτε στο Wiki του WNA ή ρωτήστε στο φόρουμ. \n\n-- \nWNA"
 			),
 			'rejected' => array(
-				'subject' => "##range##: Απορρίφθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class απορρίφθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##range##: Απορρίφθηκε",
+				'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class απορρίφθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n-- \n"
 			),
 			'invalid' => array(
-				'subject' => "##range##: Ακυρώθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ακυρώθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##range##: Ακυρώθηκε",
+				'body' => "WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ακυρώθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n-- \n"
 			)
 		),
-		
+
 		'zone' => array(
 			'pending' => array(
-				'subject' => "##zone##: Σε αναμονή",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone μπήκε σε κατάσταση αναμονής.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##zone##: Σε αναμονή",
+				'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone μπήκε σε κατάσταση αναμονής.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n-- \n"
 			),
 			'active' => array(
-				'subject' => "##zone##: Ενεργοποιήθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ενεργοποιήθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##zone##: Ενεργοποιήθηκε",
+				'body' => "WiND.WNA.gr - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ενεργοποιήθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n-- \n"
 			),
 			'rejected' => array(
-				'subject' => "##zone##: Απορρίφθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone απορρίφθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##zone##: Απορρίφθηκε",
+				'body' => "WiND.WNA.gr - \nWiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone απορρίφθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n-- \n"
 			),
 			'invalid' => array(
-				'subject' => "##zone##: Ακυρώθηκε",
-				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ακυρώθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
+				'subject' => "WiND.WNA.gr:##zone##: Ακυρώθηκε",
+				'body' => "WiND.WNA.gr - \nWiND - Wireless Nodes Database\n------------------------------------------\n\nΖώνη DNS: ##zone##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω DNS zone ακυρώθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)\n\n-- \n"
 			)
 		)
 	),
-	
+
 	'help' => array(
 		'dnszones' => array(
 			'title' => 'Ζώνες DNS',
 			'body' => 'Στη σελίδα αυτή μπορείτε να αναζητήσετε ζώνες DNS του δικτύου, με βάση τα πεδία που προσφέρονται. Τα αποτελέσματα εμφανίζονται στον παρακάτω πίνακα. Επίσης, μπορείτε να διαλέξετε κάποιον κόμβο για προβολή των στοιχείων του.'
 		),
-		
+
 		'services' => array(
 			'title' => 'Υπηρεσίες',
 			'body' => 'Στη σελίδα αυτή μπορείτε να αναζητήσετε υπηρεσίες του δικτύου, με βάση τα πεδία που προσφέρονται. Τα αποτελέσματα εμφανίζονται στον παρακάτω πίνακα. Επίσης, μπορείτε να μεταφερθείτε σε κάποια υπηρεσία (αν προσφέρεται URL) ή να επιλέξετε κάποιον κόμβο για προβολή των στοιχείων του.'
 		),
-		
-		'node_editor_add' => array(
+
+		'mynodes_add' => array(
 			'title' => 'Προσθήκη κόμβου',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε έναν κόμβο. Φροντίστε τα στοιχεία να καταχωρηθούν με όσο το δυνατόν μεγαλύτερη ακρίβεια.'
 		),
-		'node_editor' => array(
+		'mynodes' => array(
 			'title' => 'Διαχείριση κόμβου',
 			'body' => 'Στη σελίδα αυτή μπορείτε να διαχειριστείτε πλήρως τον κόμβο σας. Φροντίστε τα στοιχεία να καταχωρηθούν με όσο το δυνατόν μεγαλύτερη ακρίβεια. Στις επιμέρους κατηγορίες, ανατρέξτε στη βοήθεια της κάθε σελίδας.'
 		),
-		'node_editor_range' => array(
+		'mynodes_range' => array(
 			'title' => 'Αίτηση απόδοσης IP C-Class',
 			'body' => 'Περιγράψτε με σαφήνεια, στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
 		),
-        'node_editor_range_v6' => array(
-			'title' => 'Αίτηση απόδοσης IPv6 Net',
-			'body' => 'Περιγράψτε με σαφήνεια, στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
-		),
-		'node_editor_dnszone_request_reverse' => array(
+		'mynodes_dnszone_request_reverse' => array(
 			'title' => 'Αίτηση απόδοσης ζώνης DNS',
 			'body' => 'Περιγράψτε με σαφήνεια στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
 		),
-		'node_editor_dnszone_request_forward' => array(
+		'mynodes_dnszone_request_forward' => array(
 			'title' => 'Αίτηση απόδοσης ζώνης DNS',
 			'body' => 'Περιγράψτε με σαφήνεια στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
 		),
-		'node_editor_dnszone_edit' => array(
+		'mynodes_dnszone_edit' => array(
 			'title' => 'Επεξεργασία ζώνης DNS',
 			'body' => 'Στη σελίδα αυτή μπορείτε να ορίσετε τους υπεύθυνους nameservers (NS) που θα διατηρούν τις πληροφορίες της ζώνης.'
 		),
-		'node_editor_dnsnameserver_add' => array(
+		'mynodes_dnsnameserver_add' => array(
 			'title' => 'Προσθήκη nameserver (NS)',
 			'body' => 'Δώστε το όνομα και τη διεύθυνση του nameserver.'
 		),
-		'node_editor_dnsnameserver_edit' => array(
+		'mynodes_dnsnameserver_edit' => array(
 			'title' => 'Επεξεργασία nameserver (NS)',
 			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε το όνομα του nameserver (NS) που διατηρείτε. Αλλαγή της διεύθυνσης IP δεν είναι εφικτή, θα πρέπει να κάνετε αίτηση διαγραφής του υπάρχοντος nameserver και αίτηση καταχώρησης νέου.'
 		),
-		'node_editor_link_add' => array(
+		'mynodes_link_add' => array(
 			'title' => 'Προσθήκη διασύνδεσης',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε μια διασύνδεση του κόμβου σας με κάποιον άλλο κόμβο. Συμπληρώστε με σαφήνεια όσο το δυνατόν περισσότερα από τα πεδία.'
 		),
-		'node_editor_link_edit' => array(
+		'mynodes_link_edit' => array(
 			'title' => 'Επεξεργασία διασύνδεσης',
 			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε μια διασύνδεση του κόμβου σας με κάποιον άλλο κόμβο. Συμπληρώστε με σαφήνεια όσο το δυνατόν περισσότερα από τα πεδία.'
 		),
-		'node_editor_subnet_add' => array(
+		'mynodes_subnet_add' => array(
 			'title' => 'Προσθήκη υποδικτύου',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε ένα υποδίκτυο του κόμβου σας. Για το τοπικό σας δίκτυο μπορείτε να δηλώσετε και διευθύνσεις που δεν περιέχονται σε IP C-Class που σας έχει αποδοθεί. Σε περίπτωση διασυνδέσεων κόμβων, δήλωση ενός υποδικτύου μπορεί να γίνει μόνο από τον κάτοχο του IP C-Class του υποδικτύου που χρησιμοποιείται.'
 		),
-		'node_editor_subnet_edit' => array(
+		'mynodes_subnet_edit' => array(
 			'title' => 'Επεξεργασία υποδικτύου',
 			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε ένα υποδίκτυο του κόμβου σας.'
 		),
-		'node_editor_ipaddr_add' => array(
+		'mynodes_ipaddr_add' => array(
 			'title' => 'Προσθήκη διεύθυνσης IP',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε μία διεύθυνση IP του κόμβου σας. Το πεδίο Hostname, πρέπει να καθορίζει ποιο μηχάνημα φέρει τη συγκεκριμένη διεύθυνση IP και πρέπει να είναι κοινό σε όλες τις διευθύνσεις IP του συγκεκριμένου μηχανήματος.'
 		),
-		'node_editor_ipaddr_edit' => array(
+		'mynodes_ipaddr_edit' => array(
 			'title' => 'Επεξεργασία διασύνδεσης',
 			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε μία διεύθυνση IP του κόμβου σας. Το πεδίο Hostname, πρέπει να καθορίζει ποιο μηχάνημα φέρει τη συγκεκριμένη διεύθυνση IP και πρέπει να είναι κοινό σε όλες τις διευθύνσεις IP του συγκεκριμένου μηχανήματος.'
 		),
-		
-		'node_editor_services_add' => array(
+
+		'mynodes_services_add' => array(
 			'title' => 'Προσθήκη υπηρεσίας',
-			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε μία υπηρεσία του κόμβου σας. Το πεδίο Διεύθυνση IP περιέχει όλες τις διευθύνσεις που έχετε δηλώσει και πρέπει να καθορίζει την IP στην οποία τρέχει (ακούει) η υπηρεσία. Το πεδίο URL, πρέπει να περιέχει το link για την υπηρεσία ή το link για κάποια σελίδα που αναφέρεται στην υπηρεσία. Τέλος τα πεδία Πρωτόκολλο και Πόρτα, πρέπει να αναφέρονται στο πρωτόκολλο που χρησιμοποιεί η υπηρεσία (π.χ. tcp, udp) και στην πόρτα που ακούει.'
+			'body' => '1Στη σελίδα αυτή μπορείτε να προσθέσετε μία υπηρεσία του κόμβου σας. Το πεδίο Διεύθυνση IP περιέχει όλες τις διευθύνσεις που έχετε δηλώσει και πρέπει να καθορίζει την IP στην οποία τρέχει (ακούει) η υπηρεσία. Το πεδίο URL, πρέπει να περιέχει το link για την υπηρεσία ή το link για κάποια σελίδα που αναφέρεται στην υπηρεσία. Τέλος τα πεδία Πρωτόκολλο και Πόρτα, πρέπει να αναφέρονται στο πρωτόκολλο που χρησιμοποιεί η υπηρεσία (π.χ. tcp, udp) και στην πόρτα που ακούει.'
 		),
-		'node_editor_services_edit' => array(
-			'title' => 'Επεξεργασία υπηρεσίας',
-			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε μία υπηρεσία του κόμβου σας. Το πεδίο Διεύθυνση IP περιέχει όλες τις διευθύνσεις που έχετε δηλώσει και πρέπει να καθορίζει την IP στην οποία τρέχει (ακούει) η υπηρεσία. Το πεδίο URL, πρέπει να περιέχει το link για την υπηρεσία ή το link για κάποια σελίδα που αναφέρεται στην υπηρεσία. Τέλος τα πεδία Πρωτόκολλο και Πόρτα, πρέπει να αναφέρονται στο πρωτόκολλο που χρησιμοποιεί η υπηρεσία (π.χ. tcp, udp) και στην πόρτα που ακούει.'
-		),
-		'node_editor_nodesettingschanges_add' => array(
+		'mynodes_nodesettingschanges_add' => array(
 			'title' => 'Προσθήκη αλλαγής στο αρχείο καταγραφής',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε μία αλλαγή που κάνατε στις ρυθμίσεις του κόμβου αυτό. Οι συνδιαχειριστές σας πρέπει να είναι ενήμεροι για τις αλλαγές που γίνονται.'
 		),
-		'node_editor_nodesettingschanges' => array(
+		'mynodes_nodesettingschanges' => array(
 			'title' => 'Προσθήκη αλλαγής στο αρχείο καταγραφής',
 			'body' => '1Στη σελίδα αυτή μπορείτε να προσθέσετε μία αλλαγή που κάνατε στις ρυθμίσεις του κόμβου αυτό. Οι συνδιαχειριστές σας πρέπει να είναι ενήμεροι για τις αλλαγές που γίνονται.'
 		),
@@ -707,6 +732,11 @@ $lang = array(
 			'title' => 'Προσθήκη αλλαγής στο αρχείο καταγραφής',
 			'body' => '2Στη σελίδα αυτή μπορείτε να προσθέσετε μία αλλαγή που κάνατε στις ρυθμίσεις του κόμβου αυτό. Οι συνδιαχειριστές σας πρέπει να είναι ενήμεροι για τις αλλαγές που γίνονται.'
 		),
+		'mynodes_services_edit' => array(
+			'title' => 'Επεξεργασία υπηρεσίας',
+			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε μία υπηρεσία του κόμβου σας. Το πεδίο Διεύθυνση IP περιέχει όλες τις διευθύνσεις που έχετε δηλώσει και πρέπει να καθορίζει την IP στην οποία τρέχει (ακούει) η υπηρεσία. Το πεδίο URL, πρέπει να περιέχει το link για την υπηρεσία ή το link για κάποια σελίδα που αναφέρεται στην υπηρεσία. Τέλος τα πεδία Πρωτόκολλο και Πόρτα, πρέπει να αναφέρονται στο πρωτόκολλο που χρησιμοποιεί η υπηρεσία (π.χ. tcp, udp) και στην πόρτα που ακούει.'
+		),
+
 		'nodes_search' => array(
 			'title' => 'Κόμβοι δικτύου',
 			'body' => 'Στη σελίδα αυτή μπορείτε να αναζητήσετε κόμβους του δικτύου με βάση τα πεδία που προσφέρονται. Τα αποτελέσματα εμφανίζονται στον παρακάτω πίνακα. Επίσης, μπορείτε να διαλέξετε κάποιον κόμβο για προβολή των στοιχείων του.'
@@ -740,11 +770,10 @@ $lang = array(
 			'body' => 'Στη σελίδα αυτή μπορείτε να αποστείλετε μήνυμα προς τον διαχειριστή ή και τους συνδιαχειριστές του κόμβου. Η ηλεκτρονική σας διεύθυνση θα είναι διαθέσιμη στο απεσταλμένο μήνυμα ώστε να είναι εφικτή η πιθανή απάντηση στο μήνυμά σας από τους παραλήπτες. Οι ηλεκτρονικές διευθύνσεις των παραληπτών θα αποκαλυφθούν κατά την απάντηση του μηνύματος. Η πιθανή απάντηση στο μήνυμά σας θα σας αποσταλεί στο ηλεκτρονικό σας ταχυδρομείο.'
 		)
 	),
-	
+
 	'languages' => array(
 		'greek' => 'Ελληνικά',
-		'english' => 'Αγγλικά',
-		'dutch' => 'Ολλανδικά'
+		'english' => 'Αγγλικά'
 	)
 
 );
