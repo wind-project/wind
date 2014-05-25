@@ -207,13 +207,13 @@ class nodes_view {
 		return $table_links;
 	}
 
-        function table_links_free() {
+        function table_links_free($id) {
                 global $db;
                 $table_links = new table(array('TABLE_NAME' => 'table_links_free'));
                 $table_links->db_data(
                         'links.date_in AS links__date_in, links.due_date AS links__due_date, links.ssid AS links__ssid, links.type AS links__type, links.info AS links__info, links.protocol AS links__protocol, links.channel AS links__channel, links.frequency AS links__frequency, links.equipment AS links__equipment, links.status AS links__status',
                         'links', 
-                        "links.type ='free'",
+                        "links.type = 'free' and links.node_id = '".$id."'",
                         "",
                         "links.date_in ASC");
                 $table_links->db_data_translate('links__status', 'links__type');
@@ -337,7 +337,7 @@ class nodes_view {
 			if ($value['type'] == 'ap') $this->tpl['table_links_ap'][$value['id']] = $construct->table($this->table_links_ap($value['id']), __FILE__);
 		}
 
-		$this->tpl['table_links_free'] = $construct->table($this->table_links_free(), __FILE__);
+		$this->tpl['table_links_free'] = $construct->table($this->table_links_free(intval(get('node'))), __FILE__);
 		$this->tpl['table_ipaddr_subnets'] = $construct->table($this->table_ipaddr_subnets(), __FILE__);
 		$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 		$t = $db->get('id, date_in, view_point, info', 'photos', "node_id = ".intval(get('node')));
