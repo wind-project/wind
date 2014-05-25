@@ -8,4 +8,5 @@ Konstantinos Paliouras <sque [@] tolabaki.gr>
 John Kolovos <cirrus [@] awmn.net>
 Eddy Kikkert <ed [@] kikkert-online.nl>
 Vasilis Tsiligiannis <acinonyx [@] openwrt.gr>
-Yiannis Samouhos <ysam [@] unreal.gr>
+Yiannis Samouhos <ysamouhos [@] gmail.com>
+Leonidas Papadopoulos <leonidas [@] wna.gr>
