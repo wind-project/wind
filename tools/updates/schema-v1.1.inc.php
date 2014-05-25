@@ -99,6 +99,31 @@ $tb->addColumn('delete_req', "enum('Y','N')", array(
 		'not_null' => true,
 		'default' => "'N'"));
 
+// Table nodesettingschanges
+$tb = $update->newTable('nodesettingschanges');
+$tb->addColumn('id', 'int unsigned', array(
+		'not_null' => true,
+		'ai' => true,
+		'pk' => true));
+$tb->addColumn('node_id', 'int unsigned', array(
+		'not_null' => true,
+		'default' => '0',
+		'pk' => true));
+$tb->addColumn('uid', 'int', array(
+		'unique' => true,
+		'not_null' => true));
+$tb->addColumn('dateline', 'varchar(30)', array(
+		'default' => NULL));
+$tb->addColumn('changemade', 'text', array(
+		'fk' => true,
+		'not_null' => true));
+$tb->addColumn('changemenu', "enum('routerOS version upgrade/downgrade','groups','users','other','script','ip firewall other','ip firewall nat','ip firewall filter','wireless','snmp','radius','partitions','ipv6','ppp','INTERFACE','driver','led','user','system','special-login','routing','queue','port','mpls','log','ip','file','HARDWARE','certificate')", array(
+		'unique' => true,
+		'not_null' => true));
+$tb->addColumn('reason', "enum('other','bug fix','critical-problem','imporovement','termination')", array(
+		'not_null' => true));
+$tb->addColumn('comment', 'text');
+
 // MODIFY areas
 $update->newColumn('areas', 'v6net', 'varbinary(16)', array(
 		'default' => '0',
@@ -121,9 +146,12 @@ $update->newColumn('links', 'due_date', 'DATETIME', array(
 $update->newColumn('links', 'frequency', "enum('2412','2417','2422','2427','2432','2437','2442','2447','2452','2457','2462','2467','2472','2484','4915','4920','4925','4935','4940','4945','4960','4980','5035','5040','5045','5055','5060','5080','5170','5180','5190','5200','5210','5220','5230','5240','5260','5280','5300','5320','5500','5520','5540','5560','5580','5600','5620','5640','5660','5680','5700','5745','5765','5785','5805','5825')", array(
 		'not_null' => false,
 		'default' => "'5500'"));
-$update->modifyColumn('links', 'status', 'status', "enum('active','inactive','pending')", array(
+$update->modifyColumn('links', 'status', "enum('active','inactive','pending')", array(
 		'not_null' => false,
 		'default' => "'active'"));
+$update->modifyColumn('links', 'type', "enum('p2p','ap','client','free')", array(
+		'not_null' => false,
+		'default' => "'p2p'"));
 
 // MODIFY nodes
 $update->newColumn('nodes', 'due_date', 'DATETIME', array(
