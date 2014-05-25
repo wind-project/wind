@@ -42,7 +42,7 @@
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__due_date}</td>
-        <td class="table-node-value2">{$data[rowl].links__due_date|date_format:"%x"}</td>
+        <td class="table-node-value2">{$data.1.links__due_date|date_format:"%x"}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__protocol}</td>
@@ -58,7 +58,7 @@
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__frequency}</td>
-        <td class="table-node-value2">{$data[rowl].links__frequency|escape}</td>
+        <td class="table-node-value2">{$data.1.links__frequency|escape}</td>
 </tr>
 <tr>
         <td class="table-node-key2">{$lang.db.links__equipment}</td>
