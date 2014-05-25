@@ -381,8 +381,8 @@ $lang = array(
 		'nodes_services__protocol-udp' => 'UDP',
 		'nodes_services__port' => 'Πόρτα',
 		
-		'nodesettingschanges__entryid' => 'entry',
-     	'nodesettingschanges__nodeid' => 'nodeid',
+		'nodesettingschanges__id' => 'id',
+	     	'nodesettingschanges__node_id' => 'nodeid',
 		'nodesettingschanges__uid' => 'uid',
 		'nodesettingschanges__changemenu' => 'Τομέας αλλαγής',
 		'nodesettingschanges__changemade' => 'Τελευταία αλλαγή',
