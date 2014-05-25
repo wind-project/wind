@@ -100,7 +100,7 @@ $tb->addColumn('delete_req', "enum('Y','N')", array(
 		'default' => "'N'"));
 
 // Table nodesettingschanges
-$tb = $update->newTable('nodesettingschanges');
+$tb = $update->newTable('node_settings_changes');
 $tb->addColumn('id', 'int unsigned', array(
 		'not_null' => true,
 		'ai' => true,
@@ -115,7 +115,7 @@ $tb->addColumn('uid', 'int', array(
 $tb->addColumn('dateline', 'varchar(30)', array(
 		'default' => NULL));
 $tb->addColumn('changemade', 'text', array(
-		'fk' => true,
+		'ftk' => true,
 		'not_null' => true));
 $tb->addColumn('changemenu', "enum('routerOS version upgrade/downgrade','groups','users','other','script','ip firewall other','ip firewall nat','ip firewall filter','wireless','snmp','radius','partitions','ipv6','ppp','INTERFACE','driver','led','user','system','special-login','routing','queue','port','mpls','log','ip','file','HARDWARE','certificate')", array(
 		'unique' => true,
