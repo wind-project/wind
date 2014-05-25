@@ -110,7 +110,6 @@ $tb->addColumn('node_id', 'int unsigned', array(
 		'default' => '0',
 		'pk' => true));
 $tb->addColumn('uid', 'int', array(
-		'unique' => true,
 		'not_null' => true));
 $tb->addColumn('dateline', 'varchar(30)', array(
 		'default' => NULL));
@@ -118,7 +117,6 @@ $tb->addColumn('changemade', 'text', array(
 		'ftk' => true,
 		'not_null' => true));
 $tb->addColumn('changemenu', "enum('routerOS version upgrade/downgrade','groups','users','other','script','ip firewall other','ip firewall nat','ip firewall filter','wireless','snmp','radius','partitions','ipv6','ppp','INTERFACE','driver','led','user','system','special-login','routing','queue','port','mpls','log','ip','file','HARDWARE','certificate')", array(
-		'unique' => true,
 		'not_null' => true));
 $tb->addColumn('reason', "enum('other','bug fix','critical-problem','imporovement','termination')", array(
 		'not_null' => true));
