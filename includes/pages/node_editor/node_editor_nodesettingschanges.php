@@ -64,7 +64,7 @@ class node_editor_nodesettingschanges {
 		#						"dns_nameservers", "id", $nameserver);
 		
 		if ($ret) {
-				$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => $_POST['nodes_node_setttings_changes__node_id'])));
+				$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => $_POST['node_setttings_changes__node_id'])));
 				#log_admin_action($nodes,"#nodesetttingschange#".get('node'),get('id'), "node_setttings_changes", "insert_success");#@#
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
