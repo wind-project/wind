@@ -21,19 +21,6 @@
 $update = new DBUpdateDescriptor(new SchemaVersion(1,0), new SchemaVersion(1,1));
 
 /******************************************
- *            Database Updates            */
-$tb = $update->newTable('update_log');
-$tb->addColumn('version_major', 'int unsigned', array(
-		'not_null' => true,
-		'pk' => true));
-$tb->addColumn('version_minor', 'int unsigned', array(
-		'not_null' => true,
-		'pk' => true));
-$tb->addColumn('applied_date', 'TIMESTAMP', array(
-		'not_null' => true,
-		'default' => 'CURRENT_TIMESTAMP'));
-
-/******************************************
  *         IPv6 database changes          */
 
 // TABLE ipv6_node_repos
@@ -45,11 +32,11 @@ $tb->addColumn('id', 'int unsigned', array(
 $tb->addColumn('area_id', 'int unsigned', array(
 		'not_null' => true,
 		'default' => '0',
-		'unique' => true));
+		'unique' => false));
 $tb->addColumn('node_id', 'int unsigned', array(
 		'not_null' => true,
 		'default' => '0',
-		'unique' => true));
+		'unique' => false));
 $tb->addColumn('v6net', 'varbinary(16)', array(
 		'not_null' => true,
 		'default' => '0',
@@ -64,11 +51,11 @@ $tb->addColumn('id', 'int unsigned', array(
 $tb->addColumn('area_id', 'int unsigned', array(
 		'not_null' => true,
 		'default' => '0',
-		'unique' => true));
+		'unique' => false));
 $tb->addColumn('region_id', 'int unsigned', array(
 		'not_null' => true,
 		'default' => '0',
-		'unique' => true));
+		'unique' => false));
 $tb->addColumn('v6net', 'varbinary(16)', array(
 		'not_null' => true,
 		'default' => '0',
@@ -147,7 +134,7 @@ $update->newColumn('links', 'frequency', "enum('2412','2417','2422','2427','2432
 		'not_null' => false,
 		'default' => "'5500'"));
 $update->modifyColumn('links', 'status', "enum('active','inactive','pending')", array(
-		'not_null' => false,
+		'not_null' => true,
 		'default' => "'active'"));
 $update->modifyColumn('links', 'type', "enum('p2p','ap','client','free')", array(
 		'not_null' => false,
@@ -161,5 +148,17 @@ $update->newColumn('nodes', 'last_change', 'DATETIME', array(
 $update->newColumn('nodes', 'status', "enum('active','inactive','pending','deleted')", array(
 		'default' => "'active'"));
 
+/******************************************
+ *            Database Updates            */
+$tb = $update->newTable('update_log');
+$tb->addColumn('version_major', 'int unsigned', array(
+		'not_null' => true,
+		'pk' => true));
+$tb->addColumn('version_minor', 'int unsigned', array(
+		'not_null' => true,
+		'pk' => true));
+$tb->addColumn('applied_date', 'TIMESTAMP', array(
+		'not_null' => true,
+		'default' => 'CURRENT_TIMESTAMP'));
 
 return $update;
