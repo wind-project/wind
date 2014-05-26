@@ -31,10 +31,12 @@ $tb->addColumn('id', 'int unsigned', array(
 		'pk' => true));
 $tb->addColumn('area_id', 'int unsigned', array(
 		'not_null' => true,
+		'key' => true,
 		'default' => '0',
 		'unique' => false));
 $tb->addColumn('node_id', 'int unsigned', array(
 		'not_null' => true,
+		'key' => true,
 		'default' => '0',
 		'unique' => false));
 $tb->addColumn('v6net', 'varbinary(16)', array(
@@ -50,10 +52,12 @@ $tb->addColumn('id', 'int unsigned', array(
 		'pk' => true));
 $tb->addColumn('area_id', 'int unsigned', array(
 		'not_null' => true,
+		'key' => true,
 		'default' => '0',
 		'unique' => false));
 $tb->addColumn('region_id', 'int unsigned', array(
 		'not_null' => true,
+		'key' => true,
 		'default' => '0',
 		'unique' => false));
 $tb->addColumn('v6net', 'varbinary(16)', array(
