@@ -80,12 +80,12 @@ class node_editor_link {
 				$f['peer_node_id'] = '';
 				break;
 		}
-                $Day = $_POST["CONDATETIME_links__due_date_Day"];
-                $Month = $_POST["CONDATETIME_links__due_date_Month"];
-                $Year = $_POST["CONDATETIME_links__due_date_Year"];
-                $Hour = $_POST["CONDATETIME_links__due_date_Hour"];
-                $Minute = $_POST["CONDATETIME_links__due_date_Minute"];
-                $Second = $_POST["CONDATETIME_links__due_date_Second"];
+                $Day = (isset($_POST["CONDATETIME_links__due_date_Day"]) ? $_POST["CONDATETIME_links__due_date_Day"] :'00');
+                $Month = (isset($_POST["CONDATETIME_links__due_date_Month"]) ? $_POST["CONDATETIME_links__due_date_Month"] : '00');
+                $Year = (isset($_POST["CONDATETIME_links__due_date_Year"]) ? $_POST["CONDATETIME_links__due_date_Year"] : '0000');
+                $Hour = (isset($_POST["CONDATETIME_links__due_date_Hour"]) ? $_POST["CONDATETIME_links__due_date_Hour"] : '00');
+                $Minute = (isset($_POST["CONDATETIME_links__due_date_Minute"]) ? $_POST["CONDATETIME_links__due_date_Minute"] : '00');
+                $Second = (isset($_POST["CONDATETIME_links__due_date_Second"]) ? $_POST["CONDATETIME_links__due_date_Second"] : '00');
 
                 unset($_POST["CONDATETIME_links__due_date_Day"]);
                 unset($_POST["CONDATETIME_links__due_date_Month"]);
