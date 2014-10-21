@@ -75,7 +75,20 @@ class nodes_plot_link {
 			}
 			$this->tpl['distance'] = sqrt( pow($this->tpl['distance'] * 1000, 2) + pow( abs($a_node_total_elevation - $b_node_total_elevation), 2 ) ) / 1000;
 			$this->tpl['gearth'] = make_ref('/gearth/download', array("node" => get('a_node'), "node2" => get('b_node'), "show_p2p" => "1", "show_aps" => "1", "show_clients" => "1", "show_unlinked" => "1", "show_links_p2p" => "1", "show_links_client" => "1"));
-			$this->tpl['frequency'] = (integer)(isset($_GET['frequency'])?$_GET['frequency']:2450);
+			if (isset($_GET['frequency'])) {
+				$this->tpl['frequency'] = (integer)$_GET['frequency'];
+                        } else {
+				//Get the AP frequency and use that
+				$a_link_data = $db->get('frequency,type',
+                         		'links', "node_id = '".$this->tpl['a_node']."' and frequency > 0");
+				$b_link_data = $db->get('frequency,type',
+                              		'links', "node_id = '".$this->tpl['b_node']."' and frequency > 0");
+				$apFreq = ($a_link_data[0]['type'] == 'ap'?$a_link_data[0]['frequency']
+                              		:($b_link_data[0]['type'] == 'ap'?$b_link_data[0]['frequency']:''));
+				if ($apFreq > 0) {
+					$this->tpl['frequency'] = (integer)$apFreq;
+				}
+                        }
 			if ($this->tpl['frequency'] <= 0) $this->tpl['frequency'] = 2450;
 			$frequency = $this->tpl['frequency'] * 1000000;
 			$c = 299792.458; // light speed in km
