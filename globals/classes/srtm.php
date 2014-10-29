@@ -50,7 +50,7 @@ class srtm {
           } else {
             $r['lon_dir'] = 'E';
             if ($r['lat_dir'] == 'S') {
-              $r['lon_adj'] = -1;
+              $r['lon_adj'] = -0.75;;
             } else {
               $r['lon_adj'] = 0;
             }
