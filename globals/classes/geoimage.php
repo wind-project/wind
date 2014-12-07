@@ -111,9 +111,9 @@ class geoimage {
 		imagelinethick($image, $left_pad + 0, $ant_a, $left_pad + $width - 1, $ant_b, $color_link, 1);
 	
 		//FRESNEL ZONE
-		$freq = 0;
-		if (isset($_GET['frequency']))
-			$freq = intval($_GET['frequency']);
+		$freq = (isset($_GET['frequency']) && $_GET['frequency'] > 0?intval($_GET['frequency'])
+                    :(isset($point_a->freq) && $point_a->freq > 0?intval($point_a->freq)
+                    :2450));
 		if ($freq <= 0) $freq = 2450;
 		$ant_a_r = round($ant_a);
 		$ant_b_r = round($ant_b);
