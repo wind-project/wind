@@ -148,6 +148,10 @@ NetworkMap.prototype._constructMap = function() {
 	// LAYER : maps
 	//-------------------------------------------------------
 	this._olLayers['osm'] = new OpenLayers.Layer.OSM("OpenStreetMaps");
+        if (typeof(google) != 'undefined')
+                this._olLayers['googleR'] = new OpenLayers.Layer.Google("Google RoadMap", {type: google.maps.MapTypeId.ROADMAP, visibility: false});
+        if (typeof(google) != 'undefined')
+                this._olLayers['googleT'] = new OpenLayers.Layer.Google("Google Terrain", {type: google.maps.MapTypeId.TERRAIN, visibility: false});
 	if (typeof(google) != 'undefined') 
 		this._olLayers['google'] = new OpenLayers.Layer.Google("Google Satelite", {type: google.maps.MapTypeId.SATELLITE, visibility: false});
 	
@@ -318,7 +322,7 @@ NetworkMap.prototype._downloadTopology = function(focus_selected) {
 			// GeoJSON inherits all properties + extra
 			var properties = jQuery.extend({}, link);
 			properties['color'] = (link['status'] == 'active')
-				?'#00ff00'
+				?'#0099FF'
 				:'#ff0000';
 			
 			return {
