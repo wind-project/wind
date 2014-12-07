@@ -1,7 +1,8 @@
 <?php
 
 if (isset($argv[1])) {
-	$conf_file = basename($argv[1]).'.conf';
+	$basedir = dirname($_SERVER['PHP_SELF']);
+	$conf_file = $basedir.'/'.basename($argv[1]).'.conf';
 } else {
 	$conf_file = basename($_GET['zonefile']).'.conf';
 }
@@ -37,7 +38,7 @@ if ($conf['zone_type'] == 'forward') {
 			  ORDER BY nodes.name_ns ASC, dns_nameservers.name ASC";
 	$q = mysql_query($query, $mysql_link);
 	while ($ret = mysql_fetch_assoc($q)) {
-		$replace['NAMESERVERS'] .= $conf['notify']?
+		$replace['NAMESERVERS'] .= isset($conf['notify'])?
 			long2ip($ret['ns_ip']).";\n":
 			" NS ".$ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']."\n";
 	}
@@ -103,7 +104,7 @@ if ($conf['zone_type'] == 'forward') {
 }
 
 ## ECHO ZONE
-echo replace($replace, file_get_contents($conf['shema']));
+echo replace($replace, file_get_contents($basedir.'/'.$conf['shema']));
 
 mysql_close($mysql_link);
 
