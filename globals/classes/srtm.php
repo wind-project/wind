@@ -28,48 +28,55 @@ class srtm {
 		$this->data_path = $data_path;
 	}
 	
-	public static function get_filename($lat, $lon) {
-		if ($lat < 0) {
-			$lat_dir = 'S';
-			$lat_adj = 1;
-		} else {
-			$lat_dir = 'N';
-			$lat_adj = 0;
-		}
-		if ($lon < 0) {
-			$lon_dir = 'W';
-			$lon_adj = 1;
-		} else {
-			$lon_dir = 'E';
-			$lon_adj = 0;
-		}
-		
-		return $lat_dir . sprintf("%02.0f", (integer)($lat+$lat_adj)).$lon_dir.sprintf("%03.0f", (integer)($lon+$lon_adj)).'.hgt';
-	}
-	
-	function get_elevation($lat, $lon, $round=TRUE) {
-		if ($lat < 0) {
-			$lat_dir = 'S';
-			$lat_adj = 1;
-		} else {
-			$lat_dir = 'N';
-			$lat_adj = 0;
-		}
-		if ($lon < 0) {
-			$lon_dir = 'W';
-			$lon_adj = 1;
-		} else {
-			$lon_dir = 'E';
-			$lon_adj = 0;
-		}
+        public static function get_filename($lat, $lon) {
+                $ll = srtm::get_lat_long_adjustments($lat, $lon);
+                //print_R($ll);
+                //always return filename with positive numbers (eg S-33 -> S33)
+                return $ll['lat_dir'] . sprintf("%02.0f", abs((integer)($lat+$ll['lat_adj'])))
+                  .$ll['lon_dir'].sprintf("%03.0f", abs((integer)($lon+$ll['lon_adj']))).'.hgt';
+        }
+
+        function get_lat_long_adjustments($lat,$lon) {
+          if ($lat < 0) {
+            $r['lat_dir'] = 'S';
+            $r['lat_adj'] = 1;
+          } else {
+            $r['lat_dir'] = 'N';
+            $r['lat_adj'] = 0;
+          }
+          if ($lon < 0) {
+            $r['lon_dir'] = 'W';
+            $r['lon_adj'] = 1;
+          } else {
+            $r['lon_dir'] = 'E';
+            if ($r['lat_dir'] == 'S') {
+              $r['lon_adj'] = -0.75;;
+            } else {
+              $r['lon_adj'] = 0;
+            }
+          }
+          return $r;
+        }
+
+        function get_elevation($lat, $lon, $round=TRUE) {
+
+		$filename = $this->data_path.$this->get_filename($lat,$lon);
+
+		if ($lat === '' || $lon === '' || !file_exists($filename)) return FALSE;
+
+		$file = fopen($filename, 'r');
+
+		$ll = $this->get_lat_long_adjustments($lat,$lon);
+		$lat_dir = $ll['lat_dir'];
+		$lat_adj = $ll['lat_adj'];
+		$lon_dir = $ll['lon_dir'];
+		$lon_adj = $ll['lon_adj'];
 		$y = $lat;
 		$x = $lon;
-		
-		$filename = $this->data_path.$lat_dir.sprintf("%02.0f", (integer)($lat+$lat_adj)).$lon_dir.sprintf("%03.0f", (integer)($lon+$lon_adj)).'.hgt';
-		if ($lat === '' || $lon === '' || !file_exists($filename)) return FALSE;
-		
-		$file = fopen($filename, 'r');
-		$offset = ( (integer)(($x - (integer)$x + $lon_adj) * 1200) * 2 + (1200 - (integer)(($y - (integer)$y + $lat_adj) * 1200)) * 2402 );
+
+		$offset = ( (integer)(($x - (integer)$x + $lon_adj) * 1200)
+			* 2 + (1200 - (integer)(($y - (integer)$y + $lat_adj) * 1200)) 
+			* 2402 );
 		fseek($file, $offset);
 		$h1 = bytes2int(strrev(fread($file, 2)));
 		$h2 = bytes2int(strrev(fread($file, 2)));
