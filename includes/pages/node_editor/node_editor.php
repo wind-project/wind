@@ -62,7 +62,7 @@ class node_editor {
 		
 		if ($main->userdata->privileges['admin'] === true)
 			$form_node->db_data('nodes.id, nodes.name_ns');
-		$form_node->db_data_enum('nodes.area_id', $db->get("id AS value, name AS output", "areas"", "", "","name ASC"));
+		$form_node->db_data_enum('nodes.area_id', $db->get("id AS value, name AS output", "areas", "", "","name ASC"));
 		$form_node->db_data_values("nodes", "id", intval(get('node')));
 		return $form_node;
 	}
