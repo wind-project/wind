@@ -64,6 +64,10 @@
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.ip_addresses`" buttons="`$btn_add`" content=$table_ipaddr}
 		
+                {include assign="btn_add" file="generic/button.tpl" href=$link_cname_add content="`$lang.ip_cname_add`"
+                        class="btn-success btn-sm" glyph="plus-sign"}
+                {include file=generic/section-level3.tpl title="`$lang.ip_cnames`" buttons="`$btn_add`" content=$table_cname}
+
 		{include assign="btn_add" file="generic/button.tpl" href=$link_req_v6_cclass content="`$lang.ip_range_v6_request`"
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.ip_ranges_v6`" buttons="`$btn_add`" content=$table_ip_ranges_v6}

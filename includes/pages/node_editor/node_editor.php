@@ -286,6 +286,27 @@ class node_editor {
 		return $table_ipaddr;
 	}
 
+        function table_cname() {
+                global $construct, $db;
+                $table_cname = new table(array('TABLE_NAME' => 'table_cname', 'FORM_NAME' => 'table_cname'));
+                $table_cname->db_data(
+                        'ip_cname.id, ip_cname.cname, ip_cname.hostname',
+                        'ip_cname',
+                        'ip_cname.node_id = '.intval(get('node')),
+                        "",
+                        "ip_cname.cname ASC");
+                $table_cname->db_data_multichoice('ip_cname', 'id');
+                for($i=1;$i<count($table_cname->data);$i++) {
+                        if (isset($table_cname->data[$i])) {
+                                $table_cname->info['EDIT'][$i] = make_ref('/node_editor/cname', array('node' => intval(get('node')), "cname" => $table_cname->data[$i]['id']));
+                        }
+                }
+                $table_cname->info['EDIT_COLUMN'] = 'cname';
+                $table_cname->info['MULTICHOICE_LABEL'] = 'delete';
+                $table_cname->db_data_remove('id');
+                return $table_cname;
+        }
+
 	function table_services() {
 		global $construct, $db, $main;
 		$table_services = new table(array('TABLE_NAME' => 'table_services', 'FORM_NAME' => 'table_services'));
@@ -428,6 +449,7 @@ class node_editor {
 				}
 				$this->tpl['table_subnets'] = $construct->table($this->table_subnets(), __FILE__);
 				$this->tpl['table_ipaddr'] = $construct->table($this->table_ipaddr(), __FILE__);
+				$this->tpl['table_cname'] = $construct->table($this->table_cname(), __FILE__);
 				$this->tpl['table_services'] = $construct->table($this->table_services(), __FILE__);
 				$this->tpl['table_nodesettingschanges'] = $construct->table($this->table_nodesettingschanges(), __FILE__);
 				$this->tpl['table_photosview'] = $construct->table($this->table_photosview(), __FILE__);
@@ -442,6 +464,7 @@ class node_editor {
 				$this->tpl['link_link_add'] = make_ref('/node_editor/link', array('node' => get('node'), 'link' => 'add'));
 				$this->tpl['link_subnet_add'] = make_ref('/node_editor/subnet', array('node' => get('node'), 'subnet' => 'add'));
 				$this->tpl['link_ipaddr_add'] = make_ref('node_editor/ipaddr', array('node' => get('node'), 'ipaddr' => 'add'));
+				$this->tpl['link_cname_add'] = make_ref('node_editor/cname', array('node' => get('node'), 'cname' => 'add'));
 				$this->tpl['link_services_add'] = make_ref('/node_editor/services', array('node' => get('node'), 'service' => 'add'));
 				$this->tpl['link_nodesettingschanges_add'] = make_ref('/node_editor/nodesettingschanges', array('node' => get('node'), 'nodesettingschanges' => 'add'));
 
@@ -622,6 +645,19 @@ class node_editor {
 		}
 	}
 	
+        function output_onpost_table_cname() {
+                global $db, $main;
+                $ret = TRUE;
+                foreach( (array) $_POST['id'] as $key => $value) {
+                        $ret = $ret && $db->del("ip_addresses", '', "id = '".intval($value)."' AND node_id = ".intval(get('node')));
+                }
+                if ($ret) {
+                        $main->message->set_fromlang('info', 'delete_success', self_ref());
+                } else {
+                        $main->message->set_fromlang('error', 'generic');
+                }
+        }
+
 	function output_onpost_table_services() {
 		global $db, $main;
 		$ret = TRUE;
