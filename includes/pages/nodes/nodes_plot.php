@@ -53,6 +53,7 @@ class nodes_plot {
                   if ($apFreq > 0) {
                     $point_a->freq = (integer)$apFreq;
                   }
+		}
 		$image = $geoimage->plotlink($width, $height, $point_a, $point_b, (integer)$a_node[0]['elevation'], (integer)$b_node[0]['elevation']);
 		
 		header('Content-type: image/png');
