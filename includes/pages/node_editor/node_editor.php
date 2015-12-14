@@ -351,7 +351,7 @@ class node_editor {
 				unset($p);
 			}
 			if (isset($p) && ($table_photosview->data[$p]['view_point'] == $value)) {
-				$table_photosview->data[$p]['photo'] = $vars['folders']['photos'].'photo-'.$table_photosview->data[$p]['id'].'-s.jpg';
+				$table_photosview->data[$p]['photo'] = surl($vars['folders']['photos'].'photo-'.$table_photosview->data[$p]['id'].'-s.jpg');
 				$t[$i] = $table_photosview->data[$p];
 			} else {
 				$t[$i] = array('id' => '', 'date_in' => '', 'view_point' => $value, 'info' => '', 'photo' => '');
