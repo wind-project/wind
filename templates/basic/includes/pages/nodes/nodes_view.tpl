@@ -24,6 +24,7 @@
 <tr>
 	<td>
 		{include file="includes/pages/nodes/node_info.tpl"}
+		{include file="generic/link.tpl" content="`$lang.node_plot_list`" link="`$link_plot_list`"}
 		{include file="generic/section-level3.tpl" title="`$lang.ip_ranges`" content="`$table_ip_ranges`"}
 		{include file="generic/section-level3.tpl" title="`$lang.ip_ranges_v6`" content="`$table_ip_ranges_v6`"}
 		{include file="generic/section-level3.tpl" title="`$lang.dns_zones`" content="`$table_dns`"}
