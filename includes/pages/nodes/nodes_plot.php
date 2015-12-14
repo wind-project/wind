@@ -47,8 +47,9 @@ class nodes_plot {
                   //Get the AP frequency and use that
                   $a_link_data = $db->get('frequency,type',
                       'links', "node_id = '".get('a_node')."' and frequency > 0");
-                  $b_link_data = $db->get('frequency,type',                                                                                                 'links', "node_id = '".get('b_node')."' and frequency > 0");
-                  $apFreq = ($a_link_data[0]['type'] == 'ap'?$a_link_data[0]['frequency']
+                  $b_link_data = $db->get('frequency,type', 
+                      'links', "node_id = '".get('b_node')."' and frequency > 0");
+		  $apFreq = (isset($a_link_data[0]['type']) && $a_link_data[0]['type'] == 'ap'?$a_link_data[0]['frequency']
                       :($b_link_data[0]['type'] == 'ap'?$b_link_data[0]['frequency']:''));
                   if ($apFreq > 0) {
                     $point_a->freq = (integer)$apFreq;
