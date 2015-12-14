@@ -37,6 +37,7 @@ class nodes_plot_link {
 		$main->menu->hide = TRUE;
 		$main->footer->hide = TRUE;
 		$this->tpl['a_node'] = (isset($_POST['a_node'])?$_POST['a_node']:get('a_node'));
+		$this->tpl['nodes_pickup_link'] = make_ref('/pickup/nodes');
 		if ($this->tpl['a_node'] != '') {
 			$a_node_data = $db->get('id, name, latitude, longitude, elevation', 'nodes', "id = '".$this->tpl['a_node']."'");
 			$a_node_data = $a_node_data[0];
@@ -94,7 +95,6 @@ class nodes_plot_link {
 			$c = 299792.458; // light speed in km
 			$this->tpl['fsl'] = 20 * log10(4 * pi() * $this->tpl['distance'] * ($frequency / $c));
 			
-			$this->tpl['nodes_pickup_link'] = make_ref('/pickup/nodes');
 			$this->tpl['plot_image'] = make_ref('/nodes/plot', array("a_node" => $this->tpl['a_node'], "b_node" => $this->tpl['b_node'], "frequency" => $this->tpl['frequency']));
 		}
 		
