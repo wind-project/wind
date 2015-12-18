@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-<form name="{$extra_data.FORM_NAME}" method="post" action="?" enctype="multipart/form-data">
+<form name="{$extra_data.FORM_NAME}" method="post" action="{$action_url}" enctype="multipart/form-data">
 <input type="hidden" name="query_string" value="{$hidden_qs}" />
 <input type="hidden" name="form_name" value="{$extra_data.FORM_NAME}" />
 <table width="100%"  border="0" cellspacing="0" cellpadding="2">
