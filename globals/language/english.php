@@ -117,6 +117,9 @@ $lang = array(
 	'ip_address_edit' => "Edit IP address",
 	'ip_address_add' => "Add IP address",
 	'ip_addresses' => "IP addresses",
+        'ip_cname_edit' => "Edit CNAME",
+        'ip_cname_add' => "Add CNAME",
+        'ip_cnames' => "CNAMEs",
 	'myview' => "Node's View",
 	'ip_ranges_search' => "Search for IP Networks",
 	'ip_ranges_found' => "IP Networks found",
@@ -358,6 +361,11 @@ $lang = array(
 		'ip_addresses__always_on-Y' => 'Yes',
 		'ip_addresses__always_on-N' => 'No',
 		'ip_addresses__info' => 'Info',
+
+                'ip_cname__date_in' => 'Added',
+                'ip_cname__hostname' => 'Hostname',
+                'ip_cname__cname' => 'CNAME',
+                'ip_cname__info' => 'Info',
 
 		'services__title' => 'Category',
 		'services__protocol' => 'Protocol',
@@ -684,6 +692,15 @@ $lang = array(
 			'title' => 'Edit IP address',
 			'body' => 'In this page you can add or edit an IP address for your node. The \'Hostname\' field describes the device that the corresponding IP address belongs to and must be the same for all the IP addresses of that device.'
 		),
+
+                'node_editor_cname_add' => array(
+                        'title' => 'Add CNAME',
+                        'body' => 'In this page you can add a CNAME for a \'Hostname\' on your node. CNAME is the new (alternative) name for the hostname (as defined under IP addresses). Both should be added without trailing bits. I.e. without .ctwug.za.net.'
+                ),
+                'node_editor_cname_edit' => array(
+                        'title' => 'Edit CNAME',
+                        'body' => 'In this page you can add or edit a CNAME address for a \'Hostname\' on your node.'
+                ),
 		
 		'node_editor_services_add' => array(
 			'title' => 'Add Service',

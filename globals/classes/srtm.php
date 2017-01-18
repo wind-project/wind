@@ -1,82 +1,59 @@
 <?php
 /*
  * WiND - Wireless Nodes Database
+ *
+ * Copyright (C) 2005 Nikolaos Nikalexis <winner@cube.gr>
  * 
- * Copyright (C) 2005-2014 	by WiND Contributors (see AUTHORS.txt)
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 dated June, 1991.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  */
 
-/**
- * Class to handle SRTM Data
- */
 class srtm {
 	
 	var $data_path;
 	
-	function __construct($data_path='') {
+	function srtm($data_path='') {
 		$this->data_path = $data_path;
 	}
 	
-        public static function get_filename($lat, $lon) {
-                $ll = srtm::get_lat_long_adjustments($lat, $lon);
-                //print_R($ll);
-                //always return filename with positive numbers (eg S-33 -> S33)
-                return $ll['lat_dir'] . sprintf("%02.0f", abs((integer)($lat+$ll['lat_adj'])))
-                  .$ll['lon_dir'].sprintf("%03.0f", abs((integer)($lon+$ll['lon_adj']))).'.hgt';
-        }
-
-        function get_lat_long_adjustments($lat,$lon) {
-          if ($lat < 0) {
-            $r['lat_dir'] = 'S';
-            $r['lat_adj'] = 1;
-          } else {
-            $r['lat_dir'] = 'N';
-            $r['lat_adj'] = 0;
-          }
-          if ($lon < 0) {
-            $r['lon_dir'] = 'W';
-            $r['lon_adj'] = 1;
-          } else {
-            $r['lon_dir'] = 'E';
-            if ($r['lat_dir'] == 'S') {
-              $r['lon_adj'] = -0.75;;
-            } else {
-              $r['lon_adj'] = 0;
-            }
-          }
-          return $r;
-        }
-
-        function get_elevation($lat, $lon, $round=TRUE) {
-
-		$filename = $this->data_path.$this->get_filename($lat,$lon);
-
-		if ($lat === '' || $lon === '' || !file_exists($filename)) return FALSE;
-
-		$file = fopen($filename, 'r');
-
-		$ll = $this->get_lat_long_adjustments($lat,$lon);
-		$lat_dir = $ll['lat_dir'];
-		$lat_adj = $ll['lat_adj'];
-		$lon_dir = $ll['lon_dir'];
-		$lon_adj = $ll['lon_adj'];
+	function get_elevation($lat, $lon, $round=TRUE) {
+		if ($lat < 0) {
+			$lat_dir = 'S';
+			$lat_adj = 1;
+		} else {
+			$lat_dir = 'N';
+			$lat_adj = 0;
+		}
+		if ($lon < 0) {
+			$lon_dir = 'W';
+			$lon_adj = 1;
+		} else {
+			$lon_dir = 'E';
+			$lon_adj = 0;
+		}
 		$y = $lat;
 		$x = $lon;
-
-		$offset = ( (integer)(($x - (integer)$x + $lon_adj) * 1200)
-			* 2 + (1200 - (integer)(($y - (integer)$y + $lat_adj) * 1200)) 
-			* 2402 );
+		
+		$filename = $this->data_path.$lat_dir.sprintf("%02.0f", (integer)(abs($lat)+$lat_adj)).$lon_dir.sprintf("%03.0f", (integer)(abs($lon)+$lon_adj)).'.hgt';
+		//print "$filename\n";
+		if ($lat === '' || $lon === '' || !file_exists($filename)) {
+			print "SRTM Data: $filename\n";
+			return FALSE;
+		}
+		
+		$file = fopen($filename, 'r');
+		$offset = ( (integer)(($x - (integer)$x + $lon_adj) * 1200) * 2 + (1200 - (integer)(($y - (integer)$y + $lat_adj) * 1200)) * 2402 );
 		fseek($file, $offset);
 		$h1 = bytes2int(strrev(fread($file, 2)));
 		$h2 = bytes2int(strrev(fread($file, 2)));
@@ -105,6 +82,7 @@ class srtm {
 }
 
 function bytes2int($val) {
+	if  ($val == "") { return 0; }
 	$t = unpack("s", $val);
 	$ret = $t[1];
 	return $ret;
