@@ -2,7 +2,11 @@ Wind
 ----
 
 WiND is a Web application targeting at [Wireless Community Networks](http://en.wikipedia.org/wiki/Wireless_community_network).
-It was created as a replacement for [NodeDB](http://www.nodedb.com/) by the members of [Athens Wireless Metropolitan Network](http://www.awmn.net/) located in Athens, Greece. It has evolved into much more as you can see below in the feature list.
+It was created by the members of [Athens Wireless Metropolitan Network](http://www.awmn.net/) located in Athens, Greece. 
+
+This is a fork of the orinal project and is being maintained by users from the following networks:
+ * [Cape Town Wireless User Group](http://www.ctwug.za.net) - Cape Town, South Africa
+ * [West Australian Wireless Freenet](http://www.wafreenet.org/) - Perth, Australia
 
 WiND is distributed under [GNU Affero General Public License v3](http://www.gnu.org/licenses/agpl-3.0.html) where each piece of code remains under the copyright of their respective author. Everyone can see the source code and everyone can contribute to it.
 
