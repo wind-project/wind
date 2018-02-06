@@ -95,7 +95,7 @@ class node_editor {
 		global $db;
 		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
 		$table_ip_ranges_v6->db_data(
-			'ip_ranges_v6.id, "" AS ip_range_v6, ipv6_node_repos.v6net AS v6net, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
+			'ip_ranges_v6.id, "" AS ip_range_v6, ip_ranges_v6.v6net AS v6net, ip_ranges_v6.v6prefix AS v6prefix, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
 			'ip_ranges_v6, ipv6_node_repos',
 			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.v6net_id = ipv6_node_repos.id',
 			"",
@@ -438,6 +438,7 @@ class node_editor {
 				$this->tpl['link_req_v6_cclass'] = make_ref('/node_editor/range_v6', array('node' => get('node')));
 				$this->tpl['link_req_dns_for'] = make_ref('/node_editor/dnszone', array('type' => 'forward', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_req_dns_rev'] = make_ref('/node_editor/dnszone', array('type' => 'reverse', 'node' => get('node'), 'zone' => 'add'));
+                                $this->tpl['link_req_dns_rev_v6'] = make_ref('/node_editor/dnszone', array('type' => 'reverse_v6', 'node' => get('node'), 'zone' => 'add'));
 				$this->tpl['link_nameserver_add'] = make_ref('/node_editor/dnsnameserver', array('node' => get('node'), 'nameserver' => 'add'));
 				$this->tpl['link_link_add'] = make_ref('/node_editor/link', array('node' => get('node'), 'link' => 'add'));
 				$this->tpl['link_subnet_add'] = make_ref('/node_editor/subnet', array('node' => get('node'), 'subnet' => 'add'));

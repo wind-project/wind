@@ -18,3 +18,4 @@
 {include file=generic/page-title.tpl title="`$lang.hostmaster_panel` > `$lang.dns_zones` (`$lang.db.schema`)"}
 {include file=generic/section-level3.tpl title="`$lang.zone_forward`" content=$form_zone_forward}
 {include file=generic/section-level3.tpl title="`$lang.zone_reverse`" content=$form_zone_reverse}
+{include file=generic/section-level3.tpl title="`$lang.zone_reverse_v6`" content=$form_zone_reverse_v6}

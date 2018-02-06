@@ -51,20 +51,22 @@ CREATE TABLE IF NOT EXISTS `dns_nameservers` (
   `node_id` int(10) unsigned NOT NULL default '0',
   `name` enum('ns0','ns1','ns2','ns3') NOT NULL default 'ns0',
   `ip` int(10) NOT NULL default '0',
+  `ipv6` varbinary(16) NOT NULL default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`name`,`node_id`),
   KEY `date_in` (`date_in`),
   KEY `node_id` (`node_id`),
   KEY `ip` (`ip`),
+  KEY `ipv6` (`ipv6`),
   KEY `status` (`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_zones` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
-  `type` enum('forward','reverse') NOT NULL default 'forward',
-  `name` varchar(30) NOT NULL default '',
+  `type` enum('forward','reverse','reverse_v6') NOT NULL default 'forward',
+  `name` varchar(74) NOT NULL default '',
   `node_id` int(10) unsigned default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   `info` text,
@@ -125,6 +127,8 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
   `v6net_id` int(10) unsigned NOT NULL default '0',
+  `v6net` varbinary(16) default '0',
+  `v6prefix` smallint(6) default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   `info` text,
   `delete_req` enum('Y','N') NOT NULL default 'N',
@@ -132,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
   KEY `unique_keys` (`node_id`),
   KEY `date_in` (`date_in`),
   KEY `v6net_id` (`v6net_id`),
+  KEY `v6net` (`v6net`)
   KEY `status` (`status`),
   KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -88,7 +88,7 @@ class ranges_search {
 		$form_search_ranges_v6 = $this->form_search_ranges_v6();
 		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
 		$table_ip_ranges_v6->db_data(
-			'ipv6_node_repos.v6net AS v6net, ip_ranges_v6.id AS v6net_id, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req' , 
+			'ip_ranges_v6.v6net AS v6net, ip_ranges_v6.id AS v6net_id, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req, ip_ranges_v6.node_id ' , 
 			'ip_ranges_v6, ipv6_node_repos ' ,
 			'ipv6_node_repos.id = ip_ranges_v6.v6net_id' , 
 			"ip_ranges_v6.id" ,

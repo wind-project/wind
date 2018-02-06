@@ -354,9 +354,20 @@ function resizeJPG($filename, $width, $height) {
 }
 
 function reverse_zone_from_ip($ip) {
-	global $vars;
+      	global $vars;
 	$ret = explode(".", $ip);
 	$ret = $ret[2].".".$ret[1].".".$ret[0].".".$vars['dns']['reverse_zone'];
+	return $ret;
+}
+
+function reverse_zone_from_ipv6($ipv6,$prefix) {
+        global $vars;
+    	$hex = unpack("H*hex", inet_pton($ipv6));
+	$str = strrev($hex['hex']);
+	$p = str_split($str);
+        $ret = join(".",$p);
+        $ret = substr($ret, (128-$prefix)/2);
+        $ret = $ret.".".$vars['dns']['reverse_zone_v6'];
 	return $ret;
 }
 
@@ -630,4 +641,20 @@ function include_map($element_id) {
 			
 			
 			</script>");
+}
+
+/**
+ * Returns string with IPv6 address
+ * @param $ipv6varbinary varbinary db formated IPv6 address
+ */
+function varbinary2ipv6number($ipv6varbinary) {
+    return inet_ntop($ipv6varbinary);
+}
+
+/**
+ * Returns varbinary db formated IPv6 address
+ * @param $ipv6varbinary string with IPv6 address
+ */
+function ipv6number2varbinary($ipv6string) {
+    return inet_pton($ipv6string);
 }

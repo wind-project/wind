@@ -17,7 +17,7 @@
  *}
 {include assign=range_delete file=generic/button.tpl class="btn-danger btn-sm" glyph=remove
 	content="`$lang.delete`" href=$link_range_delete confirm=TRUE}
-{include file=generic/page-title.tpl title="`$lang.ip_range_edit`" right="`$delete_link`"}
+{include file=generic/page-title.tpl title="`$lang.ip_range_v6_edit`" right="`$delete_link`"}
 
 {$form_range_v6}
 {include file=generic/section-level2.tpl title="`$lang.node_info`" content=$table_node_info}

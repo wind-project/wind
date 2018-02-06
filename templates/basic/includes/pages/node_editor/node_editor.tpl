@@ -72,7 +72,9 @@
 			class="btn-success btn-sm" glyph="envelope"}
 		{include assign="btn_req_rev" file="generic/button.tpl" href=$link_req_dns_rev content="`$lang.dnszone_request_reverse`"
 			class="btn-success btn-sm" glyph="envelope"}
-		{include file=generic/section-level3.tpl title="`$lang.dns_zones`" buttons="`$btn_req_for` `$btn_req_rev`" content=$table_dns}
+                {include assign="btn_req_rev_v6" file="generic/button.tpl" href=$link_req_dns_rev_v6 content="`$lang.dnszone_request_reverse_v6`"
+			class="btn-success btn-sm" glyph="envelope"}
+		{include file=generic/section-level3.tpl title="`$lang.dns_zones`" buttons="`$btn_req_for` `$btn_req_rev` `$btn_req_rev_v6`" content=$table_dns}
 		
 		{include assign="btn_add" file="generic/button.tpl" href=$link_nameserver_add content="`$lang.nameserver_add`"
 			class="btn-success btn-sm" glyph="plus-sign"}

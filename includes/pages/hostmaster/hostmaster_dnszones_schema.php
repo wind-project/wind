@@ -45,15 +45,26 @@ class hostmaster_dnszones_schema {
 		return $form_zone_reverse;
 	}
 
+        function form_zone_reverse_v6() {
+		global $vars;
+		$form_zone_reverse = new form(array('FORM_NAME' => 'form_zone_reverse_v6'));
+		$form_zone_reverse->data[0]['fullField'] = 'schema'; 
+		$form_zone_reverse->data[0]['Field'] = 'schema';
+		$form_zone_reverse->data[0]['Type'] = 'text';
+		$form_zone_reverse->data[0]['value'] = file_get_contents($vars['dns']['reverse_zone_schema_v6']);
+		return $form_zone_reverse;
+	}
+        
 	function output() {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name'])) return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 		global $construct, $vars, $main;
-		if (!file_exists($vars['dns']['forward_zone_schema']) || !file_exists($vars['dns']['reverse_zone_schema'])) {
+		if (!file_exists($vars['dns']['forward_zone_schema']) || !file_exists($vars['dns']['reverse_zone_schema']) || !file_exists($vars['dns']['reverse_zone_schema_v6'])) {
 			$main->message->set_fromlang('error', 'schema_files_missing');
 			return;
 		}
 		$this->tpl['form_zone_forward'] = $construct->form($this->form_zone_forward(), __FILE__);
 		$this->tpl['form_zone_reverse'] = $construct->form($this->form_zone_reverse(), __FILE__);
+                $this->tpl['form_zone_reverse_v6'] = $construct->form($this->form_zone_reverse_v6(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 
@@ -87,6 +98,21 @@ class hostmaster_dnszones_schema {
 		}
 	}
 
+        function output_onpost_form_zone_reverse_v6() {
+		global $db, $main, $vars;
+		$ret = FALSE;
+		
+		$f = fopen($vars['dns']['reverse_zone_schema_v6'], "w");
+		if (fwrite($f, $_POST['schema']) !== FALSE) $ret = TRUE;
+		fclose($f);
+		
+		if ($ret) {
+			$main->message->set_fromlang('info', 'edit_success', self_ref());
+		} else {
+			$main->message->set_fromlang('error', 'generic');		
+		}
+	}
+        
 }
 
 ?>
