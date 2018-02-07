@@ -99,8 +99,8 @@ class ranges_search {
                         if ($isFirst) {
                                 $isFirst = false;
                         } else {
-                                if ((string)inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
-                                        $table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+                                if ((string)@inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = @inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
                                 } else {
                                         $table_ip_ranges_v6->data[$key]['v6net'] = '::';
                                 }

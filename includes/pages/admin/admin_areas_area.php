@@ -34,7 +34,7 @@ class admin_areas_area {
 		if (get('area') != 'add') {
 			$form_area->data[3]['value'] = long2ip($form_area->data[3]['value']);
 			$form_area->data[4]['value'] = long2ip($form_area->data[4]['value']);
-                        $form_area->data[5]['value'] = inet_ntop($form_area->data[5]['value']); 
+                        $form_area->data[5]['value'] = @inet_ntop($form_area->data[5]['value']); 
 		}
 		$form_area->db_data_remove('areas__id');
 		return $form_area;
@@ -55,7 +55,7 @@ class admin_areas_area {
 		$ret = TRUE;
 		$_POST['areas__ip_start'] = ip2long($_POST['areas__ip_start']);
 		$_POST['areas__ip_end'] = ip2long($_POST['areas__ip_end']);
-	        $_POST['areas__v6net'] = inet_pton($_POST['areas__v6net']);
+	        $_POST['areas__v6net'] = @inet_pton($_POST['areas__v6net']);
 		$ret = $form_area->db_set(array(),
 								"areas", "id", get('area'));
 		if (!$ret) {
@@ -63,7 +63,7 @@ class admin_areas_area {
 		}
                 $dat = $db->get("areas.id AS id", "areas", "areas.name = '".$_POST['areas__name']."'", "" , "name ASC LIMIT 1");
                 $areaid = $dat[0]['id'];
-		$ipv6net = inet_ntop($_POST['areas__v6net']); 
+		$ipv6net = @inet_ntop($_POST['areas__v6net']); 
                 $ipv6net = explode(':',$ipv6net,4); 
                	if ($ipv6net{2} == '') { $ipv6net{2} = '0000'; }
 		$ipv6net{3} = '0000';
@@ -71,7 +71,7 @@ class admin_areas_area {
                         $ipv6net{3} = dechex($i);
                         $ipv6net{4} = ':'; 
                 	$ipv6net2 = implode(':',$ipv6net);
-                        $ret2 = 1;//$db->add("ipv6_node_repos", array("v6net" => inet_pton($ipv6net2), "area_id" => $areaid));
+                        $ret2 = 1;//$db->add("ipv6_node_repos", array("v6net" => @inet_pton($ipv6net2), "area_id" => $areaid));
 			if (!$ret2) {
                 		$main->message->set_fromlang('error', 'generic');		
                         }

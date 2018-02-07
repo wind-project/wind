@@ -105,8 +105,8 @@ class node_editor {
                         if ($isFirst) {
                                 $isFirst = false;
                         } else {
-                                if ((string)inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
-                                        $table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+                                if ((string)@inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = @inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
                                 } else {
                                         $table_ip_ranges_v6->data[$key]['v6net'] = '::';
                                 }
@@ -155,7 +155,7 @@ class node_editor {
 		foreach( (array) $table_nameservers->data as $key => $value) {
 			if ($key != 0) {
 				$table_nameservers->data[$key]['ip'] = long2ip($table_nameservers->data[$key]['ip']);
-                                $table_nameservers->data[$key]['ipv6'] = inet_ntop($table_nameservers->data[$key]['ipv6']);
+                                $table_nameservers->data[$key]['ipv6'] = @inet_ntop($table_nameservers->data[$key]['ipv6']);
 				$table_nameservers->data[$key]['name'] = strtolower(($table_nameservers->data[$key]['name']!=''?$table_nameservers->data[$key]['name'].".":"").$table_nameservers->data[$key]['nodes_name_ns'].".".$vars['dns']['ns_zone']);
 			}
 		}
@@ -279,7 +279,7 @@ class node_editor {
 		foreach( (array) $table_ipaddr->data as $key => $value) {
 			if ($key != 0) {
 				$table_ipaddr->data[$key]['ip'] = long2ip($table_ipaddr->data[$key]['ip']);
-                                $table_ipaddr->data[$key]['ipv6'] = inet_ntop($table_ipaddr->data[$key]['ipv6']);
+                                $table_ipaddr->data[$key]['ipv6'] = @inet_ntop($table_ipaddr->data[$key]['ipv6']);
 			}
 		}
 		$table_ipaddr->db_data_multichoice('ip_addresses', 'id');
@@ -311,7 +311,7 @@ class node_editor {
 			if ($key != 0) {
 				if ($table_services->data[$key]['ip']) 
 					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
-                                $table_services->data[$key]['ipv6'] = inet_ntop($table_services->data[$key]['ipv6']);
+                                $table_services->data[$key]['ipv6'] = @inet_ntop($table_services->data[$key]['ipv6']);
 				$table_services->info['EDIT'][$key] = make_ref('/node_editor/services', array("node" => intval(get('node')), "service" => $table_services->data[$key]['id']));
 			}
 		}

@@ -31,7 +31,7 @@ class hostmaster_dnsnameserver {
 		$form_nameserver->db_data('dns_nameservers.name, dns_nameservers.ip, dns_nameservers.ipv6, dns_nameservers.status');
 		$form_nameserver->db_data_values("dns_nameservers", "id", get('nameserver'));
 		$form_nameserver->data[1]['value'] = long2ip($form_nameserver->data[1]['value']);
-                $form_nameserver->data[2]['value'] = inet_ntop($form_nameserver->data[2]['value']);
+                $form_nameserver->data[2]['value'] = @inet_ntop($form_nameserver->data[2]['value']);
 		return $form_nameserver;
 	}
 	
@@ -161,7 +161,7 @@ class hostmaster_dnsnameserver {
 		global $construct, $main, $db;
 		$form_nameserver = $this->form_nameserver();
 		$_POST['dns_nameservers__ip'] = ip2long($_POST['dns_nameservers__ip']);
-                $_POST['dns_nameservers__ipv6'] = inet_pton($_POST['dns_nameservers__ipv6']);
+                $_POST['dns_nameservers__ipv6'] = @inet_pton($_POST['dns_nameservers__ipv6']);
 		$ret = $form_nameserver->db_set(array(),
 							"dns_nameservers", "id", get('nameserver'));
 		

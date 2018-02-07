@@ -46,7 +46,7 @@ class node_editor_dnszone {
 						"ip_ranges_v6",
 						"node_id = ".intval(get('node')));
 				foreach( (array) $ipr as $key => $value) {
-					$ipr[$key]['v6net'] = inet_ntop($value['v6net']);
+					$ipr[$key]['v6net'] = @inet_ntop($value['v6net']);
 					$ipr[$key]['value'] = reverse_zone_from_ipv6($ipr[$key]['v6net'],(int)$ipr[$key]['v6prefix']);
 					$ipr[$key]['output'] = $ipr[$key]['value']." [".$ipr[$key]['v6net'].'/'.$ipr[$key]['v6prefix']."]";
 				}

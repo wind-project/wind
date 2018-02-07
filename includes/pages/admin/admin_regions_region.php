@@ -33,7 +33,7 @@ class admin_regions_region {
 		if (get('region') != 'add') {
 			$form_region->data[2]['value'] = long2ip($form_region->data[2]['value']);
 			$form_region->data[3]['value'] = long2ip($form_region->data[3]['value']);
-                        $form_region->data[4]['value'] = inet_ntop($form_region->data[4]['value']);                     
+                        $form_region->data[4]['value'] = @inet_ntop($form_region->data[4]['value']);                     
 		}
 		$form_region->db_data_remove('regions__id');
 		return $form_region;
@@ -54,7 +54,7 @@ class admin_regions_region {
 		$ret = TRUE;
 		$_POST['regions__ip_start'] = ip2long($_POST['regions__ip_start']);
 		$_POST['regions__ip_end'] = ip2long($_POST['regions__ip_end']);
-                $_POST['regions__v6net'] = inet_pton($_POST['regions__v6net']);
+                $_POST['regions__v6net'] = @inet_pton($_POST['regions__v6net']);
 		$ret = $form_region->db_set(array(),
 								"regions", "id", get('region'));
 		

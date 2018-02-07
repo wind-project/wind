@@ -44,7 +44,7 @@ class admin_regions {
 			if (isset($table_regions->data[$i])) {
 				$table_regions->data[$i]['ip_start'] = long2ip($table_regions->data[$i]['ip_start']);
 				$table_regions->data[$i]['ip_end'] = long2ip($table_regions->data[$i]['ip_end']);
-                $table_regions->data[$i]['v6net'] = inet_ntop($table_regions->data[$i]['v6net']); 
+                $table_regions->data[$i]['v6net'] = @inet_ntop($table_regions->data[$i]['v6net']); 
 				$table_regions->info['EDIT'][$i] = make_ref('/admin/regions', array("region" => $table_regions->data[$i]['id']));
 			}
 		}

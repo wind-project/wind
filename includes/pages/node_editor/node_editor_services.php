@@ -43,7 +43,7 @@ class node_editor_services {
 						"ip_addresses.node_id = ".intval(get('node')),//." AND subnets.type = 'local'",
 						"subnets.ip_start ASC, ip_addresses.ip ASC, ip_addresses.ipv6 ASC");
 		foreach ((array) $ips as $key => $value) {
-			$ips[$key]['output'] = $ips[$key]['hostname']." [".long2ip($ips[$key]['ip'])." ".inet_ntop($ips[$key]['ipv6'])."]";
+			$ips[$key]['output'] = $ips[$key]['hostname']." [".long2ip($ips[$key]['ip'])." ".@inet_ntop($ips[$key]['ipv6'])."]";
 		}
 		$form_services->db_data_enum('nodes_services.ip_id', $ips);
 

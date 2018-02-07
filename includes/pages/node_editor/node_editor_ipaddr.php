@@ -32,7 +32,7 @@ class node_editor_ipaddr {
 		$form_ipaddr->db_data_values("ip_addresses", "id", get('ipaddr'));
 		if (get('ipaddr') != 'add') {
 			$form_ipaddr->data[1]['value'] = long2ip($form_ipaddr->data[1]['value']);
-                        $form_ipaddr->data[2]['value'] = inet_ntop($form_ipaddr->data[2]['value']);
+                        $form_ipaddr->data[2]['value'] = @inet_ntop($form_ipaddr->data[2]['value']);
 		}
 		return $form_ipaddr;
 	}
@@ -51,7 +51,7 @@ class node_editor_ipaddr {
 		$ipaddr = get('ipaddr');
 		$ret = TRUE;
 		$_POST['ip_addresses__ip'] = ip2long($_POST['ip_addresses__ip']);
-                $_POST['ip_addresses__ipv6'] = inet_pton($_POST['ip_addresses__ipv6']);
+                $_POST['ip_addresses__ipv6'] = @inet_pton($_POST['ip_addresses__ipv6']);
 		$ret = $form_ipaddr->db_set(array('node_id' => intval(get('node'))),
 								"ip_addresses", "id", $ipaddr);
 		

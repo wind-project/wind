@@ -362,7 +362,7 @@ function reverse_zone_from_ip($ip) {
 
 function reverse_zone_from_ipv6($ipv6,$prefix) {
         global $vars;
-    	$hex = unpack("H*hex", inet_pton($ipv6));
+    	$hex = unpack("H*hex", @inet_pton($ipv6));
 	$str = strrev($hex['hex']);
 	$p = str_split($str);
         $ret = join(".",$p);

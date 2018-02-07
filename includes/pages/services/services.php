@@ -53,7 +53,7 @@ class services {
 			if ($key != 0) { 
 				if ($table_services->data[$key]['ip']) {
 					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
-                                        $table_services->data[$key]['ipv6'] = inet_ntop($table_services->data[$key]['ipv6']);
+                                        $table_services->data[$key]['ipv6'] = @inet_ntop($table_services->data[$key]['ipv6']);
                                         $table_services->data[$key]['ip'] .= $table_services->data[$key]['ipv6'];
 					if ($table_services->data[$key]['protocol'] && $table_services->data[$key]['port']) {
 						$table_services->data[$key]['ip'] .= ' ('.$lang['db']['nodes_services__protocol-'.$table_services->data[$key]['protocol']].'/'.$table_services->data[$key]['port'].')';
