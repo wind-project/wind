@@ -37,13 +37,13 @@ class node_editor_services {
 
 		$form_services->db_data_enum('nodes_services.service_id', $db->get("id AS value, title AS output", "services", "", "", "title ASC"));
 
-		$ips = $db->get("ip_addresses.id AS value, ip_addresses.hostname AS hostname, ip_addresses.ip AS ip",
+		$ips = $db->get("ip_addresses.id AS value, ip_addresses.hostname AS hostname, ip_addresses.ip AS ip, ip_addresses.ipv6 AS ipv6",
 						"ip_addresses " .
-						"INNER JOIN subnets ON subnets.node_id = ip_addresses.node_id AND ip_addresses.ip <= subnets.ip_end AND ip_addresses.ip >= subnets.ip_start", 
-						"ip_addresses.node_id = ".intval(get('node'))." AND subnets.type = 'local'",
-						"subnets.ip_start ASC, ip_addresses.ip ASC");
+						"INNER JOIN subnets ON subnets.node_id = ip_addresses.node_id ",//AND ip_addresses.ip <= subnets.ip_end AND ip_addresses.ip >= subnets.ip_start", 
+						"ip_addresses.node_id = ".intval(get('node')),//." AND subnets.type = 'local'",
+						"subnets.ip_start ASC, ip_addresses.ip ASC, ip_addresses.ipv6 ASC");
 		foreach ((array) $ips as $key => $value) {
-			$ips[$key]['output'] = $ips[$key]['hostname']." [".long2ip($ips[$key]['ip'])."]";
+			$ips[$key]['output'] = $ips[$key]['hostname']." [".long2ip($ips[$key]['ip'])." ".inet_ntop($ips[$key]['ipv6'])."]";
 		}
 		$form_services->db_data_enum('nodes_services.ip_id', $ips);
 

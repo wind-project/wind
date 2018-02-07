@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `ip_addresses` (
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `hostname` varchar(50) NOT NULL default '',
   `ip` int(10) NOT NULL default '0',
+  `ipv6` varbinary(16) default '0',
   `mac` varchar(17) default NULL,
   `node_id` int(10) unsigned NOT NULL default '0',
   `type` enum('router','server','pc','wireless-bridge','voip','camera','other') NOT NULL default 'pc',
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `ip_addresses` (
   `info` text,
   PRIMARY KEY  (`id`),
   KEY `ip` (`ip`),
+  KEY `ipv6` (`ipv6`),
   KEY `node_id` (`node_id`),
   KEY `hostname` (`hostname`),
   KEY `type` (`type`)

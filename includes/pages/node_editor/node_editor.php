@@ -271,7 +271,7 @@ class node_editor {
 		global $construct, $db;
 		$table_ipaddr = new table(array('TABLE_NAME' => 'table_ipaddr', 'FORM_NAME' => 'table_ipaddr'));
 		$table_ipaddr->db_data(
-			'ip_addresses.id, ip_addresses.hostname, ip_addresses.ip, ip_addresses.mac, ip_addresses.type, ip_addresses.always_on',
+			'ip_addresses.id, ip_addresses.hostname, ip_addresses.ip, ip_addresses.ipv6, ip_addresses.mac, ip_addresses.type, ip_addresses.always_on',
 			'ip_addresses',
 			'ip_addresses.node_id = '.intval(get('node')),
 			"",
@@ -279,6 +279,7 @@ class node_editor {
 		foreach( (array) $table_ipaddr->data as $key => $value) {
 			if ($key != 0) {
 				$table_ipaddr->data[$key]['ip'] = long2ip($table_ipaddr->data[$key]['ip']);
+                                $table_ipaddr->data[$key]['ipv6'] = inet_ntop($table_ipaddr->data[$key]['ipv6']);
 			}
 		}
 		$table_ipaddr->db_data_multichoice('ip_addresses', 'id');
@@ -298,7 +299,7 @@ class node_editor {
 		global $construct, $db, $main;
 		$table_services = new table(array('TABLE_NAME' => 'table_services', 'FORM_NAME' => 'table_services'));
 		$table_services->db_data(
-			'services.title, nodes_services.id, nodes.id AS nodes__id, ip_addresses.ip, nodes_services.url, nodes_services.info, nodes_services.status, nodes_services.date_in',
+			'services.title, nodes_services.id, nodes.id AS nodes__id, ip_addresses.ip, ip_addresses.ipv6, nodes_services.url, nodes_services.info, nodes_services.status, nodes_services.date_in',
 			'nodes_services
 			LEFT JOIN nodes on nodes_services.node_id = nodes.id
 			LEFT JOIN services on nodes_services.service_id = services.id
@@ -310,6 +311,7 @@ class node_editor {
 			if ($key != 0) {
 				if ($table_services->data[$key]['ip']) 
 					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
+                                $table_services->data[$key]['ipv6'] = inet_ntop($table_services->data[$key]['ipv6']);
 				$table_services->info['EDIT'][$key] = make_ref('/node_editor/services', array("node" => intval(get('node')), "service" => $table_services->data[$key]['id']));
 			}
 		}
