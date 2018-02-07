@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//if (file_exists(ROOT_PATH."/install")) {
-//	die("WiND error: Please delete \"install/\" folder if you have completed installation ...");
-//}
+if (file_exists(ROOT_PATH."/install")) {
+	die("WiND error: Please delete \"install/\" folder if you have completed installation ...");
+}
 if (!file_exists(ROOT_PATH."config/config.php")) {
 	die("WiND error: Please make config/config.php file ...");
 }
