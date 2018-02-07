@@ -72,7 +72,7 @@ if ($conf['zone_type'] == 'forward') {
                         $replace['NS-SUBDOMAIN'] .= $ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']." A ".long2ip($ret['ip'])."\n";
                 }
                 if ($ret['ipv6'] != '0' ) {
-                        $replace['NS-SUBDOMAIN'] .= $ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']." AAAA ".varbinary2ipv6number($ret['ipv6'])."\n";
+                        $replace['NS-SUBDOMAIN'] .= $ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']." AAAA ".inet_ntop($ret['ipv6'])."\n";
                 }                
                 if ($ret['ns_num'] == 'ns0') {
                         $replace['NS-SUBDOMAIN'] .= $ret['name_ns'].$conf['ns_domain']." CNAME ".$ret['ns_num'].".".$ret['name_ns'].$conf['ns_domain']."\n";	

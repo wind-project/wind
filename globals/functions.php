@@ -642,19 +642,3 @@ function include_map($element_id) {
 			
 			</script>");
 }
-
-/**
- * Returns string with IPv6 address
- * @param $ipv6varbinary varbinary db formated IPv6 address
- */
-function varbinary2ipv6number($ipv6varbinary) {
-    return inet_ntop($ipv6varbinary);
-}
-
-/**
- * Returns varbinary db formated IPv6 address
- * @param $ipv6varbinary string with IPv6 address
- */
-function ipv6number2varbinary($ipv6string) {
-    return inet_pton($ipv6string);
-}

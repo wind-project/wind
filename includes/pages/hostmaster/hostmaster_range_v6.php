@@ -31,7 +31,7 @@ class hostmaster_range_v6 {
 		$form_range_v6->db_data('ip_ranges_v6.v6net, ip_ranges_v6.v6prefix, ip_ranges_v6.info, ip_ranges_v6.status');
 		$form_range_v6->db_data_values("ip_ranges_v6", "id", get('v6net_id'));
 		$tmp = $db->get('users.email, users_nodes.owner', 'users, users_nodes, ip_ranges_v6', "users_nodes.user_id = users.id AND users_nodes.node_id = ip_ranges_v6.node_id AND ip_ranges_v6.id = '".get("v6net_id")."'");
-                $form_range_v6->data[0]['value'] = varbinary2ipv6number($form_range_v6->data[0]['value']);
+                $form_range_v6->data[0]['value'] = inet_ntop($form_range_v6->data[0]['value']);
 		if (!isset($form_range->info['email_all'])) $form_range_v6->info['email_all']= '';
 		if (!isset($form_range->info['email_owner'])) $form_range_v6->info['email_owner'] = '';
 		foreach( (array) $tmp as $key => $value) {
@@ -136,7 +136,7 @@ class hostmaster_range_v6 {
 			"ip_ranges_v6.date_in ASC");
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
 			if ($key != 0) {
-				$table_ip_ranges_v6->data[$key]['v6net'] = varbinary2ipv6number($table_ip_ranges_v6->data[$key]['v6net']);
+				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
 			}
 		}
 		//$table_ip_ranges_v6->db_data_remove('');
@@ -179,7 +179,7 @@ class hostmaster_range_v6 {
 	function output_onpost_form_range_v6() {
 		global $construct, $main, $db;
 		$form_range_v6 = $this->form_range_v6();
-                $_POST['ip_ranges_v6__v6net'] = ipv6number2varbinary($_POST['ip_ranges_v6__v6net']);
+                $_POST['ip_ranges_v6__v6net'] = inet_pton($_POST['ip_ranges_v6__v6net']);
 		$range_v6 = get('v6net_id');
 		$ret = TRUE;
 		$ret = $form_range_v6->db_set(array(), "ip_ranges_v6", "id", $range_v6);

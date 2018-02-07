@@ -91,7 +91,7 @@ class nodes_view {
 			"ip_ranges_v6.date_in ASC");
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
 			if ($key != 0) {
-				$table_ip_ranges_v6->data[$key]['v6net'] = varbinary2ipv6number($table_ip_ranges_v6->data[$key]['v6net']);
+				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
 			}
 		}
 		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');

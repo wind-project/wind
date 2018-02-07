@@ -139,6 +139,7 @@ $lang = array(
 	'change' => "Αλλαγή",
 	'submit' => "OK",
 	'cancel' => 'Άκυρο',
+        'empty' => 'Κενό',
 	'add' => "Προσθήκη",
 	'remove' => "Αφαίρεση",
 	'update' => "Ανανέωση",

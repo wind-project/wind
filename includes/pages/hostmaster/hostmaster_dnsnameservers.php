@@ -38,11 +38,11 @@ class hostmaster_dnsnameservers {
 	function table_nameservers() {
 		global $construct, $db, $vars;
 		if (isset($_POST['dns_nameservers__ip'])) $_POST['dns_nameservers__ip'] = (is_ip($_POST['dns_nameservers__ip'])?ip2long($_POST['dns_nameservers__ip']):'');
-                if (isset($_POST['dns_nameservers__ipv6'])) $_POST['dns_nameservers__ipv6'] = (is_ip($_POST['dns_nameservers__ip'])?ipv6number2varbinary($_POST['dns_nameservers__ipv6']):'');
+                if (isset($_POST['dns_nameservers__ipv6'])) $_POST['dns_nameservers__ipv6'] = (is_ip($_POST['dns_nameservers__ip'])?inet_pton($_POST['dns_nameservers__ipv6']):'');
 		if (isset($_GET['form_search_nameservers_search'])) {
 			$t = unserialize(stripslashes($_GET['form_search_nameservers_search']));
 			if (isset($t['dns_nameservers__ip'])) $t['dns_nameservers__ip'] = (is_ip($t['dns_nameservers__ip'])?ip2long($t['dns_nameservers__ip']):'');
-                        if (isset($t['dns_nameservers__ipv6'])) $t['dns_nameservers__ipv6'] = (is_ip($t['dns_nameservers__ipv6'])?ipv6number2varbinary($t['dns_nameservers__ipv6']):'');
+                        if (isset($t['dns_nameservers__ipv6'])) $t['dns_nameservers__ipv6'] = (is_ip($t['dns_nameservers__ipv6'])?inet_pton($t['dns_nameservers__ipv6']):'');
 			$_GET['form_search_nameservers_search'] = addslashes(serialize($t));
 		}
 
@@ -62,7 +62,7 @@ class hostmaster_dnsnameservers {
 		foreach( (array) $table_nameservers->data as $key => $value) {
 			if ($key != 0) {
 				$table_nameservers->data[$key]['ip'] = long2ip($table_nameservers->data[$key]['ip']);
-                                $table_nameservers->data[$key]['ipv6'] = varbinary2ipv6number($table_nameservers->data[$key]['ipv6']);
+                                $table_nameservers->data[$key]['ipv6'] = inet_ntop($table_nameservers->data[$key]['ipv6']);
 				$table_nameservers->data[$key]['name'] = strtolower(($table_nameservers->data[$key]['name']!=''?$table_nameservers->data[$key]['name'].".":"").$table_nameservers->data[$key]['name_ns'].".".$vars['dns']['ns_zone']);
 			}
 		}

@@ -82,6 +82,11 @@ $tb->addColumn('v6net_id', 'int', array(
 		'not_null' => true,
 		'default' => '0',
 		'unique' => true));
+$tb->newColumn('v6net', 'varbinary(16)', array(
+		'default' => '0',
+		'unique' => true));
+$tb->newColumn('v6prefix', 'smallint', array(
+		'default' => '0'));
 $tb->addColumn('status', "enum('waiting','active','pending','rejected','invalid')", array(
 		'not_null' => true,
 		'default' => "'waiting'"));
@@ -114,6 +119,18 @@ $tb->addColumn('changemenu', "enum('routerOS version upgrade/downgrade','groups'
 $tb->addColumn('reason', "enum('other','bug fix','critical-problem','imporovement','termination')", array(
 		'not_null' => true));
 $tb->addColumn('comment', 'text');
+
+// MODIFY dns_zones
+$update->modifyColumn('dns_zones', 'name', "varchar(74)", array(
+		'not_null' => true,
+		'default' => "''"));
+$update->modifyColumn('dns_zones', 'type', "enum('forward', 'reverse', 'reverse_v6')", array(
+		'not_null' => true,
+		'default' => "'forward'"));
+
+// MODIFY dns_nameservers
+$update->addColumn('dns_nameservers', 'ipv6', "varbinary(16)", array(
+		'default' => '0'));
 
 // MODIFY areas
 $update->newColumn('areas', 'v6net', 'varbinary(16)', array(
