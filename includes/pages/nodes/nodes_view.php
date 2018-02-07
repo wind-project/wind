@@ -89,9 +89,16 @@ class nodes_view {
 			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.v6net_id = ipv6_node_repos.id',
 			"",
 			"ip_ranges_v6.date_in ASC");
+                $isFirst = true;
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
-			if ($key != 0) {
-				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+			if ($isFirst) {
+                                $isFirst = false;
+                        } else {
+                                if ((string)inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+                                } else {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = '::';
+                                }
 			}
 		}
 		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');
