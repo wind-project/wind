@@ -140,7 +140,7 @@ class node_editor {
 		global $db, $vars;
 		$table_nameservers = new table(array('TABLE_NAME' => 'table_nameservers', 'FORM_NAME' => 'table_nameservers'));
 		$table_nameservers->db_data(
-			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns',
+			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.ipv6, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns',
 			'dns_nameservers, nodes',
 			"nodes.id = ".intval(get('node'))." AND dns_nameservers.node_id = nodes.id",
 			"",
@@ -148,6 +148,7 @@ class node_editor {
 		foreach( (array) $table_nameservers->data as $key => $value) {
 			if ($key != 0) {
 				$table_nameservers->data[$key]['ip'] = long2ip($table_nameservers->data[$key]['ip']);
+                                $table_nameservers->data[$key]['ipv6'] = inet_ntop($table_nameservers->data[$key]['ipv6']);
 				$table_nameservers->data[$key]['name'] = strtolower(($table_nameservers->data[$key]['name']!=''?$table_nameservers->data[$key]['name'].".":"").$table_nameservers->data[$key]['nodes_name_ns'].".".$vars['dns']['ns_zone']);
 			}
 		}
