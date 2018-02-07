@@ -3,6 +3,10 @@
 /files
 /templates/_compiled
 
+/globals/common.php
+/tools/dnszones-poller/*.conf
+/tools/dnszones-poller/*.schema
+
 # Exclude Eclipse build files
 .project
 .settings/

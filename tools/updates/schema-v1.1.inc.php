@@ -24,6 +24,7 @@ $update = new DBUpdateDescriptor(new SchemaVersion(1,0), new SchemaVersion(1,1))
  *         IPv6 database changes          */
 
 // TABLE ipv6_node_repos
+/*
 $tb = $update->newTable('ipv6_node_repos');
 $tb->addColumn('id', 'int unsigned', array(
 		'not_null' => true,
@@ -43,8 +44,9 @@ $tb->addColumn('v6net', 'varbinary(16)', array(
 		'not_null' => true,
 		'default' => '0',
 		'unique' => true));
-
+*/
 // TABLE ipv6_area_repos
+/*
 $tb = $update->newTable('ipv6_area_repos');
 $tb->addColumn('id', 'int unsigned', array(
 		'not_null' => true,
@@ -64,7 +66,7 @@ $tb->addColumn('v6net', 'varbinary(16)', array(
 		'not_null' => true,
 		'default' => '0',
 		'unique' => true));
-
+*/
 // TABLE ip_ranges_v6
 $tb = $update->newTable('ip_ranges_v6');
 $tb->addColumn('id', 'int unsigned', array(

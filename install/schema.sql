@@ -15,34 +15,14 @@ CREATE TABLE IF NOT EXISTS `areas` (
   `info` text,
   `v6net` varbinary(16) default '0',
   `v6prefix` smallint(6) default '0',
+  `ipv6_end` varbinary(16) default '0',
   PRIMARY KEY  (`id`),
   KEY `region_id` (`region_id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
   KEY `ip_end` (`ip_end`),
-  KEY `v6net` (`v6net`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `ipv6_node_repos` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `area_id` int(10) unsigned NOT NULL default '0',
-  `node_id` int(10) unsigned NOT NULL default '0',
-  `v6net` varbinary(16) default '0',
-  PRIMARY KEY (`id`),
-  KEY `aread_id` (`area_id`),
-  KEY `node_id` (`node_id`),
-  KEY `v6net` (`v6net`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `ipv6_area_repos` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `region_id` int(10) unsigned NOT NULL,
-  `area_id` int(10) unsigned default '0',
-  `v6net` varbinary(16) default '0',
-  PRIMARY KEY (`id`),
-  KEY `region_id` (`region_id`),
-  KEY `area_id` (`area_id`),
-  KEY `v6net` (`v6net`)
+  KEY `v6net` (`v6net`),
+  KEY `ipv6_end` (`ipv6_end`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_nameservers` (
@@ -131,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
   `v6net_id` int(10) unsigned NOT NULL default '0',
   `v6net` varbinary(16) default '0',
   `v6prefix` smallint(6) default '0',
+  `ipv6_end` varbinary(16) default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   `info` text,
   `delete_req` enum('Y','N') NOT NULL default 'N',
@@ -138,7 +119,8 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
   KEY `unique_keys` (`node_id`),
   KEY `date_in` (`date_in`),
   KEY `v6net_id` (`v6net_id`),
-  KEY `v6net` (`v6net`)
+  KEY `v6net` (`v6net`),
+  KEY `ipv6_end` (`ipv6_end`),
   KEY `status` (`status`),
   KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -229,12 +211,14 @@ CREATE TABLE IF NOT EXISTS `regions` (
   `ip_end` int(10) NOT NULL default '0',
   `v6net` varbinary(16) default '0',
   `v6prefix` smallint(6) default '0',
+  `ipv6_end` varbinary(16) default '0',
   `info` text,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
   KEY `ip_end` (`ip_end`),
-  KEY `v6net` (`v6net`)
+  KEY `v6net` (`v6net`),
+  KEY `ipv6_end` (`ipv6_end`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `rights` (

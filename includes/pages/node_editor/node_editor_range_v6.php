@@ -32,9 +32,11 @@ class node_editor_range_v6 {
 					"nodes.id = ".intval(get('node')));
 		$area_id = $data2[0]['area_id'];
 		
-                $data3 = $db->get("ipv6_node_repos.v6net AS v6net, ipv6_node_repos.id AS id",
-                                        "ipv6_node_repos",
-                                        "ipv6_node_repos.area_id = '".$area_id."' and ipv6_node_repos.node_id = '0'", "" , "id ASC LIMIT 1");
+                $data3 = $db->get("ip_ranges_v6.v6net AS v6net, ip_ranges_v6.id AS id",
+                                        "ip_ranges_v6",
+                                        "",//"ipv6_node_repos.area_id = '".$area_id."' and ipv6_node_repos.node_id = '0'",
+                                        "",
+                                        "id ASC LIMIT 1");
 
 		$ret['id'] = $data3[0]['id'];
 		return $ret;
@@ -68,9 +70,9 @@ class node_editor_range_v6 {
 		$status = "waiting";
 		$ret = TRUE;
 		$ret = $form_getrange_v6->db_set(array("node_id" => intval(get('node')), "v6net_id" => $nextr['id'], "status" => $status));
-		$ret2 = $db->set("ipv6_node_repos", array('node_id' => intval(get('node'))), 'id = '.$nextr['id']);
+		$ret2 = 1;//$db->set("ipv6_node_repos", array('node_id' => intval(get('node'))), 'id = '.$nextr['id']);
 		if ($ret && $ret2) {
-                        $main->message->set_fromlang('info', 'request_range_success', make_ref('/node_editor', array("node" => get('node'))));
+                        $main->message->set_fromlang('info', 'request_range_v6_success', make_ref('/node_editor', array("node" => get('node'))));
 		} else {
 			$main->message->set_fromlang('error', 'generic');		
 		}

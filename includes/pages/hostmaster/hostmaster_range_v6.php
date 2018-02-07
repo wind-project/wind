@@ -129,9 +129,9 @@ class hostmaster_range_v6 {
 		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
 		$table_ip_ranges_v6->db_data(
 			'ip_ranges_v6.v6net AS v6net, ip_ranges_v6.v6prefix AS v6prefix, ip_ranges_v6.date_in, ip_ranges_v6.status',
-			'ip_ranges_v6, ipv6_node_repos ' .
+			'ip_ranges_v6' .
 			'',
-			"ip_ranges_v6.id = '".get('v6net_id')."' and ipv6_node_repos.id = ip_ranges_v6.v6net_id",
+			"ip_ranges_v6.id = '".get('v6net_id')."'",
 			"",
 			"ip_ranges_v6.date_in ASC");
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
@@ -150,16 +150,16 @@ class hostmaster_range_v6 {
 		if(get('action') === "delete")
 		{
                         $ret1->db_data(
-			'ipv6_node_repos.id AS id',
-			'ip_ranges_v6, ipv6_node_repos ' .
+			'ip_ranges_v6.id AS id',
+			'ip_ranges_v6 ' .
 			'',
-			"ip_ranges_v6.id = '".get('v6net_id')."' and ipv6_node_repos.node_id = ip_ranges_v6.node_id",
+			"ip_ranges_v6.id = '".get('v6net_id')."' ",
 			"",
 			"ASC");
                         
 			$ret = $db->del("ip_ranges_v6", '', "id = '".get('v6net_id')."'");
                         $ret2 = TRUE;
-                        $ret2 = $ret2 && $db->set("ipv6_node_repos", array('node_id' => '0'), "id = '".$ret1[0]['v6net_id']."'");
+                        //$ret2 = $ret2 && $db->set("ipv6_node_repos", array('node_id' => '0'), "id = '".$ret1[0]['v6net_id']."'");
                         if ($ret && $ret2) {
                                 $main->message->set_fromlang('info', 'delete_success', make_ref('/hostmaster/ranges_v6'));
 			} else {

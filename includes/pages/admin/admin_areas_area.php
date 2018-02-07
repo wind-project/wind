@@ -71,7 +71,7 @@ class admin_areas_area {
                         $ipv6net{3} = dechex($i);
                         $ipv6net{4} = ':'; 
                 	$ipv6net2 = implode(':',$ipv6net);
-                        $ret2 = $db->add("ipv6_node_repos", array("v6net" => inet_pton($ipv6net2), "area_id" => $areaid));
+                        $ret2 = 1;//$db->add("ipv6_node_repos", array("v6net" => inet_pton($ipv6net2), "area_id" => $areaid));
 			if (!$ret2) {
                 		$main->message->set_fromlang('error', 'generic');		
                         }
