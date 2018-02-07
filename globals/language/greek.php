@@ -278,6 +278,7 @@ $lang = array(
 		'ip_ranges_v6__status-rejected' => 'Απορριφθέν',
 		'ip_ranges_v6__status-invalid' => 'Άκυρο',
 		'ip_ranges_v6__info' => 'Πληροφορίες IPv6',
+                'ip_ranges_v6__node_id' => 'Κόμβος',
 		'ip_ranges_v6__delete_req' => 'Αίτηση διαγραφής',
 		'ip_ranges_v6__delete_req-Y' => 'ΝΑΙ',
 		'ip_ranges_v6__delete_req-N' => 'ΟΧΙ',
