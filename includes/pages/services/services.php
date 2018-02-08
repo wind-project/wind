@@ -49,7 +49,7 @@ class services {
 			'',
 			"nodes_services.date_in DESC");
 		$table_services->db_data_search($form_search_services);
-		foreach( (array) $table_services->data as $key => $value) { echo $key;
+		foreach( (array) $table_services->data as $key => $value) { 
 			if ($key != 0) { 
 				if ($table_services->data[$key]['ip']) {
 					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
