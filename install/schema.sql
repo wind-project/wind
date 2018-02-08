@@ -250,6 +250,20 @@ CREATE TABLE IF NOT EXISTS `subnets` (
   KEY `node_id` (`node_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `subnets_v6` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `date_in` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `node_id` int(10) UNSIGNED DEFAULT NULL,
+  `v6net` varbinary(16) DEFAULT '0',
+  `v6prefix` smallint(6) DEFAULT '0',
+  `ipv6_end` varbinary(16) DEFAULT '0',
+  `type` enum('local','link','client') NOT NULL DEFAULT 'local',
+  `link_id` int(10) UNSIGNED DEFAULT NULL,
+  `client_node_id` int(10) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `node_id` (`node_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;  
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
