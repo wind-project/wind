@@ -57,7 +57,12 @@ $config = array(
                 'reverse_zone_schema' => ROOT_PATH.'./tools/dnszones-poller/10.in-addr.arpa.schema',
                 'reverse_zone_schema_v6' => ROOT_PATH.'./tools/dnszones-poller/ip6.arpa.schema',
 		),
-	
+
+    	'ipv6_ula' => array( // IPv6 ULA network for auto IPv4 to IPv6 /32 network conversion
+                'enabled' => FALSE,
+		'v6net' => 'fdd4:9370:',
+		),
+    
 	'folders' => array(
 		'photos' => ROOT_PATH.'files/photos/'
 		),

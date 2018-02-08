@@ -49,10 +49,12 @@ class admin_regions_region {
 	}
 
 	function output_onpost_form_region() {
-		global $construct, $main, $db;
+		global $vars, $construct, $main, $db;
 		$form_region = $this->form_region();
 		$region = get('region');
 		$ret = TRUE;
+                if (($_POST['regions__v6net'] == '')&&($vars['ipv6_ula']['enabled']))
+                        $_POST['regions__v6net']=ipv6_from_ip($_POST['regions__ip_start']);
 		$_POST['regions__ip_start'] = ip2long($_POST['regions__ip_start']);
 		$_POST['regions__ip_end'] = ip2long($_POST['regions__ip_end']);
                 $ipv6_calc = ipv6_calc($_POST['regions__v6net'],$_POST['regions__v6prefix']);

@@ -272,6 +272,7 @@ $lang = array(
                 'ip_ranges_v6__date_in' => 'Ημερομηνία',
 		'ip_ranges_v6__v6net' => 'IPv6 Net',
                 'ip_ranges_v6__v6prefix' => 'IPv6 Prefix',
+                'ip_ranges_v6__ipv6_end' => 'IPv6 μέχρι',
 		'ip_ranges_v6__ip_end' => 'Μέχρι',
 		'ip_ranges_v6__status' => 'Κατάσταση',
 		'ip_ranges_v6__status-waiting' => 'Προς έλεγχο',
