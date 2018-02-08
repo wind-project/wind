@@ -241,6 +241,7 @@ $lang = array(
 		'areas__ip_end' => 'IP μέχρι',
                 'areas__v6net' => 'Δίκτυο IPv6',
                 'areas__v6prefix' => 'IPv6 Prefix',
+                'areas__ipv6_end' => 'IPv6 μέχρι',
 		'areas__info' => 'Πληροφορίες',
 
 		'regions__id' => 'Νομαρχία',
@@ -249,6 +250,7 @@ $lang = array(
 		'regions__ip_end' => 'IP μέχρι',
                 'regions__v6net' => 'Δίκτυο IPv6',
                 'regions__v6prefix' => 'IPv6 Prefix',
+                'regions__ipv6_end' => 'IPv6 μέχρι',
 		'regions__info' => 'Πληροφορίες',
 
 		'ip_ranges__date_in' => 'Ημερομηνία',

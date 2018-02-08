@@ -28,13 +28,14 @@ class admin_areas_area {
 	function form_area() {
 		global $db, $vars;
 		$form_area = new form(array('FORM_NAME' => 'form_area'));
-		$form_area->db_data('areas.id, areas.region_id, areas.name, areas.ip_start, areas.ip_end, areas.v6net, areas.v6prefix, areas.info');
+		$form_area->db_data('areas.id, areas.region_id, areas.name, areas.ip_start, areas.ip_end, areas.v6net, areas.v6prefix, areas.ipv6_end, areas.info');
 		$form_area->db_data_enum('areas.region_id', $db->get("id AS value, name AS output", "regions"));
 		$form_area->db_data_values("areas", "id", get('area'));
 		if (get('area') != 'add') {
 			$form_area->data[3]['value'] = long2ip($form_area->data[3]['value']);
 			$form_area->data[4]['value'] = long2ip($form_area->data[4]['value']);
-                        $form_area->data[5]['value'] = @inet_ntop($form_area->data[5]['value']); 
+                        $form_area->data[5]['value'] = @inet_ntop($form_area->data[5]['value']);
+                        $form_area->data[7]['value'] = @inet_ntop($form_area->data[7]['value']);
 		}
 		$form_area->db_data_remove('areas__id');
 		return $form_area;
@@ -55,7 +56,9 @@ class admin_areas_area {
 		$ret = TRUE;
 		$_POST['areas__ip_start'] = ip2long($_POST['areas__ip_start']);
 		$_POST['areas__ip_end'] = ip2long($_POST['areas__ip_end']);
-	        $_POST['areas__v6net'] = @inet_pton($_POST['areas__v6net']);
+                $ipv6_calc = ipv6_calc($_POST['areas__v6net'],$_POST['areas__v6prefix']);
+                $_POST['areas__v6net'] = @inet_pton($ipv6_calc['ipv6_start']);
+                $_POST['areas__ipv6_end'] = @inet_pton($ipv6_calc['ipv6_end']);
 		$ret = $form_area->db_set(array(),
 								"areas", "id", get('area'));
 		if (!$ret) {
