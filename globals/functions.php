@@ -371,6 +371,27 @@ function reverse_zone_from_ipv6($ipv6,$prefix) {
 	return $ret;
 }
 
+function ipv6_calc($address,$len) {
+    $calc = new IPV6SubnetCalculator();
+
+    if ($calc->testValidAddress($address))
+    {
+        $rangedata = $calc->getAddressRange($address, $len);
+        $ret = array(
+            'abbr_addr' => $calc->abbreviateAddress($address), // Abbreviated Address 
+            'unabbr_addr' => $calc->unabbreviateAddress($address), //Unabbreviated Address
+            'num_addr' => $calc->getInterfaceCount($len), // Number of IPs
+            'ipv6_start' => $rangedata['start_address'], // Start IP
+            'ipv6_end' => $rangedata['end_address'], // End IP
+            'prefix_addr' => $rangedata['prefix_address'] // Prefix Address
+        );
+		return $ret;
+    } else {
+        $ret = array('That is not a valid IPv6 Address');
+    }
+    die(json_encode($ret));
+}
+
 function is8bit($str) {
 	for($i=0; $i <= strlen($str); $i++)
 		if(ord($str{$i}) >> 7)   
