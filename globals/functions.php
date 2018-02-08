@@ -385,7 +385,7 @@ function ipv6_calc($address,$len) {
             'ipv6_end' => $rangedata['end_address'], // End IP
             'prefix_addr' => $rangedata['prefix_address'] // Prefix Address
         );
-		return $ret;
+	return $ret;
     } else {
         $ret = array('That is not a valid IPv6 Address');
     }
