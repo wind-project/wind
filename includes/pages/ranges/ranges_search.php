@@ -88,11 +88,11 @@ class ranges_search {
 		$form_search_ranges_v6 = $this->form_search_ranges_v6();
 		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
 		$table_ip_ranges_v6->db_data(
-			'ip_ranges_v6.v6net AS v6net, ip_ranges_v6.id AS v6net_id, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req, ip_ranges_v6.node_id ' , 
-			'ip_ranges_v6 ' ,
+			'ip_ranges_v6.v6net AS v6net, ip_ranges_v6.v6prefix AS v6prefix, ip_ranges_v6.date_in, ip_ranges_v6.status, nodes.name AS nodes__name, nodes.id AS nodes__id ' , 
+			'ip_ranges_v6 LEFT JOIN nodes ON ip_ranges_v6.node_id = nodes.id' ,
 			'' , 
 			"ip_ranges_v6.id" ,
-			"ip_ranges_v6.date_in DESC, ip_ranges_v6.status ASC");
+			"ip_ranges_v6.status ASC, ip_ranges_v6.v6net ASC");
 		$table_ip_ranges_v6->db_data_search($form_search_ranges_v6);
                 $isFirst = true;
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
@@ -104,13 +104,13 @@ class ranges_search {
                                 } else {
                                         $table_ip_ranges_v6->data[$key]['v6net'] = '::';
                                 }
-                                $table_ip_ranges_v6->info['EDIT'][$key] = make_ref('/nodes', array("node" => $table_ip_ranges_v6->data[$key]['node_id']));
-                                $table_ip_ranges_v6->data[$key]['node_id'] = " (#".$table_ip_ranges_v6->data[$key]['node_id'].")";
+                                $table_ip_ranges_v6->data[$key]['nodes__name'] .= " (#".$table_ip_ranges_v6->data[$key]['nodes__id'].")";
+				$table_ip_ranges_v6->info['EDIT'][$key] = make_ref('/nodes', array("node" => $table_ip_ranges_v6->data[$key]['nodes__id']));
                         }
 		}
-                $table_ip_ranges_v6->info['EDIT_COLUMN'] = 'node_id';
-		$table_ip_ranges_v6->db_data_remove('v6net_id');
-		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status', 'ip_ranges_v6__delete_req');
+                $table_ip_ranges_v6->info['EDIT_COLUMN'] = 'nodes__name';
+		$table_ip_ranges_v6->db_data_remove('nodes__id');
+		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status');
 		return $table_ip_ranges_v6;
 	}
         
