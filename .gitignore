@@ -2,6 +2,8 @@
 /config/
 /files
 /templates/_compiled
+/tools/update.php
+/tools/updates/*
 
 /globals/common.php
 /tools/dnszones-poller/*.conf
