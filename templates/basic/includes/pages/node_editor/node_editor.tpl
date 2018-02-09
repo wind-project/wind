@@ -21,10 +21,10 @@
 	{else}
 	{include assign=help file=generic/help.tpl help=node_editor}
 	{assign var=t value="`$lang.node` $node_name (#$node_id)"|escape}
-	{include assign="view_link" file="generic/button.tpl" class="btn-default btn-sm" glyph=eye-open 
+	{include assign="view_link" file="generic/button.tpl" class="btn-default btn-sm" glyph=eye-open
 		href=$link_node_view content="`$lang.node_view`"}
 	{if $link_node_delete}
-		{include assign="delete_link" file="generic/button.tpl" href=$link_node_delete 
+		{include assign="delete_link" file="generic/button.tpl" href=$link_node_delete
 			class="btn-danger btn-sm" glyph=remove content="`$lang.node_delete`" confirm=TRUE}
 	{/if}
 {/if}
@@ -40,11 +40,11 @@
    		<li><a href="#tab-nodesettingschanges" data-toggle="tab">{$lang.nodesettingschanges}</a></li>
 		{/if}
 	</ul>
- 
+
 <div class="tab-content">
 <div class="tab-pane active" id="tab-info">
 
-	{include assign="picker" class="btn-info btn-sm" file="generic/button.tpl" glyph="globe" content="`$lang.find_coordinates`" 
+	{include assign="picker" class="btn-info btn-sm" file="generic/button.tpl" glyph="globe" content="`$lang.find_coordinates`"
 		onclick="javascript: picker = new LocationPicker($('input[name=nodes__latitude]'), $('input[name=nodes__longitude]')); return false; "}
 	{include file=generic/section.tpl level=2 title="`$lang.node_info`" buttons="$picker" content=$form_node}
 </div>
@@ -53,21 +53,25 @@
 	<div class="tab-pane" id="tab-network">
 		{include assign="btn_request" file="generic/button.tpl" href=$link_req_cclass content="`$lang.ip_range_request`"
 			class="btn-success btn-sm" glyph="envelope"}
-			
+
 		{include file=generic/section-level3.tpl title="`$lang.ip_ranges`" buttons="`$btn_request`" content=$table_ip_ranges}
-		
+
 		{include assign="btn_add" file="generic/button.tpl" href=$link_subnet_add content="`$lang.subnet_add`"
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.subnets`" buttons="`$btn_add`" content=$table_subnets}
-		
+
+    {include assign="btn_add" file="generic/button.tpl" href=$link_subnet_v6_add content="`$lang.subnet_add`"
+      class="btn-success btn-sm" glyph="plus-sign"}
+    {include file=generic/section-level3.tpl title="`$lang.subnets_v6`" buttons="`$btn_add`" content=$table_subnets_v6}
+
 		{include assign="btn_add" file="generic/button.tpl" href=$link_ipaddr_add content="`$lang.ip_address_add`"
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.ip_addresses`" buttons="`$btn_add`" content=$table_ipaddr}
-		
+
 		{include assign="btn_add" file="generic/button.tpl" href=$link_req_v6_cclass content="`$lang.ip_range_v6_request`"
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.ip_ranges_v6`" buttons="`$btn_add`" content=$table_ip_ranges_v6}
-		
+
 		{include assign="btn_req_for" file="generic/button.tpl" href=$link_req_dns_for content="`$lang.dnszone_request_forward`"
 			class="btn-success btn-sm" glyph="envelope"}
 		{include assign="btn_req_rev" file="generic/button.tpl" href=$link_req_dns_rev content="`$lang.dnszone_request_reverse`"
@@ -75,7 +79,7 @@
                 {include assign="btn_req_rev_v6" file="generic/button.tpl" href=$link_req_dns_rev_v6 content="`$lang.dnszone_request_reverse_v6`"
 			class="btn-success btn-sm" glyph="envelope"}
 		{include file=generic/section-level3.tpl title="`$lang.dns_zones`" buttons="`$btn_req_for` `$btn_req_rev` `$btn_req_rev_v6`" content=$table_dns}
-		
+
 		{include assign="btn_add" file="generic/button.tpl" href=$link_nameserver_add content="`$lang.nameserver_add`"
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.dns_nameservers`" buttons="`$btn_add`" content=$table_nameservers}
@@ -84,18 +88,18 @@
 		{include assign="btn_add" file="generic/button.tpl" href=$link_link_add content="`$lang.link_add`"
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.links`" buttons="`$btn_add`" content=$table_links}
-		
+
 		{foreach key=key item=item from=$table_links_ap}
 		{include file=generic/section-level3.tpl title="`$lang.ap` $key"|escape content=$item}
 		{/foreach}
 	</div>
-	
+
 	<div class="tab-pane" id="tab-services">
 		{include assign="btn_add" file="generic/button.tpl" href=$link_services_add content="`$lang.services_add`"
 			class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.services`" buttons="`$btn_add`" content=$table_services}
 	</div>
-	
+
 	<div class="tab-pane" id="tab-myview">
 		{include file=generic/section-level3.tpl title="`$lang.myview`" content=$table_photosview}
 	</div>
@@ -104,7 +108,7 @@
           class="btn-success btn-sm" glyph="plus-sign"}
 		{include file=generic/section-level3.tpl title="`$lang.nodesettingschanges`" buttons="`$btn_add`" content=$table_nodesettingschanges}
 	</div>
-    
+
 {/if}
 </div>
 </div>
