@@ -33,13 +33,15 @@ CREATE TABLE IF NOT EXISTS `dns_nameservers` (
   `ip` int(10) NOT NULL default '0',
   `ipv6` varbinary(16) NOT NULL default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
+  `delete_req` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`name`,`node_id`),
   KEY `date_in` (`date_in`),
   KEY `node_id` (`node_id`),
   KEY `ip` (`ip`),
   KEY `ipv6` (`ipv6`),
-  KEY `status` (`status`)
+  KEY `status` (`status`),
+  KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_zones` (
@@ -50,12 +52,14 @@ CREATE TABLE IF NOT EXISTS `dns_zones` (
   `node_id` int(10) unsigned default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   `info` text,
+  `delete_req` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`name`,`type`),
   KEY `type` (`type`),
   KEY `date_in` (`date_in`),
   KEY `node_id` (`node_id`),
-  KEY `status` (`status`)
+  KEY `status` (`status`),
+  KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_zones_nameservers` (
@@ -75,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `ip_addresses` (
   `ipv6` varbinary(16) default '0',
   `mac` varchar(17) default NULL,
   `node_id` int(10) unsigned NOT NULL default '0',
-  `type` enum('router','server','pc','wireless-bridge','voip','camera','other') NOT NULL default 'pc',
+  `type` enum('router','server','pc','wireless-bridge','voip','camera','monitoring','other') NOT NULL default 'pc',
   `always_on` enum('Y','N') NOT NULL default 'N',
   `info` text,
   PRIMARY KEY  (`id`),
@@ -132,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `peer_ap_id` int(10) unsigned default NULL,
   `type` enum('p2p','ap','client','free') NOT NULL default 'p2p',
   `ssid` varchar(50) default NULL,
-  `protocol` enum('IEEE 802.11b','IEEE 802.11g','IEEE 802.11a','IEEE 802.11n','IEEE 802.3i (Ethernet)','IEEE 802.3u (Fast Ethernet)','IEEE 802.3ab (Gigabit Ethernet)','other') default NULL,
+  `protocol` enum('IEEE 802.11b','IEEE 802.11g','IEEE 802.11a','IEEE 802.11n','IEEE 802.11ac','IEEE 802.11ad','IEEE 802.3i (Ethernet)','IEEE 802.3u (Fast Ethernet)','IEEE 802.3ab (Gigabit Ethernet)','IEEE 802.3an (10 Gigabit Ethernet)','IEEE 802.3z (Gigabit Optical Fiber)','IEEE 802.3ae (10 Gigabit Optical Fiber)','other') default NULL,
   `channel` varchar(50) default NULL,
   `frequency` enum('2412','2417','2422','2427','2432','2437','2442','2447','2452','2457','2462','2467','2472','2484','4915','4920','4925','4935','4940','4945','4960','4980','5035','5040','5045','5055','5060','5080','5170','5180','5190','5200','5210','5220','5230','5240','5260','5280','5300','5320','5500','5520','5540','5560','5580','5600','5620','5640','5660','5680','5700','5745','5765','5785','5805','5825') NOT NULL default '5500',
   `status` enum('active','inactive','pending') NOT NULL default 'active',
@@ -250,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `subnets` (
   KEY `node_id` (`node_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `subnets_v6` (
+CREATE TABLE IF NOT EXISTS `subnets_v6` (
   `id` int(10) UNSIGNED NOT NULL,
   `date_in` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `node_id` int(10) UNSIGNED DEFAULT NULL,
