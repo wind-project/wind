@@ -360,6 +360,14 @@ function reverse_zone_from_ip($ip) {
 	return $ret;
 }
 
+function ips_network_bits($ip1,$ip2) {
+	$ip1 = ip2long($ip1);
+	$ip2 = ip2long($ip2);
+  $lxo = ($ip1 ^ $ip2);
+  $lxo = (string)(decbin($lxo));
+	return (int)strlen($lxo);
+}
+
 function reverse_zone_from_ipv6($ipv6,$prefix) {
         global $vars;
     	$hex = unpack("H*hex", @inet_pton($ipv6));

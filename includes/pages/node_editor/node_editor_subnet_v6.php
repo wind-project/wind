@@ -58,7 +58,7 @@ class node_editor_subnet_v6 {
 		}
 		$form_subnet->db_data_enum('subnets_v6.client_node_id', $clients);
 
-		$form_subnet->db_data_values("subnets_v6", "id", get('subnet'));
+		$form_subnet->db_data_values("subnets_v6", "id", get('subnet_v6'));
 		if (get('subnet_v6') != 'add') {
 			$form_subnet->data[0]['value'] = @inet_ntop($form_subnet->data[0]['value']);
 			$form_subnet->data[2]['value'] = @inet_ntop($form_subnet->data[2]['value']);
@@ -79,13 +79,12 @@ class node_editor_subnet_v6 {
 	function output_onpost_form_subnet_v6() {
 		global $main, $db;
 		$form_subnet = $this->form_subnet_v6();
-		$subnet = get('subnet_v6');
+		$subnet_v6 = get('subnet_v6');
 		$ret = TRUE;
-		//$_POST['subnets_v6__v6net'] = @inet_ntop(@inet_pton($_POST['subnets_v6__v6net']));
 		$ipv6_calc = ipv6_calc($_POST['subnets_v6__v6net'],$_POST['subnets_v6__v6prefix']);
 		$_POST['subnets_v6__v6net'] = @inet_pton($ipv6_calc['ipv6_start']);
 		$_POST['subnets_v6__ipv6_end'] = @inet_pton($ipv6_calc['ipv6_end']);
-		if ($_POST['subnets__type'] == 'link') {
+		if ($_POST['subnets_v6__type'] == 'link') {
 			if ($db->cnt(
 				'',
 				'ip_ranges_v6',
@@ -95,7 +94,7 @@ class node_editor_subnet_v6 {
 					return;
 				}
 		}
-		$ret = $form_subnet->db_set(array('node_id' => intval(get('node'))), "subnets_v6", "id", $subnet);
+		$ret = $form_subnet->db_set(array('node_id' => intval(get('node'))), "subnets_v6", "id", $subnet_v6);
 
 		if ($ret) {
 			$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => get('node'))));

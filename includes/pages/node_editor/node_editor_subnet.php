@@ -20,10 +20,10 @@
 class node_editor_subnet {
 
 	var $tpl;
-	
+
 	function __construct() {
 	}
-	
+
 	function form_subnet() {
 		global $db, $vars, $lang;
 		$form_subnet = new form(array('FORM_NAME' => 'form_subnet'));
@@ -65,12 +65,12 @@ class node_editor_subnet {
 		}
 		return $form_subnet;
 	}
-	
+
 	function output() {
 		global $construct;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
 			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
-		
+
 		$this->tpl['subnet_method'] = (get('subnet') == 'add' ? 'add' : 'edit' );
 		$this->tpl['form_subnet'] = $construct->form($this->form_subnet(), __FILE__);
 		return template($this->tpl, __FILE__);
@@ -94,11 +94,11 @@ class node_editor_subnet {
 				}
 		}
 		$ret = $form_subnet->db_set(array('node_id' => intval(get('node'))), "subnets", "id", $subnet);
-		
+
 		if ($ret) {
 			$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => get('node'))));
 		} else {
-			$main->message->set_fromlang('error', 'generic');		
+			$main->message->set_fromlang('error', 'generic');
 		}
 	}
 

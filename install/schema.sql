@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `nodes` (
   UNIQUE KEY `unique_keys` (`name_ns`),
   KEY `date_in` (`date_in`),
   KEY `due_date` (`due_date`),
-  KEY `last_change` (`last_change`),  
+  KEY `last_change` (`last_change`),
   KEY `name` (`name`),
   KEY `area_id` (`area_id`),
   KEY `status` (`status`),
@@ -255,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `subnets` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `subnets_v6` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL auto_increment,
   `date_in` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `node_id` int(10) UNSIGNED DEFAULT NULL,
   `v6net` varbinary(16) DEFAULT '0',
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `subnets_v6` (
   `client_node_id` int(10) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `node_id` (`node_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;  
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL auto_increment,
