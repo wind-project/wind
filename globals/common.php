@@ -29,6 +29,7 @@ include_once(ROOT_PATH."config/config.php");
 $vars = array_merge_recursive($vars, $config);
 include_once($vars['templates']['path'].$vars['templates']['default'].'/config.php');
 $vars = array_merge($vars, $template_config);
+include_once(ROOT_PATH."globals/ipv6subnetcalculator.php");
 include_once(ROOT_PATH."globals/functions.php");
 
 $php_start = getmicrotime();

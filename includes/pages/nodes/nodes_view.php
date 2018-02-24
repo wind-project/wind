@@ -84,14 +84,21 @@ class nodes_view {
 		global $db;
 		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
 		$table_ip_ranges_v6->db_data(
-			'ip_ranges_v6.id, "" AS ip_range_v6, ipv6_node_repos.v6net AS v6net, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
-			'ip_ranges_v6, ipv6_node_repos',
-			'ip_ranges_v6.node_id = '.intval(get('node')).' and ip_ranges_v6.v6net_id = ipv6_node_repos.id',
+			'ip_ranges_v6.id, "" AS ip_range_v6, ip_ranges_v6.v6net AS v6net, ip_ranges_v6.v6prefix AS v6prefix, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req',
+			'ip_ranges_v6',
+			'ip_ranges_v6.node_id = '.intval(get('node')).' ',
 			"",
 			"ip_ranges_v6.date_in ASC");
+                $isFirst = true;
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
-			if ($key != 0) {
-				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+			if ($isFirst) {
+                                $isFirst = false;
+                        } else {
+                                if ((string)@inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = @inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+                                } else {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = '::';
+                                }
 			}
 		}
 		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'id');
@@ -128,7 +135,7 @@ class nodes_view {
 		global $db, $vars;
 		$table_nameservers = new table(array('TABLE_NAME' => 'table_nameservers', 'FORM_NAME' => 'table_nameservers'));
 		$table_nameservers->db_data(
-			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns',
+			'dns_nameservers.id, dns_nameservers.name, dns_nameservers.ip, dns_nameservers.ipv6, dns_nameservers.date_in, dns_nameservers.status, nodes.name_ns AS nodes_name_ns',
 			'dns_nameservers, nodes',
 			"nodes.id = ".intval(get('node'))." AND dns_nameservers.node_id = nodes.id",
 			"",
@@ -136,6 +143,7 @@ class nodes_view {
 		foreach( (array) $table_nameservers->data as $key => $value) {
 			if ($key != 0) {
 				$table_nameservers->data[$key]['ip'] = long2ip($table_nameservers->data[$key]['ip']);
+                                $table_nameservers->data[$key]['ipv6'] = @inet_ntop($table_nameservers->data[$key]['ipv6']);
 				$table_nameservers->data[$key]['name'] = strtolower(($table_nameservers->data[$key]['name']!=''?$table_nameservers->data[$key]['name'].".":"").$table_nameservers->data[$key]['nodes_name_ns'].".".$vars['dns']['ns_zone']);
 			}
 		}

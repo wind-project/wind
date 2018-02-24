@@ -40,7 +40,7 @@ class services {
 		$where = $form_search_services->db_data_where();
 		$table_services = new table(array('TABLE_NAME' => 'table_services', 'FORM_NAME' => 'table_services'));
 		$table_services->db_data(
-			'services.title, nodes.name AS nodes__name, nodes.id AS nodes__id, ip_addresses.ip, nodes_services.url, nodes_services.info, nodes_services.date_in, nodes_services.status, IFNULL(nodes_services.protocol, services.protocol) AS protocol, IFNULL(nodes_services.port, services.port) AS port',
+			'services.title, nodes.name AS nodes__name, nodes.id AS nodes__id, ip_addresses.ip, ip_addresses.ipv6, nodes_services.url, nodes_services.info, nodes_services.date_in, nodes_services.status, IFNULL(nodes_services.protocol, services.protocol) AS protocol, IFNULL(nodes_services.port, services.port) AS port',
 			'nodes_services
 			LEFT JOIN nodes on nodes_services.node_id = nodes.id
 			LEFT JOIN services on nodes_services.service_id = services.id
@@ -49,10 +49,12 @@ class services {
 			'',
 			"nodes_services.date_in DESC");
 		$table_services->db_data_search($form_search_services);
-		foreach( (array) $table_services->data as $key => $value) {
-			if ($key != 0) {
+		foreach( (array) $table_services->data as $key => $value) { 
+			if ($key != 0) { 
 				if ($table_services->data[$key]['ip']) {
 					$table_services->data[$key]['ip'] = long2ip($table_services->data[$key]['ip']);
+                                        $table_services->data[$key]['ipv6'] = @inet_ntop($table_services->data[$key]['ipv6']);
+                                        $table_services->data[$key]['ip'] .= $table_services->data[$key]['ipv6'];
 					if ($table_services->data[$key]['protocol'] && $table_services->data[$key]['port']) {
 						$table_services->data[$key]['ip'] .= ' ('.$lang['db']['nodes_services__protocol-'.$table_services->data[$key]['protocol']].'/'.$table_services->data[$key]['port'].')';
 					}

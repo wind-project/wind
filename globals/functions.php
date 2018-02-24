@@ -28,7 +28,7 @@ function redirect($url, $sec=0, $exit=TRUE) {
 		header("Refresh: $sec; URL=".html_entity_decode($url));
 		$main->html->head->add_meta("$sec; url=$url", "", "refresh");
 	} else {
-		header("Location: ".html_entity_decode($url));		
+		header("Location: ".html_entity_decode($url));
 	}
 	if ($exit && !$main->message->show) {
 		exit;
@@ -55,28 +55,28 @@ function is_ajax_request() {
  */
 function get_user_title() {
 	global $main;
-	
+
 	if (!$main->userdata->logged)
 		return "Anonymous";
-	
+
 	$title_tokens = array();
-	
+
 	// Try to get tokens from name surname
 	if (! empty($main->userdata->info['name']))
 		$title_tokens[] = $main->userdata->info['name'];
 	if (! empty($main->userdata->info['surname']))
 		$title_tokens[] = $main->userdata->info['surname'];
-	
+
 	// If we didn't find any token we add username
 	if (empty($title_tokens)){
 		$title_tokens[] = $main->userdata->info['username'];
 	}
-	
-	return implode(" ", $title_tokens); 
+
+	return implode(" ", $title_tokens);
 }
 
 /**
- * @brief Get the raw query string 
+ * @brief Get the raw query string
  * @return string The raw url query string with any escape character included.
  */
 function get_query_string() {
@@ -94,7 +94,7 @@ function get_query_string() {
 function get_query_string_array() {
 	if (get_query_string() == '')
 		return array();
-	
+
 	$params = array();
 	foreach(explode('&', get_query_string()) as $param_token) {
 		// Split params tokens in two
@@ -143,30 +143,30 @@ function get_path_level($level, $default = null){
  */
 function get($key) {
 	global $page_admin, $main;
-	
+
 	$ret = isset($_GET[$key])?$_GET[$key]:"";
-	
+
 	switch ($key) {
 		case 'page':
 			// Try to get page from path info (higher priority)
 			if (!is_null(get_path_level(1))){
 				$ret= get_path_level(1);
 			}
-			
+
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/");
 			array_unshift($valid_array, 'startup');
-			
+
 			break;
 		case 'subpage':
 			// Try to get page from path info (higher priority)
 			if (!is_null(get_path_level(2))){
 				$ret= get_path_level(2);
 			}
-			
+
 			$valid_array = getdirlist(ROOT_PATH."includes/pages/".get('page').'/', FALSE, TRUE);
 			for ($key=0;$key<count($valid_array);$key++) {
 				$valid_array[$key] = basename($valid_array[$key], '.php');
-				
+
 				if (substr($valid_array[$key], 0, strlen(get('page'))+1) != get('page').'_') {
 					array_splice($valid_array, $key, 1);
 					$key--;
@@ -185,21 +185,21 @@ function get($key) {
 	return $ret;
 }
 
-function getdirlist($dirName, $dirs=TRUE, $files=FALSE) { 
+function getdirlist($dirName, $dirs=TRUE, $files=FALSE) {
 	$d = dir($dirName);
 	$a = array();
-	while($entry = $d->read()) { 
-		if ($entry != "." && $entry != "..") { 
-			if (is_dir($dirName."/".$entry)) { 
-				if ($dirs==TRUE) array_push($a, $entry); 
-			} else { 
-				if ($files==TRUE) array_push($a, $entry); 
-			} 
-		} 
-	} 
+	while($entry = $d->read()) {
+		if ($entry != "." && $entry != "..") {
+			if (is_dir($dirName."/".$entry)) {
+				if ($dirs==TRUE) array_push($a, $entry);
+			} else {
+				if ($files==TRUE) array_push($a, $entry);
+			}
+		}
+	}
 	$d->close();
 	return $a;
-} 
+}
 
 /**
  * @brief Create an absolute reference for a specific resource
@@ -244,7 +244,7 @@ function fqn_url($absolute_url) {
  */
 function url($relative) {
 	global $vars;
-	
+
 	$relative = '/' . ltrim($relative, '/.');	// Normalize path as /something
 	if ($vars['site']['short_urls']) {
 		return (dirname($_SERVER['SCRIPT_NAME']) != '/'? dirname($_SERVER['SCRIPT_NAME']):'')  . $relative;
@@ -285,7 +285,7 @@ function cookie($name, $value) {
 function date_now() {
       return date("Y-m-d H:i:s");
  }
- 
+
 function message($arg) {
 	global $lang;
 	$mes = $lang['message'][func_get_arg(0)][func_get_arg(1)][func_get_arg(2)];
@@ -329,17 +329,17 @@ function reset_smarty() {
 	$smarty->assign('js_dir', surl($smarty->template_dir."scripts/javascripts"));
 }
 
-function delfile($str) 
-{ 
-   foreach( (array) glob($str) as $fn) { 
-	   unlink($fn); 
-   } 
-} 
+function delfile($str)
+{
+   foreach( (array) glob($str) as $fn) {
+	   unlink($fn);
+   }
+}
 
 function resizeJPG($filename, $width, $height) {
 
 	list($width_orig, $height_orig) = getimagesize($filename);
-	
+
 	if ($width && ($width_orig < $height_orig)) {
 	   $width = ($height / $height_orig) * $width_orig;
 	} else {
@@ -354,15 +354,68 @@ function resizeJPG($filename, $width, $height) {
 }
 
 function reverse_zone_from_ip($ip) {
-	global $vars;
+      	global $vars;
 	$ret = explode(".", $ip);
 	$ret = $ret[2].".".$ret[1].".".$ret[0].".".$vars['dns']['reverse_zone'];
 	return $ret;
 }
 
+function ips_network_bits($ip1,$ip2) {
+	$ip1 = ip2long($ip1);
+	$ip2 = ip2long($ip2);
+  $lxo = ($ip1 ^ $ip2);
+  $lxo = (string)(decbin($lxo));
+	return (int)strlen($lxo);
+}
+
+function reverse_zone_from_ipv6($ipv6,$prefix) {
+        global $vars;
+    	$hex = unpack("H*hex", @inet_pton($ipv6));
+	$str = strrev($hex['hex']);
+	$p = str_split($str);
+        $ret = join(".",$p);
+        $ret = substr($ret, (128-$prefix)/2);
+        $ret = $ret.".".$vars['dns']['reverse_zone_v6'];
+	return $ret;
+}
+
+function ipv6_expand($ip){
+    $hex = unpack("H*hex", inet_pton($ip));
+    return substr(preg_replace("/([A-f0-9]{4})/", "$1:", $hex['hex']), 0, -1);
+}
+
+function ipv6_calc($address,$len) {
+				$address = ipv6_expand($address);
+        $calc = new IPV6SubnetCalculator();
+
+        if ($calc->testValidAddress($address))
+        {
+                $rangedata = $calc->getAddressRange($address, $len);
+                $ret = array(
+                        'abbr_addr' => $calc->abbreviateAddress($address), // Abbreviated Address
+                        'unabbr_addr' => $calc->unabbreviateAddress($address), //Unabbreviated Address
+                        'num_addr' => $calc->getInterfaceCount($len), // Number of IPs
+                        'ipv6_start' => $rangedata['start_address'], // Start IP
+                        'ipv6_end' => $rangedata['end_address'], // End IP
+                        'prefix_addr' => $rangedata['prefix_address'] // Prefix Address
+                );
+                return $ret;
+        } else {
+                $ret = array($address.'/'.$len.' is not a valid IPv6 Address.');
+        }
+        die(json_encode($ret));
+}
+
+function ipv6_from_ip($ip) {
+	global $vars;
+	$ret = explode(".", $ip);
+	$ret = $vars['ipv6_ula']['v6net'].sprintf('%02X%02X', $ret[1], $ret[2])."::";
+	return $ret;
+}
+
 function is8bit($str) {
 	for($i=0; $i <= strlen($str); $i++)
-		if(ord($str{$i}) >> 7)   
+		if(ord($str{$i}) >> 7)
 			return TRUE;
 	return FALSE;
 }
@@ -466,15 +519,15 @@ function is_ip($ip, $full_ip=TRUE) {
 	if ($ip == '') return FALSE;
 	for ($i=0;$i<count($ip_ex);$i++) {
 		if ($i == count($ip_ex)-1 && $ip_ex[$i] == '') continue;
-		if (!is_numeric($ip_ex[$i]) || $ip_ex[$i] < 0 || $ip_ex[$i] > 255) return FALSE; 
+		if (!is_numeric($ip_ex[$i]) || $ip_ex[$i] < 0 || $ip_ex[$i] > 255) return FALSE;
 	}
 	return ($full_ip?(count($ip_ex)==4):TRUE);
 }
 
-function getmicrotime(){ 
-	list($usec, $sec) = explode(" ",microtime()); 
-	return ((float)$usec + (float)$sec); 
-} 
+function getmicrotime(){
+	list($usec, $sec) = explode(" ",microtime());
+	return ((float)$usec + (float)$sec);
+}
 
 function array_multimerge($array1, $array2) {
 	if (is_array($array2) && count($array2)) {
@@ -488,7 +541,7 @@ function array_multimerge($array1, $array2) {
 	} else {
 		$array1 = $array2;
 	}
-	
+
 	return $array1;
 }
 
@@ -506,8 +559,8 @@ function language_set($language='', $force=FALSE) {
 		$tl = $vars['language']['default'];
 	}
 	$vars['info']['current_language'] = $tl;
-	
-	if ($vars['language']['enabled'][$tl] === TRUE && 
+
+	if ($vars['language']['enabled'][$tl] === TRUE &&
 			file_exists(ROOT_PATH."globals/language/".$tl.".php")) {
 
 		include_once(ROOT_PATH."globals/language/".$tl.".php");
@@ -517,7 +570,7 @@ function language_set($language='', $force=FALSE) {
 		}
 		// Set-up mbstring's internal encoding (mainly for supporting UTF-8)
 		mb_internal_encoding($lang['charset']);
-		
+
 		// Set-up NAMES on database system
 		if($vars['db']['version']>=4.1)
 			$db->query("SET NAMES '".$lang['mysql_charset']."'");
@@ -544,7 +597,7 @@ function url_fix ($url, $default_prefix="http://") {
 		return $default_prefix.$url;
 	}
 	return $url;
-	
+
 }
 
 function replace_sql_wildcards($str) {
@@ -559,7 +612,7 @@ function format_version($version_array) {
 		$glue =  is_numeric($dig)? '.' : '-';
 		$str .= empty($str)?$dig:$glue . $dig;
 	}
-	return $str;	
+	return $str;
 }
 
 /**
@@ -616,7 +669,7 @@ function include_map($element_id) {
 
 	// Include needed javascript
 	include_js_language_tokens();
-	
+
 	$main->html->head->add_extra(
 			"<script type=\"text/javascript\">
 			$(function() {
@@ -625,9 +678,9 @@ function include_map($element_id) {
 
 				controlNodeFilter = new NetworkMapControlNodeFilter(map);
 				controlFullScreen = new NetworkMapControlFullScreen(map);
-				
+
 			});
-			
-			
+
+
 			</script>");
 }

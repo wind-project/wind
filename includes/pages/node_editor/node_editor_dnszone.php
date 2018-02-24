@@ -41,6 +41,16 @@ class node_editor_dnszone {
 					$ipr[$key]['output'] = $ipr[$key]['value']." [".$ipr[$key]['ip_start'].' - '.$ipr[$key]['ip_end']."]";
 				}
 				$form_zone->db_data_enum('dns_zones.name', $ipr);
+			} elseif (get('type') == 'reverse_v6') {
+				$ipr = $db->get("v6net, v6prefix",
+						"ip_ranges_v6",
+						"node_id = ".intval(get('node')));
+				foreach( (array) $ipr as $key => $value) {
+					$ipr[$key]['v6net'] = @inet_ntop($value['v6net']);
+					$ipr[$key]['value'] = reverse_zone_from_ipv6($ipr[$key]['v6net'],(int)$ipr[$key]['v6prefix']);
+					$ipr[$key]['output'] = $ipr[$key]['value']." [".$ipr[$key]['v6net'].'/'.$ipr[$key]['v6prefix']."]";
+				}
+				$form_zone->db_data_enum('dns_zones.name', $ipr);
 			} else {
 				$form_zone->data[0]['value'] = $db->get('name_ns', 'nodes', "id = ".intval(get('node')));
 				$form_zone->data[0]['value'] = $form_zone->data[0]['value'][0]['name_ns'];
@@ -105,6 +115,8 @@ class node_editor_dnszone {
 						return;
 					}
 					break;
+                                case 'reverse_v6':
+                                        break;
 				default:
 					$main->message->set_fromlang('error', 'generic');		
 					return;

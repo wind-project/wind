@@ -29,6 +29,7 @@ class hostmaster_dnsnameservers {
 		global $db;
 		$form_search_nameservers = new form(array('FORM_NAME' => 'form_search_nameservers'));
 		$form_search_nameservers->data = array("0" => array("Field" => "ip", "fullField" => "dns_nameservers__ip"));
+                $form_search_nameservers->data = array("0" => array("Field" => "ipv6", "fullField" => "dns_nameservers__ipv6"));
 		$form_search_nameservers->db_data('dns_nameservers.status, nodes.id, nodes.name');
 		$form_search_nameservers->db_data_search();
 		return $form_search_nameservers;
@@ -37,9 +38,11 @@ class hostmaster_dnsnameservers {
 	function table_nameservers() {
 		global $construct, $db, $vars;
 		if (isset($_POST['dns_nameservers__ip'])) $_POST['dns_nameservers__ip'] = (is_ip($_POST['dns_nameservers__ip'])?ip2long($_POST['dns_nameservers__ip']):'');
+                if (isset($_POST['dns_nameservers__ipv6'])) $_POST['dns_nameservers__ipv6'] = (is_ip($_POST['dns_nameservers__ip'])?@inet_pton($_POST['dns_nameservers__ipv6']):'');
 		if (isset($_GET['form_search_nameservers_search'])) {
 			$t = unserialize(stripslashes($_GET['form_search_nameservers_search']));
 			if (isset($t['dns_nameservers__ip'])) $t['dns_nameservers__ip'] = (is_ip($t['dns_nameservers__ip'])?ip2long($t['dns_nameservers__ip']):'');
+                        if (isset($t['dns_nameservers__ipv6'])) $t['dns_nameservers__ipv6'] = (is_ip($t['dns_nameservers__ipv6'])?@inet_pton($t['dns_nameservers__ipv6']):'');
 			$_GET['form_search_nameservers_search'] = addslashes(serialize($t));
 		}
 
@@ -48,7 +51,7 @@ class hostmaster_dnsnameservers {
 		$table_nameservers = new table(array('TABLE_NAME' => 'table_nameservers', 'FORM_NAME' => 'table_nameservers'));
 
 		$table_nameservers->db_data(
-			'dns_nameservers.id, dns_nameservers.name, nodes.name_ns, dns_nameservers.ip, dns_nameservers.date_in, dns_nameservers.status',
+			'dns_nameservers.id, dns_nameservers.name, nodes.name_ns, dns_nameservers.ip, dns_nameservers.ipv6, dns_nameservers.date_in, dns_nameservers.status',
 			'dns_nameservers
 			LEFT JOIN nodes ON dns_nameservers.node_id = nodes.id',
 			$where,
@@ -59,6 +62,7 @@ class hostmaster_dnsnameservers {
 		foreach( (array) $table_nameservers->data as $key => $value) {
 			if ($key != 0) {
 				$table_nameservers->data[$key]['ip'] = long2ip($table_nameservers->data[$key]['ip']);
+                                $table_nameservers->data[$key]['ipv6'] = @inet_ntop($table_nameservers->data[$key]['ipv6']);
 				$table_nameservers->data[$key]['name'] = strtolower(($table_nameservers->data[$key]['name']!=''?$table_nameservers->data[$key]['name'].".":"").$table_nameservers->data[$key]['name_ns'].".".$vars['dns']['ns_zone']);
 			}
 		}

@@ -15,12 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *}
-{include assign=range_delete file=generic/button.tpl class="btn-danger btn-sm" glyph=remove
-	content="`$lang.delete`" href=$link_range_delete confirm=TRUE}
-{include file=generic/page-title.tpl title="`$lang.ip_range_v6_edit`" right="`$delete_link`"}
-
-{$form_range_v6}
-{include file=generic/section-level2.tpl title="`$lang.node_info`" content=$table_node_info}
-{include file=generic/section-level2.tpl title="`$lang.users_info`" content=$table_user_info}
-{include file=generic/section-level2.tpl title="`$lang.links`" content=$table_links}
-{include file=generic/section-level2.tpl title="`$lang.ip_ranges_v6`" content=$table_ip_ranges_v6}
+{include assign=help file=generic/help.tpl help="node_editor_subnet_v6_`$subnet_v6_method`"}
+{assign var=t value="subnet_v6_`$subnet_v6_method`"}
+{include file=generic/page-title.tpl title="`$lang.$t`" right="$help"}
+{$form_subnet_v6}

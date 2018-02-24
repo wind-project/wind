@@ -41,16 +41,23 @@ class hostmaster_ranges_v6 {
 		$form_search_ranges_v6 = $this->form_search_ranges_v6();
 		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
 		$table_ip_ranges_v6->db_data(
-			'ipv6_node_repos.v6net AS v6net, ip_ranges_v6.id AS v6net_id, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req' , 
-			'ip_ranges_v6, ipv6_node_repos ' ,
-			'ipv6_node_repos.id = ip_ranges_v6.v6net_id' , 
+			'ip_ranges_v6.v6net AS v6net, ip_ranges_v6.v6prefix AS v6prefix, ip_ranges_v6.id AS v6net_id, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req' , 
+			'ip_ranges_v6 ' ,
+			'' , 
 			"ip_ranges_v6.id" ,
 			"ip_ranges_v6.date_in DESC, ip_ranges_v6.status ASC");
 		$table_ip_ranges_v6->db_data_search($form_search_ranges_v6);
-		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
-			if ($key != 0) {
-				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
-			}
+                $isFirst = true;
+		foreach((array) $table_ip_ranges_v6->data as $key => $value) {
+                        if ($isFirst) {
+                                $isFirst = false;
+                        } else {
+                            if ((string)@inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
+                                    $table_ip_ranges_v6->data[$key]['v6net'] = @inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+                            } else {
+                                    $table_ip_ranges_v6->data[$key]['v6net'] = '::';
+                            }
+                        }
 		}
 		$table_ip_ranges_v6->db_data_multichoice('ip_ranges_v6', 'v6net_id');
 		for($i=1;$i<count($table_ip_ranges_v6->data);$i++) {
@@ -81,7 +88,7 @@ class hostmaster_ranges_v6 {
                         $ret1 = $db->get('v6net_id','ip_ranges_v6',"ip_ranges_v6.id = '".$value."'");
                         $ret = $ret && $db->del("ip_ranges_v6", '', "id = '".$value."'");
                         $ret2 = TRUE;
-                        $ret2 = $ret2 && $db->set("ipv6_node_repos", array('node_id' => '0'), "id = '".$ret1[0]['v6net_id']."'");
+                        //$ret2 = $ret2 && $db->set("ipv6_node_repos", array('node_id' => '0'), "id = '".$ret1[0]['v6net_id']."'");
                 }
                 if ($ret && $ret2) {
                         $main->message->set_fromlang('info', 'delete_success', self_ref());

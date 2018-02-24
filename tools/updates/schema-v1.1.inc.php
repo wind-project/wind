@@ -24,6 +24,7 @@ $update = new DBUpdateDescriptor(new SchemaVersion(1,0), new SchemaVersion(1,1))
  *         IPv6 database changes          */
 
 // TABLE ipv6_node_repos
+/*
 $tb = $update->newTable('ipv6_node_repos');
 $tb->addColumn('id', 'int unsigned', array(
 		'not_null' => true,
@@ -43,8 +44,9 @@ $tb->addColumn('v6net', 'varbinary(16)', array(
 		'not_null' => true,
 		'default' => '0',
 		'unique' => true));
-
+*/
 // TABLE ipv6_area_repos
+/*
 $tb = $update->newTable('ipv6_area_repos');
 $tb->addColumn('id', 'int unsigned', array(
 		'not_null' => true,
@@ -64,7 +66,7 @@ $tb->addColumn('v6net', 'varbinary(16)', array(
 		'not_null' => true,
 		'default' => '0',
 		'unique' => true));
-
+*/
 // TABLE ip_ranges_v6
 $tb = $update->newTable('ip_ranges_v6');
 $tb->addColumn('id', 'int unsigned', array(
@@ -82,6 +84,11 @@ $tb->addColumn('v6net_id', 'int', array(
 		'not_null' => true,
 		'default' => '0',
 		'unique' => true));
+$tb->newColumn('v6net', 'varbinary(16)', array(
+		'default' => '0',
+		'unique' => true));
+$tb->newColumn('v6prefix', 'smallint', array(
+		'default' => '0'));
 $tb->addColumn('status', "enum('waiting','active','pending','rejected','invalid')", array(
 		'not_null' => true,
 		'default' => "'waiting'"));
@@ -114,6 +121,18 @@ $tb->addColumn('changemenu', "enum('routerOS version upgrade/downgrade','groups'
 $tb->addColumn('reason', "enum('other','bug fix','critical-problem','imporovement','termination')", array(
 		'not_null' => true));
 $tb->addColumn('comment', 'text');
+
+// MODIFY dns_zones
+$update->modifyColumn('dns_zones', 'name', "varchar(74)", array(
+		'not_null' => true,
+		'default' => "''"));
+$update->modifyColumn('dns_zones', 'type', "enum('forward', 'reverse', 'reverse_v6')", array(
+		'not_null' => true,
+		'default' => "'forward'"));
+
+// MODIFY dns_nameservers
+$update->addColumn('dns_nameservers', 'ipv6', "varbinary(16)", array(
+		'default' => '0'));
 
 // MODIFY areas
 $update->newColumn('areas', 'v6net', 'varbinary(16)', array(

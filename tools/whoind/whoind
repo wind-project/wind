@@ -492,8 +492,8 @@ sub isIP($) {
 }
 
 # IP <-> LongIP conversions
-sub ip2long($) { return unpack('N',inet_aton(shift)); }
-sub long2ip($) { return inet_ntoa(pack 'N', shift); }
+sub ip2long($) { return unpack('N',@inet_aton(shift)); }
+sub long2ip($) { return @inet_ntoa(pack 'N', shift); }
 
 # Format IP range output
 sub formatipr($$) {

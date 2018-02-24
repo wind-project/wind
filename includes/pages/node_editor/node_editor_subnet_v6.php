@@ -17,17 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class node_editor_subnet {
+class node_editor_subnet_v6 {
 
 	var $tpl;
 
 	function __construct() {
 	}
 
-	function form_subnet() {
+	function form_subnet_v6() {
 		global $db, $vars, $lang;
-		$form_subnet = new form(array('FORM_NAME' => 'form_subnet'));
-		$form_subnet->db_data('subnets.ip_start, subnets.ip_end, subnets.type, subnets.link_id, subnets.client_node_id');
+		$form_subnet = new form(array('FORM_NAME' => 'form_subnet_v6'));
+		$form_subnet->db_data('subnets_v6.v6net, subnets_v6.v6prefix, subnets_v6.ipv6_end, subnets_v6.type, subnets_v6.link_id, subnets_v6.client_node_id');
 		$links = $db->get('links.id AS value, links.type, links.ssid, nodes.name, links.peer_node_id, "" AS output',
 							"links
 							LEFT JOIN nodes ON links.peer_node_id = nodes.id",
@@ -43,7 +43,7 @@ class node_editor_subnet {
 				$links[$key]['output'] .= $links[$key]['name'].' (#'.$links[$key]['peer_node_id'].')';
 			}
 		}
-		$form_subnet->db_data_enum('subnets.link_id', $links);
+		$form_subnet->db_data_enum('subnets_v6.link_id', $links);
 
 		$clients = $db->get('cl_n.id AS value, ap_l.ssid, cl_n.name, cl_n.id, "" AS output',
 							"links AS cl_l " .
@@ -56,12 +56,12 @@ class node_editor_subnet {
 		foreach ( (array) $clients as $key => $value) {
 			$clients[$key]['output'] = '['.$lang['db']['links__type-ap'].' '.$clients[$key]['ssid'].'] - '.$clients[$key]['name'].' (#'.$clients[$key]['id'].')';
 		}
-		$form_subnet->db_data_enum('subnets.client_node_id', $clients);
+		$form_subnet->db_data_enum('subnets_v6.client_node_id', $clients);
 
-		$form_subnet->db_data_values("subnets", "id", get('subnet'));
-		if (get('subnet') != 'add') {
-			$form_subnet->data[0]['value'] = long2ip($form_subnet->data[0]['value']);
-			$form_subnet->data[1]['value'] = long2ip($form_subnet->data[1]['value']);
+		$form_subnet->db_data_values("subnets_v6", "id", get('subnet_v6'));
+		if (get('subnet_v6') != 'add') {
+			$form_subnet->data[0]['value'] = @inet_ntop($form_subnet->data[0]['value']);
+			$form_subnet->data[2]['value'] = @inet_ntop($form_subnet->data[2]['value']);
 		}
 		return $form_subnet;
 	}
@@ -71,29 +71,30 @@ class node_editor_subnet {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && method_exists($this, 'output_onpost_'.$_POST['form_name']))
 			return call_user_func(array($this, 'output_onpost_'.$_POST['form_name']));
 
-		$this->tpl['subnet_method'] = (get('subnet') == 'add' ? 'add' : 'edit' );
-		$this->tpl['form_subnet'] = $construct->form($this->form_subnet(), __FILE__);
+		$this->tpl['subnet_v6_method'] = (get('subnet_v6') == 'add' ? 'add' : 'edit' );
+		$this->tpl['form_subnet_v6'] = $construct->form($this->form_subnet_v6(), __FILE__);
 		return template($this->tpl, __FILE__);
 	}
 
-	function output_onpost_form_subnet() {
+	function output_onpost_form_subnet_v6() {
 		global $main, $db;
-		$form_subnet = $this->form_subnet();
-		$subnet = get('subnet');
+		$form_subnet = $this->form_subnet_v6();
+		$subnet_v6 = get('subnet_v6');
 		$ret = TRUE;
-		$_POST['subnets__ip_start'] = ip2long($_POST['subnets__ip_start']);
-		$_POST['subnets__ip_end'] = ip2long($_POST['subnets__ip_end']);
-		if ($_POST['subnets__type'] == 'link') {
+		$ipv6_calc = ipv6_calc($_POST['subnets_v6__v6net'],$_POST['subnets_v6__v6prefix']);
+		$_POST['subnets_v6__v6net'] = @inet_pton($ipv6_calc['ipv6_start']);
+		$_POST['subnets_v6__ipv6_end'] = @inet_pton($ipv6_calc['ipv6_end']);
+		if ($_POST['subnets_v6__type'] == 'link') {
 			if ($db->cnt(
 				'',
-				'ip_ranges',
-				"node_id = ".intval(get('node'))." AND ip_ranges.ip_start <= '".$_POST['subnets__ip_start']."' AND ip_ranges.ip_end >= '".$_POST['subnets__ip_start']."' " .
-						"AND ip_ranges.ip_start <= '".$_POST['subnets__ip_end']."' AND ip_ranges.ip_end >= '".$_POST['subnets__ip_end']."'") == 0) {
+				'ip_ranges_v6',
+				"node_id = ".intval(get('node'))." AND ip_ranges_v6.v6net <= '".$_POST['subnets_v6__v6net']."' AND ip_ranges_v6.ipv6_end >= '".$_POST['subnets_v6__v6net']."' " .
+						"AND ip_ranges_v6.v6net <= '".$_POST['subnets_v6__ipv6_end']."' AND ip_ranges_v6.ipv6_end >= '".$_POST['subnets_v6__ipv6_end']."'") == 0) {
 					$main->message->set_fromlang('error', 'subnet_backbone_no_ip_range');
 					return;
 				}
 		}
-		$ret = $form_subnet->db_set(array('node_id' => intval(get('node'))), "subnets", "id", $subnet);
+		$ret = $form_subnet->db_set(array('node_id' => intval(get('node'))), "subnets_v6", "id", $subnet_v6);
 
 		if ($ret) {
 			$main->message->set_fromlang('info', 'insert_success', make_ref('/node_editor', array("node" => get('node'))));

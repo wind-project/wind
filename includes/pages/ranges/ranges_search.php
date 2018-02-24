@@ -76,7 +76,7 @@ class ranges_search {
 		global $construct, $db;
 		$form_search_ranges_v6 = new form(array('FORM_NAME' => 'form_search_ranges_v6'));
 		$form_search_ranges_v6->data = array("0" => array("Field" => "ipv6", "fullField" => "ipv6"));
-		$form_search_ranges_v6->db_data('ip_ranges_v6.status, ip_ranges_v6.delete_req, nodes.id, nodes.name');
+		$form_search_ranges_v6->db_data('ip_ranges_v6.status, ip_ranges_v6.delete_req, nodes.name AS nodes__name, nodes.id AS nodes__id');
 		array_push($form_search_ranges_v6->data, array('Compare' => 'numeric', 'Field' => 'total_active_p2p', 'fullField' => 'total_active_p2p'));
 		array_push($form_search_ranges_v6->data, array('Compare' => 'numeric', 'Field' => 'total_active_aps', 'fullField' => 'total_active_aps'));
 		$form_search_ranges_v6->db_data_search();
@@ -88,19 +88,29 @@ class ranges_search {
 		$form_search_ranges_v6 = $this->form_search_ranges_v6();
 		$table_ip_ranges_v6 = new table(array('TABLE_NAME' => 'table_ip_ranges_v6', 'FORM_NAME' => 'table_ip_ranges_v6'));
 		$table_ip_ranges_v6->db_data(
-			'ipv6_node_repos.v6net AS v6net, ip_ranges_v6.id AS v6net_id, ip_ranges_v6.date_in, ip_ranges_v6.status, ip_ranges_v6.delete_req' , 
-			'ip_ranges_v6, ipv6_node_repos ' ,
-			'ipv6_node_repos.id = ip_ranges_v6.v6net_id' , 
+			'ip_ranges_v6.v6net AS v6net, ip_ranges_v6.v6prefix AS v6prefix, ip_ranges_v6.date_in, ip_ranges_v6.status, nodes.name AS nodes__name, nodes.id AS nodes__id ' , 
+			'ip_ranges_v6 LEFT JOIN nodes ON ip_ranges_v6.node_id = nodes.id' ,
+			'' , 
 			"ip_ranges_v6.id" ,
-			"ip_ranges_v6.date_in DESC, ip_ranges_v6.status ASC");
+			"ip_ranges_v6.status ASC, ip_ranges_v6.v6net ASC");
 		$table_ip_ranges_v6->db_data_search($form_search_ranges_v6);
+                $isFirst = true;
 		foreach( (array) $table_ip_ranges_v6->data as $key => $value) {
-			if ($key != 0) {
-				$table_ip_ranges_v6->data[$key]['v6net'] = inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
-			}
+                        if ($isFirst) {
+                                $isFirst = false;
+                        } else {
+                                if ((string)@inet_ntop($table_ip_ranges_v6->data[$key]['v6net']) != '') {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = @inet_ntop($table_ip_ranges_v6->data[$key]['v6net']);
+                                } else {
+                                        $table_ip_ranges_v6->data[$key]['v6net'] = '::';
+                                }
+                                $table_ip_ranges_v6->data[$key]['nodes__name'] .= " (#".$table_ip_ranges_v6->data[$key]['nodes__id'].")";
+				$table_ip_ranges_v6->info['EDIT'][$key] = make_ref('/nodes', array("node" => $table_ip_ranges_v6->data[$key]['nodes__id']));
+                        }
 		}
-		$table_ip_ranges_v6->db_data_remove('v6net_id');
-		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status', 'ip_ranges_v6__delete_req');
+                $table_ip_ranges_v6->info['EDIT_COLUMN'] = 'nodes__name';
+		$table_ip_ranges_v6->db_data_remove('nodes__id');
+		$table_ip_ranges_v6->db_data_translate('ip_ranges_v6__status');
 		return $table_ip_ranges_v6;
 	}
         

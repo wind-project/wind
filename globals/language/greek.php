@@ -25,12 +25,12 @@ $lang = array(
 	'charset' => 'utf-8',
 	'iso639' => 'el',
 	'mysql_charset' => 'utf8',
-	
+
 	'site_title' => "WiND - Wireless Nodes Database",
 	'title_small' => "WiND",
-	
+
 	'forward_text' => "Αν δεν επιθυμείτε να περιμένετε πατήστε εδώ...",
-	
+
 	'delete_request' => "Αίτηση διαγραφής",
 	'location' => 'Τοποθεσία',
 	'delete' => "Διαγραφή",
@@ -101,6 +101,7 @@ $lang = array(
 	'ip_range_v6_request_for_node' => "Αίτηση απόδοσης IPv6 Δικτύου για τον κόμβο",
 	'dnszone_request_forward' => "Αίτηση απόδοσης ζώνης DNS (forward)",
 	'dnszone_request_reverse' => "Αίτηση απόδοσης ζώνης DNS (reverse)",
+        'dnszone_request_reverse_v6' => "Αίτηση απόδοσης ζώνης IPv6 DNS (reverse)",
 	'dnszone_edit' => "Επεξεργασία ζώνης DNS",
 	'nameserver_add' => "Προσθήκη nameserver (NS)",
 	'nameserver_edit' => "Επεξεργασία nameserver (NS)",
@@ -115,16 +116,18 @@ $lang = array(
 	'aps_found' => "Access Points που βρέθηκαν",
 	'subnet_edit' => "Επεξεργασία υποδικτύου",
 	'subnet_add' => "Προσθήκη υποδικτύου",
-	'subnets' => "Υποδίκτυα",
-	'ip_address_edit' => "Επεξεργασία διεύθυνσης IP",
-	'ip_address_add' => "Προσθήκη διεύθυνσης IP",
-	'ip_addresses' => "Διευθύνσεις IP",
+	'subnets' => "Υποδίκτυα IP",
+	'subnets_v6' => "Υποδίκτυα IPv6",
+	'ip_address_edit' => "Επεξεργασία διεύθυνσης IP/IPv6",
+	'ip_address_add' => "Προσθήκη διεύθυνσης IP/IPv6",
+	'ip_addresses' => "Διευθύνσεις IP/IPv6",
 	'myview' => "Η οπτική του κόμβου",
 	'ip_ranges_search' => "Αναζήτηση IP Δικτύων",
 	'ip_ranges_found' => "IP Δίκτυα που βρέθηκαν",
 	'dns_nameservers_search' => "Αναζήτηση DNS nameservers",
 	'dns_nameservers_found' => "DNS nameservers που βρέθηκαν",
 	'ip_range_edit' => "Επεξεργασία IP C-Class",
+        'ip_range_v6_edit' => "Επεξεργασία IPv6 Network",
 	'send_mail' => "Αποστολή ενημερωτικού E-mail",
 	'to' => "Προς",
 	'subject' => "Θέμα",
@@ -137,6 +140,7 @@ $lang = array(
 	'change' => "Αλλαγή",
 	'submit' => "OK",
 	'cancel' => 'Άκυρο',
+        'empty' => 'Κενό',
 	'add' => "Προσθήκη",
 	'remove' => "Αφαίρεση",
 	'update' => "Ανανέωση",
@@ -163,6 +167,7 @@ $lang = array(
 	'compare_contains' => "Περιέχει",
 	'zone_forward' => "Forward ζώνη DNS",
 	'zone_reverse' => "Reverse ζώνη DNS",
+        'zone_reverse_v6' => "Reverse ζώνη IPv6 DNS",
 	'contact' => "Αποστολή μηνύματος",
 	'contact_node' => "Επικοινωνία με τον κόμβο",
 	'from' => "Από",
@@ -204,7 +209,7 @@ $lang = array(
 		'users__status-activated' => 'Ενεργοποιημένη',
 		'users__language' => 'Γλώσσα',
 		'fullname' => 'Ονοματεπώνυμο',
-		
+
 		'nodes__id' => 'Αριθμός κόμβου',
 		'nodes__name' => 'Όνομα κόμβου',
 		'nodes__date_in' => 'Δημιουργήθηκε',
@@ -221,7 +226,7 @@ $lang = array(
                 'nodes__status-pending' => 'Σε αναμονή',
                 'nodes__status-deleted' => 'Διεγραμμένος',
 		'nodes__name_ns' => 'Πρόθεμα nameserver',
-		
+
 		'users_nodes__owner' => 'Δικαίωμα',
 		'users_nodes__owner-Y' => 'Διαχειριστής',
 		'users_nodes__owner-N' => 'Συνδιαχειριστής',
@@ -237,6 +242,7 @@ $lang = array(
 		'areas__ip_end' => 'IP μέχρι',
                 'areas__v6net' => 'Δίκτυο IPv6',
                 'areas__v6prefix' => 'IPv6 Prefix',
+                'areas__ipv6_end' => 'IPv6 μέχρι',
 		'areas__info' => 'Πληροφορίες',
 
 		'regions__id' => 'Νομαρχία',
@@ -245,6 +251,7 @@ $lang = array(
 		'regions__ip_end' => 'IP μέχρι',
                 'regions__v6net' => 'Δίκτυο IPv6',
                 'regions__v6prefix' => 'IPv6 Prefix',
+                'regions__ipv6_end' => 'IPv6 μέχρι',
 		'regions__info' => 'Πληροφορίες',
 
 		'ip_ranges__date_in' => 'Ημερομηνία',
@@ -265,6 +272,8 @@ $lang = array(
 
                 'ip_ranges_v6__date_in' => 'Ημερομηνία',
 		'ip_ranges_v6__v6net' => 'IPv6 Net',
+                'ip_ranges_v6__v6prefix' => 'IPv6 Prefix',
+                'ip_ranges_v6__ipv6_end' => 'IPv6 μέχρι',
 		'ip_ranges_v6__ip_end' => 'Μέχρι',
 		'ip_ranges_v6__status' => 'Κατάσταση',
 		'ip_ranges_v6__status-waiting' => 'Προς έλεγχο',
@@ -273,13 +282,15 @@ $lang = array(
 		'ip_ranges_v6__status-rejected' => 'Απορριφθέν',
 		'ip_ranges_v6__status-invalid' => 'Άκυρο',
 		'ip_ranges_v6__info' => 'Πληροφορίες IPv6',
+                'ip_ranges_v6__node_id' => 'Κόμβος',
 		'ip_ranges_v6__delete_req' => 'Αίτηση διαγραφής',
 		'ip_ranges_v6__delete_req-Y' => 'ΝΑΙ',
 		'ip_ranges_v6__delete_req-N' => 'ΟΧΙ',
 		'ip_range_v6' => 'IPv6 ID',
-		'ipv6' => 'Διεύθυνση IPv6',            
+		'ipv6' => 'Διεύθυνση IPv6',
                 'v6net' => 'Δίκτυο IPv6',
-            
+                'v6prefix' => 'IPv6 Prefix',
+
 		'dns_zones__date_in' => 'Ημερομηνία',
 		'dns_zones__name' => 'Όνομα ζώνης',
 		'dns_zones__type' => 'Τύπος ζώνης',
@@ -300,6 +311,7 @@ $lang = array(
 		'dns_nameservers__date_in' => 'Ημερομηνία',
 		'dns_nameservers__name' => 'Όνομα Nameserver',
 		'dns_nameservers__ip' => 'Διεύθυνση IP',
+                'dns_nameservers__ipv6' => 'Διεύθυνση IPv6',
 		'dns_nameservers__status' => 'Κατάσταση',
 		'dns_nameservers__status-waiting' => 'Προς έλεγχο',
 		'dns_nameservers__status-pending' => 'Σε αναμονή',
@@ -344,9 +356,21 @@ $lang = array(
 		'subnets__client_node_id' => 'Πελάτης',
 		'subnet' => 'Υποδίκτυο',
 
+		'subnets_v6__v6net' => 'Από',
+		'subnets_v6__v6prefix' => 'IPv6 Prefix',
+		'subnets_v6__ipv6_end' => 'Μέχρι',
+		'subnets_v6__type' => 'Χρήση υποδικτύου',
+		'subnets_v6__type-local' => 'Τοπικό δίκτυο',
+		'subnets_v6__type-link' => 'Διασύνδεση',
+		'subnets_v6__type-client' => 'Πελάτη Access Point',
+		'subnets_v6__link_id' => 'Διασύνδεση',
+		'subnets_v6__client_node_id' => 'Πελάτης',
+		'subnet_v6' => 'Υποδίκτυο',
+
 		'ip_addresses__date_in' => 'Προστέθηκε',
 		'ip_addresses__hostname' => 'Hostname',
 		'ip_addresses__ip' => 'Διεύθυνση IP',
+                'ip_addresses__ipv6' => 'Διεύθυνση IPv6',
 		'ip_addresses__mac' => 'Διεύθυνση MAC',
 		'ip_addresses__type' => 'Τύπος μηχανήματος',
 		'ip_addresses__type-router' => 'Δρομολογητής',
@@ -360,7 +384,7 @@ $lang = array(
 		'ip_addresses__always_on-Y' => 'ΝΑΙ',
 		'ip_addresses__always_on-N' => 'ΟΧΙ',
 		'ip_addresses__info' => 'Πληροφορίες',
-	
+
 		'services__title' => 'Κατηγορία',
 		'services__protocol' => 'Πρωτόκολλο',
 		'services__protocol-tcp' => 'TCP',
@@ -370,7 +394,7 @@ $lang = array(
 		'nodes_services__node_id' => 'Κόμβος',
 		'nodes_services__service_id' => 'Κατηγορία',
 		'nodes_services__date_in' => 'Προστέθηκε',
-		'nodes_services__ip_id' => 'Διεύθυνση IP',
+		'nodes_services__ip_id' => 'Διεύθυνση IP/IPv6',
 		'nodes_services__url' => 'URL',
 		'nodes_services__status' => 'Κατάσταση',
 		'nodes_services__status-active' => 'Ενεργή',
@@ -380,7 +404,7 @@ $lang = array(
 		'nodes_services__protocol-tcp' => 'TCP',
 		'nodes_services__protocol-udp' => 'UDP',
 		'nodes_services__port' => 'Πόρτα',
-		
+
 		'node_settings_changes__id' => 'id',
 	     	'node_settings_changes__node_id' => 'nodeid',
 		'node_settings_changes__uid' => 'uid',
@@ -389,7 +413,7 @@ $lang = array(
 		'node_settings_changes__reason' => 'Αιτιολογία τροποποίησης',
 		'node_settings_changes__comment' => 'Σχόλιο',
 		'node_settings_changes__dateline' => 'Ημερομηνία ώρα',
-		
+
 		'photos__date_in' => 'Ημερομηνία',
 		'photos__view_point' => 'Κατεύθυνση',
 		'photos__view_point-N' => 'Βόρεια',
@@ -409,7 +433,7 @@ $lang = array(
 		'rights__type-admin' => 'Διαχειριστής',
 		'rights__type-hostmaster' => 'Hostmaster'
 	),
-	
+
 	'message' => array(
 		'info' => array(
 			'insert_success' => array(
@@ -431,6 +455,10 @@ $lang = array(
 			'request_range_success' => array(
 				'title' => "Αίτηση IP C-Class",
 				'body' => "Η αίτηση σας για IP C-Class έγινε δεκτή. Σύντομα, η ομάδα Hostmaster θα απαντήσει στην αίτησή σας στο e-mail που έχετε δηλώσει. Μπορείτε να δείτε το IP C-Class καθώς και την κατάστασή του στη σελίδα του κόμβου σας."
+			),
+			'request_range_v6_success' => array(
+				'title' => "Αίτηση IPv6 Network",
+				'body' => "Η αίτηση σας για IPv6 Network έγινε δεκτή. Σύντομα, η ομάδα Hostmaster θα απαντήσει στην αίτησή σας στο e-mail που έχετε δηλώσει. Μπορείτε να δείτε το IPv6 Network καθώς και την κατάστασή του στη σελίδα του κόμβου σας."
 			),
 			'request_dnszone_success' => array(
 				'title' => "Αίτηση ζώνης DNS",
@@ -455,7 +483,7 @@ $lang = array(
 			'password_restored' => array(
 				'title' => "Αλλαγή κωδικού",
 				'body' => "Ο κωδικός πρόσβασης αλλάχτηκε με επιτυχία. Μπορείτε να προχωρήσετε σε σύνδεση με το νέο σας κωδικό πρόσβασης."
-			),	
+			),
 			'logout_success' => array(
 				'title' => "Αποσύνδεση",
 				'body' => "Έγινε αποσύνδεση από το σύστημα."
@@ -552,7 +580,7 @@ $lang = array(
 			)
 		)
 	),
-		
+
 	'email' => array(
 		'user_activation' => array(
 			'subject' => "Ενεργοποίηση λογαριασμού: ##username##",
@@ -594,7 +622,7 @@ $lang = array(
 				'body' => "WiND - Wireless Nodes Database\n------------------------------------------\n\nIP C-Class: ##range##\nΚόμβος: ##node_name## (###node_id##)\n\nΤο παραπάνω IP C-Class ακυρώθηκε.\n\nΕκ μέρους της ομάδας WiND Hostmaster,\n##hostmaster_surname## ##hostmaster_name## (##hostmaster_username##)"
 			)
 		),
-		
+
 		'zone' => array(
 			'pending' => array(
 				'subject' => "##zone##: Σε αναμονή",
@@ -614,18 +642,18 @@ $lang = array(
 			)
 		)
 	),
-	
+
 	'help' => array(
 		'dnszones' => array(
 			'title' => 'Ζώνες DNS',
 			'body' => 'Στη σελίδα αυτή μπορείτε να αναζητήσετε ζώνες DNS του δικτύου, με βάση τα πεδία που προσφέρονται. Τα αποτελέσματα εμφανίζονται στον παρακάτω πίνακα. Επίσης, μπορείτε να διαλέξετε κάποιον κόμβο για προβολή των στοιχείων του.'
 		),
-		
+
 		'services' => array(
 			'title' => 'Υπηρεσίες',
 			'body' => 'Στη σελίδα αυτή μπορείτε να αναζητήσετε υπηρεσίες του δικτύου, με βάση τα πεδία που προσφέρονται. Τα αποτελέσματα εμφανίζονται στον παρακάτω πίνακα. Επίσης, μπορείτε να μεταφερθείτε σε κάποια υπηρεσία (αν προσφέρεται URL) ή να επιλέξετε κάποιον κόμβο για προβολή των στοιχείων του.'
 		),
-		
+
 		'node_editor_add' => array(
 			'title' => 'Προσθήκη κόμβου',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε έναν κόμβο. Φροντίστε τα στοιχεία να καταχωρηθούν με όσο το δυνατόν μεγαλύτερη ακρίβεια.'
@@ -638,7 +666,7 @@ $lang = array(
 			'title' => 'Αίτηση απόδοσης IP C-Class',
 			'body' => 'Περιγράψτε με σαφήνεια, στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
 		),
-        'node_editor_range_v6' => array(
+                'node_editor_range_v6' => array(
 			'title' => 'Αίτηση απόδοσης IPv6 Net',
 			'body' => 'Περιγράψτε με σαφήνεια, στο πεδίο Πληροφορίες τον λόγο της αίτησής σας.'
 		),
@@ -671,11 +699,19 @@ $lang = array(
 			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε μια διασύνδεση του κόμβου σας με κάποιον άλλο κόμβο. Συμπληρώστε με σαφήνεια όσο το δυνατόν περισσότερα από τα πεδία.'
 		),
 		'node_editor_subnet_add' => array(
-			'title' => 'Προσθήκη υποδικτύου',
+			'title' => 'Προσθήκη υποδικτύου IP',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε ένα υποδίκτυο του κόμβου σας. Για το τοπικό σας δίκτυο μπορείτε να δηλώσετε και διευθύνσεις που δεν περιέχονται σε IP C-Class που σας έχει αποδοθεί. Σε περίπτωση διασυνδέσεων κόμβων, δήλωση ενός υποδικτύου μπορεί να γίνει μόνο από τον κάτοχο του IP C-Class του υποδικτύου που χρησιμοποιείται.'
 		),
 		'node_editor_subnet_edit' => array(
-			'title' => 'Επεξεργασία υποδικτύου',
+			'title' => 'Επεξεργασία υποδικτύου IP',
+			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε ένα υποδίκτυο του κόμβου σας.'
+		),
+		'node_editor_subnet_v6_add' => array(
+			'title' => 'Προσθήκη υποδικτύου IPv6',
+			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε ένα υποδίκτυο του κόμβου σας. Για το τοπικό σας δίκτυο μπορείτε να δηλώσετε και διευθύνσεις που δεν περιέχονται σε IPv6 Network που σας έχει αποδοθεί. Σε περίπτωση διασυνδέσεων κόμβων, δήλωση ενός υποδικτύου μπορεί να γίνει μόνο από τον κάτοχο του IPv6 Network του υποδικτύου που χρησιμοποιείται.'
+		),
+		'node_editor_subnet_v6_edit' => array(
+			'title' => 'Επεξεργασία υποδικτύου IPv6',
 			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε ένα υποδίκτυο του κόμβου σας.'
 		),
 		'node_editor_ipaddr_add' => array(
@@ -686,7 +722,7 @@ $lang = array(
 			'title' => 'Επεξεργασία διασύνδεσης',
 			'body' => 'Στη σελίδα αυτή μπορείτε να επεξεργαστείτε μία διεύθυνση IP του κόμβου σας. Το πεδίο Hostname, πρέπει να καθορίζει ποιο μηχάνημα φέρει τη συγκεκριμένη διεύθυνση IP και πρέπει να είναι κοινό σε όλες τις διευθύνσεις IP του συγκεκριμένου μηχανήματος.'
 		),
-		
+
 		'node_editor_services_add' => array(
 			'title' => 'Προσθήκη υπηρεσίας',
 			'body' => 'Στη σελίδα αυτή μπορείτε να προσθέσετε μία υπηρεσία του κόμβου σας. Το πεδίο Διεύθυνση IP περιέχει όλες τις διευθύνσεις που έχετε δηλώσει και πρέπει να καθορίζει την IP στην οποία τρέχει (ακούει) η υπηρεσία. Το πεδίο URL, πρέπει να περιέχει το link για την υπηρεσία ή το link για κάποια σελίδα που αναφέρεται στην υπηρεσία. Τέλος τα πεδία Πρωτόκολλο και Πόρτα, πρέπει να αναφέρονται στο πρωτόκολλο που χρησιμοποιεί η υπηρεσία (π.χ. tcp, udp) και στην πόρτα που ακούει.'
@@ -740,7 +776,7 @@ $lang = array(
 			'body' => 'Στη σελίδα αυτή μπορείτε να αποστείλετε μήνυμα προς τον διαχειριστή ή και τους συνδιαχειριστές του κόμβου. Η ηλεκτρονική σας διεύθυνση θα είναι διαθέσιμη στο απεσταλμένο μήνυμα ώστε να είναι εφικτή η πιθανή απάντηση στο μήνυμά σας από τους παραλήπτες. Οι ηλεκτρονικές διευθύνσεις των παραληπτών θα αποκαλυφθούν κατά την απάντηση του μηνύματος. Η πιθανή απάντηση στο μήνυμά σας θα σας αποσταλεί στο ηλεκτρονικό σας ταχυδρομείο.'
 		)
 	),
-	
+
 	'languages' => array(
 		'greek' => 'Ελληνικά',
 		'english' => 'Αγγλικά',

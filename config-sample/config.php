@@ -49,13 +49,20 @@ $config = array(
 		),
 	
 	'dns' => array(
-		'root_zone' => 'yourdomain',
-		'ns_zone' => 'ns.yourdomain',
-		'reverse_zone' => 'in-addr.arpa',
-		'forward_zone_schema' => ROOT_PATH.'tools/dnszones-poller/yourdomain.schema',
-		'reverse_zone_schema' => ROOT_PATH.'tools/dnszones-poller/10.in-addr.arpa.schema'
+                'root_zone' => 'yourdomain',
+                'ns_zone' => 'ns.yourdomain',
+                'reverse_zone' => 'in-addr.arpa',
+                'reverse_zone_v6' => 'ip6.arpa',
+                'forward_zone_schema' => ROOT_PATH.'./tools/dnszones-poller/yourdomain.schema',
+                'reverse_zone_schema' => ROOT_PATH.'./tools/dnszones-poller/10.in-addr.arpa.schema',
+                'reverse_zone_schema_v6' => ROOT_PATH.'./tools/dnszones-poller/ip6.arpa.schema',
 		),
-	
+
+    	'ipv6_ula' => array( // IPv6 ULA network for auto IPv4 to IPv6 /32 network conversion
+                'enabled' => FALSE,
+		'v6net' => 'fdd4:9370:',
+		),
+    
 	'folders' => array(
 		'photos' => ROOT_PATH.'files/photos/'
 		),

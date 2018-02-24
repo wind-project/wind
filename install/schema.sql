@@ -15,34 +15,14 @@ CREATE TABLE IF NOT EXISTS `areas` (
   `info` text,
   `v6net` varbinary(16) default '0',
   `v6prefix` smallint(6) default '0',
+  `ipv6_end` varbinary(16) default '0',
   PRIMARY KEY  (`id`),
   KEY `region_id` (`region_id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
   KEY `ip_end` (`ip_end`),
-  KEY `v6net` (`v6net`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `ipv6_node_repos` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `area_id` int(10) unsigned NOT NULL default '0',
-  `node_id` int(10) unsigned NOT NULL default '0',
-  `v6net` varbinary(16) default '0',
-  PRIMARY KEY (`id`),
-  KEY `aread_id` (`area_id`),
-  KEY `node_id` (`node_id`),
-  KEY `v6net` (`v6net`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `ipv6_area_repos` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `region_id` int(10) unsigned NOT NULL,
-  `area_id` int(10) unsigned default '0',
-  `v6net` varbinary(16) default '0',
-  PRIMARY KEY (`id`),
-  KEY `region_id` (`region_id`),
-  KEY `area_id` (`area_id`),
-  KEY `v6net` (`v6net`)
+  KEY `v6net` (`v6net`),
+  KEY `ipv6_end` (`ipv6_end`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_nameservers` (
@@ -51,29 +31,35 @@ CREATE TABLE IF NOT EXISTS `dns_nameservers` (
   `node_id` int(10) unsigned NOT NULL default '0',
   `name` enum('ns0','ns1','ns2','ns3') NOT NULL default 'ns0',
   `ip` int(10) NOT NULL default '0',
+  `ipv6` varbinary(16) NOT NULL default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
+  `delete_req` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`name`,`node_id`),
   KEY `date_in` (`date_in`),
   KEY `node_id` (`node_id`),
   KEY `ip` (`ip`),
-  KEY `status` (`status`)
+  KEY `ipv6` (`ipv6`),
+  KEY `status` (`status`),
+  KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_zones` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
-  `type` enum('forward','reverse') NOT NULL default 'forward',
-  `name` varchar(30) NOT NULL default '',
+  `type` enum('forward','reverse','reverse_v6') NOT NULL default 'forward',
+  `name` varchar(74) NOT NULL default '',
   `node_id` int(10) unsigned default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   `info` text,
+  `delete_req` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_keys` (`name`,`type`),
   KEY `type` (`type`),
   KEY `date_in` (`date_in`),
   KEY `node_id` (`node_id`),
-  KEY `status` (`status`)
+  KEY `status` (`status`),
+  KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `dns_zones_nameservers` (
@@ -90,13 +76,15 @@ CREATE TABLE IF NOT EXISTS `ip_addresses` (
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `hostname` varchar(50) NOT NULL default '',
   `ip` int(10) NOT NULL default '0',
+  `ipv6` varbinary(16) default '0',
   `mac` varchar(17) default NULL,
   `node_id` int(10) unsigned NOT NULL default '0',
-  `type` enum('router','server','pc','wireless-bridge','voip','camera','other') NOT NULL default 'pc',
+  `type` enum('router','server','pc','wireless-bridge','voip','camera','monitoring','other') NOT NULL default 'pc',
   `always_on` enum('Y','N') NOT NULL default 'N',
   `info` text,
   PRIMARY KEY  (`id`),
   KEY `ip` (`ip`),
+  KEY `ipv6` (`ipv6`),
   KEY `node_id` (`node_id`),
   KEY `hostname` (`hostname`),
   KEY `type` (`type`)
@@ -124,14 +112,17 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_v6` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `date_in` datetime NOT NULL default '0000-00-00 00:00:00',
   `node_id` int(10) unsigned NOT NULL default '0',
-  `v6net_id` int(10) unsigned NOT NULL default '0',
+  `v6net` varbinary(16) default '0',
+  `v6prefix` smallint(6) default '0',
+  `ipv6_end` varbinary(16) default '0',
   `status` enum('waiting','active','pending','rejected','invalid') NOT NULL default 'waiting',
   `info` text,
   `delete_req` enum('Y','N') NOT NULL default 'N',
   PRIMARY KEY  (`id`),
   KEY `unique_keys` (`node_id`),
   KEY `date_in` (`date_in`),
-  KEY `v6net_id` (`v6net_id`),
+  KEY `v6net` (`v6net`),
+  KEY `ipv6_end` (`ipv6_end`),
   KEY `status` (`status`),
   KEY `delete_req` (`delete_req`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -145,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `peer_ap_id` int(10) unsigned default NULL,
   `type` enum('p2p','ap','client','free') NOT NULL default 'p2p',
   `ssid` varchar(50) default NULL,
-  `protocol` enum('IEEE 802.11b','IEEE 802.11g','IEEE 802.11a','IEEE 802.11n','IEEE 802.3i (Ethernet)','IEEE 802.3u (Fast Ethernet)','IEEE 802.3ab (Gigabit Ethernet)','other') default NULL,
+  `protocol` enum('IEEE 802.11b','IEEE 802.11g','IEEE 802.11a','IEEE 802.11n','IEEE 802.11ac','IEEE 802.11ad','IEEE 802.3i (Ethernet)','IEEE 802.3u (Fast Ethernet)','IEEE 802.3ab (Gigabit Ethernet)','IEEE 802.3an (10 Gigabit Ethernet)','IEEE 802.3z (Gigabit Optical Fiber)','IEEE 802.3ae (10 Gigabit Optical Fiber)','other') default NULL,
   `channel` varchar(50) default NULL,
   `frequency` enum('2412','2417','2422','2427','2432','2437','2442','2447','2452','2457','2462','2467','2472','2484','4915','4920','4925','4935','4940','4945','4960','4980','5035','5040','5045','5055','5060','5080','5170','5180','5190','5200','5210','5220','5230','5240','5260','5280','5300','5320','5500','5520','5540','5560','5580','5600','5620','5640','5660','5680','5700','5745','5765','5785','5805','5825') NOT NULL default '5500',
   `status` enum('active','inactive','pending') NOT NULL default 'active',
@@ -176,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `nodes` (
   UNIQUE KEY `unique_keys` (`name_ns`),
   KEY `date_in` (`date_in`),
   KEY `due_date` (`due_date`),
-  KEY `last_change` (`last_change`),  
+  KEY `last_change` (`last_change`),
   KEY `name` (`name`),
   KEY `area_id` (`area_id`),
   KEY `status` (`status`),
@@ -222,12 +213,14 @@ CREATE TABLE IF NOT EXISTS `regions` (
   `ip_end` int(10) NOT NULL default '0',
   `v6net` varbinary(16) default '0',
   `v6prefix` smallint(6) default '0',
+  `ipv6_end` varbinary(16) default '0',
   `info` text,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`),
   KEY `ip_start` (`ip_start`),
   KEY `ip_end` (`ip_end`),
-  KEY `v6net` (`v6net`)
+  KEY `v6net` (`v6net`),
+  KEY `ipv6_end` (`ipv6_end`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `rights` (
@@ -258,6 +251,20 @@ CREATE TABLE IF NOT EXISTS `subnets` (
   `link_id` int(10) unsigned default NULL,
   `client_node_id` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`),
+  KEY `node_id` (`node_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `subnets_v6` (
+  `id` int(10) UNSIGNED NOT NULL auto_increment,
+  `date_in` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `node_id` int(10) UNSIGNED DEFAULT NULL,
+  `v6net` varbinary(16) DEFAULT '0',
+  `v6prefix` smallint(6) DEFAULT '0',
+  `ipv6_end` varbinary(16) DEFAULT '0',
+  `type` enum('local','link','client') NOT NULL DEFAULT 'local',
+  `link_id` int(10) UNSIGNED DEFAULT NULL,
+  `client_node_id` int(10) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `node_id` (`node_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

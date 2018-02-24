@@ -49,7 +49,7 @@ class ranges_allocation {
 				$table_areas->data[$key]['ip_start'] = long2ip($table_areas->data[$key]['ip_start']);
 				$table_areas->data[$key]['ip_end'] = long2ip($table_areas->data[$key]['ip_end']);
 				$table_areas->data[$key]['ip_range'] = $table_areas->data[$key]['ip_start']." - ".$table_areas->data[$key]['ip_end'];
-                                $table_areas->data[$key]['v6net'] = inet_ntop($table_areas->data[$key]['v6net']);
+                                $table_areas->data[$key]['v6net'] = @inet_ntop($table_areas->data[$key]['v6net']);
 			}
 		}
 		$table_areas->db_data_remove('ip_start', 'ip_end');
